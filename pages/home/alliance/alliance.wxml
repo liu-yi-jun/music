@@ -1,0 +1,35 @@
+<!--pages/home/alliance/alliance.wxml-->
+<view class="alliance">
+  <view class="contain">
+    <view class="head">
+      <view class="title">
+        <text class="title-top">联盟活动</text>
+        <text class="title-bottom">Union activities</text>
+      </view>
+      <view class="bar">
+        <view class="lineWarp">
+          <view></view>
+          <view></view>
+          <view></view>
+          <view class="last"></view>
+        </view>
+        <text class="{{current=='advance'?'active':''}}" data-current="advance" bindtap="active">最新预告</text>
+
+        <text class="{{current=='review'?'active':''}}" data-current="review" bindtap="active">往期回顾</text>
+
+        <text class="{{current=='common'?'active':''}}" data-current="common" bindtap="active">活动共建</text>
+
+        <text class="{{current=='issue'?'active':''}}" data-current="issue" bindtap="active">我的发布</text>
+      </view>
+    </view>
+    <view class="list">
+      <scroll-view scroll-y style="height: 1206rpx">
+        <issue wx:if="{{current=='issue'}}"></issue>
+        <allianceList wx:else></allianceList>
+      </scroll-view>
+    </view>
+    <view class="add" catchtap="goIssue">
+      <image src="http://use.eigene.cn/add.png"></image>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,66 @@
+<!--pages/square/square.wxml-->
+<view class="square" catchtap="tap">
+  <scroll-view class="scroll" scroll-y bindscrolltolower="scrolltolower" >
+    <navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' iconTheme='white'></navBar>
+    <view class="hideBar" catchtap="hideBar">
+    </view>
+    <view mark:district="hideBarBackground" class="hideBarBackground {{hideBarShow? 'hideBarUnfold': 'hideBarPackUp'}}">
+      <view catchtap="goUnion">
+        <image src="http://cdn.eigene.cn/square/alliance.png"></image>
+        <text>小组联盟</text>
+      </view>
+      <view catchtap="goBand">
+        <image src="http://cdn.eigene.cn/square/band.png"></image>
+        <text>乐队之家</text>
+      </view>
+      <view catchtap="goPerformance">
+        <image src="http://cdn.eigene.cn/square/performance.png"></image>
+        <text>演出资讯</text>
+      </view>
+      <view catchtap="goDeal">
+        <image src="http://cdn.eigene.cn/square/deal.png"></image>
+        <text>二手交易</text>
+      </view>
+    </view>
+    <view class="community">
+      <view class="cardWrap">
+        <view class="signInBackground">
+          <text class="everyday">每日打卡：</text>
+          <view class="date">
+            <view class="yearMonth">{{yearMonth}}</view>
+            <view class="day">{{day}}</view>
+          </view>
+          <view class="signInSumsWrap">
+            <view class="signInPart">
+              <text>{{signInSums[0]}}</text>
+              <text>{{signInSums[1]}}</text>
+            </view>
+            <view class="signInPart">
+              <text>{{signInSums[2]}}</text>
+              <text>{{signInSums[3]}}</text>
+            </view>
+          </view>
+          <text class="dayText">天</text>
+          <image catchtap="singIn" class="signIn" src="http://cdn.eigene.cn/square/signIn.png"></image>
+        </view>
+        <view class="recommendBackground" id="recommendBackground">
+          <marquee  id="marquee" text="{{song.songName}}-{{song.author}}"></marquee>
+          <image catchtap="playSong" data-songurl="{{song.songUrl}}" class="played" src="http://cdn.eigene.cn/square/play{{play?'ed':''}}.png"></image>
+          <image catchtap="toStoreSong" class="store" src="http://cdn.eigene.cn/square/store{{song.isStore?'d':''}}.png"></image>
+        </view>
+      </view>
+      <swiper class="topicWrap">
+        <swiper-item wx:for="{{topics}}" wx:key="index" wx:for-item="topic">
+          <view wx:for="{{topic}}" class="topic" catchtap="goTopic" data-topicid="{{item.id}}">
+            <text>{{item.topicName}}</text>
+          </view>
+        </swiper-item>
+      </swiper>
+      <dynamicList id="dynamicList" dynamics="{{dynamics}}"></dynamicList>
+      <image class="issueDynamic" src="http://cdn.eigene.cn/square/issueDynamic.png" catchtap="goSquarePost"></image>
+
+    </view>
+  </scroll-view>
+  <showTabBar tabBarBtnShow="{{tabBarBtnShow}}">
+  </showTabBar>
+</view>

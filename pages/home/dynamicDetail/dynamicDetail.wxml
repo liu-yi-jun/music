@@ -1,0 +1,51 @@
+<!--pages/home/dynamicDetail/dynamicDetail.wxml-->
+<view>
+  <navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' back="{{true}}" iconTheme='white'
+    bindback="handlerGobackClick"></navBar>
+  <view class="head">
+    <image catchtap="goPersonal" class="avatar" src="{{detail.avatarUrl}}"></image>
+    <text class="userName">{{detail.nickName}}</text>
+  </view>
+  <scroll-view style="height:{{excludeHeight-130}}rpx" scroll-y bindscrolltolower="scrolltolower">
+    <swiper wx:if="{{detail.mold === 0}}" class="swiper" indicator-dots duration="400">
+      <swiper-item wx:for="{{detail.pictureUrls}}" wx:key="*this">
+        <image class="dynamicImg" mode="aspectFill" src="{{item}}" catchtap="preview" data-src="{{item}}"></image>
+      </swiper-item>
+    </swiper>
+    <video class="video" object-fit="cover" wx:if="{{detail.mold === 1}}" src="{{detail.videoUrl}}"></video>
+    <view class="recordWrap" wx:if="{{detail.mold === 2}}">
+      <playRecord voiceUrl="{{detail.voiceUrl}}"></playRecord>
+    </view>
+    <view class="icon-time">
+      <view class="iconWrap">
+        <view class="icon">
+          <image src="http://cdn.eigene.cn/dynamicDetail/like.png"></image>
+          <text>{{detail.likes}}</text>
+        </view>
+        <view class="icon">
+          <image src="http://cdn.eigene.cn/dynamicDetail/comment.png"></image>
+          <text>{{detail.comment}}</text>
+        </view>
+        <view class="icon">
+          <image src="http://cdn.eigene.cn/dynamicDetail/share.png"></image>
+          <text>{{detail.share}}</text>
+        </view>
+      </view>
+      <text class="time">{{detail.releaseTime}}</text>
+    </view>
+    <view class="content">
+      <text space="ensp" > {{detail.introduce}}</text>
+    </view>
+    <view class="commentWrap">
+      <image src="http://cdn.eigene.cn/dynamicDetail/comment.png"></image>
+      <text>评论</text>
+    </view>
+    <commentList bind:toReply="toReply" commentArr="{{commentArr}}">
+    </commentList>
+    <inputBox showTextara="{{showTextara}}" param="{{param}}" bind:completeCommentOrReply="completeCommentOrReply">
+    </inputBox>
+    <commentBar class="footerComment" bind:toComment="toComment" commenetBarData="{{commenetBarData}}"
+      bind:completeLike="completeLike" bind:completeStore="completeStore">
+    </commentBar>
+  </scroll-view>
+</view>

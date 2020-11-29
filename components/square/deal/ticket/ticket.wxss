@@ -1,0 +1,100 @@
+/* components/square/deal/ticket/ticket.wxss */
+
+.ticket {
+  box-sizing: border-box;
+}
+
+.img {
+  width: 124rpx;
+  height: 165rpx;
+  font-size: 0;
+  flex-shrink: 0;
+}
+
+.top {
+  box-sizing: border-box;
+  padding: 40rpx 90rpx 0 40rpx;
+  display: flex;
+  /* border-bottom: 10rpx dotted #4b5abf; */
+}
+
+.card {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 650rpx;
+  height: 347rpx;
+  border-radius: 20rpx;
+  background-image: url('http://cdn.eigene.cn/deal/cardBackground.png');
+  background-size: 100%;
+  position: relative;
+  left: 0;
+  right: 0;
+  margin: 30rpx auto;
+}
+
+.ticketStore {
+  width: 40rpx;
+  height: 40rpx;
+  position: absolute;
+  top: 40rpx;
+  right: 38rpx;
+}
+
+.introduce {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-left: 20rpx;
+  flex-grow: 1;
+}
+
+.title {
+  font-size: 28rpx;
+}
+
+.message {
+  font-size: 18rpx;
+  display: flex;
+  color: #808080;
+  flex-direction: column;
+}
+
+.bottom {
+  box-sizing: border-box;
+  padding: 0rpx 40rpx 20rpx 40rpx;
+  display: flex;
+  justify-content: space-between;
+}
+
+.avatar {
+  width: 62rpx;
+  height: 62rpx;
+  border-radius: 50%;
+}
+
+.avatar-name {
+  display: flex;
+  align-items: flex-end;
+}
+
+.name {
+  margin-left: 10rpx;
+  margin-bottom: 10rpx;
+  font-size: 16rpx;
+  color: #808080;
+}
+
+.money {
+  color: #ce4646;
+  font-size: 40rpx;
+}
+
+.issueDynamic {
+  width: 142rpx;
+  height: 142rpx;
+  position: fixed;
+  bottom: calc(69rpx + env(safe-area-inset-bottom));
+  right: 37rpx;
+}

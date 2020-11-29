@@ -1,0 +1,96 @@
+<!--pages/home/puchCard/puchCard.wxml-->
+<view>
+  <navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' back="{{true}}" iconTheme='white'
+    bindback="handlerGobackClick"></navBar>
+  <!-- <view class='progress_box'>
+        <canvas class="progress_bg"   canvas-id="canvasProgressbg">  </canvas> 
+        <canvas class="progress_canvas"   canvas-id="canvasProgress">  </canvas> 
+        <view class="progress_text">
+            <view class="progress_dot"></view> 
+            <text class='progress_info'> {{progress_txt}}</text>
+        </view>     
+    </view> -->
+
+
+
+
+
+
+  <image wx:if="{{isMyGroup && (groupDuty === 0 || groupDuty === 1)}}" catchtap="issuePuchCard" class="issuePuchCard"
+    src="http://cdn.eigene.cn/puchCard/issuePuchCard.png"></image>
+  <swiper style="height:{{excludeHeight}}rpx" bindchange="changeCard">
+    <swiper-item wx:for="{{groupCards}}" wx:key="inex" wx:for-index="i">
+      <view class="card">
+        <view class="head">
+          <view class="bar">
+            <text wx:if="{{item.datumUrls.length}}" class="practice {{item.flag==='practice'?'active':''}}"
+              catchtap="switch" data-flag="practice" data-index="{{i}}">练习资料</text>
+            <text wx:if="{{item.videoUrl}}" class="demonstration  {{item.flag==='demonstration'?'active':''}}"
+              catchtap="switch" data-flag="demonstration" data-index="{{i}}">演示视频</text>
+          </view>
+          <view class="avatar-userName" data-userid="{{item.adminId}}">
+            <image class="avatar" src="{{item.adminAvatar}}"></image>
+            <text class="userName">{{item.adminName}}</text>
+          </view>
+        </view>
+        <view class="MusicscoreWrap">
+          <image wx:if="{{item.flag==='practice'}}" class="Musicscore" mode="aspectFill" src="{{item.datumUrls}}"
+            data-preview="{{item.datumUrls}}" catchtap="previewImage"></image>
+          <video wx:else src="{{item.videoUrl}}" class="video" object-fit="fill"></video>
+        </view>
+        <view class="timeWrap">
+          <text class="time">{{item.releaseTime}}</text>
+        </view>
+        <view class="time-sound {{item.flag==='demonstration'?'videoSound':''}}">
+          <scroll-view bindscrolltolower="scrolltolower" class="scroll" scroll-y enhanced show-scrollbar="{{false}}">
+            <view class="soundRowWrap">
+              <view class="soundRow" wx:for="{{item.soundRowArr}}" wx:key="id" wx:for-item="soundRow" wx:for-index="j">
+                <view class="avatarWrap">
+                  <text class="rank" wx:if="{{j===0||j===1||j===2}}">{{j+1}}</text>
+                  <image wx:if="{{j===0}}" class="avatarBackground"
+                    src="http://cdn.eigene.cn/puchCard/firstBackground.png"></image>
+                  <image wx:if="{{j===1}}" class="avatarBackground"
+                    src="http://cdn.eigene.cn/puchCard/secondBackground.png"></image>
+                  <image wx:if="{{j===2}}" class="avatarBackground"
+                    src="http://cdn.eigene.cn/puchCard/thirdBackground.png"></image>
+                  <image class="avatar" src="{{soundRow.avatarUrl}}"></image>
+                </view>
+                <view class="recordingStripWrap">
+                  <view catchtap="playSound" data-i="{{i}}" data-j="{{j}}" class="recordingStrip" style="width:{{soundRow.width}}rpx" data-recordurl="{{soundRow.recordUrl}}">
+                    <image src="http://cdn.eigene.cn/play{{soundRow.isPlay?'ing':''}}.gif" class="voice"></image> 
+                    <text>{{soundRow.duration}}s</text>
+                  </view>
+                </view>
+                <view class="likeWrap" data-islike="{{soundRow.isLike}}" data-index="{{j}}" catchtap="toLike">
+                  <!-- <image class="like" src="http://cdn.eigene.cn/puchCard/like.png"></image> -->
+                  <image class="like" src="http://cdn.eigene.cn/dynamicLike{{soundRow.isLike?'d':''}}.png"></image>
+                  <text class="likeNumber">{{soundRow.likes}}</text>
+                </view>
+              </view>
+            </view>
+          </scroll-view>
+        </view>
+      </view>
+    </swiper-item>
+  </swiper>
+  <image wx:if="{{isMyGroup && groupDuty!=-1}}" class="soundBackground{{current!==0?'2':'1'}}"
+    src="http://cdn.eigene.cn/puchCard/soundBackground{{current!==0?'2':'1'}}.png">
+    <view class='progress_box' id="progress_box">
+      <image wx:if="{{current===0}}" class="sound" src="http://cdn.eigene.cn/puchCard/sound.png" catchtap="startRecord">
+      </image>
+      <image wx:elif="{{current===1}}" class="sound" src="http://cdn.eigene.cn/puchCard/recording.png"
+        catchtap="endRecord"></image>
+      <image wx:elif="{{current===2}}" class="playSound" src="http://cdn.eigene.cn/puchCard/playSound.png"
+        catchtap="startPlay"></image>
+      <image wx:elif="{{current===3}}" class="playingSound" src="http://cdn.eigene.cn/puchCard/playingSound.png"
+        catchtap="pausePlay"></image>
+      <canvas hidden="{{current===0}}" class="progress_bg" canvas-id="canvasProgressbg"> </canvas>
+      <canvas hidden="{{current===0}}" class="progress_canvas" canvas-id="canvasProgress"> </canvas>
+    </view>
+    <image wx:if="{{current===2 || current===3}}" class="deleteSound"
+      src="http://cdn.eigene.cn/puchCard/deleteSound.png" catchtap="deleteSound"></image>
+    <image catchtap="sendGroupCardRecord" wx:if="{{current===2 || current===3}}" class="completeSound"
+      src="http://cdn.eigene.cn/puchCard/completeSound.png"></image>
+  </image>
+
+</view>

@@ -1,0 +1,54 @@
+<!--pages/square/deal/secondIssue/secondIssue.wxml-->
+<view class="secondIssue">
+  <navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' back="{{true}}" iconTheme='white'
+    bindback="handlerGobackClick"></navBar>
+  <canvas canvas-id='canvas' class='canvas'></canvas>
+  <form bindsubmit="formSubmit">
+    <issueHead avatarUrl="{{avatarUrl}}" nickName="{{nickName}}">
+    </issueHead>
+    <scroll-view style="height:{{excludeHeight-160}}rpx" scroll-y>
+      <view class="wrap">
+        <view class="importWrap first">
+          <input name="brand" placeholder="品牌·型号" placeholder-class="placeholder"></input>
+        </view>
+        <view class="importWrap">
+          <input name="newOld" placeholder="新旧程度" placeholder-class="placeholder"></input>
+        </view>
+        <view class="importWrap">
+          <textarea name="additional" disable-default-padding placeholder="附加信息"
+            placeholder-class="placeholder"></textarea>
+        </view>
+        <view class="importWrap min">
+          <input name="contact" placeholder="联系方式" placeholder-class="placeholder"></input>
+        </view>
+        <view class="moneyWrap" wx:if="{{money}}">
+          <text>定价: ¥{{money}}</text>
+        </view>
+        <view class="imgWrap" wx:if="{{tempImagePaths.length}}">
+          <view class="imgArea">
+            <image mode="aspectFill" catchtap="previewImage" data-id="{{index}}" wx:key="index" src="{{item}}"
+              wx:for="{{tempImagePaths}}">
+            </image>
+          </view>
+        </view>
+        <view class="wrapVideo" wx:if="{{tempVideoPath}}">
+          <video object-fit="cover" src="{{tempVideoPath}}"></video>
+        </view>
+        <view class="locationWrap">
+          <view class="location" catchtap="getLocation">
+            <image class="locationLogo" src="http://cdn.eigene.cn/squarePost/locationLogo.png"></image>
+            <text class="locationText">你在哪里?</text>
+          </view>
+          <picker class="picker" bindchange="bindPickerChange" value="{{index}}" range="{{mks}}" range-key="title">
+            <view>
+              {{mks[index].title}}
+            </view>
+          </picker>
+        </view>
+      </view>
+    </scroll-view>
+  </form>
+
+  <bottomBar bind:chooseImage="chooseImage" bind:chooseVideo="chooseVideo" bind:inputMoney="inputMoney">
+  </bottomBar>
+</view>

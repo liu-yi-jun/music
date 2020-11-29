@@ -1,0 +1,31 @@
+<!--components/home/course/courseList/courseList.wxml-->
+<view class="learnGuitarList">
+  <view wx:for="{{courses}}" wx:key="id" class="card" catchtap="goLearnGuitarDetail" data-id="{{item.id}}">
+    <view class="avatarWrap" catchtap="goPersonal" data-userid="{{item.userId}}">
+      <image class="avatarBackground" src="http://use.eigene.cn/avatarBackground.png">
+        <image class="avatar" src="{{item.avatarUrl}}"></image>
+      </image>
+    </view>
+    <view class="userNameOrganization">
+      <text class="userName">{{item.nickName}}</text>
+      <view class="organization">{{item.groupName}}</view>
+    </view>
+    <view class="img">
+      <image class="wallimg" src="{{item.posterUrl}}" mode="aspectFill"></image>
+    </view>
+    <view class="content">
+      <view class="title">{{item.courseName}}
+      </view>
+      <view class="iconWrap">
+        <view class="views">
+          <image src="http://use.eigene.cn/views.png"></image>
+          <text>{{item.views}}</text>
+        </view>
+        <view class="store">
+          <image src="http://use.eigene.cn/collectionNumber.png"></image>
+          <text>{{item.store}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

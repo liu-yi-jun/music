@@ -1,0 +1,128 @@
+/* pages/square/performance/alliancePost/alliancePost.wxss */
+
+.issue {
+  height: 100%;
+}
+
+.placeholder, .picker {
+  color: #b6b7b7;
+}
+
+.wrap {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 50rpx 300rpx;
+}
+
+.wrap input, .date {
+  box-sizing: border-box;
+  border-bottom: 1rpx solid white;
+  margin-top: 70rpx;
+  padding: 0rpx 20rpx;
+  /* height: 60rpx; */
+  color: white;
+}
+
+.warptextarea {
+  /* height: calc(100vh - 220rpx); */
+  width: 100%;
+}
+
+.wrap textarea {
+  box-sizing: border-box;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 20rpx;
+  width: 100%;
+  margin: 70rpx 0 50rpx;
+  padding: 20rpx 20rpx;
+  min-height: 377rpx;
+  color: white;
+}
+
+
+.footer {
+  transition: all 0.4s;
+  background: linear-gradient(to bottom, rgba(226, 145, 227, 0.5), rgba(0, 69, 207, 0.5));
+  position: fixed;
+  width: 100%;
+  height: 135rpx;
+  bottom: 0;
+  z-index: 999;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.footerInner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 50rpx;
+  height: 100%;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.footer image {
+  width: 78rpx;
+  height: 78rpx;
+  border-radius: 50%;
+}
+
+.imgWrap {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  /* padding: 0 0 30rpx; */
+}
+.wrapVideo {
+  height: 400rpx;
+  width: 100%;
+  padding: 0 8rpx;
+  box-sizing: border-box;
+}
+.recordWrap{
+  padding: 0 8rpx;
+  box-sizing: border-box;
+}
+.recordImg {
+  width: 54rpx;
+  height: 30rpx;
+}
+.recordTime {
+  font-size: 25rpx;
+}
+.playRecord {
+  width: 394rpx;
+  height: 75rpx;
+  position: relative;
+  border-radius: 999rem;
+  background-color: #ece4fc;
+  box-sizing: border-box;
+  padding: 0 20rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.record{
+  position: fixed;
+  z-index: 99999;
+}
+video {
+  width: 100%;
+  height: 100%;
+}
+
+.imgArea {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.imgArea image {
+  margin: 8rpx;
+  width: 200rpx;
+  height: 200rpx;
+  border-radius: 20rpx;
+  overflow: hidden;
+  position: relative;
+}

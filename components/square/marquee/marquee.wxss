@@ -1,0 +1,12 @@
+.marquee_container {
+  position: relative;  
+  width: 100%;
+  background-color: pink;
+}
+
+.marquee_text {
+  position: absolute;
+  white-space: nowrap;
+  top: 15rpx;
+  color: white;
+}

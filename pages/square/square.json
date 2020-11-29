@@ -1,0 +1,9 @@
+{
+  "usingComponents": {
+    "showTabBar": "/components/common/showTabBar/showTabBar",
+    "navBar": "/components/navBar/navBar",
+    "marquee": "/components/square/marquee/marquee",
+    "dynamicList":"/components/square/dynamicList/dynamicList"
+  },
+  "disableScroll": true
+}

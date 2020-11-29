@@ -1,0 +1,94 @@
+<!--pages/mass/joinClub/joinClub.wxml-->
+<view class="joinClub">
+  <view class="head">
+    <view class="title">
+      <text class="title-top">社团</text>
+      <text class="title-bottom">COMMUNITY</text>
+    </view>
+    <view class="logo-search">
+      <image class="logo" src="http://use.eigene.cn/picture.png"></image>
+      <input class="search"></input>
+    </view>
+  </view>
+  <scroll-view class="scroll" scroll-y>
+    <view class="list">
+      <view class="card">
+        <view class="block">
+          <image src="http://use.eigene.cn/joinClub1.png" class="communityLogo" mode="aspectFill"></image>
+          <view class="introduce">
+            <view class="top">
+              <text class="communityName">浙江大学吉他协会</text>
+              <view class="member-invitation">
+                <text>101成员</text>
+                <view class="point"></view>
+                <text>85帖子</text>
+              </view>
+            </view>
+            <view class="bottom">
+              <text>No Frills , Just Rock ，浙工大七和弦吉他社期待你的加入</text>
+            </view>
+          </view>
+          <image class="add" src="http://use.eigene.cn/joinClubAdd.png"></image>
+        </view>
+      </view>
+      <view class="card">
+        <view class="block">
+          <image src="http://use.eigene.cn/joinClub2.png" class="communityLogo" mode="aspectFill"></image>
+          <view class="introduce">
+            <view class="top">
+              <text class="communityName">浙江音乐学院音韵吉他社</text>
+              <view class="member-invitation">
+                <text>17成员</text>
+                <view class="point"></view>
+                <text>34帖子</text>
+              </view>
+            </view>
+            <view class="bottom">
+              <text>以梦为马，背上吉他，乘音乐出发，音韵吉他社期待你的加入</text>
+            </view>
+          </view>
+          <image class="add" src="http://use.eigene.cn/joinClubAdd.png"></image>
+        </view>
+      </view>
+      <view class="card">
+        <view class="block">
+          <image src="http://use.eigene.cn/joinClub3.png" class="communityLogo" mode="aspectFill"></image>
+          <view class="introduce">
+            <view class="top">
+              <text class="communityName">浙江财经大学星空吉他社</text>
+              <view class="member-invitation">
+                <text>99成员</text>
+                <view class="point"></view>
+                <text>61帖子</text>
+              </view>
+            </view>
+            <view class="bottom">
+              <text>看脚下一片黑暗，望头顶星光璀璨，星空吉他社期待你的加入</text>
+            </view>
+          </view>
+          <image class="add" src="http://use.eigene.cn/joinClubAdd.png"></image>
+        </view>
+      </view>
+      <view class="card">
+        <view class="block">
+          <image src="http://use.eigene.cn/joinClub4.png" class="communityLogo" mode="aspectFill"></image>
+          <view class="introduce">
+            <view class="top">
+              <text class="communityName">浙大城市学院弦舞吉他社</text>
+              <view class="member-invitation">
+                <text>99成员</text>
+                <view class="point"></view>
+                <text>61帖子</text>
+              </view>
+            </view>
+            <view class="bottom">
+              <text>看脚下一片黑暗，望头顶星光璀璨，星空吉他社期待你的加入</text>
+            </view>
+          </view>
+          <image class="add" src="http://use.eigene.cn/joinClubAdd.png"></image>
+        </view>
+      </view>
+
+    </view>
+  </scroll-view>
+</view>

@@ -1,0 +1,34 @@
+/* pages/square/performance/performance.wxss */
+
+.bar {
+  display: flex;
+  align-items: center;
+  height: 150rpx;
+  box-sizing: border-box;
+  padding: 0 20rpx;
+}
+
+.line {
+  height: 30rpx;
+  border-left: 1rpx solid #a3a3a4;
+}
+
+.bar text {
+  padding: 0 30rpx 0 30rpx;
+  color: #b6b7b7;
+  font-size: 30rpx;
+}
+
+.active {
+  color: white !important;
+  transform: scale(1.1);
+}
+
+
+.issueDynamic {
+  width: 140rpx;
+  height: 140rpx;
+  position: fixed;
+  bottom: calc(69rpx + env(safe-area-inset-bottom));
+  right: 37rpx;
+}

@@ -1,0 +1,270 @@
+/* pages/home/course/addCourse/addCourse.wxss */
+
+
+.addImg-poster {
+  height: 500rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.addImg-limit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.addImg {
+  width: 278rpx;
+  height: 281rpx;
+}
+
+.limit {
+  color: #b7b8b8;
+  font-size: 24rpx;
+}
+
+.Wrap {
+  color: white;
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  padding: 0 70rpx 200rpx;
+  font-size: 26rpx;
+}
+
+.courseNameWrap {
+  display: flex;
+}
+
+.courseNameInput {
+  flex-grow: 1;
+  border-bottom: 1rpx solid white;
+}
+
+.courseIntroduceWrap {
+  margin-top: 60rpx;
+}
+
+.courseIntroduceTextarea {
+  height: 239rpx;
+  color: white;
+  box-sizing: border-box;
+  border-radius: 20rpx;
+  padding: 15rpx 20rpx;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.2);
+  margin-top: 30rpx;
+}
+
+.placeholder {
+  color: #B7B8B8;
+}
+
+.suffix {
+  position: absolute;
+  width: 64rpx;
+  height: 63rpx;
+  right: 15rpx;
+}
+
+
+.deleteData {
+  position: absolute;
+  width: 30rpx;
+  height: 32rpx;
+  top: 0rpx;
+  right: 0rpx;
+}
+
+.media {
+  margin-top: 60rpx;
+}
+
+/* .mediaRow {
+  display: flex;
+  position: relative;
+  align-items: center;
+  margin-top: 60rpx;
+}
+
+.mediaRowInput {
+  flex-grow: 1;
+  padding: 10rpx 90rpx 10rpx 0rpx;
+  height: 75rpx;
+  border-bottom: 1rpx solid white;
+}
+
+.mediaRowView {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+  padding: 10rpx 90rpx 10rpx 0rpx;
+  height: 75rpx;
+  border-bottom: 1rpx solid white;
+  color: #B7B8B8;
+}
+
+.mediaRowView>text {
+  margin-right: 20rpx;
+} */
+
+.poster {
+  width: 80%;
+  height: 80%;
+}
+
+.popup {
+  background: linear-gradient(to bottom, rgba(226, 145, 227, 0.6), rgba(0, 69, 207, 0.6));
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.complete {
+  height: 80rpx;
+  text-align: center;
+  line-height: 80rpx;
+  background-color: #ECE4FC;
+  color: #47C01C;
+  border-radius: 10rpx;
+  margin-top: 20rpx;
+
+}
+.popupTextarea {
+  padding: 10rpx;
+  background-color: #ECE4FC;
+  border-radius: 10rpx;
+  max-height: 100rpx;
+
+}
+
+
+.mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 99999;
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.4s all;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.shadeShow {
+  opacity: 1;
+  visibility: visible;
+}
+
+
+.video {
+  width: 500rpx;
+  height: 250rpx;
+  border-radius: 20rpx;
+}
+
+
+.part {
+  display: flex;
+  padding: 20rpx 25rpx 20rpx 0;
+  position: relative;
+  margin-right: 10rpx;
+}
+
+
+.btnWrap {
+  margin: 30rpx 0;
+  width: 100%;
+}
+
+.btn {
+  width: 100%;
+  text-align: center;
+  height: 70rpx;
+  line-height: 70rpx;
+  background-color: #ECE4FC;
+  border-radius: 10rpx;
+  color: black;
+  font-size: 32rpx;
+}
+
+.audioWrap,
+.videoWrap,
+.pictureurlWrap {
+  position: relative;
+}
+
+.imgWrap {
+  width: 500rpx;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.addDatum {
+  margin-top: 18rpx;
+  width: 242rpx;
+  height: 330rpx;
+  background-color: rgba(255, 255, 255, 0.2);
+  position: relative;
+}
+
+.datumImg {
+  margin-top: 18rpx;
+  width: 242rpx;
+  height: 330rpx;
+}
+
+.addDatum>.row {
+  width: 70rpx;
+  height: 10rpx;
+}
+
+.addDatum>.column {
+  width: 10rpx;
+  height: 70rpx;
+}
+
+.addDatum>.row,
+.addDatum>.column {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  background: white;
+  border-radius: 999rem;
+}
+
+.recordWrap {
+  padding: 0 8rpx;
+  box-sizing: border-box;
+}
+
+.recordImg {
+  width: 54rpx;
+  height: 30rpx;
+}
+
+.recordTime {
+  font-size: 25rpx;
+  color: black;
+}
+
+.playRecord {
+  width: 394rpx;
+  height: 75rpx;
+  position: relative;
+  border-radius: 999rem;
+  background-color: #ece4fc;
+  box-sizing: border-box;
+  padding: 0 20rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

@@ -1,0 +1,36 @@
+/* components/common/comment/inputBox/inputBox.wxss */
+
+.textareaWarp {
+  width: 100%;
+  box-sizing: border-box;
+  border-top: 1rpx solid rgb(185, 185, 185);
+  padding: 20rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  z-index: 10;
+  background: linear-gradient(to bottom, rgba(226, 145, 227, 0.5), rgba(0, 69, 207, 0.5));
+  transition: bottom 0.5s;
+}
+
+.textareaWarp textarea {
+  width: 70%;
+  border: 1rpx solid white;
+  border-radius: 40rpx;
+  color: white;
+  padding: 25rpx;
+  height: 42rpx;
+  /* 设置高度防止卡顿 */
+}
+
+.textareaWarp button {
+  color: white!important;
+  width: 20%!important;
+  height: 80rpx!important;
+  background: linear-gradient(to bottom, rgba(0, 69, 207, 0.5), rgba(226, 145, 227, 0.5))!important;
+  box-shadow: 0px 0px 10rpx #777676!important;
+  border-radius: 999rem!important;
+  text-align: center!important;
+  line-height: 80rpx!important;
+}

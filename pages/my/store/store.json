@@ -1,0 +1,10 @@
+{
+  "usingComponents": {
+    "courseList": "/components/home/course/courseList/courseList",
+    "allianceList": "/components/square/performance/allianceList/allianceList",
+    "liveHouse": "/components/square/performance/liveHouse/liveHouse",
+    "navBar": "/components/navBar/navBar",
+    "dynamicList":"/components/square/dynamicList/dynamicList"
+  },
+  "disableScroll": true
+}

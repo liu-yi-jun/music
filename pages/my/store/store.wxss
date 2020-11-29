@@ -1,0 +1,28 @@
+/* pages/my/store/store.wxss */
+.scroll {
+  height: calc(100vh - 100rpx);
+}
+
+.bar {
+  display: flex;
+  align-items: center;
+  margin-top: 50rpx;
+  margin-bottom: 40rpx;
+  box-sizing: border-box;
+  padding: 0 20rpx;
+}
+
+
+.bar text {
+  padding: 0 18rpx;
+  text-align: center;
+  box-sizing: border-box;
+  color: #b6b7b7;
+  font-size: 30rpx;
+}
+
+.active {
+  color: white !important;
+  transform: scale(1.1);
+}
+

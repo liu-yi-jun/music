@@ -1,0 +1,136 @@
+/* pages/my/my.wxss */
+
+.my {
+  min-height: 100%;
+  width: 100%;
+}
+
+.information {
+  position: relative;
+  height: 400rpx;
+  width: 100%;
+}
+
+.number {
+  color: white;
+  font-size: 62rpx;
+  margin-left: 10rpx;
+}
+
+.text {
+  color: #b6b7b7;
+  font-size: 30rpx;
+}
+
+.backgroundImg {
+  width: 100%;
+  height: 400rpx;
+  border-top-left-radius: 35% 55%;
+  position: relative;
+
+}
+
+.avatar {
+  width: 135rpx;
+  height: 135rpx;
+  border-radius: 50%;
+}
+
+.name {
+  margin-top: 10rpx;
+  font-size: 35rpx;
+}
+
+.nameBotoom {
+  font-size: 22rpx;
+}
+
+.constellation {
+  margin: 0 10rpx;
+}
+
+.organization {
+  position: absolute;
+  left: 50%;
+  text-align: center;
+  transform: translate(-50%, 0);
+  white-space: nowrap;
+  padding: 8rpx 30rpx;
+  bottom: -23rpx;
+  z-index: 999;
+  background-color: white;
+  border-radius: 999rem;
+  font-size: 22rpx;
+}
+
+.avatarName {
+  text-align: center;
+  color: white;
+  width: 220rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 135rpx;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  z-index: 99;
+}
+.backgroundWarp {
+  z-index: 99;
+}
+
+.editData {
+  position: absolute;
+  width: 65rpx;
+  height: 65rpx;
+  right: 32rpx;
+  bottom: 32rpx;
+}
+
+.menu {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin-top: 50rpx;
+}
+
+.iconImg {
+  width: 100rpx;
+  height: 100rpx;
+}
+
+.iconWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+  font-size: 27rpx;
+}
+
+.song, .feedback, .aboutUs {
+  position: absolute;
+}
+
+.song {
+  width: 208rpx;
+  height: 208rpx;
+  top: 775rpx;
+  left: 178rpx;
+}
+
+.feedback {
+  width: 465rpx;
+  height: 465rpx;
+  top: 871rpx;
+  left: 347rpx;
+}
+
+.aboutUs {
+  width: 398rpx;
+  height: 398rpx;
+  top: 989rpx;
+  right: 446rpx;
+}

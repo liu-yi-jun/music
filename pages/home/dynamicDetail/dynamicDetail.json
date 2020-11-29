@@ -1,0 +1,10 @@
+{
+  "usingComponents": {
+    "navBar": "/components/navBar/navBar",
+    "commentList": "/components/common/commentList/commentList",
+    "commentBar": "/components/common/comment/commentBar/commentBar",
+    "inputBox": "/components/common/comment/inputBox/inputBox",
+    "playRecord":"/components/common/playRecord/playRecord"
+  },
+  "disableScroll": true
+}

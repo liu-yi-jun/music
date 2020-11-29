@@ -1,0 +1,132 @@
+/* pages/mass/joinClub/joinClub.wxss */
+
+.scroll {
+  height: calc(100vh - 134rpx);
+}
+
+.head {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 40rpx 14rpx 30rpx 40rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title::before {
+  content: "";
+  display: block;
+  position: absolute;
+  height: 52rpx;
+  width: 1rpx;
+  background-color: #a3a3a4;
+  left: 0rpx;
+  top: 9rpx;
+}
+
+.title {
+  display: flex;
+  flex-direction: column;
+  /* border-left: 1rpx #a3a3a4 solid; */
+  padding-left: 14rpx;
+  position: relative;
+}
+
+.title-top {
+  color: #fff;
+  font-size: 30rpx;
+}
+
+.title-bottom {
+  color: #cacbcb;
+  font-size: 19rpx;
+}
+
+.logo-search {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  width: 46rpx;
+  height: 46rpx;
+  border-radius: 50%;
+  margin-right: 20rpx;
+}
+
+.search {
+  width: 321rpx;
+  height: 60rpx;
+  background: #e2e2e2;
+  border-radius: 999rem;
+}
+
+.card {
+  margin: 30rpx 0;
+  display: flex;
+  justify-content: flex-end;
+ 
+}
+
+.block {
+  
+  display: flex;
+  align-items: center;
+  width: 720rpx;
+  height: 280rpx;
+  box-sizing: border-box;
+  border-bottom-left-radius: 999rem;
+  border-top-left-radius: 999rem;
+  background: linear-gradient(to left, rgba(226, 145, 227, 1), rgba(0, 69, 207, 1));
+}
+
+.communityLogo {
+  margin-left: 42rpx;
+  width: 210rpx;
+  height: 210rpx;
+  border-radius: 50%;
+}
+
+.introduce {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 65%;
+  margin-left: 20rpx;
+}
+
+.top {
+  color: white;
+}
+
+.bottom {
+  color: #cacbcb;
+  font-size: 20rpx;
+  width: 278rpx;
+}
+
+.communityName {
+  font-size: 33rpx;
+}
+
+.member-invitation {
+  font-size: 18rpx;
+  margin-top: 10rpx;
+  display: flex;
+  align-items: center;
+}
+
+.point {
+  margin: 0 10rpx;
+  background: white;
+  width: 6rpx;
+  height: 6rpx;
+  border-radius: 50%;
+}
+
+.add {
+  width: 114rpx;
+  height: 114rpx;
+  position: absolute;
+  right: 33rpx;
+}

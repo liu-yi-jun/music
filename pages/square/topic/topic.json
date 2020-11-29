@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "dynamicList":"/components/square/dynamicList/dynamicList",
+    "navBar": "/components/navBar/navBar"
+  },
+  "disableScroll": true
+}

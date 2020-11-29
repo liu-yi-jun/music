@@ -1,0 +1,1830 @@
+{
+  "description": "项目配置文件。",
+  "packOptions": {
+    "ignore": []
+  },
+  "setting": {
+    "urlCheck": false,
+    "es6": true,
+    "enhance": true,
+    "postcss": true,
+    "preloadBackgroundData": false,
+    "minified": true,
+    "newFeature": true,
+    "coverView": true,
+    "nodeModules": false,
+    "autoAudits": false,
+    "showShadowRootInWxmlPanel": true,
+    "scopeDataCheck": false,
+    "uglifyFileName": false,
+    "checkInvalidKey": true,
+    "checkSiteMap": true,
+    "uploadWithSourceMap": true,
+    "compileHotReLoad": false,
+    "useMultiFrameRuntime": false,
+    "useApiHook": true,
+    "babelSetting": {
+      "ignore": [],
+      "disablePlugins": [],
+      "outputPath": ""
+    },
+    "enableEngineNative": false,
+    "useIsolateContext": true,
+    "useCompilerModule": true,
+    "userConfirmedUseCompilerModuleSwitch": false,
+    "packNpmManually": false,
+    "packNpmRelationList": [],
+    "minifyWXSS": true
+  },
+  "appid": "wxa158839a69c014d3",
+  "projectname": "musicMonster",
+  "libVersion": "2.13.1",
+  "simulatorType": "wechat",
+  "simulatorPluginLibVersion": {},
+  "condition": {
+    "plugin": {
+      "list": []
+    },
+    "game": {
+      "list": []
+    },
+    "gamePlugin": {
+      "list": []
+    },
+    "miniprogram": {
+      "list": [
+        {
+          "id": -1,
+          "name": "db guide",
+          "pathName": "pages/databaseGuide/databaseGuide",
+          "query": ""
+        },
+        {
+          "id": -1,
+          "name": "pages/home/alliance/alliance",
+          "pathName": "pages/home/alliance/alliance",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/home/alliance/alliance",
+          "pathName": "pages/home/alliance/alliance",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "components/advance/advance",
+          "pathName": "components/advance/advance",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/home/alliance/salonDetail/salonDetail",
+          "pathName": "pages/home/alliance/salonDetail/salonDetail",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/home/alliance/issue/issue",
+          "pathName": "pages/home/alliance/issue/issue",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/my/invitation/invitation",
+          "pathName": "pages/my/invitation/invitation",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/my/fansFollow/fnasFollow",
+          "pathName": "pages/my/fansFollow/fnasFollow",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/home/showInformation/showInformation",
+          "pathName": "pages/home/showInformation/showInformation",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/square/square",
+          "pathName": "pages/square/square",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/community/community",
+          "pathName": "pages/community/community",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/community/joinClub/joinClub",
+          "pathName": "pages/community/joinClub/joinClub",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/community/clubInto/clubInto",
+          "pathName": "pages/community/clubInto/clubInto",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/my/my",
+          "pathName": "pages/my/my",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/my/editData/editData",
+          "pathName": "pages/my/editData/editData",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/my/store/store",
+          "pathName": "pages/my/store/store",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/square/square",
+          "pathName": "pages/square/square",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/square/learnGuitar/learnGuitar",
+          "pathName": "pages/square/learnGuitar/learnGuitar",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/community/joinClub/joinClub",
+          "pathName": "pages/community/joinClub/joinClub",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/square/learnGuitar/learnGuitar",
+          "pathName": "pages/square/learnGuitar/learnGuitar",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/my/store/store",
+          "pathName": "pages/my/store/store",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/home/alliance/alliance",
+          "pathName": "pages/home/alliance/alliance",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/square/square",
+          "pathName": "pages/square/square",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/square/learnGuitarDetail/learnGuitarDetail",
+          "pathName": "pages/square/learnGuitarDetail/learnGuitarDetail",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/square/learnGuitar/learnGuitar",
+          "pathName": "pages/square/learnGuitar/learnGuitar",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/square/learnGuitar/addCourse/addCourse",
+          "pathName": "pages/square/learnGuitar/addCourse/addCourse",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/square/learnGuitar/addCourse/addCourse",
+          "pathName": "pages/square/learnGuitar/addCourse/addCourse",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/square/square",
+          "pathName": "pages/square/square",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/square/learnGuitar/addCourse/addCourse",
+          "pathName": "pages/square/learnGuitar/addCourse/addCourse",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/square/squarePost/squarePost",
+          "pathName": "pages/square/squarePost/squarePost",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/square/square",
+          "pathName": "pages/square/square",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/square/secondIssue/secondIssue",
+          "pathName": "pages/square/secondIssue/secondIssue",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/home/alliance/issue/issue",
+          "pathName": "pages/home/alliance/issue/issue",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/square/squarePost/squarePost",
+          "pathName": "pages/square/squarePost/squarePost",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/square/secondIssue/secondIssue",
+          "pathName": "pages/square/secondIssue/secondIssue",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/square/squarePost/squarePost",
+          "pathName": "pages/square/squarePost/squarePost",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/square/ticketIssue/ticketIssue",
+          "pathName": "pages/square/ticketIssue/ticketIssue",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/square/learnGuitar/learnGuitar",
+          "pathName": "pages/square/learnGuitar/learnGuitar",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/my/my",
+          "pathName": "pages/my/my",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/my/information/information",
+          "pathName": "pages/my/information/information",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/my/invitation/invitation",
+          "pathName": "pages/my/invitation/invitation",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": 41,
+          "name": "pages/my/privateLetter/privateLetter",
+          "pathName": "pages/my/privateLetter/privateLetter",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/mass/joinClub/joinClub",
+          "pathName": "pages/mass/joinClub/joinClub",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/my/song/song",
+          "pathName": "pages/my/song/song",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/init/index/index",
+          "pathName": "pages/init/index/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/mass/clubInto/clubInto",
+          "pathName": "pages/mass/clubInto/clubInto",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/init/groupSettlement/groupSettlement",
+          "pathName": "pages/init/groupSettlement/groupSettlement",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/init/groupSettlement/groupSettlement",
+          "pathName": "pages/init/groupSettlement/groupSettlement",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/home/home",
+          "pathName": "pages/home/home",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/home/course/course",
+          "pathName": "pages/home/course/course",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/home/course/addCourse/addCourse",
+          "pathName": "pages/home/course/addCourse/addCourse",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/home/dynamicDetail/dynamicDetail",
+          "pathName": "pages/home/dynamicDetail/dynamicDetail",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/home/course/courseDetail/courseDetail",
+          "pathName": "pages/home/course/courseDetail/courseDetail",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/square/square",
+          "pathName": "pages/square/square",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/my/my",
+          "pathName": "pages/my/my",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/tool/tool",
+          "pathName": "pages/tool/tool",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/square/square",
+          "pathName": "pages/square/square",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/my/my",
+          "pathName": "pages/my/my",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/my/editData/editData",
+          "pathName": "pages/my/editData/editData",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/my/invitation/invitation",
+          "pathName": "pages/my/invitation/invitation",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/my/invitation/invitation",
+          "pathName": "pages/my/invitation/invitation",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/my/store/store",
+          "pathName": "pages/my/store/store",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/my/store/store",
+          "pathName": "pages/my/store/store",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/home/course/course",
+          "pathName": "pages/home/course/course",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/home/course/addCourse/addCourse",
+          "pathName": "pages/home/course/addCourse/addCourse",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/home/course/courseDetail/courseDetail",
+          "pathName": "pages/home/course/courseDetail/courseDetail",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/my/store/store",
+          "pathName": "pages/my/store/store",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/square/square",
+          "pathName": "pages/square/square",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/init/index/index",
+          "pathName": "pages/init/index/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/square/square",
+          "pathName": "pages/square/square",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/square/deal/deal",
+          "pathName": "pages/square/deal/deal",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/square/deal/ticketIssue/ticketIssue",
+          "pathName": "pages/square/deal/ticketIssue/ticketIssue",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/square/deal/secondIssue/secondIssue",
+          "pathName": "pages/square/deal/secondIssue/secondIssue",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/square/deal/ticketIssue/ticketIssue",
+          "pathName": "pages/square/deal/ticketIssue/ticketIssue",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/square/square",
+          "pathName": "pages/square/square",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/square/squarePost/squarePost",
+          "pathName": "pages/square/squarePost/squarePost",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/square/performance/performance",
+          "pathName": "pages/square/performance/performance",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/square/performance/performance",
+          "pathName": "pages/square/performance/performance",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/home/home",
+          "pathName": "pages/home/home",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/home/massManagement/massManagement",
+          "pathName": "pages/home/massManagement/massManagement",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/home/massManagement/personnelManage/personnelManage",
+          "pathName": "pages/home/massManagement/personnelManage/personnelManage",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/home/home",
+          "pathName": "pages/home/home",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/home/uploadVideo/uploadVideo",
+          "pathName": "pages/home/uploadVideo/uploadVideo",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/home/issueImg/issueImg",
+          "pathName": "pages/home/issueImg/issueImg",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/home/uploadVideo/uploadVideo",
+          "pathName": "pages/home/uploadVideo/uploadVideo",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/home/issueImg/issueImg",
+          "pathName": "pages/home/issueImg/issueImg",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/home/uploadVoice/uploadVoice",
+          "pathName": "pages/home/uploadVoice/uploadVoice",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/home/home",
+          "pathName": "pages/home/home",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/home/puchCard/puchCard",
+          "pathName": "pages/home/puchCard/puchCard",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/home/home",
+          "pathName": "pages/home/home",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/home/puchCard/puchCard",
+          "pathName": "pages/home/puchCard/puchCard",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/home/puchCard/issuePuchCard/issuePuchCard",
+          "pathName": "pages/home/puchCard/issuePuchCard/issuePuchCard",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/home/course/course",
+          "pathName": "pages/home/course/course",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/my/information/information",
+          "pathName": "pages/my/information/information",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/my/fansFollow/fansFollow",
+          "pathName": "pages/my/fansFollow/fansFollow",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/my/invitation/invitation",
+          "pathName": "pages/my/invitation/invitation",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/my/privateLetter/privateLetter",
+          "pathName": "pages/my/privateLetter/privateLetter",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/my/my",
+          "pathName": "pages/my/my",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/my/song/song",
+          "pathName": "pages/my/song/song",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/square/performance/performance",
+          "pathName": "pages/square/performance/performance",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/square/performance/alliancePost/alliancePost",
+          "pathName": "pages/square/performance/alliancePost/alliancePost",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/square/square",
+          "pathName": "pages/square/square",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/my/my",
+          "pathName": "pages/my/my",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/my/followMass/followMass",
+          "pathName": "pages/my/followMass/followMass",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/square/square",
+          "pathName": "pages/square/square",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/square/union/union",
+          "pathName": "pages/square/union/union",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/square/band/band",
+          "pathName": "pages/square/band/band",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/square/band/application/application",
+          "pathName": "pages/square/band/application/application",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/square/square",
+          "pathName": "pages/square/square",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/square/band/application/application",
+          "pathName": "pages/square/band/application/application",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/square/band/band",
+          "pathName": "pages/square/band/band",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/square/band/application/application",
+          "pathName": "pages/square/band/application/application",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/square/band/issueTeam/issueTeam",
+          "pathName": "pages/square/band/issueTeam/issueTeam",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/square/square",
+          "pathName": "pages/square/square",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/home/uploadVoice/uploadVoice",
+          "pathName": "pages/home/uploadVoice/uploadVoice",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/home/issueImg/issueImg",
+          "pathName": "pages/home/issueImg/issueImg",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/home/puchCard/puchCard",
+          "pathName": "pages/home/puchCard/puchCard",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/home/uploadVoice/uploadVoice",
+          "pathName": "pages/home/uploadVoice/uploadVoice",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/my/information/information",
+          "pathName": "pages/my/information/information",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/home/home",
+          "pathName": "pages/home/home",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/home/puchCard/puchCard",
+          "pathName": "pages/home/puchCard/puchCard",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/home/home",
+          "pathName": "pages/home/home",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/square/band/application/application",
+          "pathName": "pages/square/band/application/application",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/square/band/issueTeam/issueTeam",
+          "pathName": "pages/square/band/issueTeam/issueTeam",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/init/index/index",
+          "pathName": "pages/init/index/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/home/uploadVoice/uploadVoice",
+          "pathName": "pages/home/uploadVoice/uploadVoice",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/home/home",
+          "pathName": "pages/home/home",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/square/square",
+          "pathName": "pages/square/square",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/my/my",
+          "pathName": "pages/my/my",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/square/square",
+          "pathName": "pages/square/square",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/my/invitation/invitation",
+          "pathName": "pages/my/invitation/invitation",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/my/privateLetter/privateLetter",
+          "pathName": "pages/my/privateLetter/privateLetter",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/my/fansFollow/fansFollow",
+          "pathName": "pages/my/fansFollow/fansFollow",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/my/followMass/followMass",
+          "pathName": "pages/my/followMass/followMass",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/my/information/information",
+          "pathName": "pages/my/information/information",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/my/song/song",
+          "pathName": "pages/my/song/song",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/square/performance/performance",
+          "pathName": "pages/square/performance/performance",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/home/course/course",
+          "pathName": "pages/home/course/course",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/my/store/store",
+          "pathName": "pages/my/store/store",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/home/home",
+          "pathName": "pages/home/home",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/square/band/band",
+          "pathName": "pages/square/band/band",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/init/index/index",
+          "pathName": "pages/init/index/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/square/band/band",
+          "pathName": "pages/square/band/band",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/square/square",
+          "pathName": "pages/square/square",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/square/band/band",
+          "pathName": "pages/square/band/band",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/square/band/application/application",
+          "pathName": "pages/square/band/application/application",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/square/band/band",
+          "pathName": "pages/square/band/band",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/square/band/application/application",
+          "pathName": "pages/square/band/application/application",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/square/band/application/application",
+          "pathName": "pages/square/band/application/application",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/home/puchCard/puchCard",
+          "pathName": "pages/home/puchCard/puchCard",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/home/puchCard/issuePuchCard/issuePuchCard",
+          "pathName": "pages/home/puchCard/issuePuchCard/issuePuchCard",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/home/puchCard/puchCard",
+          "pathName": "pages/home/puchCard/puchCard",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/square/band/band",
+          "pathName": "pages/square/band/band",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/home/puchCard/issuePuchCard/issuePuchCard",
+          "pathName": "pages/home/puchCard/issuePuchCard/issuePuchCard",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/home/puchCard/puchCard",
+          "pathName": "pages/home/puchCard/puchCard",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/square/squarePost/squarePost",
+          "pathName": "pages/square/squarePost/squarePost",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/square/union/union",
+          "pathName": "pages/square/union/union",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/square/performance/alliancePost/alliancePost",
+          "pathName": "pages/square/performance/alliancePost/alliancePost",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/square/squarePost/squarePost",
+          "pathName": "pages/square/squarePost/squarePost",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/home/uploadVoice/uploadVoice",
+          "pathName": "pages/home/uploadVoice/uploadVoice",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/my/information/information",
+          "pathName": "pages/my/information/information",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/my/my",
+          "pathName": "pages/my/my",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/init/groupSettlement/groupSettlement",
+          "pathName": "pages/init/groupSettlement/groupSettlement",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/home/issueImg/issueImg",
+          "pathName": "pages/home/issueImg/issueImg",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/init/groupSettlement/groupSettlement",
+          "pathName": "pages/init/groupSettlement/groupSettlement",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/init/groupSettlement/groupSettlement",
+          "pathName": "pages/init/groupSettlement/groupSettlement",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/home/home",
+          "pathName": "pages/home/home",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/my/my",
+          "pathName": "pages/my/my",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/home/home",
+          "pathName": "pages/home/home",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/home/massManagement/massManagement",
+          "pathName": "pages/home/massManagement/massManagement",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/home/massManagement/massManagement",
+          "pathName": "pages/home/massManagement/massManagement",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/home/home",
+          "pathName": "pages/home/home",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/home/uploadVideo/uploadVideo",
+          "pathName": "pages/home/uploadVideo/uploadVideo",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/my/my",
+          "pathName": "pages/my/my",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/home/home",
+          "pathName": "pages/home/home",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/home/puchCard/puchCard",
+          "pathName": "pages/home/puchCard/puchCard",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/home/course/addCourse/addCourse",
+          "pathName": "pages/home/course/addCourse/addCourse",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/square/square",
+          "pathName": "pages/square/square",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/square/topic/topic",
+          "pathName": "pages/square/topic/topic",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/square/union/union",
+          "pathName": "pages/square/union/union",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/square/union/union",
+          "pathName": "pages/square/union/union",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/square/square",
+          "pathName": "pages/square/square",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/square/band/issueTeam/issueTeam",
+          "pathName": "pages/square/band/issueTeam/issueTeam",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/square/band/band",
+          "pathName": "pages/square/band/band",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/square/band/issueTeam/issueTeam",
+          "pathName": "pages/square/band/issueTeam/issueTeam",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/square/band/application/application",
+          "pathName": "pages/square/band/application/application",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/square/band/issueTeam/issueTeam",
+          "pathName": "pages/square/band/issueTeam/issueTeam",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/square/band/application/application",
+          "pathName": "pages/square/band/application/application",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/my/editData/editData",
+          "pathName": "pages/my/editData/editData",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/square/band/application/application",
+          "pathName": "pages/square/band/application/application",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/my/followMass/followMass",
+          "pathName": "pages/my/followMass/followMass",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/my/information/information",
+          "pathName": "pages/my/information/information",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/init/groupSettlement/groupSettlement",
+          "pathName": "pages/init/groupSettlement/groupSettlement",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/init/groupSettlement/groupSettlement",
+          "pathName": "pages/init/groupSettlement/groupSettlement",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/my/editData/editData",
+          "pathName": "pages/my/editData/editData",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/home/home",
+          "pathName": "pages/home/home",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/home/issueImg/issueImg",
+          "pathName": "pages/home/issueImg/issueImg",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/home/uploadVideo/uploadVideo",
+          "pathName": "pages/home/uploadVideo/uploadVideo",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/home/uploadVoice/uploadVoice",
+          "pathName": "pages/home/uploadVoice/uploadVoice",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/home/massManagement/massManagement",
+          "pathName": "pages/home/massManagement/massManagement",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/home/massManagement/personnelManage/addManage/addManage",
+          "pathName": "pages/home/massManagement/personnelManage/addManage/addManage",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/square/deal/deal",
+          "pathName": "pages/square/deal/deal",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/home/course/addCourse/addCourse",
+          "pathName": "pages/home/course/addCourse/addCourse",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/square/band/application/application",
+          "pathName": "pages/square/band/application/application",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/home/course/addCourse/addCourse",
+          "pathName": "pages/home/course/addCourse/addCourse",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/home/puchCard/issuePuchCard/issuePuchCard",
+          "pathName": "pages/home/puchCard/issuePuchCard/issuePuchCard",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/home/puchCard/puchCard",
+          "pathName": "pages/home/puchCard/puchCard",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/home/course/addCourse/addCourse",
+          "pathName": "pages/home/course/addCourse/addCourse",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/home/course/addCourse/addCourse",
+          "pathName": "pages/home/course/addCourse/addCourse",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/home/course/addCourse/addCourse",
+          "pathName": "pages/home/course/addCourse/addCourse",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/square/square",
+          "pathName": "pages/square/square",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/square/squarePost/squarePost",
+          "pathName": "pages/square/squarePost/squarePost",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/square/square",
+          "pathName": "pages/square/square",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/square/union/union",
+          "pathName": "pages/square/union/union",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/square/band/issueTeam/issueTeam",
+          "pathName": "pages/square/band/issueTeam/issueTeam",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/square/band/band",
+          "pathName": "pages/square/band/band",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/square/band/issueTeam/issueTeam",
+          "pathName": "pages/square/band/issueTeam/issueTeam",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/square/band/band",
+          "pathName": "pages/square/band/band",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/square/band/band",
+          "pathName": "pages/square/band/band",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/home/home",
+          "pathName": "pages/home/home",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/home/home",
+          "pathName": "pages/home/home",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/home/home",
+          "pathName": "pages/home/home",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/home/home",
+          "pathName": "pages/home/home",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/home/course/addCourse/addCourse",
+          "pathName": "pages/home/course/addCourse/addCourse",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/home/course/addCourse/addCourse",
+          "pathName": "pages/home/course/addCourse/addCourse",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/home/course/addCourse/addCourse",
+          "pathName": "pages/home/course/addCourse/addCourse",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/home/dynamicDetail/dynamicDetail",
+          "pathName": "pages/home/dynamicDetail/dynamicDetail",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/home/dynamicDetail/dynamicDetail",
+          "pathName": "pages/home/dynamicDetail/dynamicDetail",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/home/course/courseDetail/courseDetail",
+          "pathName": "pages/home/course/courseDetail/courseDetail",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/square/square",
+          "pathName": "pages/square/square",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/square/squarePost/squarePost",
+          "pathName": "pages/square/squarePost/squarePost",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/square/squarePost/squarePost",
+          "pathName": "pages/square/squarePost/squarePost",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/square/band/band",
+          "pathName": "pages/square/band/band",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/square/band/application/application",
+          "pathName": "pages/square/band/application/application",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/init/index/index",
+          "pathName": "pages/init/index/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/square/band/band",
+          "pathName": "pages/square/band/band",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/square/performance/allianceDetail/allianceDetail",
+          "pathName": "pages/square/performance/allianceDetail/allianceDetail",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/square/performance/alliancePost/alliancePost",
+          "pathName": "pages/square/performance/alliancePost/alliancePost",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/square/performance/alliancePost/alliancePost",
+          "pathName": "pages/square/performance/alliancePost/alliancePost",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/my/invitation/invitation",
+          "pathName": "pages/my/invitation/invitation",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/square/deal/secondIssue/secondIssue",
+          "pathName": "pages/square/deal/secondIssue/secondIssue",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/square/deal/secondIssue/secondIssue",
+          "pathName": "pages/square/deal/secondIssue/secondIssue",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/square/deal/secondIssue/secondIssue",
+          "pathName": "pages/square/deal/secondIssue/secondIssue",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/home/puchCard/puchCard",
+          "pathName": "pages/home/puchCard/puchCard",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/square/band/application/application",
+          "pathName": "pages/square/band/application/application",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/my/privateLetter/privateLetter",
+          "pathName": "pages/my/privateLetter/privateLetter",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/my/privateLetter/privateLetter",
+          "pathName": "pages/my/privateLetter/privateLetter",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/my/information/information",
+          "pathName": "pages/my/information/information",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/my/privateLetter/privateLetter",
+          "pathName": "pages/my/privateLetter/privateLetter",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/square/performance/performance",
+          "pathName": "pages/square/performance/performance",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/square/performance/liveHouseDetail/liveHouseDetail",
+          "pathName": "pages/square/performance/liveHouseDetail/liveHouseDetail",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/home/course/addCourse/addCourse",
+          "pathName": "pages/home/course/addCourse/addCourse",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/square/performance/performance",
+          "pathName": "pages/square/performance/performance",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/square/performance/liveHouseDetail/liveHouseDetail",
+          "pathName": "pages/square/performance/liveHouseDetail/liveHouseDetail",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/square/squarePost/squarePost",
+          "pathName": "pages/square/squarePost/squarePost",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/my/editData/editData",
+          "pathName": "pages/my/editData/editData",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/square/band/band",
+          "pathName": "pages/square/band/band",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/square/performance/liveHouseDetail/liveHouseDetail",
+          "pathName": "pages/square/performance/liveHouseDetail/liveHouseDetail",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/square/performance/liveHouseDetail/liveHouseDetail",
+          "pathName": "pages/square/performance/liveHouseDetail/liveHouseDetail",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/tool/tool",
+          "pathName": "pages/tool/tool",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/tool/tool",
+          "pathName": "pages/tool/tool",
+          "scene": null
+        }
+      ]
+    }
+  }
+}

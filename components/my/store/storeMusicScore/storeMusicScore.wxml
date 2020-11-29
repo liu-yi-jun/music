@@ -1,0 +1,50 @@
+<!--components/my/store/storeMusicScore/storeMusicScore.wxml-->
+<view class="storeMusicScore">
+  <image src="http://use.eigene.cn/storeMusicScoreBC.png" class="storeMusicScoreBC">
+    <view class="song song1">
+      <text class="number">1</text>
+      <text class="name">宝贝</text>
+      <text class="author">张悬</text>
+    </view>
+    <view class="song song2">
+      <text class="number">2</text>
+      <text class="name">夏天的风</text>
+      <text class="author">阿琦</text>
+    </view>
+    <view class="song song3">
+      <text class="number">3</text>
+      <text class="name">认真地老去</text>
+      <text class="author">曹方/张希</text>
+    </view>
+    <view class="song song4">
+      <text class="number">4</text>
+      <text class="name">七月上</text>
+      <text class="author">JAM</text>
+    </view>
+    <view class="song song5">
+      <text class="number">5</text>
+      <text class="name">东西</text>
+      <text class="author">林俊呈</text>
+    </view>
+    <view class="song song6">
+      <text class="number">6</text>
+      <text class="name">下一站茶山刘</text>
+      <text class="author">房东的猫</text>
+    </view>
+    <view class="song song7">
+      <text class="number">7</text>
+      <text class="name">我会在每个有意义的时辰</text>
+      <text class="author">黄楚桐</text>
+    </view>
+    <view class="song song8">
+      <text class="number">8</text>
+      <text class="name">种种</text>
+      <text class="author">陈粒</text>
+    </view>
+     <view class="song song9">
+      <text class="number">9</text>
+      <text class="name">去看星星好不好</text>
+      <text class="author">开心</text>
+    </view>
+  </image>
+</view>

@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "navBar": "/components/navBar/navBar",
+    "issueHead": "/components/common/issueHead/issueHead",
+    "record": "/components/common/record/record"
+  },
+  "disableScroll": true
+}

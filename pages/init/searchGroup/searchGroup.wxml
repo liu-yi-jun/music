@@ -1,0 +1,19 @@
+<!--pages/init/searchGroup/searchGroup.wxml-->
+<view class="joinClub">
+  <navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' back="{{true}}" iconTheme='white'
+    bindback="handlerGobackClick"></navBar>
+  <view class="head">
+    <view class="logo-search">
+      <image class="logo" src="http://use.eigene.cn/picture.png"></image>
+      <view class="searchWrap">
+        <input class="search" value="{{groupName}}" focus bindconfirm="confirm">
+        </input>
+        <image class="searchLog" src="http://cdn.eigene.cn/search.png"></image>
+      </view>
+
+    </view>
+  </view>
+  <scroll-view bindscrolltolower="scrolltolower" style="height:{{excludeHeight-130}}rpx" scroll-y>
+    <groupList groups="{{groups}}"></groupList>
+  </scroll-view>
+</view>

@@ -1,0 +1,113 @@
+/* pages/home/massManagement/personnelManage/personnelManage.wxss */
+
+.head {
+  color: white;
+  box-sizing: border-box;
+  padding: 20rpx 20rpx 40rpx 30rpx;
+  font-size: 34rpx;
+  display: flex;
+  justify-content: space-between;
+}
+
+.list {
+  margin-top: 20rpx;
+  box-sizing: border-box;
+  padding: 0 30rpx;
+  overflow: hidden;
+  border-bottom: 1rpx solid #cacbcb;
+}
+
+.row {
+  display: flex;
+  margin-bottom: 50rpx;
+}
+
+.name {
+  font-size: 32rpx;
+  color: white;
+}
+
+.nameBotoom {
+  color: #b7b8b8;
+  font-size: 18rpx;
+}
+
+.nameBotoom > text {
+  margin-right: 10rpx;
+}
+
+.left {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.right {
+  color: #d18cdd;
+  background: white;
+  font-size: 22rpx;
+  border-radius: 999rem;
+  height: 45rpx;
+  width: 110rpx;
+  text-align: center;
+  line-height: 45rpx;
+}
+
+.information {
+  box-sizing: border-box;
+  padding: 0 30rpx;
+  display: flex;
+  flex-grow: 1;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.avatar {
+  width: 110rpx;
+  height: 110rpx;
+  border-radius: 50%;
+}
+
+.fansFollowList {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 10rpx 0 40rpx;
+  border-bottom: 1rpx #cacbcb solid;
+}
+
+.addManageWrap {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 40rpx;
+}
+
+.addManage {
+  color: white;
+  position: relative;
+  padding: 8rpx 15rpx 8rpx 15rpx;
+  text-align: center;
+  border-radius: 999rem;
+  background: #b37ae5;
+  display: inline-block;
+  box-shadow: 0rpx 0rpx 10rpx 2rpx rgba(0, 0, 255, 0.1);
+  font-size: 25rpx;
+}
+
+.add {
+  position: absolute;
+  left: 6rpx;
+  top: -11rpx;
+  font-size: 50rpx;
+}
+
+.logo {
+  width: 50rpx;
+  height: 50rpx;
+}
+
+.searchWrap {
+  width: 320rpx;
+  height: 52rpx;
+  background: #e3e3e3;
+  border-radius: 999rem;
+}

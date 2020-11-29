@@ -1,0 +1,41 @@
+<!--pages/init/groupSettlement/groupSettlement.wxml-->
+<view class="groupSettlement">
+  <canvas canvas-id='canvas' class='canvas'></canvas>
+  <navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' back="{{true}}" iconTheme='white'
+    bindback="handlerGobackClick"></navBar>
+  <!-- <scroll-view scroll-y style="height:{{height}}px"> -->
+  <form bindsubmit="formSubmit">
+    <view class="title">小组入驻</view>
+    <view class="imgWarp">
+      <image wx:if="{{tempFilePaths.length}}" class="logo" src="{{tempFilePaths[0]}}" mode="aspectFill"
+        catchtap="previewImage" catchlongpress="deleteImg"></image>
+      <image wx:else catchtap="chooseGroupLogo" class="img" src="http://use.eigene.cn/bigAdd.png"></image>
+    </view>
+
+    <view class="inputWarp">
+      <input placeholder="小组名称："name="groupName" value="{{form.groupName}}" class="input" placeholder-class="placeholder"></input>
+    </view>
+    <view class="textareaWarp">
+      <textarea maxlength="-1"  class="textarea" placeholder="小组描述：" placeholder-class="placeholder" name="introduce" value='{{form.introduce}}' ></textarea>
+    </view>
+    <view class="typeWrap">
+      <view class="type">
+        <text class="typeTile">小组类型</text>
+        <view class="switchWarp">
+          <view>
+            <switch name="private" checked="{{form.privates}}"></switch>
+            <text>设为私密</text>
+          </view>
+          <view>   
+            <switch  name="examine" checked="{{form.examine}}"></switch>
+            <text>入社审批</text>
+          </view>
+        </view>
+        <view class="createWarp">
+          <button class="create" form-type="submit">创建</button>
+        </view>
+      </view>
+    </view>
+  </form>
+  <!-- </scroll-view> -->
+</view>

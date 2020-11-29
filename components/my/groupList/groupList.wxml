@@ -1,0 +1,23 @@
+<!--components/my/groupList/groupList.wxml-->
+<view class="list">
+      <view class="card" wx:for="{{groups}}" wx:key="index">
+        <view class="block" catchtap="goOtherHome" data-id="{{item.id}}">
+          <image src="{{item.groupLogo}}" class="communityLogo" mode="aspectFill"></image>
+          <view class="introduce">
+            <view class="top">
+              <text class="communityName">{{item.groupName}}</text>
+              <view class="member-invitation">
+                <text>{{item.member}}成员</text>
+                <view class="point"></view>
+                <text>{{item.postNumber}}帖子</text>
+              </view>
+            </view>
+            <view class="bottom">
+              <text>{{item.introduce}}</text>
+            </view>
+          </view>
+          <image data-index="{{index}}" catchtap="toFollow" class="follow"
+            src="http://cdn.eigene.cn/followMass/follow{{item.isFollow?'ed':''}}.png"></image>
+        </view>
+      </view>
+    </view>

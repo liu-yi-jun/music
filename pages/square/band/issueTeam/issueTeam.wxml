@@ -1,0 +1,79 @@
+<!--pages/square/band/issueTeam/issueTeam.wxml-->
+<view>
+  <navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' back="{{true}}" iconTheme='white'
+    bindback="handlerGobackClick"></navBar>
+    <form bindsubmit="formSubmit">
+  <view class="head">
+    <input name="title" placeholder="标题……" placeholder-class="placeholder"></input>
+    <view class="avatarWrap">
+      <image mode="aspectFill" class="avatar" src="{{avatarUrl}}"></image>
+      <text>{{nickName}}</text>
+    </view>
+  </view>
+  <view class="exist-recruit">
+    <view class="existWrap">
+      <view class="exist" catchtap="toggleExist">现有</view>
+      <view class="existPopup" wx:if="{{showExistPopup}}">
+        <view catchtap="choose" data-index="{{index}}" data-flag="exist" class="part" wx:for="{{instruments}}" wx:key="index">
+          <view class="instrumentsWrap">
+            <image class="instruments" src="{{item.instrumentsUrl}}"></image>
+            <text class="instrumentsName">{{item.instrumentsName}}</text>
+          </view>
+          <image class="select" src="http://cdn.eigene.cn/issueTeam/{{item.exist?'':'not'}}Selected.png"></image>
+        </view>
+        <view class="explain">
+          <text>*如有其它乐器请在“详情”说明</text>
+        </view>
+      </view>
+      <swiper class="existLogo" wx:if="{{exists.length}}">
+        <swiper-item wx:for="{{exists}}" wx:key="index" wx:for-item="exist">
+          <view wx:for="{{exist}}" wx:key="index">
+            <image src="{{item.instrumentsUrl}}"></image>
+            <text>{{item.instrumentsName}}</text>
+          </view>
+        </swiper-item>
+      </swiper>
+    </view>
+    <view class="recruitWrap" >
+      <view class="recruit" catchtap="toggleRecruit">招募</view>
+      <view class="recruitPopup" wx:if="{{showRecruitPopup}}">
+        <view catchtap="choose" data-index="{{index}}" data-flag="recruit"  class="part" wx:for="{{instruments}}" wx:key="index">
+          <view class="instrumentsWrap">
+            <image class="instruments" src="{{item.instrumentsUrl}}"></image>
+            <text class="instrumentsName">{{item.instrumentsName}}</text>
+          </view>
+          <image class="select" src="http://cdn.eigene.cn/issueTeam/{{item.recruit?'':'not'}}Selected.png"></image>
+        </view>
+        <view class="explain">
+          <text>*如有其它乐器请在“详情”说明</text>
+        </view>
+      </view>
+      <swiper class="recruitLogo" wx:if="{{recruits.length}}">
+        <swiper-item wx:for="{{recruits}}" wx:key="index" wx:for-item="recruit">
+          <view wx:for="{{recruit}}" wx:key="index">
+            <image src="{{item.instrumentsUrl}}"></image>
+            <text>{{item.instrumentsName}}</text>
+          </view>
+        </swiper-item>
+      </swiper>
+    </view>
+  </view>
+  <view class="textareaWarp">
+    <textarea name="introduce" maxlength="-1" class="textarea" placeholder="详情" placeholder-class="placeholder"></textarea>
+    <view class="locationWrap">
+        <view class="location" catchtap="getLocation">
+          <image class="locationLogo" src="http://cdn.eigene.cn/squarePost/locationLogo.png"></image>
+          <text class="locationText">你在哪里?</text>
+        </view>
+        <picker class="picker" bindchange="bindPickerChange" value="{{index}}" range="{{mks}}" range-key="title">
+          <view>
+            {{mks[index].title}}
+          </view>
+        </picker>
+      </view>
+  </view>
+  <view class="issueWrap">
+    <button class="issue" form-type="submit">发布</button>
+  </view>
+</form>
+</view>

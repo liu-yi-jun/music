@@ -1,0 +1,23 @@
+/* components/common/showTabBar/showTabBar.wxss */
+
+.tabBarBtn {
+  position: fixed;
+  right: 0rpx;
+  /* bottom: 0rpx; */
+  bottom: calc(0rpx + env(safe-area-inset-bottom));
+  width: 170rpx;
+  height: 100rpx;
+  opacity: 1;
+  visibility: visible;
+  transition: 0.4s all;
+  background-image: url("http://cdn.eigene.cn/tabBarBtn.png");
+  background-position: center;
+  background-size: 53rpx 30rpx;
+  background-repeat: no-repeat;
+}
+
+.tabBarBtnHide {
+  opacity: 0;
+  bottom: 0rpx;
+  visibility: hidden;
+}

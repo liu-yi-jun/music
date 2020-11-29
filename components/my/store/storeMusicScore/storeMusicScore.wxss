@@ -1,0 +1,70 @@
+/* components/my/store/storeMusicScore/storeMusicScore.wxss */
+
+.storeMusicScoreBC {
+  position: relative;
+  width: 684rpx;
+  height: 1048rpx;
+}
+
+.number {
+  font-size: 44rpx;
+}
+
+.name {
+  margin: 0 18rpx;
+  font-size: 33rpx;
+}
+
+.author {
+  font-size: 19rpx;
+}
+
+.song {
+  position: absolute;
+  color: white;
+}
+
+.song1 {
+  top: 97rpx;
+  left: 62rpx;
+}
+
+.song2 {
+  top: 150rpx;
+  left: 238rpx;
+}
+
+.song3 {
+  top: 269rpx;
+  left: 149rpx;
+}
+
+.song4 {
+  top: 358rpx;
+  left: 392rpx;
+}
+
+.song5 {
+  top: 443rpx;
+  left: 466rpx;
+}
+
+.song6 {
+  top: 570rpx;
+  left: 312rpx;
+}
+
+.song7 {
+  top: 676rpx;
+  left: 182rpx;
+}
+
+.song8 {
+  top: 779rpx;
+  left: 355rpx;
+}
+
+.song9 {
+  top: 852rpx;
+  left: 164rpx;
+}

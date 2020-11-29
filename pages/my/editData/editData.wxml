@@ -1,0 +1,61 @@
+<!--pages/my/editData/editData.wxml-->
+<!-- <scroll-view class="scroll" scroll-y> -->
+<navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' back="{{true}}" iconTheme='white'
+  bindback="handlerGobackClick"></navBar>
+<canvas canvas-id='canvas' class='canvas'></canvas>
+<view class="editDtata">
+  <view class="avatarWarp">
+    <view class="avatarImg">
+      <image class="avatar" mode="aspectFill" catchtap="previewImage" src="{{tempFilePaths[0]}}">
+      </image>
+      <image catchtap="chooseAvatar" class="changeAvatar" src="http://use.eigene.cn/changeBackground.png"></image>
+    </view>
+  </view>
+  <form class="form" bindsubmit="formSubmit">
+    <view class="basicWarp">
+      <view class="basic">
+        <view class="nickNameWrap">
+          <text>昵称</text>
+          <input placeholder-class="placeholder" name="nickName" value="{{userInfo.nickName}}"></input>
+        </view>
+        <view class="sexWarp">
+          <text>性别</text>
+          <image catchtap="changeWoman" src="http://cdn.eigene.cn/editData/woman{{userInfo.gender===2?'ed':''}}.png">
+          </image>
+          <image catchtap="changeman" src="http://cdn.eigene.cn/editData/man{{userInfo.gender===1?'ed':''}}.png">
+          </image>
+        </view>
+        <view class="ageWrap">
+          <text>年龄</text>
+          <input type="number"  maxlength="3" name="age" placeholder-class="placeholder"
+            value="{{userInfo.age}}"></input>
+        </view>
+        <view class="constellationWrap">
+          <text>星座</text>
+          <input type="text" maxlength="4" name="constellation" placeholder-class="placeholder"
+            value="{{userInfo.constellation}}"></input>
+        </view>
+      </view>
+    </view>
+    <input disabled class="subordinate" placeholder="所属小组:{{userInfo.groupName}}{{userInfo.groupDuty===-1?' 申请中':''}}"
+      placeholder-class="subPlaceholder"> </input>
+    <view class="demoteWarp">
+      <text class="demote">小组职责</text>
+      <view class="role">
+        <view class="{{userInfo.groupDuty===2?'active':''}}">组员</view>
+        <view class="{{userInfo.groupDuty===0?'active':''}}">组长</view>
+        <view class="{{userInfo.groupDuty===1?'active':''}}">管理员</view>
+      </view>
+    </view>
+    <view class="introductionWarp">
+      <text class="introduction">个人简历</text>
+      <text class="limit">（小于等于30字）</text>
+      <textarea maxlength="30" name="resume" class="textarea" value="{{userInfo.resume}}"></textarea>
+    </view>
+    <view class="summitWarp">
+      <button class="summit" form-type="submit">完成</button>
+    </view>
+  </form>
+  <view class="blank"></view>
+</view>
+<!-- </scroll-view> -->

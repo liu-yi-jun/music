@@ -1,0 +1,51 @@
+<!--components/my/information/system/system.wxml-->
+<view class="system">
+  <!-- <view class="row">
+    <image class="avatar" src="http://cdn.eigene.cn/system/systemLogo.png"></image>
+    <view class="contentWrap">
+      <text class="inform">系统消息</text>
+      <text class="content">吉他盟向良班周边开始预售啦！</text>
+      <view class="number">1</view>
+    </view>
+  </view> -->
+  <view class="row" wx:for="{{systems}}" wx:key="id">
+    <image class="avatar" src="http://cdn.eigene.cn/system/systemLogo.png"></image>
+    <view class="contentWrap">
+      <text class="title">有人申请和你一起组乐队！</text>
+      <video wx:if="{{item.videoUrl}}" class="video" object-fit="cover" src="{{item.videoUrl}}"></video>
+      <view class="describe">
+        <view class="userNameWrap">
+          <text class="userName">姓名：</text>
+          <text>{{item.userName}}</text>
+        </view>
+        <view class="sexWrap">
+          <text class="sex">性别：</text>
+          <text wx:if="{{item.gender === 1}}">男</text>
+          <text wx:if="{{item.gender === 2}}">女</text>
+        </view>
+        <view class="contactWrap">
+          <text class="contact">联系：</text>
+          <text>{{item.contact}}</text>
+        </view>
+        <view class="remarksWrap">
+          <text class="remarks">备注：</text>
+          <text class="remarks">{{item.remark}}</text>
+        </view>
+        <view class="formWrap">
+          <text class="form">表演形式：</text>
+          <view class="formRightWrap">
+            <view class="formImgWrap" wx:for="{{item.perform}}" wx:key="index">
+              <image src="{{item.instrumentsUrl}}"></image>
+              <text>{{item.instrumentsName}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="avatarLocation" catchtap="goPersonal" data-userid="{{item.joinId}}">
+        <image class="avatar" src="{{item.avatarUrl}}"></image>
+        <text class="location">{{item.nickName}}</text>
+      </view>
+      <view wx:if="{{item.isNew}}" class="number">1</view>
+    </view>
+  </view>
+</view>

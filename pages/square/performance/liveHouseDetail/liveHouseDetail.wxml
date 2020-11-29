@@ -1,0 +1,74 @@
+<!--pages/square/performance/liveHouseDetail/liveHouseDetail.wxml-->
+<view>
+  <navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' back="{{true}}" iconTheme='white'
+    bindback="handlerGobackClick"></navBar>
+  <scroll-view style="height:{{excludeHeight}}rpx" scroll-y bindscrolltolower="scrolltolower">
+    <view class="ticketWrap">
+      <image class="poster" src="{{detail.showPoster}}"></image>
+      <view class="introduce">
+        <view class="right">
+          <text class="title">{{detail.showTitle}}</text>
+          <view class="right-bottom">
+            <view class="row">
+              <text>场次:</text>
+              <view >{{detail.showSession}}</view>
+            </view>
+            <view class="row">
+              <text>票档:</text>
+              <view >{{detail.showTicket}}</view>
+            </view>
+          </view>
+        </view>
+        <view class="location">{{detail.showAddress}}</view>
+      </view>
+      <image class="buy" src="http://cdn.eigene.cn/liveHouseDetail/buy.png"></image>
+    </view>
+    <view class="icon-time">
+      <view class="iconWrap">
+        <view class="icon">
+          <image src="http://cdn.eigene.cn/dynamicDetail/like.png"></image>
+          <text>{{detail.likes}}</text>
+        </view>
+        <view class="icon">
+          <image class="img" src="http://cdn.eigene.cn/courseDetail/store.png"></image>
+          <text>{{detail.store}}</text>
+        </view>
+        <view class="icon">
+          <image src="http://cdn.eigene.cn/dynamicDetail/comment.png"></image>
+          <text>{{detail.comment}}</text>
+        </view>
+        <view class="icon">
+          <image src="http://cdn.eigene.cn/dynamicDetail/share.png"></image>
+          <text>{{detail.share}}</text>
+        </view>
+      </view>
+    </view>
+    <!-- <view class="content">
+      <rich-text nodes="{{content}}"></rich-text>
+      <text space="ensp"> {{detail.showIntroduce}}</text>
+    </view> -->
+    <view class="bar">
+      <view class="datumWrap {{current === 'datum' ? 'active' : ''}}" catchtap="switchBtn" data-current="datum">
+        <image class="datum" src="http://cdn.eigene.cn/courseDetail/datum.png"></image>
+        <text class="datumText">详情</text>
+      </view>
+      <view class="commentWrap {{current === 'comment' ? 'active' : ''}}" catchtap="switchBtn" data-current="comment">
+        <image class="comment" src="http://cdn.eigene.cn/courseDetail/comment.png"></image>
+        <text>评论</text>
+      </view>
+    </view>
+    <view class="richTextWrap" hidden="{{current !== 'datum'}}">
+      <view class="performanceIntroduction">『演出介绍』</view>
+      <rich-text class="rich-text" nodes="{{detail.showIntroduce}}"></rich-text>
+    </view>
+    <view hidden="{{current !== 'comment'}}">
+      <commentList bind:toReply="toReply" commentArr="{{commentArr}}">
+      </commentList>
+    </view>
+    <inputBox showTextara="{{showTextara}}" param="{{param}}" bind:completeCommentOrReply="completeCommentOrReply">
+    </inputBox>
+    <commentBar class="footerComment" bind:toComment="toComment" commenetBarData="{{commenetBarData}}"
+      bind:completeLike="completeLike" bind:completeStore="completeStore">
+    </commentBar>
+  </scroll-view>
+</view>

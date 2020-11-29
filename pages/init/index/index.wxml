@@ -1,0 +1,34 @@
+<!--pages/init/index/index.wxml-->
+<image class="pageBackground" src="http://cdn.eigene.cn/pageBackground.png">
+  <image class="logo" src="http://cdn.eigene.cn/index-logo.png"></image>
+  <view class="searchWrap">
+    <text class="searchText">搜索</text>
+    <view class="search">
+      <image class="searchBtn" src="http://cdn.eigene.cn/index/search.png"></image>
+      <input class="input" bindconfirm="confirm"></input>
+      <image class="unfoldBtn" src="http://cdn.eigene.cn/index/unfold{{listIsShow?'ed':''}}.png" catchtap="unfold">
+      </image>
+      <view class="listWrap {{listIsShow?'listShow':''}}">
+        <scroll-view class="scroll" scroll-y enhanced show-scrollbar="{{false}}">
+          <view wx:for="{{groups}}" class="listItme" catchtap="goOther" data-id="{{item.id}}"  wx:key="id">
+            {{item.groupName}}</view>
+        </scroll-view>
+      </view>
+    </view>
+  </view>
+  <view class="Settlement">
+    <view class="SettlementText" catchtap="goGroupSettlement">入驻</view>
+  </view>
+  <view class="shade {{dialogShow? 'shadeShow':''}}" mark:district="shade">
+    <view class="dialog">
+      <view class="miniLogo-musicmonster">
+        <image class="miniLogo" src="http://cdn.eigene.cn/index/miniLogo.png"></image>
+        <image class="musicmonster" src="http://cdn.eigene.cn/index/musicmonster.png"></image>
+      </view>
+      <view class="buttonWrap">
+        <button class="btn cancel" catchtap="cancel">取消</button>
+        <button class="btn confirm" open-type="getUserInfo" bindgetuserinfo="handleGetUserInfo">微信授权</button>
+      </view>
+    </view>
+  </view>
+</image>

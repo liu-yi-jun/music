@@ -1,0 +1,7 @@
+<!--components/common/record/record.wxml-->
+<view class="recordMask {{recordMaskShow? 'recordMaskShow':''}}" atchtouchmove="touchmove" >
+  <view class="recordWrap" id="progress_box">
+    <image catchtap="stopRecord" class="recordLogo" src="http://cdn.eigene.cn/addCourse/recordLogo.png"></image>
+    <canvas class="progress_canvas" canvas-id="canvasProgress"> </canvas>
+  </view>
+</view>

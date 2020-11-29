@@ -1,0 +1,62 @@
+<!--pages/square/performance/allianceDetail/allianceDetail.wxml-->
+<view>
+  <navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' back="{{true}}" iconTheme='white'
+    bindback="handlerGobackClick"></navBar>
+  <view class="head">
+    <view class="title">{{detail.title}}</view>
+    <view class="time">{{detail.releaseTime}}</view>
+  </view>
+  <scroll-view style="height:{{excludeHeight-140}}rpx" scroll-y>
+    <view class="Wrap">
+      <view class="info">
+        <text>组织者：</text>
+        <text>{{detail.organization}}</text>
+        <text>活动地点：</text>
+        <text>{{detail.activityLocation}}</text>
+        <text>活动时间：</text>
+        <text>{{detail.activityTime}}</text>
+        <!-- <text>共建截止时间：</text>
+        <text>2020年12月1号</text> -->
+      </view>
+      <view class="imgWrap">
+        <image wx:for="{{detail.pictureUrls}}" wx:key="index" wx:for-item="url" class="img" mode="widthFix"
+          src="{{url}}"></image>
+      </view>
+      <view class="introduceWrap">
+        <view>共建活动简介：</view>
+        <view>
+          <text>{{detail.introduce}}</text>
+        </view>
+      </view>
+    </view>
+    <view class="fontWrap">
+      <view class="img-number">
+        <image class="img" src="http://cdn.eigene.cn/courseDetail/like.png"></image>
+        <text class="number">{{detail.likes}}</text>
+      </view>
+      <view class="img-number">
+        <image class="img" src="http://cdn.eigene.cn/courseDetail/store.png"></image>
+        <text class="number">{{detail.store}}</text>
+      </view>
+      <view class="img-number">
+        <image class="img" src="http://cdn.eigene.cn/courseDetail/comment.png"></image>
+        <text class="number">{{detail.comment}}</text>
+      </view>
+      <view class="img-number">
+        <image class="img" src="http://cdn.eigene.cn/courseDetail/share.png"></image>
+        <text class="number">{{detail.share}}</text>
+      </view>
+    </view>
+    <view class="commentWrap">
+      <image src="http://cdn.eigene.cn/dynamicDetail/comment.png"></image>
+      <text>评论</text>
+    </view>
+    <commentList bind:toReply="toReply" commentArr="{{commentArr}}">
+    </commentList>
+    <inputBox showTextara="{{showTextara}}" param="{{param}}" bind:completeCommentOrReply="completeCommentOrReply">
+    </inputBox>
+    <commentBar class="footerComment" bind:toComment="toComment" commenetBarData="{{commenetBarData}}"
+      bind:completeLike="completeLike" bind:completeStore="completeStore">
+    </commentBar>
+  </scroll-view>
+</view>

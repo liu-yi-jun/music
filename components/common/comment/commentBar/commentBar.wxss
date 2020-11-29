@@ -1,0 +1,60 @@
+/* components/common/comment/commentBar/commentBar.wxss */
+
+.warp {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  box-sizing: border-box;
+  height: 110rpx;
+  align-items: center;
+  padding: 0 40rpx;
+  margin-bottom: env(safe-area-inset-bottom);
+}
+
+.input {
+  box-sizing: border-box;
+  padding: 10rpx 20rpx;
+  width: 35%;
+  /* height: 100%; */
+  color: white;
+  border: 1rpx solid white;
+  border-radius: 999rem;
+}
+
+.icon {
+  /* height: 100%; */
+  width: 60%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.icon view {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.icon view text {
+  color: white;
+  font-size: 24rpx;
+  margin-left: 5rpx;
+}
+
+.icon  .min {
+  transform: scale(0.9);
+}
+
+.icon image {
+  width: 70rpx;
+  height: 70rpx;
+}
+
+.shareBtn {
+  width: 70rpx!important;
+  height: 70rpx!important;
+  position: absolute!important;
+  left: 0!important;
+  top: 0!important;
+  opacity:0
+}

@@ -1,0 +1,60 @@
+<!--pages/square/performance/alliancePost/alliancePost.wxml-->
+
+<view class="issue">
+  <navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' back="{{true}}" iconTheme='white'
+    bindback="handlerGobackClick"></navBar>
+  <canvas canvas-id='canvas' class='canvas'></canvas>
+  <form bindsubmit="formSubmit">
+    <issueHead avatarUrl="{{avatarUrl}}" nickName="{{nickName}}">
+    </issueHead>
+    <scroll-view scroll-y style="height:{{excludeHeight-161}}rpx" scroll-into-view="{{id}}">
+      <view class="wrap">
+        <input placeholder="标       题" placeholder-class="placeholder" name="title"></input>
+        <picker class="date" mode="date" value="{{date}}" start="2017-09-01" end="2025-09-01"
+          bindchange="bindDateChange">
+          <view class="picker">
+            {{date}}
+          </view>
+        </picker>
+        <picker class="date" mode="time" value="{{time}}" start="00:00" end="23:59"
+          bindchange="bindTimeChange">
+          <view class="picker">
+            {{time}}
+          </view>
+        </picker>
+
+        <input name="activityLocation" placeholder="活动地点" placeholder-class="placeholder"></input>
+        <input name="organization" placeholder="组  织  者" placeholder-class="placeholder"></input>
+        <view class="warptextarea">
+          <textarea name="introduce" id="textarea" adjust-position="{{false}}" auto-height disable-default-padding
+            placeholder="演出详情" placeholder-class="placeholder" bindkeyboardheightchange="boardheightchange"
+            maxlength="-1"></textarea>
+        </view>
+        <view class="imgWrap" wx:if="{{tempImagePaths.length}}">
+          <view class="imgArea">
+            <image mode="aspectFill" catchtap="previewImage" data-id="{{index}}" wx:key="index" src="{{item}}"
+              wx:for="{{tempImagePaths}}">
+            </image>
+          </view>
+        </view>
+        <view class="wrapVideo" wx:if="{{tempVideoPath}}">
+          <video object-fit="cover" src="{{tempVideoPath}}"></video>
+        </view>
+        <view class="recordWrap" wx:if="{{tempRecordPath}}">
+          <view class="playRecord" catchtap="playRecord" style="width:{{soundWidth}}rpx">
+            <image class="recordImg"  src="http://cdn.eigene.cn/play{{isPlay?'ing':''}}.gif"></image>
+            <text class="recordTime">{{duration}}s</text>
+          </view>
+        </view>
+      </view>
+    </scroll-view>
+  </form>
+  <record class="record" id="record" bind:recordResult="recordResult" recordTime="{{recordTime}}"></record>
+  <view class="footer" style="bottom:{{keyBoardHeight}}">
+    <view class="footerInner">
+      <image src="http://use.eigene.cn/picture.png" catchtap="imgSheet"></image>
+      <image src="http://use.eigene.cn/video.png" catchtap="videoSheet"></image>
+      <image src="http://use.eigene.cn/selectRecord.png" catchtap="recordSheet"></image>
+    </view>
+  </view>
+</view>

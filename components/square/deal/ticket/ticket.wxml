@@ -1,0 +1,26 @@
+<!--components/square/deal/ticket/ticket.wxml-->
+<view class="ticket">
+  <view class="card" wx:for="{{tickets}}" wx:key="id">
+  <image class="ticketStore" data-index="{{index}}" catchtap="switchTicketStore"  src="http://cdn.eigene.cn/deal/ticketStore{{item.isStore?'d':''}}.png"></image>
+    <view class="top">
+      <image class="img" src="{{item.pictureUrls[0]}}"></image>
+      <view class="introduce">
+        <text class="title">{{item.title}}</text>
+        <view class="message">
+          <text wx:if="{{item.time}}">时间：{{item.activityTime}}</text>
+          <text wx:if="{{item.location}}">地点：{{item.activityLocation}}</text>
+          <text wx:if="{{item.number}}">数量：{{item.number}}</text>
+          <text wx:if="{{item.relation}}">联系方式：{{item.contact}}</text>
+        </view>
+      </view>
+    </view>
+    <view class="bottom">
+      <view class="avatar-name">
+        <image class="avatar" src="{{item.avatarUrl}}"></image>
+        <text class="name">{{item.nickName}}{{item.location}}}</text>
+      </view>
+      <view class="money">¥{{item.price}}</view>
+    </view>
+  </view>
+ <image class="issueDynamic" src="http://cdn.eigene.cn/deal/issueDynamic.png" catchtap="goTicketIssue"></image>
+</view>

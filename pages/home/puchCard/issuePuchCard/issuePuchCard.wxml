@@ -1,0 +1,19 @@
+<!--pages/home/puchCard/issuePuchCard/issuePuchCard.wxml-->
+<view class="issuePuchCard">
+  <canvas canvas-id='canvas' class='canvas'></canvas>
+  <navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' back="{{true}}" iconTheme='white' bindback="handlerGobackClick"></navBar>
+  <view class="card">
+    <view class="part topPart">
+      <text>练习资料</text>
+      <image mode="aspectFill" class="dataImg" wx:if="{{isData}}" src="{{tempDataPaths[0]}}" catchtap="previewImage"></image>
+      <view wx:if="{{!isData}}" catchtap="chooseData" class="uploadData topUpload">上传</view>
+    </view>
+    <view class="part bottomPart">
+      <text>演示视频</text>
+      <video object-fit="cover" class="video" wx:if="{{isVideo}}" src="{{tempVideoPath}}">
+      </video>
+      <view wx:if="{{!isVideo}}" catchtap="chooseVideo" class="uploadVideo bottomUpload">上传</view>
+    </view>
+    <image class="okLogo" catchtap="issue" src="http://cdn.eigene.cn/issuePuchCard/okLogo.png"></image>
+  </view>
+</view>

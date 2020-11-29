@@ -1,0 +1,30 @@
+<!--components/my/information/privateLetter/privateLetter.wxml-->
+<wxs module="privateLetterWxs" src="./privateLetter.wxs"></wxs>
+<view class="privateLetter">
+  <movable-area class="movable-area" wx:for="{{userMessage}}" >
+    <movable-view id="movable-view" x="{{list[index].x}}" class="movable-view" inertia direction="horizontal" out-of-bounds data-index="{{index}}" bindchange="{{privateLetterWxs.handleMovebleChange}}" bindtouchend="handleTouchend" bindtouchstart="handleTouchStart" damping="50">
+      <view class="left" catchtap="goPrivateLetter" data-item="{{item}}">
+        <image class="avatar" src="{{item.avatarUrl}}"></image>
+        <view class="detail">
+          <view class="name-comment">
+            <text class="name">{{item.nickName}}</text>
+            <text class="comment">{{item.lastMessage}}</text>
+          </view>
+          <view class="time-number">
+            <text class="time">刚刚</text>
+            <view class="number" wx:if="{{item.newNum}}">{{item.newNum}}</view>
+          </view>
+        </view>
+      </view>
+      <view class="right">
+        <view class="shield">
+          <text>屏蔽</text>
+          <view class="deleteLetter" id="deleteLetter{{index}}">
+            <text>删除</text>
+          </view>
+        </view>
+      </view>
+    </movable-view>
+  </movable-area>
+  
+</view>

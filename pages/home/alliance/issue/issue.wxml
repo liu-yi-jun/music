@@ -1,0 +1,29 @@
+<!--pages/home/alliance/issue/issue.wxml-->
+<view class="issue">
+  <issueHead>
+  </issueHead>
+  <scroll-view scroll-y class="scroll" scroll-into-view="{{id}}">
+    <form class="form">
+      <input placeholder="标       题" placeholder-class="placeholder"></input>
+      <picker class="date" mode="date" value="{{date}}" start="2017-09-01" end="2025-09-01" bindchange="bindDateChange">
+        <view class="picker">
+          {{date}}
+        </view>
+      </picker>
+
+      <input placeholder="活动地点" placeholder-class="placeholder"></input>
+      <input placeholder="组  织  者" placeholder-class="placeholder"></input>
+      <view class="warptextarea">
+        <textarea id="textarea" adjust-position="{{false}}" auto-height disable-default-padding placeholder="演出详情" placeholder-class="placeholder" bindkeyboardheightchange="boardheightchange" maxlength="-1"></textarea>
+      </view>
+    </form>
+  </scroll-view>
+
+  <view class="footer" style="bottom:{{keyBoardHeight}}">
+    <view class="footerInner">
+      <image src="http://use.eigene.cn/picture.png"></image>
+      <image src="http://use.eigene.cn/video.png"></image>
+      <image src="http://use.eigene.cn/selectRecord.png"></image>
+    </view>
+  </view>
+</view>

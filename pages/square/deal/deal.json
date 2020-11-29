@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "second": "/components/square/deal/second/second",
+    "ticket": "/components/square/deal/ticket/ticket",
+    "navBar": "/components/navBar/navBar"
+  },
+  "disableScroll": true
+}

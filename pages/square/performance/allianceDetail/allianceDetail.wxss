@@ -1,0 +1,97 @@
+/* pages/square/performance/allianceDetail/allianceDetail.wxss */
+.head {
+  height: 120rpx;
+  padding: 40rpx 40rpx 0 40rpx;
+  box-sizing: border-box;
+  margin-bottom: 20rpx;
+}
+
+.head>.title {
+  font-size: 30rpx;
+  color: white;
+}
+
+.head>.time {
+  color: #B7B8B8;
+  font-size: 21rpx;
+}
+
+.Wrap {
+  box-sizing: border-box;
+  padding: 40rpx 40rpx 50rpx 40rpx;
+  margin-bottom: 10rpx;
+  border-bottom: 1rpx solid #B7B8B8;
+}
+
+.info {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  color: white;
+  font-size: 28rpx;
+  line-height: 52rpx;
+}
+
+.imgWrap {
+  margin: 40rpx 0rpx;
+}
+
+.img {
+  width: 100%;
+}
+
+.introduceWrap {
+  color: white;
+  font-size: 28rpx;
+}
+.footerComment {
+  background: linear-gradient(to bottom, rgba(226, 145, 227, 0.5), rgba(0, 69, 207, 0.5));
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  z-index: 999;
+}
+
+.commentWrap {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 20rpx 20rpx 0;
+}
+
+.commentWrap image {
+  width: 60rpx;
+  height: 60rpx;
+}
+
+.commentWrap text {
+  color: white;
+  font-size: 30rpx;
+  margin-left: 10rpx;
+}
+
+
+
+.fontWrap {
+  display: flex;
+  justify-content: flex-end;
+  box-sizing: border-box;
+  padding: 10rpx 0;
+}
+
+.fontWrap .img {
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.fontWrap .number {
+  color: white;
+  font-size: 26rpx;
+  margin-left: 10rpx;
+}
+
+.fontWrap .img-number {
+  display: flex;
+  align-items: center;
+  margin-right: 20rpx;
+}

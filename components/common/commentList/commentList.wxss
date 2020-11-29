@@ -1,0 +1,87 @@
+/* components/common/commentList/commentList.wxss */
+
+
+.avatar {
+  width: 62rpx;
+  height: 62rpx;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.item {
+  display: flex;
+  box-sizing: border-box;
+  padding: 30rpx 15rpx 0 15rpx;
+}
+
+.right {
+  padding-top: 5rpx;
+  flex-grow: 1;
+  box-sizing: border-box;
+  padding-left: 15rpx;
+}
+
+.user1 {
+  display: flex;
+  flex-direction: column;
+}
+
+.user1 .content1 {
+  margin-top: 10rpx;
+}
+
+.user2 {
+  margin-top: 10rpx;
+  /* display: flex; */
+}
+
+.angle {
+  width: 20rpx;
+  height: 20rpx;
+  border-left: 1rpx solid white;
+  border-bottom: 1rpx solid white;
+  border-bottom-left-radius: 10rpx;
+  margin-right: 10rpx;
+  display: inline-block;
+  /* position: relative;
+  bottom: 8rpx; */
+}
+
+.userName {
+  font-size: 28rpx;
+  flex-shrink: 0;
+  margin-right: 10rpx;
+}
+.content2 {
+  font-size: 28rpx;
+  color: white;
+  word-break:break-all;
+}
+.content1 {
+  font-size: 28rpx;
+  color: white;
+  word-break:break-all;
+}
+
+.reply {
+  flex-shrink: 0;
+  font-size: 25rpx;
+  color: white;
+}
+
+.time {
+  font-size: 21rpx;
+  color: white;
+  border-bottom: 1rpx solid #CACBCB;
+  box-sizing: border-box;
+  padding: 15rpx 0;
+}
+
+.blank {
+  height: 400rpx;
+}
+.replyTime{
+  font-size: 21rpx;
+  color: white;
+  margin-left: 10rpx;
+}

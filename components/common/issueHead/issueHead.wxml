@@ -1,0 +1,8 @@
+<!--components/common/issueHead/issueHead.wxml-->
+ <view class="head">
+    <view class="avatarName">
+      <image src="{{avatarUrl}}"></image>
+      <text>{{nickName}}</text>
+    </view>
+    <button class="btn" form-type="submit">发布</button>
+  </view>

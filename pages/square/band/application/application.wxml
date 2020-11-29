@@ -1,0 +1,86 @@
+<!--pages/square/band/application/application.wxml-->
+<view>
+  <navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' back="{{true}}" iconTheme='white'
+    bindback="handlerGobackClick"></navBar>
+  <form bindsubmit="formSubmit">
+    <view class="applicationBackground">
+      <view class="basicWrap">
+        <view class="basic">
+          <text>基本信息</text>
+        </view>
+        <view class="row">
+          <text>姓名</text>
+          <input name="userName"></input>
+        </view>
+        <view class="row sexRow">
+          <text>性别</text>
+          <image class="sexImg" src="http://cdn.eigene.cn/editData/man{{userInfo.gender===1?'ed':''}}.png">
+          </image>
+          <image class="sexImg" src="http://cdn.eigene.cn/editData/woman{{userInfo.gender===2?'ed':''}}.png">
+          </image>
+        </view>
+        <view class="row">
+          <text>联系</text>
+          <input name="contact"></input>
+        </view>
+        <view class="row">
+          <text>备注</text>
+          <input name="remark"></input>
+        </view>
+      </view>
+      <view class="performWrap">
+        <view class="perform">
+          <text>表演形式</text>
+        </view>
+        <!-- <view class="radioWrap">
+        <image catchtap="showPopup" class="addImg" src="http://cdn.eigene.cn/application/addImg.png"></image>
+      </view> -->
+        <view class="blank" mark:myMark="blank">
+          <view class="swiper" wx:if="{{recruits.length === 1}}">
+            <view class="swiepr-item" wx:for="{{recruits}}" wx:key="index" wx:for-item="recruit" wx:for-index="i">
+              <view class="part" data-i="{{i}}" data-j="{{j}}" wx:for-index="j" wx:for="{{recruit}}" wx:key="index"
+                catchtap="select">
+                <view class="instrumentsWrap">
+                  <image class="instruments" src="{{item.instrumentsUrl}}"></image>
+                  <text class="instrumentsName">{{item.instrumentsName}}</text>
+                </view>
+                <image class="select" src="http://cdn.eigene.cn/issueTeam/{{item.exist?'':'not'}}Selected.png"></image>
+              </view>
+            </view>
+          </view>
+          <swiper class="swiper" wx:else>
+            <swiper-item class="swiepr-item" wx:for="{{recruits}}" wx:key="index" wx:for-item="recruit"
+              wx:for-index="i">
+              <view class="part" data-i="{{i}}" data-j="{{j}}" wx:for-index="j" wx:for="{{recruit}}" wx:key="index"
+                catchtap="select">
+                <view class="instrumentsWrap">
+                  <image class="instruments" src="{{item.instrumentsUrl}}"></image>
+                  <text class="instrumentsName">{{item.instrumentsName}}</text>
+                </view>
+                <image class="select" src="http://cdn.eigene.cn/issueTeam/{{item.exist?'':'not'}}Selected.png"></image>
+              </view>
+            </swiper-item>
+          </swiper>
+          <view class="explain">
+            <text>*如有其它乐器请在“详情”说明</text>
+          </view>
+        </view>
+      </view>
+      <view class="exhibitionWrap">
+        <view class="exhibition"> 个人展示 </view>
+        <view class="tips">（上传一段3分钟以内的表演）</view>
+        <view class="upload" wx:if="{{!tempFilePath}}" catchtap="upload">上传</view>
+        <view class="videoText" wx:else catchtap="popupVideo">[video]</view>
+      </view>
+      <view class="okLogoWrap">
+        <button form-type="submit" class="okLogoBtn" plain='true'></button>
+        <image class="okLogo" src="http://cdn.eigene.cn/application/okLogo.png"></image>
+      </view>
+    </view>
+  </form>
+  <view catchtap="cancelPopup" catchtouchmove="touchmove" class="mask {{dialogShow? 'shadeShow':''}}">
+    <view class="popup" mark:popup="true">
+      <video wx:if="{{dialogShow}}" src="{{tempFilePath}}" class="video" object-fit="cover"></video>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,254 @@
+/* components/square/dynamicList/dynamicList.wxss */
+
+.list {
+  padding: 0 20rpx 400rpx;
+}
+
+.item {
+  display: flex;
+  position: relative;
+  margin-top: 40rpx;
+}
+
+.item::after {
+  content: "";
+  display: block;
+  height: 1rpx;
+  background: #cacbcb;
+  position: absolute;
+  width: 90%;
+  right: -10rpx;
+  bottom: 0;
+}
+
+.message-content {
+  flex-grow: 1;
+  padding-left: 15rpx;
+  box-sizing: border-box;
+}
+
+.username {
+  font-size: 30rpx;
+}
+
+.message {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+  padding-top: 5rpx;
+}
+
+.nameBottom {
+  color: #b7b8b8;
+  font-size: 22rpx;
+}
+.constellation {
+  margin: 0 10rpx;
+}
+
+.right {
+  font-size: 20rpx;
+  padding: 8rpx 15rpx;
+  border-radius: 999rem;
+  background: white;
+}
+
+.onlineRecord {
+  width: 394rpx;
+  height: 75rpx;
+  position: relative;
+}
+
+.recordTime {
+  position: absolute;
+  right: 25rpx;
+  top: 22rpx;
+  font-size: 25rpx;
+}
+
+.content {
+  padding-top: 10rpx;
+  box-sizing: border-box;
+}
+
+.minTopic {
+  margin-top: 14rpx;
+  width: 180rpx;
+  height: 50rpx;
+  display: block;
+  position: relative;
+}
+
+.minTopicText {
+  font-size: 20rpx;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  line-height: 50rpx;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.like-comment-time {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30rpx;
+  margin-bottom: 20rpx;
+  align-items: center;
+  box-sizing: border-box;
+  padding-right: 20rpx;
+}
+
+.like-comment {
+  color: white;
+  font-size: 24rpx;
+  display: flex;
+  align-items: center;
+}
+
+
+.item > .avatar {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  flex-shrink:0
+}
+
+.imgWrap {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 15rpx;
+}
+
+.imgWrap image {
+  /* width: 220rpx;
+  height: 220rpx; */
+  border-radius: 5rpx;
+  /* margin-right: 15rpx; */
+}
+
+.like, .comment {
+  display: flex;
+  align-items: center;
+}
+.like >text, .comment  >text{
+  margin-left: 10rpx;
+}
+.like image {
+  width: 40rpx;
+  height: 40rpx;
+}
+.comment image {
+  width: 40rpx;
+  height: 40rpx;
+  /* transform: scale(0.8); */
+}
+
+.comment {
+  margin-left: 30rpx;
+  display: flex;
+}
+
+.time {
+  font-size: 22rpx;
+  color: #b7b8b8;
+  margin-top: 5rpx;
+}
+
+.ul{
+  padding:0px;
+  width:90%;
+  display: flex;
+  /* justify-content: flex-end; //用于设置或检索弹性盒子元素在主轴（横轴）方向上的对齐方式。 */
+  flex-wrap: wrap; 
+}
+.li{
+  list-style: none;
+  width:32.3%;
+  height:176rpx;
+  margin-top: 5px;
+}
+/* 除了每行最后的元素,其他都留右外边距 (100-32*3)/2*/
+.li:not(:nth-child(3n)){
+  margin-right: 1.5%; 
+}
+/* 当只有唯一一张图时 */
+.li:only-child{
+  width: 400rpx;
+  height: auto;
+  margin: 0; 
+}
+/* 有四张图时 */
+/* 不支持~ */
+
+.li:nth-last-child(4):first-child +.li + .li {
+  margin-right: 1.5%;
+} 
+.li:nth-last-child(4):first-child + .li {
+  margin-right: 32.3%;
+} 
+.li .img{
+  width:100%;
+  height: 100%;
+}
+.topic {
+  position: relative;
+  background-image: url('http://cdn.eigene.cn/square/topic1.png');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  box-sizing: border-box;
+  padding: 15rpx 25rpx;
+  font-size: 23rpx;
+  display: inline-block;
+}
+.topicWrap {
+  margin-top: 15rpx;
+}
+.recordWrap {
+  margin-top: 15rpx;
+}
+.recordWrap{
+  box-sizing: border-box;
+}
+.recordImg {
+  width: 54rpx;
+  height: 30rpx;
+}
+.recordTime {
+  font-size: 25rpx;
+}
+.record {
+  width: 394rpx;
+  height: 75rpx;
+  position: relative;
+  border-radius: 999rem;
+  background-color: #ece4fc;
+  box-sizing: border-box;
+  padding: 0 20rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+video {
+  width: 100%;
+  height: 100%;
+}
+.wrapVideo {
+  width: 400rpx;
+  height: 300rpx;
+  margin-top: 15rpx;
+}
+
+.delete {
+  width: 25rpx;
+  height: 28rpx;
+}
+
+.extend {
+  color: white;
+}
+.contentText{
+  color: white;
+}

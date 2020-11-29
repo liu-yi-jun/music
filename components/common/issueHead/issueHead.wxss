@@ -1,0 +1,40 @@
+/* components/common/issueHead/issueHead.wxss */
+
+.head {
+  width: 98%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 160rpx;
+  border-bottom: 1rpx solid #b7b8b8;
+  box-sizing: border-box;
+  /* left: 0;
+  right: 0; */
+  margin: auto;
+  padding: 0 20rpx;
+}
+
+.head image {
+  border-radius: 50%;
+  margin-right: 30rpx;
+  width: 88rpx;
+  height: 88rpx;
+}
+
+.btn {
+  width: 140rpx!important;
+  height: 60rpx!important;
+  line-height: 60rpx!important;
+  text-align: center!important;
+  background: white!important;
+  font-size: 30rpx!important;
+  color: #a58cd4!important;
+  border-radius: 999rem!important;
+}
+
+.avatarName {
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  font-size: 31rpx;
+}

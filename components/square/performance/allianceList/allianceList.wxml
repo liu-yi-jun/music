@@ -1,0 +1,28 @@
+<!--components/square/performance/allianceList/allianceList.wxml-->
+<view class="advance">
+
+  <view wx:for="{{alliances}}" wx:key="id" class="card" catchtap="goAllianceDetail" data-id="{{item.id}}">
+    <view class="avatarWarp" catchtap="goPersonal" data-userid="{{item.userId}}">
+      <image class="avatarBackground" src="http://use.eigene.cn/avatarBackground.png">
+        <image class="avatar" src="{{item.avatarUrl}}"></image>
+      </image>
+    </view>
+    <view class="userNameOrganization">
+      <text class="userName">{{item.nickName}}</text>
+      <view class="organization">{{item.groupName}}</view>
+    </view>
+    <view class="img">
+      <image class="wallimg" src="{{item.pictureUrls[0]}}" mode="aspectFill"></image>
+    </view>
+    <view class="content">
+      <view class="title">
+        {{item.title}}
+      </view>
+      <view class="message">
+        <text>组织者：{{item.organization}}</text>
+        <text>演出时间：{{item.activityTime}}</text>
+      </view>
+    </view>
+  </view>
+
+</view>

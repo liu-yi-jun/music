@@ -1,0 +1,38 @@
+<!--pages/home/uploadVoice/uploadVoice.wxml-->
+<!-- <wxs module="uploadVoiceWxs" src="./uploadVoice.wxs"></wxs> -->
+<view class="uploadVideo">
+  <navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' back="{{true}}" iconTheme='white'
+    bindback="handlerGobackClick"></navBar>
+    <form bindsubmit="formSubmit">
+  <view class="soundRecordWrap">
+    <image class="soundRecord" src="{{soundRecordSrc}}" catchtap="soundRecord">
+      <!-- -->
+      <view wx:if="{{current!==0}}"
+        class="clip {{clipAuto? 'auto': ''}} {{current===2 ||current===3 ? 'clipPlay': ''}}">
+        <view class="left {{current===2 || current===3 ? 'leftPlay': ''}}"
+          style="transform:rotate({{recordRotate}}deg)"></view>
+        <view class="right {{widthNone?' width-none': ''}} {{current===2 ||current===3 ? 'rightPlay': ''}}"></view>
+      </view>
+      <view wx:if="{{current===1}}" class="count">{{recordTime}}s</view>
+      <view wx:if="{{current===2 || current===3}}" class="remake" catchtap="remake"></view>
+    </image>
+  </view>
+  <view class="textareaWarp">
+    <textarea maxlength="-1" name="describe" class="textarea" placeholder="请输入音频描述……" placeholder-class="placeholder"></textarea>
+  </view>
+  <view class="locationWrap">
+    <view class="location" catchtap="getLocation">
+      <image class="locationLogo" src="http://cdn.eigene.cn/squarePost/locationLogo.png"></image>
+      <text class="locationText">你在哪里?</text>
+    </view>
+    <picker class="picker" bindchange="bindPickerChange" value="{{index}}" range="{{mks}}" range-key="title">
+      <view>
+        {{mks[index].title}}
+      </view>
+    </picker>
+  </view>
+  <view class="issueWrap">
+    <button class="issue" form-type="submit">发布</button>
+  </view>
+</form>
+</view>

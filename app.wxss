@@ -1,0 +1,39 @@
+@import "/assets/style/iconfont.wxss";
+page {
+  height: 100%;
+  width: 100%;
+  -webkit-overflow-scrolling : touch;
+   /* background:#0044D2 */
+   /* background-image: url("http://cdn.eigene.cn/pageBackground.png");
+   background-size: 100% 100%;   */
+}
+button {
+  padding: 0!important;
+  margin: 0!important;
+  font-weight: normal!important;
+  
+}
+
+page::before {
+  content: ' ';
+  position: fixed;
+  z-index: -999;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url("http://cdn.eigene.cn/pageBackground.png") no-repeat;
+  background-size: 100% 100%;
+}
+
+.blank {
+  height: 200rpx;
+}
+
+.canvas {
+  position: absolute;
+  top: -1000px;
+  background-color: gray;
+  width: 100vw;
+  height: 100vh;
+}

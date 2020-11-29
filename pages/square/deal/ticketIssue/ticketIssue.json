@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "issueHead": "/components/common/issueHead/issueHead",
+    "navBar": "/components/navBar/navBar",
+    "bottomBar": "/components/square/deal/bottomBar/bottomBar"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "fansFollowList": "/components/my/fansFollowList/fansFollowList",
+    "navBar": "/components/navBar/navBar"
+  },
+  "disableScroll": true
+}

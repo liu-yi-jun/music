@@ -1,0 +1,10 @@
+<!--components/common/comment/inputBox/inputBox.wxml-->
+<view class="main">
+  <form bindsubmit="formSubmit">
+    <view class="textareaWarp" style="bottom:{{keyBoardHeight}}" wx:if="{{showTextara}}">
+      <textarea value="{{comment}}" name="comment" disable-default-padding bindinput="input" auto-height show-confirm-bar="{{false}}" auto-focus
+        adjust-position="{{false}}"></textarea>
+      <button form-type="submit" >发送</button>
+    </view>
+  </form>
+</view>

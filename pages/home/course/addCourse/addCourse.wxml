@@ -1,0 +1,80 @@
+<!--pages/home/course/addCourse/addCourse.wxml-->
+<view class="addCourse">
+  <canvas canvas-id='canvas' class='canvas'></canvas>
+  <navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' back="{{true}}" iconTheme='white'
+    bindback="handlerGobackClick"></navBar>
+
+  <form bindsubmit="formSubmit">
+    <issueHead avatarUrl="{{avatarUrl}}" nickName="{{nickName}}">
+    </issueHead>
+    <scroll-view style="height:{{excludeHeight-160}}rpx" scroll-y>
+      <view class="Wrap">
+        <view class="addImg-poster">
+          <view class="addImg-limit" wx:if="{{!posterUrl}}">
+            <image catchtap="addImg" mode="aspectFill" class="addImg" src="http://use.eigene.cn/bigAdd.png"></image>
+            <text class="limit">上传课程封面海报，图需小于2M</text>
+          </view>
+          <image wx:else class="poster" src="{{posterUrl}}" mode="aspectFill"></image>
+        </view>
+        <view class="courseNameWrap">
+          <text class="courseName">课程名称：</text>
+          <input class="courseNameInput" name="courseName"></input>
+        </view>
+        <view class="courseIntroduceWrap">
+          <text class="courseIntroduce">课程介绍：</text>
+          <textarea class="courseIntroduceTextarea" name="introduce" placeholder="请添加课程描述……"
+            placeholder-class="placeholder"></textarea>
+        </view>
+        <view class="media">
+          <view class="audioWrap">
+            <image class="deleteData" src="http://cdn.eigene.cn/addCourse/deleteData.png" data-type="1"
+              catchtap="deleteData" wx:if="{{tempRecordPath}}"></image>
+            <text>音频示范:</text>
+            <view class="btnWrap">
+              <view class="btn" catchtap="audioSheet" wx:if="{{!tempRecordPath}}">上传音频</view>
+              <view class="recordWrap" wx:else>
+                <view class="playRecord" catchtap="playRecord" style="width:{{soundWidth}}rpx">
+                  <image class="recordImg" src="http://cdn.eigene.cn/play{{isPlay?'ing':''}}.gif"></image>
+                  <text wx:if="{{duration}}" class="recordTime">{{duration}}s</text>
+                </view>
+              </view>
+            </view>
+          </view>
+          <view class="videoWrap">
+            <image wx:if="{{tempVideoPath}}" class="deleteData" src="http://cdn.eigene.cn/addCourse/deleteData.png"
+              data-type="2" catchtap="deleteData"></image>
+            <text>课程视频:</text>
+            <view class="btnWrap">
+              <view wx:if="{{!tempVideoPath}}" class="btn" catchtap="videoSheet">上传视频</view>
+              <video class="video" wx:else src="{{tempVideoPath}}" object-fit="cover"></video>
+            </view>
+          </view>
+          <view class="pictureurlWrap">
+            <image wx:if="{{tempPicturePaths.length}}" class="deleteData"
+              src="http://cdn.eigene.cn/addCourse/deleteData.png" data-type="3" catchtap="deleteData"></image>
+            <text>课程资料:</text>
+            <view class="btnWrap">
+              <view wx:if="{{!tempPicturePaths.length}}" class="btn" catchtap="pictureurlSheet">上传资料</view>
+              <view class="imgWrap" wx:else>
+                <image mode="aspectFill" class="datumImg" wx:for="{{tempPicturePaths}}" wx:key="index" src="{{item}}"
+                  catchtap="previewImage" data-src="item">
+                </image>
+                <view catchtap="choosePicture" class="addDatum" wx:if="{{tempPicturePaths.length < 4}}">
+                  <view class="row"></view>
+                  <view class="column"></view>
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </scroll-view>
+    <view  catchtap="cancelPopup" catchtouchmove="touchmove" class="mask {{dialogShow? 'shadeShow':''}}">
+      <view class="popup" catchtap="return" >
+        <textarea wx:if="{{dialogShow}}" value="{{linkUrl}}" bindinput="inputLinkUrl" class="popupTextarea" placeholder="请输入{{currentType==1?'音频':(currentType==2?'视频':'资料')}}链接" ></textarea>
+        <view class="complete" catchtap="complete">完成</view>
+      </view>
+    </view>
+    <record id="record" bind:recordResult="recordResult"></record>
+  </form>
+</view>

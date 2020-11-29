@@ -1,0 +1,24 @@
+<!--components/my/fansFollowList/fansFollowList.wxml-->
+<view class="fansFollowList">
+  <view class="row" wx:for="{{list}}" wx:key="id">
+    <image class="avatar" src="{{item.avatarUrl}}" catchtap="goPersonal" data-userid="{{item.id}}"></image>
+    <view class="information">
+      <view class="left">
+        <text class="name">{{item.nickName}}</text>
+        <view class="nameBotoom">
+          <text wx:if="{{item.gender=== 1}}">♂</text>
+          <text wx:if="{{item.gender=== 2}}">♀</text>
+          <text class="constellation" wx:if="{{item.constellation}}">{{item.constellation}}</text>
+          <text wx:if="{{item.age}}">{{item.age}}岁</text>
+          <!-- <text class="icon">♂</text>
+          <text>处女座</text>
+          <text>24岁</text> -->
+        </view>
+      </view>
+      <view class="right followed" wx:if="{{item.followType === 3}}" catchtap="cancelFollow" data-followtype="{{item.followType}}" data-index="{{index}}" data-otherid="{{item.id}}">互相关注</view>
+      <view class="right followed" wx:elif="{{item.followType === 2}}" catchtap="cancelFollow" data-followtype="{{item.followType}}" data-index="{{index}}" data-otherid="{{item.id}}">已关注</view>
+      <view class="right follow" wx:else catchtap="toFollow" data-followtype="{{item.followType}}" data-index="{{index}}" data-otherid="{{item.id}}">关注</view>
+    </view>
+  </view>
+
+</view>

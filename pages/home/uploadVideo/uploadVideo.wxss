@@ -1,0 +1,104 @@
+/* pages/home/uploadVideo/uploadVideo.wxss */
+
+.placeholder {
+  color: #c9cbcb;
+  font-size: 30rpx;
+}
+
+.textareaWarp {
+  position: relative;
+  height: 460rpx;
+}
+
+.textarea {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  width: 600rpx;
+  height: 360rpx;
+  box-sizing: border-box;
+  border-radius: 20rpx;
+  font-size: 30rpx;
+  padding: 30rpx;
+  color: white;
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.videoWrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 40rpx 0 80rpx;
+}
+
+.videoWrap::after {
+  content: "";
+  display: block;
+  width: 600rpx;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  height: 1rpx;
+  background-color: #b7b8b8;
+}
+
+.videoWrap video {
+  border-radius: 20rpx;
+  width: 600rpx;
+  height: 420rpx;
+}
+
+
+.locationWrap {
+  color: #b7b8b8;
+  margin: 20rpx auto 0;
+  width: 600rpx;
+  font-size: 30rpx;
+}
+
+
+.location {
+  display: inline-block;
+}
+.picker {
+  color: white;
+  margin-left: 34rpx;
+}
+.locationLogo {
+  width: 26rpx;
+  height: 36rpx;
+  position: relative;
+  top: 4rpx;
+}
+.locationText {
+  margin-left: 8rpx;
+}
+
+.issueWrap {
+  box-sizing: border-box;
+  padding: 60rpx 0 100rpx;
+}
+
+.issue {
+  width: 120rpx!important;
+  height: 72rpx!important;
+  background: #fff!important;
+  border: 1px solid #ab85d9!important;
+  opacity: 1!important;
+  border-radius: 23rpx!important;
+  text-align: center!important;
+  line-height: 72rpx!important;
+  color: #ab85d9!important;
+  margin: auto!important;
+}
+.add {
+  width: 180rpx;
+  height: 180rpx;
+  border-radius: 20rpx;
+}

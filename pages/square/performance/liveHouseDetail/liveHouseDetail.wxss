@@ -1,0 +1,212 @@
+/* pages/square/performance/liveHouseDetail/liveHouseDetail.wxss */
+
+
+.icon-time {
+  box-sizing: border-box;
+  padding: 20rpx 20rpx 50rpx 20rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1rpx solid #CACBCB;
+}
+
+.iconWrap {
+  display: flex;
+}
+
+
+.icon {
+  display: flex;
+  align-items: center;
+}
+
+.icon image {
+  width: 40rpx;
+  height: 40rpx;
+  margin-left: 20rpx;
+}
+
+.icon text {
+  color: white;
+  font-size: 26rpx;
+  margin-left: 10rpx;
+}
+
+.content {
+  font-size: 28rpx;
+  color: white;
+  padding: 30rpx 40rpx;
+  box-sizing: border-box;
+  word-break: break-all;
+  /* width: 98%;
+  margin: auto; */
+  border-bottom: 1rpx solid #cacbcb;
+}
+
+.wx-swiper-dots {
+  position: relative;
+  left: unset !important;
+  right: 0rpx;
+}
+
+.footerComment {
+  background: linear-gradient(to bottom, rgba(226, 145, 227, 0.5), rgba(0, 69, 207, 0.5));
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  z-index: 999;
+}
+
+/* 
+.commentWrap {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 40rpx 20rpx 0;
+}
+
+.commentWrap image {
+  width: 60rpx;
+  height: 60rpx;
+}
+
+.commentWrap text {
+  color: white;
+  font-size: 30rpx;
+  margin-left: 10rpx;
+} */
+
+.recordWrap {
+  width: 350rpx;
+  height: 350rpx;
+  margin: 20rpx auto;
+}
+
+.ticketWrap {
+  width: 655rpx;
+  margin: 100rpx auto 0rpx;
+  display: flex;
+  position: relative;
+  justify-content: flex-end;
+}
+
+.poster {
+  width: 257rpx;
+  height: 337rpx;
+  position: absolute;
+  top: -50rpx;
+  left: 0rpx;
+}
+
+.introduce {
+  width: 610rpx;
+  min-height: 387rpx;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 30rpx;
+  color: white;
+  box-sizing: border-box;
+  padding: 20rpx 30rpx;
+  box-shadow: 10rpx 10rpx 20rpx 8rpx rgba(0, 0, 0, .1);
+}
+
+.location {
+  font-size: 26rpx;
+}
+
+.introduce>.right {
+  margin-left: auto;
+  width: 350rpx;
+  font-size: 26rpx;
+  min-height: 300rpx;
+}
+
+.buy {
+  width: 130rpx;
+  height: 130rpx;
+  position: absolute;
+  right: 30rpx;
+  bottom: -52rpx;
+}
+
+.bar {
+  display: flex;
+  color: #B7B8B8;
+  box-sizing: border-box;
+  padding: 35rpx;
+  align-items: center;
+}
+
+.commentWrap,
+.datumWrap {
+  display: flex;
+  align-items: center;
+}
+
+.commentWrap {
+  margin-left: 30rpx;
+}
+
+.bar image {
+  width: 50rpx;
+  height: 50rpx;
+}
+
+.active {
+  color: white;
+}
+
+.bar text {
+  margin-left: 5rpx;
+  font-size: 28rpx;
+}
+
+.datum {
+  width: 35rpx !important;
+  height: 37rpx !important;
+}
+
+.datumText {
+  margin-left: 10rpx !important;
+}
+
+.richTextWrap {
+  color: white !important;
+  box-sizing: border-box;
+  padding: 0 50rpx;
+  font-size: 28rpx;
+  line-height: 50rpx;
+}
+
+.performanceIntroduction {
+  text-align: center;
+  margin: 20rpx 0;
+  font-weight: bold;
+  font-size: 30rpx;
+}
+
+.img {
+  width: 100%;
+}
+
+.row {
+  display: flex;
+  font-size: 24rpx;
+  height: 70rpx;
+  border-bottom: #B7B8B8 1rpx solid;
+  line-height: 70rpx;
+}
+
+.row>text {
+  margin-right: 10rpx;
+}
+
+.row>view {
+  color: black;
+  width: 250rpx;
+  white-space: nowrap; 
+  overflow: hidden;
+  text-overflow:ellipsis;
+}
+.right-bottom {
+  margin-top: 30rpx;
+}

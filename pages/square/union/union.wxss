@@ -1,0 +1,43 @@
+/* pages/square/union/union.wxss */
+
+/* .circularWrap {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  left: 333rpx;
+  top: 130rpx;
+} */
+
+.circular {
+  position: absolute;
+  border-radius: 50%;
+  /* width: 127rpx;
+  height: 127rpx;
+  background: linear-gradient(-100deg, rgba(226, 145, 227, 1), rgba(0, 69, 207, 1));
+  left: 333rpx;
+  top: 132rpx; */
+  animation-iteration-count: infinite;
+  animation-direction:alternate;
+  animation-timing-function:linear;
+}
+
+@keyframes shake {
+  from  {
+    transform: translateX(0) translateY(-10rpx);
+  }
+  to  {
+    transform: translateX(0) translateY(10rpx);
+  }
+}
+
+.circular text {
+  color: white;
+  position: absolute;
+  font-size: 22rpx;
+  left: 50%;
+  display: block;
+  transform: translateX(-50%);
+  bottom: -40rpx;
+  white-space: nowrap;
+}

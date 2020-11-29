@@ -1,0 +1,25 @@
+<!--components/square/deal/second/second.wxml-->
+<view class="second">
+  <view class="column" wx:for="{{seconds}}" wx:for-index="i" wx:for-item="second" wx:key="*this">
+    <view class="card" wx:for="{{second}}" wx:for-index="j" wx:key="*this">
+      <image class="img img{{item.id % 4}}" mode="aspectFill" src="{{item.pictureUrls[0]}}">
+      <image class="secondStore" data-i="{{i}}" data-j="{{j}}" catchtap="switchSecondStore"  src="http://cdn.eigene.cn/deal/secondStore{{item.isStore?'d':''}}.png"></image>
+      </image>
+      <view class="bottomContent">
+        <view class="goods">
+          <view class="left">
+            <text class="name">{{item.brand}}</text>
+            <text class="degree">{{item.newOld}}</text>
+          </view>
+          <view class="right">¥{{item.price}}</view>
+        </view>
+        <view class="wx">{{item.contact}}</view>
+        <view class="avatar-username">
+          <image class="avatar" src="{{item.avatarUrl}}"></image>
+          <text class="username">{{item.location}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+  <image class="issueDynamic" src="http://cdn.eigene.cn/deal/issueDynamic.png" catchtap="goSecondIssue"></image>
+</view>

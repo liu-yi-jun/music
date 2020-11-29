@@ -1,0 +1,13 @@
+/* components/home/course/courseDatum/courseDatum.wxss */
+.datumWrap {
+  box-sizing: border-box;
+  padding: 40rpx 25rpx;
+}
+.datum {
+  width: 100%;
+  height: auto;
+}
+
+.blank {
+  height: 200rpx;
+}

@@ -1,0 +1,45 @@
+<!--components/my/information/inform/inform.wxml-->
+<view class="inform">
+  <view class="row" wx:for="{{informs}}" wx:key="id">
+    <image catchtap="goPersonal" data-userid="{{item.userId}}" class="avatar" src="{{item.avatarUrl}}"></image>
+    <view class="content" catchtap="toDetail" data-index="{{index}}">
+      <view>
+        <text class="name">{{item.nickName}}</text>
+        <text class="elaborate" wx:if="{{item.theme === 'groupdynamics'}}">赞了你的小组动态</text>
+        <text class="elaborate" wx:if="{{item.theme === 'squaredynamics'}}">赞了你的广场动态</text>
+        <text class="elaborate" wx:if="{{item.theme === 'alliance'}}">赞了你的联盟活动</text>
+        <text class="elaborate" wx:if="{{item.theme === 'groupcourse'}}">赞了你的课程</text>
+      </view>
+      <text class="words">{{item.themeTitle}}</text>
+    </view>
+  </view>
+  <!-- <view class="row">
+    <image class="avatar" src="http://cdn.eigene.cn/avatar15.png" ></image>
+    <view class="content">
+      <view>
+        <text class="name">Raymond</text>
+        <text class="elaborate">赞了你的视频</text>
+      </view>
+      <text class="words">「爱你就像爱生命（cover房东的猫）」</text>
+    </view>
+  </view>
+  <view class="row">
+    <image class="avatar" src="http://cdn.eigene.cn/avatar16.png" ></image>
+    <view class="content">
+      <view>
+        <text class="name">Raymond</text>
+        <text class="elaborate">赞了你的视频</text>
+      </view>
+      <text class="words">「爱你就像爱生命（cover房东的猫）」</text>
+    </view>
+  </view><view class="row">
+    <image class="avatar" src="http://cdn.eigene.cn/avatar17.png" ></image>
+    <view class="content">
+      <view>
+        <text class="name">Raymond</text>
+        <text class="elaborate">赞了你的视频</text>
+      </view>
+      <text class="words">「爱你就像爱生命（cover房东的猫）」</text>
+    </view>
+  </view> -->
+</view>

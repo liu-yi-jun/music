@@ -1,0 +1,11 @@
+<!--pages/mass/mass.wxml-->
+<view class="mass">
+  <view class="joinClub">
+    <text class="text">加入社团</text>
+    <image catchtap="goJoinClub" class="img" src="http://use.eigene.cn/clubAdd.png"></image>
+  </view>
+  <view class="clubInto">
+    <text class="text">社团入驻</text>
+    <image catchtap="goClubInto" class="img" src="http://use.eigene.cn/clubAdd.png"></image>
+  </view>
+</view>

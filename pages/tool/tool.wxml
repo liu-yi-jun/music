@@ -1,0 +1,67 @@
+<!--pages/tool/tool.wxml-->
+<view catchtap="tap" class="tool">
+  <navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' iconTheme='white'></navBar>
+  <view class="head">
+    <view class="title">
+      <text class="title-top">搜索曲谱</text>
+      <text class="title-bottom">Search Score</text>
+    </view>
+  </view>
+  <view class="wrap">
+    <view class="logo-search">
+      <image class="logo" src="http://use.eigene.cn/picture.png"></image>
+      <view class="searchWrap">
+        <input class="search" value="{{groupName}}" bindconfirm="confirm">
+        </input>
+        <image class="searchLog" src="http://cdn.eigene.cn/search.png"></image>
+      </view>
+    </view>
+  </view>
+  <view data-id="{{item.id}}" catchtap="goOtherHome" class="circular" wx:for="{{circulars}}" style="{{item.style}}" catchtap="previewImage" data-src="{{item.src}}">
+    <!-- <text>{{item.id}}</text>
+    <text>{{item.groupName}}</text> -->
+  </view>
+  <view class="text1" catchtap="previewImage" data-src="{{circulars[0].src}}">
+    <!-- <img alt="解忧邵帅《写给黄淮》吉他谱1" src=""/> -->
+    <text class="number">1</text>
+    <text class="name">写给黄淮</text>
+    <text class="author">解忧邵帅 </text>
+  </view>
+  <view class="text2" catchtap="previewImage" data-src="{{circulars[1].src}}">
+    <text class="number">2</text>
+    <text class="name">童话</text>
+    <text class="author">光良</text>
+  </view>
+  <view class="text3" catchtap="previewImage" data-src="{{circulars[2].src}}">
+    <text class="number">3</text>
+    <text class="name">难以抗拒你的容颜</text>
+    <text class="author">林隆璇</text>
+  </view>
+  <view class="text4" catchtap="previewImage" data-src="{{circulars[3].src}}">
+    <text class="number">4</text>
+    <text class="name">会不会</text>
+    <text class="author">小雨滴</text>
+  </view>
+  <view class="text5" catchtap="previewImage" data-src="{{circulars[4].src}}">
+    <text class="number">5</text>
+    <text class="name">星空</text>
+    <text class="author">无月天</text>
+  </view>
+  <view class="text6"catchtap="previewImage" data-src="{{circulars[5].src}}">
+    <text class="number">6</text>
+    <text class="name">何必在一起</text>
+    <text class="author">梁晓雪/赵阳 </text>
+  </view>
+  <view class="text7" catchtap="previewImage" data-src="{{circulars[6].src}}">
+    <text class="number">7</text>
+    <text class="name">唯一</text>
+    <text class="author">王力宏</text>
+  </view>
+  <view class="text8" catchtap="previewImage" data-src="{{circulars[7].src}}">
+    <text class="number">8</text>
+    <text class="name">燕无歇</text>
+    <text class="author">堇临/刘涛</text>
+  </view>
+  <showTabBar tabBarBtnShow="{{tabBarBtnShow}}">
+  </showTabBar>
+</view>

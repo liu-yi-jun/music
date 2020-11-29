@@ -1,0 +1,180 @@
+/* pages/home/course/courseDetail/courseDetail.wxss */
+
+.head {
+  box-sizing: border-box;
+  padding: 60rpx 40rpx 30rpx;
+}
+
+.title {
+  color: white;
+}
+
+.viewWrap {
+  margin-top: 20rpx;
+  font-size: 22rpx;
+  color: #cacbcb;
+  display: flex;
+  align-items: center;
+}
+
+.viewImg {
+  width: 30rpx;
+  margin-right: 10rpx;
+  height: 20rpx;
+}
+
+.date {
+  margin-left: 40rpx;
+}
+
+.time {
+  margin-left: 15rpx;
+}
+
+.video {
+  width: 100%;
+}
+
+.fontWrap {
+  display: flex;
+  justify-content: flex-end;
+  box-sizing: border-box;
+  padding: 10rpx 0;
+}
+
+.fontWrap .img {
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.fontWrap .number {
+  color: white;
+  font-size: 26rpx;
+  margin-left: 10rpx;
+}
+
+.fontWrap .img-number {
+  display: flex;
+  align-items: center;
+  margin-right: 20rpx;
+}
+
+.avatarAreaWarp-introduce {
+  display: flex;
+  border-bottom: 2rpx solid #cacbcb;
+}
+
+.introduce {
+  font-size: 26rpx;
+  box-sizing: border-box;
+  padding: 10rpx 20rpx 20rpx 0rpx;
+  color: #cacbcb;
+  flex-grow: 1;
+  word-break:break-all
+}
+
+.avatarAreaWrap {
+  display: flex;
+  box-sizing: border-box;
+
+}
+.avatarVoiceWrap {
+  padding: 10rpx 20rpx 20rpx 20rpx;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  
+}
+.voiceWrap {
+  background-color: #ece4fc;
+  border-radius: 999rem;
+  margin-top: 30rpx;
+  height: 60rpx;
+  width: 246rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 0 15rpx;
+}
+.voice {
+  height: 30rpx;
+  width: 50rpx;
+}
+.voiceWrap text {
+  color: black;
+  font-size: 20rpx;
+}
+.name-organization {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin-left: 20rpx;
+  align-items: center;
+}
+
+.name-organization .name {
+  font-size: 26rpx;
+}
+
+.organization {
+  font-size: 16rpx;
+  text-align: center;
+  margin-top: 10rpx;
+  box-sizing: border-box;
+  padding: 5rpx 15rpx;
+  border-radius: 999rem;
+  background: white;
+}
+
+.avatar {
+  height: 70rpx;
+  width: 70rpx;
+  border-radius: 50%;
+}
+
+.bar {
+  display: flex;
+  color: #B7B8B8;
+  box-sizing: border-box;
+  padding: 35rpx;
+}
+.commentWrap, .datumWrap{
+  display: flex;
+  align-items: center;
+}
+.datumWrap {
+  margin-left: 30rpx;
+}
+.bar image {
+  width: 50rpx;
+  height: 50rpx;
+}
+.active {
+  color: white;
+}
+
+.bar text {
+  margin-left: 5rpx;
+  font-size: 28rpx;
+}
+
+.footerComment {
+  background: linear-gradient(to bottom, rgba(226, 145, 227, 0.5), rgba(0, 69, 207, 0.5));
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  z-index: 999;
+}
+.datum{
+  width: 35rpx!important;
+  height: 37rpx!important;
+}
+.datumText {
+  margin-left: 10rpx!important;
+}
+
+.recordImg {
+  width: 54rpx;
+  height: 30rpx;
+}

@@ -1,0 +1,51 @@
+/* components/common/record/record.wxss */
+
+.recordMask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 99999;
+  opacity: 0;
+  visibility: hidden;
+  background: rgba(0, 0, 0, 0.3);
+  transition: 0.4s all;
+  z-index: 999;
+  /* 解决点击穿透 */
+  pointer-events: auto
+}
+
+.recordMaskShow {
+  opacity: 1;
+  visibility: visible;
+}
+
+.recordWrap {
+  position: absolute;
+  width: 400rpx;
+  height: 400rpx;
+  top: 50%;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+
+.recordLogo {
+  width: 239rpx;
+  height: 276rpx;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  z-index: 9999;
+}
+
+.progress_canvas {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+
+}

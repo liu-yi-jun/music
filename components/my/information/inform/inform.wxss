@@ -1,0 +1,40 @@
+/* components/my/information/inform/inform.wxss */
+
+.inform {
+  margin-top: 70rpx;
+}
+.avatar {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+}
+
+.row {
+  box-sizing: border-box;
+  padding: 0 35rpx 60rpx 35rpx;
+  display: flex;
+}
+
+.content {
+  color: #b6b7b7;
+  margin-left: 20rpx;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+}
+
+.name {
+  color: white;
+  font-size: 30rpx;
+}
+
+.elaborate {
+  font-size: 33rpx;
+  margin-left: 20rpx;
+}
+
+.words {
+  font-size: 28rpx;
+  margin-top: 20rpx;
+}

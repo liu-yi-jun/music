@@ -1,0 +1,28 @@
+var rotate = 0;
+
+function ring(newValue, oldValue, ownerInstance, instance) {
+  console.log(newValue, oldValue, ownerInstance, instance)
+  var cliInstance = ownerInstance.selectComponent('#clip')
+  var leftInstance = ownerInstance.selectComponent('#left')
+  var rightInstance = ownerInstance.selectComponent('#right')
+  var loop = setInterval(function() {
+    if (rotate >= 100) {
+      rotate = 0;
+      right.addClass('width-none');
+      clip.removeClass('auto');
+    } else if (rotate > 50) {
+      right.removeClass('width-none');
+      clip.addClass('auto');
+    }
+    rotate++;
+    instance.setStyle({
+      "transform": 'rotate(' + 3.6 * rotate + 'deg)'
+    })
+    // left.style.transform = 'rotate(' + 3.6 * rotate + 'deg)';
+  }, 100)
+}
+
+
+module.exports = {
+  ring: ring
+}

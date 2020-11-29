@@ -1,0 +1,17 @@
+
+
+var currentX = 0
+
+function handleMovebleChange(event, ins) {
+  currentX = event.detail.x
+  var index = event.currentTarget.dataset.index
+  // console.log(JSON.stringify(event))
+  ins.selectComponent("#deleteLetter" + index).setStyle({
+    transform: 'translateX(' + -currentX + 'rpx)'
+  })
+}
+
+
+module.exports = {
+  handleMovebleChange: handleMovebleChange
+}

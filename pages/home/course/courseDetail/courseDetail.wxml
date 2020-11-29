@@ -1,0 +1,77 @@
+<!--pages/home/course/courseDetail/courseDetail.wxml-->
+<view class="learnGuitarDetail">
+  <navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' back="{{true}}" iconTheme='white'
+    bindback="handlerGobackClick"></navBar>
+  <view class="head">
+    <text class="title">{{detail.courseName}}</text>
+    <view class="view-time">
+      <view class="viewWrap">
+        <image class="viewImg" src="http://use.eigene.cn/views.png"></image>
+        <text>{{detail.views}}</text>
+        <text class="date">{{detail.releaseTime}}</text>
+        <!-- <text class="time">19:00</text> -->
+      </view>
+    </view>
+  </view>
+  <scroll-view style="height:{{excludeHeight-176}}rpx" scroll-y>
+    <video class="video" src="{{detail.videoUrl}}"
+      enable-auto-rotation show-mute-btn object-fit="cover"> </video>
+    <view class="fontWrap">
+      <view class="img-number">
+        <image class="img" src="http://cdn.eigene.cn/courseDetail/like.png"></image>
+        <text class="number">{{detail.likes}}</text>
+      </view>
+      <view class="img-number">
+        <image class="img" src="http://cdn.eigene.cn/courseDetail/store.png"></image>
+        <text class="number">{{detail.store}}</text>
+      </view>
+      <view class="img-number">
+        <image class="img" src="http://cdn.eigene.cn/courseDetail/comment.png"></image>
+        <text class="number">{{detail.comment}}</text>
+      </view>
+      <view class="img-number">
+        <image class="img" src="http://cdn.eigene.cn/courseDetail/share.png"></image>
+        <text class="number">{{detail.share}}</text>
+      </view>
+    </view>
+    <view>
+      <view class="avatarAreaWarp-introduce">
+        <view class="avatarVoiceWrap">
+          <view class="avatarAreaWrap">
+            <image class="avatar" src="{{detail.avatarUrl}}" catchtap="goPersonal"></image>
+            <view class="name-organization">
+              <text class="name">{{detail.nickName}}</text>
+              <text class="organization">{{detail.groupName}}</text>
+            </view>
+          </view>
+          <view catchtap="playRecord" class="voiceWrap" wx:if="{{detail.voiceUrl}}">
+            <image class="recordImg" src="http://cdn.eigene.cn/play{{isPlay?'ing':''}}.gif"></image>
+            <text wx:if="{{detail.duration}}">{{detail.duration}}s</text>
+          </view>
+        </view>
+        <view class="introduce">
+          {{detail.introduce}}
+        </view>
+      </view>
+    </view>
+    <view class="bar">
+      <view class="commentWrap {{current === 'comment' ? 'active' : ''}}" catchtap="switchBtn" data-current="comment">
+        <image class="comment" src="http://cdn.eigene.cn/courseDetail/comment.png"></image>
+        <text>评论</text>
+      </view>
+      <view class="datumWrap {{current === 'datum' ? 'active' : ''}}" catchtap="switchBtn" data-current="datum">
+        <image class="datum" src="http://cdn.eigene.cn/courseDetail/datum.png"></image>
+        <text class="datumText">课程资料</text>
+      </view>
+    </view>
+    <commentList wx:if="{{current === 'comment'}}" bind:toReply="toReply" commentArr="{{commentArr}}">
+    </commentList>
+    <courseDatum wx:else datumUrls="{{datumUrls}}">
+    </courseDatum>
+  </scroll-view>
+  <inputBox showTextara="{{showTextara}}" param="{{param}}" bind:completeCommentOrReply="completeCommentOrReply">
+  </inputBox>
+  <commentBar class="footerComment" bind:toComment="toComment" commenetBarData="{{commenetBarData}}"
+    bind:completeLike="completeLike" bind:completeStore="completeStore">
+  </commentBar>
+</view>

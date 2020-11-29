@@ -1,0 +1,20 @@
+<!--components/square/deal/bottomBar/bottomBar.wxml-->
+<view>
+  <view catchtap="cancelPopup" catchtouchmove="touchmove" class="mask {{dialogShow? 'shadeShow':''}}">
+    <view class="popup" mark:popup="true">
+      <text>输入金额</text>
+      <input bindinput="bindinput" type="number" class="moneyInput"> </input>
+      <view class="btnButtom">
+        <button class="btn_no" catchtap="cancel">取消</button>
+        <button class="btn_yes" catchtap="confirm">确定</button>
+      </view>
+    </view>
+  </view>
+  <view class="footer" style="bottom:{{keyBoardHeight}}">
+    <view class="footerInner">
+      <image src="http://cdn.eigene.cn/deal/picture.png" catchtap="chooseImg"></image>
+      <image src="http://cdn.eigene.cn/deal/video.png" catchtap="chooseVideo"></image>
+      <image catchtap="popupMoney" src="http://cdn.eigene.cn/deal/price.png"></image>
+    </view>
+  </view>
+</view>

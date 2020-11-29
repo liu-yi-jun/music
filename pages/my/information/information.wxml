@@ -1,0 +1,27 @@
+<!--pages/my/information/information.wxml-->
+<view class="information">
+  <navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' back="{{true}}" iconTheme='white'
+    bindback="handlerGobackClick"></navBar>
+  <view class="bar">
+    <text class="{{switchBtn === 'privateLetter' ? 'active' : ''}}" catchtap="switchBtn"
+      data-switchBtn="privateLetter">私信</text>
+    <view class="line"></view>
+    <text class="{{switchBtn === 'inform' ? 'active' : ''}}" catchtap="switchBtn" data-switchBtn="inform">通知</text>
+    <view class="line"></view>
+    <text class="{{switchBtn === 'system' ? 'active' : ''}}" catchtap="switchBtn" data-switchBtn="system">系统</text>
+  </view>
+  <scroll-view scroll-y style="height:{{excludeHeight-131}}rpx" bindscrolltolower="scrolltolower">
+    <view hidden="{{switchBtn !== 'privateLetter'}}">
+      <privateLetter userMessage="{{userMessage}}">
+      </privateLetter>
+    </view>
+    <view hidden="{{switchBtn !== 'inform'}}">
+      <inform informs="{{informs}}">
+      </inform>
+    </view>
+    <view hidden="{{switchBtn !== 'system'}}">
+      <system systems="{{systems}}">
+      </system>
+    </view>
+  </scroll-view>
+</view>

@@ -1,0 +1,5 @@
+<!--components/home/course/courseDatum/courseDatum.wxml-->
+<view class="datumWrap">
+  <image wx:for="{{datumUrls}}" wx:key="index" catchtap="preview" class="datum" src="{{item}}" mode="widthFix" data-src="{{item}}"></image>
+</view>
+<view class="blank"></view>

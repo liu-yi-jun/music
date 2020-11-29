@@ -1,0 +1,31 @@
+<!--pages/my/store/store.wxml-->
+<view class="store">
+  <navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' iconTheme='white' back="{{true}}"
+    bindback="handlerGobackClick"></navBar>
+  <view class="bar">
+    <text class="{{switchBtn === 'storeDynamic' ? 'active' : ''}}" catchtap="switchBtn" data-switchBtn="storeDynamic">动态</text>
+    <view class="line"></view>
+    <text class="{{switchBtn === 'storeCurriculum' ? 'active' : ''}}" catchtap="switchBtn"
+      data-switchBtn="storeCurriculum">课程</text>
+    <view class="line"></view>
+    <text class="{{switchBtn === 'storeAlliance' ? 'active' : ''}}" catchtap="switchBtn"
+      data-switchBtn="storeAlliance">联盟活动</text>
+    <view class="line"></view>
+    <text class="{{switchBtn === 'storePerformance' ? 'active' : ''}}" catchtap="switchBtn"
+      data-switchBtn="storePerformance">演出咨讯</text>
+  </view>
+  <scroll-view bindscrolltolower="scrolltolower" scroll-y style="height:{{excludeHeight-130}}rpx">
+    <view hidden="{{switchBtn !== 'storeDynamic'}}">
+      <dynamicList id="dynamicList" isInvitation="{{true}}" dynamics="{{dynamics}}"></dynamicList>
+    </view>
+    <view hidden="{{switchBtn !== 'storeCurriculum'}}">
+      <courseList courses="{{courses}}"></courseList>
+    </view>
+    <view hidden="{{switchBtn !== 'storeAlliance'}}">
+      <allianceList alliances="{{alliances}}"> </allianceList>
+    </view>
+    <view hidden="{{switchBtn !== 'storePerformance'}}">
+      <liveHouse> </liveHouse>
+    </view>
+  </scroll-view>
+</view>

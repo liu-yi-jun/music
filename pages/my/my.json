@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "showTabBar": "/components/common/showTabBar/showTabBar",
+    "navBar": "/components/navBar/navBar"
+  },
+  "disableScroll": true
+}

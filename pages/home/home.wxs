@@ -1,0 +1,151 @@
+var style = [{
+    index: 0,
+    bottom: 85,
+    scaleX: 0.2,
+    scaleY: 0.1,
+    opacity: 0,
+  },
+  {
+    index: 1,
+    bottom: 79,
+    scaleX: 0.4,
+    scaleY: 0.2,
+    opacity: 1,
+  },
+  {
+    index: 2,
+    bottom: 68,
+    scaleX: 0.5,
+    scaleY: 0.3,
+    opacity: 1,
+  },
+  {
+    index: 3,
+    bottom: 54,
+    scaleX: 0.6,
+    scaleY: 0.4,
+    opacity: 1,
+  },
+  {
+    index: 4,
+    bottom: 34,
+    scaleX: 0.8,
+    scaleY: 0.6,
+    opacity: 1,
+  },
+  {
+    index: 5,
+    bottom: 4,
+    scaleX: 1,
+    scaleY: 1,
+    opacity: 1,
+  },
+  {
+    index: 6,
+    bottom: -50,
+    scaleX: 1,
+    scaleY: 1,
+    opacity: 0,
+  }
+]
+
+var startY = 0
+var startX = 0
+var endY = 0
+var endX = 0
+var fixedindex = 0
+// 能够点击的
+var ableIndex = 5
+var url = ''
+var scrollArea = false
+var member = []
+
+function touchstart(e) {
+
+  scrollArea = e.instance.getDataset().scrollarea
+  console.log(scrollArea)
+  if (!scrollArea) {
+    fixedindex = e.instance.getDataset().fixedindex
+    url = e.instance.getDataset().url
+  }
+  startY = e.changedTouches[0].clientY
+  startX = e.changedTouches[0].clientX
+}
+
+function touchend(e, ins) {
+  endX = e.changedTouches[0].clientX
+  endY = e.changedTouches[0].clientY
+  moveRealize(ins)
+}
+
+function moveRealize(ins) {
+  console.log(fixedindex, ableIndex)
+  var i = 0
+  var temp
+  if (Math.abs(endY - startY) > 5 || Math.abs(endX - startX) > 5) {
+    // 向上滑
+    if (startY - endY > 50) {
+      ableIndex++
+      temp = style[style.length - 1]
+      i = style.length - 1
+      for (i; i > 0; i--) {
+        style[i] = style[i - 1]
+      }
+      style[i] = temp
+      render(ins)
+    } else if (endY - startY > 50) {
+      ableIndex--;
+      temp = style[0]
+      for (i; i < style.length - 1; i++) {
+        style[i] = style[i + 1]
+      }
+      style[i] = temp
+      render(ins)
+    }
+  } else {
+    // 点
+    if (!scrollArea) {
+      if (fixedindex == ableIndex) {
+        // ins.callMethod('goAlliance', {
+        //   url: url
+        // })
+      } else {
+        for (i; i < ableIndex - fixedindex; i++) {
+          temp = style[0]
+          for (var j = 0; j < style.length - 1; j++) {
+            style[j] = style[j + 1]
+          }
+          style[j] = temp
+        }
+        ableIndex = fixedindex
+        render(ins)
+      }
+    }
+  }
+}
+
+function render(ins) {
+  console.log(fixedindex, ableIndex)
+  for (var i = 0; i < 7; i++) {
+    ins.selectComponent('.section-' + i).setStyle({
+      bottom: style[i].bottom + '%',
+      transform: 'scale(' + style[i].scaleX + ',' + style[i].scaleY + ')',
+      opacity: style[i].opacity,
+    })
+  }
+}
+
+function pushMember(newValue, oldValue, ownerInstance, instance) {
+  console.log(JSON.stringify(instance.selectComponent('.section-1').url) )
+  if (!oldValue) {
+    member = newValue
+  }
+}
+
+
+module.exports = {
+  touchstart: touchstart,
+  touchend: touchend,
+  style: style,
+  pushMember: pushMember
+}

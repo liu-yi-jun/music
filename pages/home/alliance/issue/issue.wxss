@@ -1,0 +1,73 @@
+/* pages/home/alliance/issue/issue.wxss */
+
+.issue {
+  height: 100%;
+}
+
+.placeholder, .picker {
+  color: #b6b7b7;
+}
+
+.form {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 50rpx;
+}
+
+.form input, .date {
+  box-sizing: border-box;
+  border-bottom: 1rpx solid white;
+  margin-top: 70rpx;
+  padding: 0rpx 20rpx;
+  /* height: 60rpx; */
+  color: white;
+}
+
+.warptextarea {
+  height: calc(100vh - 220rpx);
+  width: 100%;
+}
+
+.form textarea {
+  box-sizing: border-box;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 20rpx;
+  width: 100%;
+  margin-top: 70rpx;
+  padding: 20rpx 20rpx;
+  min-height: 377rpx;
+  color: white;
+}
+
+.scroll {
+  height: calc(100vh - 160rpx);
+  width: 100%;
+}
+
+.footer {
+  transition: all 0.4s;
+  background: linear-gradient(to bottom, rgba(226, 145, 227, 0.5), rgba(0, 69, 207, 0.5));
+  position: fixed;
+  width: 100%;
+  height: 135rpx;
+  bottom: 0;
+  z-index: 999;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.footerInner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 50rpx;
+  height: 100%;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.footer image {
+  width: 78rpx;
+  height: 78rpx;
+  border-radius: 50%;
+}

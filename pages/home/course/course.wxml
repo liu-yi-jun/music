@@ -1,0 +1,16 @@
+<!--pages/home/course/course.wxml-->
+<view class="course">
+ <navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' back="{{true}}" iconTheme='white' bindback="handlerGobackClick"></navBar>
+  <view class="head">
+    <view class="title">
+      <text class="title-top">课程</text>
+      <text class="title-bottom">Course</text>
+    </view>
+  </view>
+  <scroll-view bindscrolltolower="scrolltolower" style="height:{{excludeHeight-134}}rpx"  scroll-y>
+  <courseList courses="{{courses}}">
+  </courseList>
+  </scroll-view>
+ 
+  <image wx:if="{{isMyGroup && groupDuty!=-1}}" class="issueDynamic" src="http://cdn.eigene.cn/course/issueDynamic.png" catchtap="goAddCourse"></image>
+</view>

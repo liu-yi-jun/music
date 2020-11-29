@@ -1,0 +1,181 @@
+/* pages/home/uploadVoice/uploadVoice.wxss */
+
+.soundRecordWrap {
+  height: 500rpx;
+  position: relative;
+}
+
+.soundRecord {
+  width: 447rpx;
+  height: 447rpx;
+  margin: auto;
+  position: absolute;
+  bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+.placeholder {
+  color: #c9cbcb;
+  font-size: 30rpx;
+}
+
+.textareaWarp {
+  position: relative;
+  height: 460rpx;
+}
+
+.textarea {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  width: 600rpx;
+  height: 360rpx;
+  box-sizing: border-box;
+  border-radius: 20rpx;
+  font-size: 30rpx;
+  padding: 30rpx;
+  color: white;
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.locationWrap {
+  color: #b7b8b8;
+  margin: 20rpx auto 0;
+  width: 600rpx;
+  font-size: 30rpx;
+}
+
+
+.location {
+  display: inline-block;
+}
+.picker {
+  color: white;
+  margin-left: 34rpx;
+}
+.locationLogo {
+  width: 26rpx;
+  height: 36rpx;
+  position: relative;
+  top: 4rpx;
+}
+.locationText {
+  margin-left: 8rpx;
+}
+
+
+.issueWrap {
+  box-sizing: border-box;
+  padding: 60rpx 0 100rpx;
+}
+
+.issue {
+  width: 120rpx!important;
+  height: 72rpx!important;
+  background: #fff!important;
+  border: 1px solid #ab85d9!important;
+  opacity: 1!important;
+  border-radius: 23rpx!important;
+  text-align: center!important;
+  line-height: 72rpx!important;
+  color: #ab85d9!important;
+  margin: auto!important;
+}
+
+.remake {
+  position: absolute;
+  border-radius: 50%;
+  width: 115rpx;
+  height: 115rpx;
+  z-index: 10;
+  right: 0;
+  bottom: 0;
+  background-image: url('http://cdn.eigene.cn/uploadVoice/remake.png');
+  background-repeat: no-repeat;
+  background-size: 52rpx 57rpx;
+  background-position: center;
+}
+
+.count {
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: #e99fe1;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.clip {
+  width: 378rpx;
+  height: 378rpx;
+  position: absolute;
+  margin: auto;
+  left: 0rpx;
+  top: 0rpx;
+  right: 0rpx;
+  bottom: 0rpx;
+  border: 8rpx solid transparent;
+  border-radius: 50%;
+  clip: rect(0, 394rpx, 394rpx, 197rpx);
+  z-index: 10;
+}
+
+.left {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  border: 8rpx solid white;
+  border-radius: 50%;
+  clip: rect(0, 197rpx, 394rpx, 0);
+  left: -8rpx;
+  top: -8rpx;
+  z-index: 20;
+}
+
+.right {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  border: 8rpx solid white;
+  border-radius: 50%;
+  clip: rect(0, 394rpx, 394rpx, 197rpx);
+  left: -8rpx;
+  top: -8rpx;
+  z-index: 30;
+}
+
+.clipPlay {
+  width: 330rpx;
+  height: 330rpx;
+  left: 25rpx;
+  top: 25rpx;
+  right: auto;
+  bottom: auto;
+  clip: rect(0, 346rpx, 346rpx, 173rpx);
+  /* border: 8rpx solid red; */
+}
+
+.leftPlay {
+  clip: rect(0, 173rpx, 346rpx, 0);
+}
+
+.rightPlay {
+  clip: rect(0, 346rpx, 346rpx, 173rpx);
+}
+
+
+.width-none {
+  width: 0;
+}
+
+.auto {
+  clip: auto;
+}

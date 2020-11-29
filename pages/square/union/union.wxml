@@ -1,0 +1,7 @@
+<!--pages/square/union/union.wxml-->
+<view>
+  <navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' back="{{true}}" iconTheme='white' bindback="handlerGobackClick"></navBar>
+  <view data-id="{{item.id}}" catchtap="goOtherHome" class="circular"  wx:for="{{circulars}}" style="{{item.style}}" >
+    <text>{{item.groupName}}</text>
+  </view>
+</view>

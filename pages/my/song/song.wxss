@@ -1,0 +1,92 @@
+/* pages/my/song/song.wxss */
+
+.head {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 40rpx 14rpx 30rpx 40rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title::before {
+  content: "";
+  display: block;
+  position: absolute;
+  height: 80%;
+  width: 1rpx;
+  background-color: #a3a3a4;
+  left: 0rpx;
+  top: 0rpx;
+  bottom: 0rpx;
+  margin: auto;
+}
+
+.title {
+  display: flex;
+  flex-direction: column;
+  /* border-left: 1rpx #a3a3a4 solid; */
+  padding-left: 14rpx;
+  position: relative;
+}
+
+.title-top {
+  color: #fff;
+  font-size: 34rpx;
+}
+
+.title-bottom {
+  color: #cacbcb;
+  font-size: 22rpx;
+}
+
+.songList {
+  margin-top: 40rpx;
+  box-sizing: border-box;
+  padding: 0 30rpx 40rpx;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.publicityImg {
+ width: 100%;
+  height: 360rpx;
+  display: block;
+}
+
+.card {
+  margin-bottom:10rpx;
+  width: 340rpx;
+}
+
+.bottom {
+  height: 170rpx;
+  background: black;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  box-sizing: border-box;
+  padding: 0 20rpx;
+  align-items: center;
+}
+
+.play {
+  width: 68rpx;
+  height: 68rpx;
+}
+
+.songName-author {
+  display: flex;
+  flex-direction: column;
+}
+
+.songName {
+  width: 220rpx;
+  font-size: 24rpx;
+}
+
+.author {
+  margin-top: 10rpx;
+  font-size: 22rpx;
+}

@@ -1,0 +1,165 @@
+/* pages/my/invitation/invitation.wxss */
+
+.information {
+  position: relative;
+  height: 400rpx;
+  width: 100%;
+}
+
+
+.number {
+  color: white;
+  font-size: 62rpx;
+  margin-left: 10rpx;
+}
+
+.text {
+  color: #b6b7b7;
+  font-size: 30rpx;
+}
+
+.backgroundImg {
+  width: 100%;
+  height: 400rpx;
+  border-top-left-radius: 35% 55%;
+  position: relative;
+}
+
+.avatar {
+  width: 133rpx;
+  height: 133rpx;
+  border-radius: 50%;
+}
+
+.name {
+   margin-top: 10rpx;
+  font-size: 35rpx;
+}
+
+.nameBotoom {
+  font-size: 22rpx;
+}
+
+.constellation {
+  margin: 0 10rpx;
+}
+
+.icon {
+  width: 13px;
+  height: 18px;
+  font-size: 13px;
+  font-family: SourceHanSansCN-Regular-GBpc-EUC-H;
+  line-height: 16px;
+  color: rgba(255, 255, 255, 1);
+  letter-spacing: 47px;
+  opacity: 1;
+}
+
+.organization {
+  position: absolute;
+  left: 50%;
+  text-align: center;
+  transform: translate(-50%, 0);
+  padding: 8rpx 30rpx;
+  bottom: -23rpx;
+  z-index: 999;
+  background-color: white;
+  border-radius: 999rem;
+  font-size: 22rpx;
+}
+
+.portion {
+  display: flex;
+  align-items: center;
+}
+
+.btn {
+  /* transition: all 0.3s; */
+  margin-left: 17rpx;
+  box-sizing: border-box;
+  color: white;
+  font-size: 28rpx;
+  height: 50rpx;
+  line-height: 50rpx;
+}
+
+.letter {
+  position: absolute;
+  right: 28rpx;
+  color: white;
+  top: -25rpx;
+  font-size: 26rpx;
+  border-radius: 15rpx;
+  height: 50rpx;
+  line-height: 50rpx;
+  box-shadow: 0rpx 0rpx 6rpx 6rpx rgba(0, 0, 0, 0.1);
+  background-color: #aa7edf;
+  width: 120rpx;
+  text-align: center;
+}
+
+.bar {
+  position: relative;
+  /* height: 85rpx; */
+  display: flex;
+  box-sizing: border-box;
+  align-items: center;
+  width: 97%;
+  margin: 0 auto;
+  padding-bottom: 20rpx;
+  border-bottom: 1rpx solid #c9caca;
+}
+
+.active {
+  width: 100rpx;
+  font-size: 30rpx;
+  background-color: #aa7edf;
+  border-radius: 10rpx;
+  box-shadow: 0rpx 0rpx 6rpx 6rpx rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.square {
+  width: 15rpx;
+  height: 15rpx;
+  margin-left: 40rpx;
+  background-color: #aa7edf;
+}
+
+.statistics {
+  width: 100%;
+  height: 200rpx;
+  box-sizing: border-box;
+  padding: 0 20rpx;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.avatarName {
+  text-align: center;
+  color: white;
+  width: 300rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+   top: 135rpx;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+}
+
+.list{
+  box-sizing: border-box;
+  padding-top: 60rpx;
+}
+
+.follow {
+  position: absolute;
+  width: 70rpx;
+  height: 70rpx;
+  right: 50rpx;
+  top: 37rpx;
+}

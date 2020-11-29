@@ -1,0 +1,57 @@
+<!--pages/my/song/song.wxml-->
+<view class="song">
+  <navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' back="{{true}}" iconTheme='white'
+    bindback="handlerGobackClick"></navBar>
+  <view class="head">
+    <view class="title">
+      <text class="title-top">我的歌单</text>
+      <text class="title-bottom">MY MEUN</text>
+    </view>
+  </view>
+  <scroll-view bindscrolltolower="scrolltolower" style="height:{{excludeHeight-144}}rpx" scroll-y>
+    <view class="songList">
+      <view class="card" wx:for="{{songs}}" wx:key="id">
+        <image class="publicityImg" src="{{item.poster}}"></image>
+        <view class="bottom">
+          <view class="songName-author">
+            <text class="songName">{{item.songName}}</text>
+            <text class="author">{{item.author}}</text>
+          </view>
+          <image catchtap="playSong" data-index="{{index}}" class="play"
+            src="http://cdn.eigene.cn/{{item.isPlay?'songListPause':'songListPlay'}}.png"></image>
+        </view>
+      </view>
+
+      <!-- <view class="card">
+        <image class="publicityImg" src="http://use.eigene.cn/7ED0KW.png"></image>
+        <view class="bottom">
+          <view class="songName-author">
+            <text class="songName">童话镇Plus（Live）</text>
+            <text class="author">暗杠</text>
+          </view>
+          <image class="play" src="http://use.eigene.cn/songListPlay.png"></image>
+        </view>
+      </view>
+      <view class="card">
+        <image class="publicityImg" src="http://use.eigene.cn/rs91du.png"></image>
+        <view class="bottom">
+          <view class="songName-author">
+            <text class="songName">Old Time Rock & Roll</text>
+            <text class="author">Bob Seger</text>
+          </view>
+          <image class="play" src="http://use.eigene.cn/songListPlay.png"></image>
+        </view>
+      </view>
+      <view class="card">
+        <image class="publicityImg" src="http://use.eigene.cn/8ifdSZ.png"></image>
+        <view class="bottom">
+          <view class="songName-author">
+            <text class="songName">瓦力</text>
+            <text class="author">G2er</text>
+          </view>
+          <image class="play" src="http://use.eigene.cn/songListPlay.png"></image>
+        </view>
+      </view> -->
+    </view>
+  </scroll-view>
+</view>

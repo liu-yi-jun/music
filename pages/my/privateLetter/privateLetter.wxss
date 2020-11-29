@@ -1,0 +1,147 @@
+/* pages/my/privateLetter/privateLetter.wxss */
+
+.head {
+  height: 103rpx;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1rpx solid white;
+}
+
+.timeWrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 40rpx;
+}
+
+.time {
+  font-size: 24rpx;
+  color: white;
+  background: #b7b8b8;
+  display: inline-block;
+  border-radius: 8rpx;
+  padding: 2rpx 10rpx;
+  margin: auto;
+}
+
+.otherAvatar {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+  flex-shrink: 0
+}
+
+.otherAvatar {
+  margin-left: 30rpx;
+}
+
+.otherName-content {
+  margin-left: 30rpx;
+}
+
+.otherName {
+  color: white;
+  font-size: 24rpx;
+}
+
+.otherPart {
+  display: flex;
+  margin-top: 30rpx;
+}
+
+.otherContent {
+  margin-top: 10rpx;
+  background: white;
+  border-radius: 10rpx;
+  padding: 20rpx 30rpx 25rpx 30rpx;
+  position: relative;
+  max-width: 400rpx;
+  /* box-sizing: border-box; */
+  word-break: break-all;
+}
+
+.otherContent::after {
+  content: "";
+  display: block;
+  width: 0;
+  height: 0;
+  border-top: 20rpx solid white;
+  border-right: 20rpx solid transparent;
+  position: absolute;
+  top: 20rpx;
+  left: -15rpx;
+  border-left: 20rpx solid transparent;
+}
+
+.myContent {
+  margin-right: 30rpx;
+  background: white;
+  border-radius: 10rpx;
+  padding: 20rpx 30rpx 25rpx 30rpx;
+  position: relative;
+  max-width: 505rpx;
+  /* box-sizing: border-box; */
+  word-break: break-all;
+}
+
+.myContent::after {
+  content: "";
+  display: block;
+  width: 0;
+  height: 0;
+  border-top: 20rpx solid white;
+  border-right: 20rpx solid transparent;
+  position: absolute;
+  top: 20rpx;
+  right: -15rpx;
+  border-left: 20rpx solid transparent;
+}
+
+.myPart {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 40rpx;
+}
+
+.form {
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  transition: bottom 0.3s;
+}
+
+.messageBox {
+  width: 100%;
+  box-sizing: border-box;
+  border-top: 1rpx solid rgb(185, 185, 185);
+  padding: 20rpx;
+  /* padding-bottom: calc(20rpx + env(safe-area-inset-bottom)); */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 10;
+  background: linear-gradient(to bottom, rgba(226, 145, 227, 0.5), rgba(0, 69, 207, 0.5));
+  transition: 0.5s;
+}
+
+.messageBox textarea {
+  width: 70%;
+  border: 1rpx solid white;
+  border-radius: 40rpx;
+  color: white;
+  padding: 20rpx;
+  height: 42rpx;
+}
+
+.messageBox button {
+  color: white !important;
+  width: 20% !important;
+  height: 70rpx !important;
+  background: linear-gradient(to bottom, rgba(0, 69, 207, 0.5), rgba(226, 145, 227, 0.5)) !important;
+  box-shadow: 0px 0px 10rpx #777676 !important;
+  border-radius: 999rem !important;
+  text-align: center !important;
+  line-height: 70rpx !important;
+}

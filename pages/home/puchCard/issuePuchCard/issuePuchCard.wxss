@@ -1,0 +1,153 @@
+/* pages/home/puchCard/issuePuchCard/issuePuchCard.wxss */
+.issuePuchCard {
+  width:100%;
+  height:100%;
+}
+.card {
+  width: 630rpx;
+  height: 1070rpx;
+  position: absolute;
+  left: 0;
+  right: 0;
+  background: #a97ede;
+  border-radius: 60rpx;
+  top: 13.75%;
+  margin:auto;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.part {
+  color: white;
+  display: flex;
+  height: 50%;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.topUpload {
+  margin-bottom: 160rpx;
+}
+
+.bottomUpload {
+  margin-bottom: 350rpx;
+}
+
+.part view {
+  background: white;
+  color: #a97ede;
+  border-radius: 10rpx;
+  font-size: 26rpx;
+  padding: 8rpx 20rpx;
+  margin-top: 15rpx;
+}
+
+/* 
+.uploadData {
+  margin-bottom: 200rpx;
+} */
+
+.okLogo {
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 50%;
+  position: absolute;
+  right: 30rpx;
+  bottom: 50rpx;
+}
+
+.dataImg {
+  width: 500rpx;
+  height: 359rpx;
+  margin: 20rpx auto 40rpx;
+  border-radius: 10rpx;
+}
+
+.video {
+  width: 500rpx;
+  height: 359rpx;
+  margin: 20rpx auto 100rpx;
+  border-radius: 10rpx;
+}
+
+@media screen and (max-aspect-ratio: 1/2) { 
+
+  .card {
+    width: 84.1%;
+    height: 1100rpx;
+    position: absolute;
+    background: #a97ede;
+    border-radius: 60rpx;
+    margin:auto ;
+    top: 18.58%;
+    left: 0;
+    right: 0;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .part {
+    color: white;
+    display: flex;
+    height: 50%;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+  }
+  
+  .topUpload {
+    margin-bottom: 160rpx;
+  }
+  
+  .bottomUpload {
+    margin-bottom: 350rpx;
+  }
+  
+  .part view {
+    background: white;
+    color: #a97ede;
+    border-radius: 10rpx;
+    font-size: 26rpx;
+    padding: 8rpx 20rpx;
+    margin-top: 15rpx;
+  }
+  
+  /* 
+  .uploadData {
+    margin-bottom: 200rpx;
+  } */
+  
+  .okLogo {
+    width: 160rpx;
+    height: 160rpx;
+    border-radius: 50%;
+    position: absolute;
+    right: 30rpx;
+    bottom: 55rpx;
+  }
+  
+  .dataImg {
+    width: 500rpx;
+    height: 359rpx;
+    margin: 20rpx auto 40rpx;
+    border-radius: 10rpx;
+  }
+  
+  .video {
+    width: 500rpx;
+    height: 359rpx;
+    margin: 20rpx auto 100rpx;
+    border-radius: 10rpx;
+  }
+
+}
+

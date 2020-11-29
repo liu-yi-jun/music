@@ -1,0 +1,47 @@
+/* pages/home/course/course.wxss */
+
+
+.head {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 40rpx 14rpx 30rpx 40rpx;
+  display: flex;
+  align-items: center;
+}
+
+.title::before {
+  content: "";
+  display: block;
+  position: absolute;
+  height: 52rpx;
+  width: 1rpx;
+  background-color: #a3a3a4;
+  left: 0rpx;
+  top: 9rpx;
+}
+
+.title {
+  display: flex;
+  flex-direction: column;
+  /* border-left: 1rpx #a3a3a4 solid; */
+  padding-left: 14rpx;
+  position: relative;
+}
+
+.title-top {
+  color: #fff;
+  font-size: 30rpx;
+}
+
+.title-bottom {
+  color: #cacbcb;
+  font-size: 19rpx;
+}
+
+.issueDynamic {
+  width: 140rpx;
+  height: 140rpx;
+  position:fixed;
+  bottom: calc(69rpx + env(safe-area-inset-bottom));
+  right: 36rpx;
+}

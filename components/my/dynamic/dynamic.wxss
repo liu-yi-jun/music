@@ -1,0 +1,86 @@
+/* components/my/dynamic/dynamic.wxss */
+
+.head {
+  display: flex;
+}
+
+/* .setion {
+  display: flex;
+  flex-direction: column;
+} */
+
+.content {
+  color: white;
+  font-size: 28rpx;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 20rpx 0 20rpx 47rpx;
+}
+
+.rightImg {
+  margin-left: 10rpx;
+}
+
+.imgArae {
+  margin-top: 30rpx;
+}
+
+.imgArae image {
+  width: 259rpx;
+  height: 259rpx;
+  border-radius: 10rpx;
+}
+
+.left {
+  height: 77rpx;
+  display: flex;
+  align-items: center;
+}
+
+.right {
+  font-size: 20rpx;
+  display: block;
+  text-align: center;
+  padding: 8rpx 15rpx;
+  background-color: white;
+  border-radius: 999rem;
+}
+
+.name {
+  font-size: 35rpx;
+}
+
+.nameBotoom {
+  color: #b7b8b8;
+  font-size: 22rpx;
+}
+
+.nameBotoom > text {
+  margin-right: 10rpx;
+}
+
+.information {
+  box-sizing: border-box;
+  padding-left: 40rpx;
+  padding-right: 40rpx;
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.setion {
+  margin-bottom: 60rpx;
+}
+
+.dynamic {
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.avatar {
+  width: 80rpx;
+  height: 80rpx;
+  margin-right: 20rpx;
+  border-radius: 50%;
+}

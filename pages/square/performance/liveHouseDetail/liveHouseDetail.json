@@ -1,0 +1,9 @@
+{
+  "usingComponents": {
+    "navBar": "/components/navBar/navBar",
+    "commentBar": "/components/common/comment/commentBar/commentBar",
+    "inputBox": "/components/common/comment/inputBox/inputBox",
+    "commentList": "/components/common/commentList/commentList"
+  },
+  "disableScroll": true
+}

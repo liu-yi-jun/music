@@ -1,0 +1,72 @@
+/* components/my/fansFollowList/fansFollowList.wxss */
+
+.row {
+  display: flex;
+  margin-bottom: 50rpx;
+}
+
+.name {
+  font-size: 32rpx;
+  color: white;
+}
+
+.nameBotoom {
+  color: #b7b8b8;
+  font-size: 22rpx;
+}
+
+.nameBotoom > text {
+  margin-right: 10rpx;
+}
+
+.left {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.followed {
+  background: #b6b7b7;
+  color: white;
+}
+
+.eachFollowed {
+  color: #d18cdd;
+  background: white;
+}
+
+.follow {
+  color: #d18cdd;
+  background: white;
+}
+
+.right {
+  font-size: 24rpx;
+  border-radius: 999rem;
+  height: 50rpx;
+  width: 120rpx;
+  text-align: center;
+  line-height: 50rpx;
+}
+
+.information {
+  box-sizing: border-box;
+  padding: 0 30rpx;
+  display: flex;
+  flex-grow: 1;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.avatar {
+  width: 110rpx;
+  height: 110rpx;
+  border-radius: 50%;
+}
+
+.fansFollowList {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 10rpx 0 30rpx;
+  border-bottom: 1rpx #cacbcb solid;
+}

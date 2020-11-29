@@ -1,0 +1,18 @@
+<!--pages/my/fansFollow/fnasFollow.wxml-->
+<view class="fansFollow">
+  <navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' back="{{true}}" iconTheme='white'
+    bindback="handlerGobackClick"></navBar>
+  <view class="bar">
+    <text class="{{switchBtn === 'fans' ? 'active' : ''}}" catchtap="switchBtn" data-switchBtn="fans">{{isMy?'我': 'TA'}}的粉丝</text>
+    <view class="line"></view>
+    <text class="{{switchBtn === 'follow' ? 'active' : ''}}" catchtap="switchBtn" data-switchBtn="follow">{{isMy?'我': 'TA'}}的关注</text>
+  </view>
+  <scroll-view bindscrolltolower="scrolltolower" scroll-y style="height:{{excludeHeight-150}}rpx">
+    <view hidden="{{switchBtn !== 'fans'}}">
+      <fansFollowList list="{{fans}}"> </fansFollowList>
+    </view>
+    <view hidden="{{switchBtn !== 'follow'}}">
+      <fansFollowList list="{{follows}}"> </fansFollowList>
+    </view>
+  </scroll-view>
+</view>

@@ -1,0 +1,11 @@
+<!--pages/home/showInformation/showInformation.wxml-->
+<view class="showInformation">
+  <view class="bar">
+    <text class="{{switchBtn === 'LiveHouse' ? 'active' : ''}}" catchtap="switchBtn" data-switchBtn="LiveHouse">LiveHouse</text>
+    <view class="line"></view>
+    <text class="{{switchBtn === 'mussic' ? 'active' : ''}}" catchtap="switchBtn" data-switchBtn="mussic">音乐节</text>
+  </view>
+  <scroll-view scroll-y class="scroll">
+  <showInformationList></showInformationList>
+  </scroll-view>
+</view>

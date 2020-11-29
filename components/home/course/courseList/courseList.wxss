@@ -1,0 +1,138 @@
+/* components/home/course/courseList/courseList.wxss */
+
+.learnGuitarList {
+  box-sizing: border-box;
+  padding: 0 30rpx;
+}
+
+.card {
+  margin-bottom: 50rpx;
+  position: relative;
+  width: 100%;
+  background: white;
+  /* height: 370rpx; */
+  border-radius: 20rpx;
+  overflow: hidden;
+}
+
+.wallimg {
+  /* width: 632rpx; */
+  width: 100%;
+  height: 100%;
+}
+
+.img {
+  width: 100%;
+  height: 270rpx;
+  overflow: hidden;
+}
+
+.content {
+  width: 100%;
+  min-height: 150rpx;
+  box-sizing: border-box;
+  padding: 20rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.userName {
+  font-size: 20rpx;
+  display: block;
+}
+
+.organization {
+  /* font-weight: bold; */
+  color: white;
+  margin-top: 6rpx;
+  font-size: 15rpx;
+  padding: 6rpx 8rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #b37ae5;
+  border-radius: 999em;
+  height: 16rpx;
+}
+
+.userNameOrganization {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  position: absolute;
+  top: 330rpx;
+  width: 190rpx;
+  right: 9rpx;
+}
+
+.avatarBackground {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.avatar {
+  width: 110rpx;
+  height: 110rpx;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  position: absolute;
+  border-radius: 50%;
+}
+
+.avatarWrap {
+  width: 170rpx;
+  height: 175rpx;
+  top: 180rpx;
+  right: 20rpx;
+  position: absolute;
+}
+
+.advance {
+  width: 100%;
+}
+
+.title {
+  font-size: 24rpx;
+  width: 75%;
+}
+
+.iconWrap {
+  font-size: 24rpx;
+  box-sizing: border-box;
+  padding-left: 10rpx;
+  color: #808080;
+  margin-top: 18rpx;
+  display: flex;
+  align-items: center;
+}
+.store image {
+  width: 30rpx;
+  height: 30rpx;
+}
+.store, .views  {
+  display: flex;
+  align-items: center;
+}
+.views image {
+ width: 34rpx;
+  height: 24rpx;
+}
+
+.iconWrap text {
+  margin-left: 12rpx;
+}
+
+.iconWrap view {
+  display: flex;
+  align-content: center;
+  margin-right: 20rpx;
+}
+
+.blank {
+  height: 200rpx;
+}

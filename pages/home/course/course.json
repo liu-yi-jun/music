@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "courseList": "/components/home/course/courseList/courseList",
+    "navBar": "/components/navBar/navBar"
+  },
+  "disableScroll": true
+}

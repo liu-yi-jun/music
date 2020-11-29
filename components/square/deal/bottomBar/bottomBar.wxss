@@ -1,0 +1,103 @@
+/* components/square/deal/bottomBar/bottomBar.wxss */
+
+.footer {
+  transition: all 0.4s;
+  background: linear-gradient(to bottom, rgba(226, 145, 227, 0.5), rgba(0, 69, 207, 0.5));
+  position: fixed;
+  width: 100%;
+  height: 135rpx;
+  bottom: 0;
+  z-index: 999;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.footerInner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 50rpx;
+  height: 100%;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.footer image {
+  width: 78rpx;
+  height: 78rpx;
+  border-radius: 50%;
+}
+
+
+.popup {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  width: 580rpx;
+  height: 400rpx;
+  background: #FAFAFA;
+  border-radius: 10rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 99999;
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.4s all;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.shadeShow {
+  opacity: 1;
+  visibility: visible;
+}
+
+.moneyInput {
+  border: 2rpx solid #E9E9E9;
+  height: 60rpx;
+  width: 400rpx;
+}
+
+.btnButtom {
+  border-top: 1px solid #E8E8EA;
+  display: flex;
+  font: 20px "microsoft yahei";
+  width: 100%;
+}
+
+.btn_yes {
+  padding: 10px!important;
+  width: 50%!important;
+  text-align: center!important;
+  color: #3CC51F!important;
+}
+
+.btn_no {
+  padding: 10px!important;
+  text-align: center!important;
+  border-right: 1px solid #E8E8EA!important;
+  color: black!important;
+  width: 50%!important;
+}
+
+.popup {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.popup text {
+  margin-top: 40rpx;
+  font-size: 35rpx;
+}

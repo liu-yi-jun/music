@@ -1,0 +1,67 @@
+<!--pages/square/squarePost/squarePost.wxml-->
+<view class="squarePost">
+  <navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' back="{{true}}" iconTheme='white'
+    bindback="handlerGobackClick"></navBar>
+  <canvas canvas-id='canvas' class='canvas'></canvas>
+  <form bindsubmit="formSubmit">
+    <issueHead avatarUrl="{{avatarUrl}}" nickName="{{nickName}}">
+    </issueHead>
+    <scroll-view style="height:{{excludeHeight-160}}rpx" scroll-y>
+      <view class="wrap">
+        <textarea name="introduce" maxlength="5000" placeholder="说点什么吧……" placeholder-class="placeholder"
+          auto-height></textarea>
+        <view class="imgWrap" wx:if="{{tempImagePaths.length}}">
+          <view class="imgArea">
+            <image mode="aspectFill" catchtap="previewImage" data-id="{{index}}" wx:key="index" src="{{item}}"
+              wx:for="{{tempImagePaths}}">
+            </image>
+          </view>
+        </view>
+        <view class="wrapVideo" wx:if="{{tempVideoPath}}">
+          <video object-fit="cover" src="{{tempVideoPath}}"></video>
+        </view>
+        <view class="recordWrap" wx:if="{{tempRecordPath}}" >
+          <view class="playRecord" catchtap="playRecord" style="width:{{soundWidth}}rpx">
+            <image class="recordImg" src="http://cdn.eigene.cn/play{{isPlay?'ing':''}}.gif"></image>
+            <text class="recordTime">{{duration}}s</text>
+          </view>
+        </view>
+        <view class="topicWrap" wx:if="{{topicIndex !== undefine}}">
+          <view class="topic" catchtap="goTopic">
+            <text>#{{topics[topicIndex].topicName}}#</text>
+          </view>
+        </view>
+        <view class="locationWrap">
+          <view class="location" catchtap="getLocation">
+            <image class="locationLogo" src="http://cdn.eigene.cn/squarePost/locationLogo.png"></image>
+            <text class="locationText">你在哪里?</text>
+          </view>
+          <picker class="picker" bindchange="bindPickerChange" value="{{index}}" range="{{mks}}" range-key="title">
+            <view>
+              {{mks[index].title}}
+            </view>
+          </picker>
+        </view>
+      </view>
+    </scroll-view>
+  </form>
+  <record class="record" id="record" bind:recordResult="recordResult" recordTime="{{recordTime}}"></record>
+  <view class="footer" style="bottom:{{keyBoardHeight}}">
+    <view class="footerInner">
+      <view class="picker-image">
+        <picker class="topicPicker" bindchange="bindtopicPickerChange" value="{{topicIndex}}" range="{{topics}}"
+          range-key="topicName">
+          <view class="pickerView">
+            <!-- {{topics[index].topicName}} -->
+          </view>
+        </picker>
+        <image src="http://cdn.eigene.cn/squarePost/topic.png"></image>
+      </view>
+
+      <image catchtap="chooseImg" src="http://cdn.eigene.cn/squarePost/picture.png"></image>
+      <image catchtap="chooseVideo" src="http://cdn.eigene.cn/squarePost/video.png"></image>
+      <image src="http://cdn.eigene.cn/squarePost/record.png" catchtap="record"></image>
+    </view>
+  </view>
+
+</view>

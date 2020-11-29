@@ -1,0 +1,169 @@
+/* pages/my/editData/editData.wxss */
+
+.avatar {
+  width: 170rpx;
+  height: 170rpx;
+  border-radius: 50%;
+}
+
+.editDtata {
+  box-sizing: border-box;
+  padding-top: 100rpx;
+}
+
+.avatarWarp {
+  width: 100%;
+  height: 200rpx;
+  position: relative;
+}
+
+.avatarImg {
+  position: absolute;
+  width: 170rpx;
+  height: 170rpx;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+}
+
+.changeAvatar {
+  height: 60rpx;
+  width: 60rpx;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  z-index: 999;
+}
+
+.form {
+  width: 80%;
+  display: block;
+  margin: auto;
+  color: white;
+}
+
+.sexWarp {
+  display: flex;
+  margin-top: 40rpx;
+  align-items: center;
+}
+
+.sexWarp image {
+  margin-left: 40rpx;
+  width: 60rpx;
+  height: 60rpx;
+}
+
+.basicWarp {
+  display: flex;
+  justify-content: center;
+}
+
+.nickNameWrap,.ageWrap,.constellationWrap {
+  display: flex;
+  width: 440rpx;
+  margin-top: 40rpx;
+  padding-bottom: 8rpx;
+  border-bottom: 1rpx solid white;
+}
+
+.basic input {
+  flex-grow: 1;
+}
+.nickNameWrap> text,.ageWrap > text,.constellationWrap > text {
+  margin-right: 20rpx;
+} 
+.basic  text {
+  flex-shrink: 0;
+}
+
+.placeholder {
+  color: white;
+}
+
+.subordinate {
+  width: 100%;
+  padding-bottom: 8rpx;
+  border-bottom: 1rpx solid white;
+}
+
+.subPlaceholder {
+  color: #b7b8b8;
+}
+
+.introductionWarp, .demoteWarp, .subordinate {
+  margin-top: 60rpx;
+}
+
+.demote {
+  color: #b7b8b8;
+}
+
+.role {
+  margin-top: 20rpx;
+  display: flex;
+  justify-content: space-between;
+}
+
+.role view {
+  border: 1rpx solid #b7b8b8;
+  text-align: center;
+  line-height: 60rpx;
+  width: 148rpx;
+  height: 60rpx;
+  border-radius: 15rpx;
+  color: #b7b8b8;
+}
+
+.active {
+  background: #b7b8b8;
+  color: white !important;
+}
+
+.introduction {
+  color: white;
+}
+
+.limit {
+  font-size: 22rpx;
+  color: #b7b8b8;
+  margin-left: 8rpx;
+}
+
+.textarea {
+  margin-top: 20rpx;
+  width: 100%;
+  height: 300rpx;
+  box-sizing: border-box;
+  border-radius: 20rpx;
+  padding: 15rpx 15rpx;
+  color: white;
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.scroll {
+  width: 100%;
+  height: 100vh;
+}
+
+.summitWarp {
+  display: flex;
+  height: 250rpx;
+  justify-content: center;
+  align-items: center;
+}
+
+.summit {
+  border-radius: 999rem!important;
+  background: #ab7ee0!important;
+  width: 180rpx!important;
+  height: 60rpx!important;
+  line-height: 60rpx!important;
+  text-align: center!important;
+  color: white!important;
+  font-size: 32rpx!important;
+  box-shadow: 0rpx 0rpx 10rpx 2rpx rgba(0, 0, 255, .1)
+}
+

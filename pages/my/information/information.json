@@ -1,0 +1,9 @@
+{
+  "usingComponents": {
+    "privateLetter": "/components/my/information/privateLetter/privateLetter",
+    "inform": "/components/my/information/inform/inform",
+    "system": "/components/my/information/system/system",
+    "navBar": "/components/navBar/navBar"
+  },
+  "disableScroll": true
+}

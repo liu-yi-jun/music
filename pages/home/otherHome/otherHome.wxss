@@ -1,0 +1,495 @@
+/* pages/home/otherHome/otherHome.wxss */
+
+.home {
+  width: 100%;
+  height: 100%;
+  /* position: relative; */
+}
+
+page::before {
+  content: ' ';
+  position: fixed;
+  z-index: -999;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url("http://cdn.eigene.cn/home/background.png") no-repeat;
+  background-size: 100% 100%;
+}
+
+.avatar {
+  width: 80%;
+  height: 80%;
+  border-radius: 50%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+}
+
+.scroll-midguide {
+  position: absolute;
+  left: 209rpx;
+  bottom: 0;
+  height: 100%;
+  width: 350rpx;
+  z-index: 10;
+  justify-content: space-around;
+}
+
+.scrollArea {
+  position: absolute;
+  z-index: 20;
+  height: 71%;
+  width: 100%;
+  bottom: 0;
+}
+
+.section {
+  /* will-change: transform opacity bottom; */
+  z-index: 30;
+  transition: all 0.4s;
+  background: linear-gradient(to top, rgba(226, 145, 227, 1), rgba(0, 69, 207, 1));
+  font-weight: bold;
+  height: 30%;
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 50%;
+  position: absolute;
+}
+
+.top-area {
+  bottom: 22.01%;
+  height: 305rpx;
+  width: 100%;
+  position: absolute;
+  z-index: 100;
+  background: rgba(255, 0, 0, 0.1);
+}
+
+.bottom-area {
+  bottom: 0;
+  height: 305rpx;
+  width: 100%;
+  position: absolute;
+  z-index: 100;
+  background: rgba(0, 0, 255, 0.1);
+}
+
+.prompt {
+  width: 100%;
+  opacity: 0;
+  height: 0rpx;
+  transition: all 0.3s;
+  background-color: #fffbeb;
+  position: absolute;
+  z-index: 99;
+  display: flex;
+  align-items: center;
+}
+
+.show {
+  opacity: 1;
+  height: 68rpx;
+}
+
+.issue-background {
+  transition: all 0.3s;
+  position: absolute;
+  width: 0;
+  height: 0;
+  z-index: 10;
+  left: 30rpx;
+  bottom: 20.61%;
+  opacity: 0;
+  border-top-left-radius: 80% 100%;
+  border-bottom-right-radius: 70% 100%;
+}
+
+.showIssue {
+  opacity: 1;
+  width: 201rpx;
+  height: 356rpx;
+}
+
+.uploadVoice {
+  position: absolute;
+  left: 106rpx;
+  top: 16rpx;
+  width: 91rpx;
+  height: 69rpx;
+}
+
+.uploadVideo {
+  position: absolute;
+  left: 67rpx;
+  bottom: 186rpx;
+  width: 109rpx;
+  height: 85rpx;
+}
+
+.issueImg {
+  position: absolute;
+  left: 35rpx;
+  bottom: 90rpx;
+  width: 114rpx;
+  height: 93rpx;
+}
+
+.issueBtn {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 124rpx;
+  height: 87rpx;
+}
+
+.logo {
+  border-radius: 50%;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.follow {
+  position: absolute;
+  right: 3rpx;
+  bottom: 15rpx;
+  width: 60rpx;
+  height: 60rpx;
+}
+
+.functionBar {
+  position: absolute;
+  transition: 0.4s all;
+  height: 0rpx;
+  top: 288rpx;
+  width: 394rpx;
+  left: -55rpx;
+  z-index: 10;
+  background-image: url('http://cdn.eigene.cn/home/massBackground.png');
+  background-size: 100% 100%;
+  color: white;
+  font-size: 24rpx;
+  opacity: 0;
+  transform: scale(0);
+}
+
+.functionBarShow {
+  opacity: 1;
+  transform: scale(1);
+  height: 227rpx;
+}
+
+.puchCard image, .course image {
+  width: 100rpx;
+  height: 100rpx;
+  margin-bottom: 10rpx;
+}
+
+.puchCard, .course {
+  position: absolute;
+  transition: 0.3s all;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  left: 147rpx;
+  top: -20rpx;
+  visibility: hidden;
+  opacity: 0;
+}
+
+.puchCardShow {
+  transform: translateX(-90rpx);
+  visibility: visible;
+  top: 69rpx;
+  opacity: 1;
+}
+
+.courseShow {
+  transform: translateX(90rpx);
+  visibility: visible;
+  top: 69rpx;
+  opacity: 1;
+}
+
+.logoWrap {
+  position: absolute;
+  /* 变化 */
+  top: 8.84%;
+  /* 变化 x/750*不同设备像素  */
+  width: 285rpx;
+  height: 285rpx;
+  left: 238rpx;
+  z-index: 20;
+}
+
+.organizationName {
+  font-size: 22rpx;
+  font-weight: bold;
+  margin-top: 10rpx;
+}
+
+.organization {
+  font-size: 20rpx;
+  font-weight: bold;
+}
+
+.expandIssue {
+  position: absolute;
+  left: 30rpx;
+  bottom: 20.61%;
+  transition: 0.4s all;
+  height: 87rpx;
+  width: 124rpx;
+  transform: scale(0);
+  opacity: 0;
+}
+
+.showExpandIssue {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.socialManagement {
+  position: absolute;
+  left: 20rpx;
+  top: 80rpx;
+  width: 80rpx;
+  height: 80rpx;
+  z-index: 10;
+  background-image: url('http://cdn.eigene.cn/socialManagement.png');
+  background-size: 38rpx 38rpx;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.fanWrap, .memberWrap {
+  position: absolute;
+  color: white;
+  width: 165rpx;
+  height: 125rpx;
+  top: 218rpx;
+  text-align: center;
+  line-height: 125rpx;
+}
+
+.memberNumber, .fanNumber {
+  font-size: 50rpx;
+}
+
+.member, .fan {
+  font-size: 28rpx;
+  margin-left: 5rpx;
+}
+
+.memberWrap {
+  left: 70rpx;
+}
+
+.fanWrap {
+  right: 60rpx;
+}
+
+.unit {
+  font-size: 35rpx;
+}
+
+.logoName {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  position: absolute;
+  width: 100%;
+  height: 88rpx;
+  bottom: 0;
+  left: 0;
+  background: white;
+}
+
+.backgroundImg {
+  width: 100%;
+  height: 100%;
+  z-index: -99;
+  position: absolute;
+  top: 0rpx;
+  left: 0px;
+}
+
+.avatarBackground {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.dynamicShowBackground {
+  transition: 0.4s all;
+  position: absolute;
+  overflow: hidden;
+  left: 52rpx;
+  z-index: 100;
+  width: 652rpx;
+  bottom: 4%;
+  background-image: url('http://cdn.eigene.cn/dynamicShowBackground.png');
+  background-size: 100%;
+  background-repeat: no-repeat;
+  border-top-left-radius: 50% 20%;
+  border-top-right-radius: 50% 20%;
+  border-bottom-left-radius: 48% 80%;
+  border-bottom-right-radius: 48% 80%;
+}
+
+.hideDynamic {
+  height: 0rpx;
+  transform: scale(0);
+}
+
+.showDynamic {
+  transform: scale(1);
+  height: 971rpx;
+}
+
+.swiper {
+  position: absolute;
+  top: 198rpx;
+  left: 117rpx;
+  width: 418rpx;
+  height: 470rpx;
+  border-radius: 10rpx;
+  overflow: hidden;
+}
+.video {
+  position: absolute;
+  top: 210rpx;
+  left: 0;
+  right: 0;
+  margin: auto;
+  width: 480rpx;
+  height: 350rpx;
+}
+
+.dynamicImg {
+  width: 100%;
+  height: 418rpx;
+}
+
+.like-comment {
+  position: absolute;
+  left: 0;
+  top: 700rpx;
+  right: 0;
+  margin: auto;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.like-comment image {
+  width: 65rpx;
+  height: 59rpx;
+}
+
+.like-comment text {
+  font-size: 30rpx;
+  color: white;
+  margin-left: 20rpx;
+}
+
+.comment, .like {
+  display: flex;
+  align-items: center;
+}
+
+.comment {
+  margin-top: 40rpx;
+}
+
+.userName {
+  position: absolute;
+  font-size: 33rpx;
+  color: white;
+  width: 60%;
+  left: 0;
+  top: 66rpx;
+  right: 0;
+  margin: auto;
+  text-align: center;
+}
+
+.title-time {
+  position: absolute;
+  width: 418rpx;
+  left: 117rpx;
+  top: 142rpx;
+  display: flex;
+  justify-content: space-between;
+  box-sizing: border-box;
+  padding: 0 5rpx;
+}
+
+.title-time .title {
+  font-size: 26rpx;
+  color: white;
+}
+
+.title-time .time {
+  font-size: 24rpx;
+  color: #b5b6b6;
+}
+
+.shade {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 9999;
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.4s all;
+}
+
+.shadeShow {
+  opacity: 1;
+  visibility: visible;
+}
+
+.dialog {
+  width: 397rpx;
+  height: 347rpx;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  background: linear-gradient(to bottom, rgba(226, 145, 227, 0.6), rgba(0, 69, 207, 0.6));
+  border-radius: 40rpx;
+  box-sizing: border-box;
+  padding: 70rpx 30rpx 30rpx;
+  color: white;
+  font-size: 30rpx;
+  display: flex;
+  justify-content: space-between;
+  flex-flow: column;
+  text-align: center;
+}
+
+.yesOrNo {
+  display: flex;
+  justify-content: space-between;
+}
+
+.yesOrNo image {
+  width: 160rpx;
+  height: 160rpx;
+}

@@ -1,0 +1,104 @@
+/* components/square/performance/liveHouse/liveHouse.wxss */
+
+
+.img {
+  width: 124rpx;
+  height: 165rpx;
+  font-size: 0;
+  flex-shrink: 0;
+}
+
+.top {
+  box-sizing: border-box;
+  padding: 40rpx 70rpx 0 40rpx;
+  display: flex;
+  /* border-bottom: 10rpx dotted #4b5abf; */
+}
+
+.card {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 640rpx;
+  height: 350rpx;
+  border-radius: 20rpx;
+  background-image: url('http://cdn.eigene.cn/deal/cardBackground.png');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  position: relative;
+  left: 0;
+  right: 0;
+  margin: 30rpx auto;
+}
+
+.introduce {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-left: 20rpx;
+  flex-grow: 1;
+}
+
+.title {
+  font-size: 26rpx;
+  font-weight: bold;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+
+}
+
+.message {
+  font-size: 18rpx;
+  display: flex;
+  color: #808080;
+  flex-direction: column;
+}
+
+.bottom {
+  box-sizing: border-box;
+  padding: 0rpx 40rpx 20rpx 40rpx;
+  display: flex;
+  height: 106rpx;
+  align-items: center;
+  justify-content: space-between;
+}
+
+
+.money {
+  color: #ce4646;
+  font-size: 37rpx;
+}
+
+.issueDynamic {
+  width: 142rpx;
+  height: 142rpx;
+  position: fixed;
+  bottom: calc(69rpx + env(safe-area-inset-bottom));
+  right: 37rpx;
+}
+
+.fontWrap {
+  display: flex;
+  align-items: center;
+  margin-right: 30rpx;
+}
+
+.fontWrap image {
+  width: 40rpx;
+  height: 40rpx;
+
+}
+
+.fontWrap text {
+  color: #A97EDE;
+  margin-left: 5rpx;
+  font-size: 22rpx;
+}
+
+.fontBar {
+  display: flex;
+}

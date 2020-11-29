@@ -1,0 +1,101 @@
+/* pages/square/deal/deal.wxss */
+
+.title {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  margin-bottom: 20rpx;
+  box-sizing: border-box;
+  width: 85%;
+  margin: auto;
+}
+
+.title::before {
+  content: "";
+  display: block;
+  position: absolute;
+  height: 60rpx;
+  width: 1rpx;
+  background-color: #a3a3a4;
+  left: -20rpx;
+  top: 0;
+  bottom:0;
+  margin: auto 0; 
+}
+
+.title-top {
+  color: #fff;
+  font-size: 35rpx;
+}
+
+.title-bottom {
+  color: #cacbcb;
+  font-size: 21rpx;
+}
+
+.head {
+  box-sizing: border-box;
+  padding: 0 20rpx;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 10rpx;
+  margin-bottom: 20rpx;
+}
+
+.logo {
+  width: 47rpx;
+  height: 47rpx;
+  border-radius: 50%;
+}
+
+
+.line {
+  height: 26rpx;
+  border-left: 1rpx solid #a3a3a4;
+  margin: 0 20rpx;
+}
+
+.bar {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  /* padding: 0 20rpx; */
+}
+
+.bar text {
+  text-align: center;
+  box-sizing: border-box;
+  color: #b6b7b7;
+  font-size: 30rpx;
+}
+
+.active {
+  color: white !important;
+  transform: scale(1.1);
+}
+
+.searchLog {
+  width: 30rpx;
+  height: 32rpx;
+  position: absolute;
+  left: 18rpx;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+}
+
+.search {
+  width: 340rpx;
+  height: 60rpx;
+  box-sizing: border-box;
+  color: black!important;
+  padding: 0 30rpx 0 60rpx;
+  background: #e2e2e2;
+  border-radius: 999rem;
+}
+
+.searchWrap {
+  position: relative;
+}

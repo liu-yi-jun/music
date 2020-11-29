@@ -1,0 +1,28 @@
+<!--pages/square/performance/performance.wxml-->
+<view class="showInformation">
+  <navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' back="{{true}}" iconTheme='white'
+    bindback="handlerGobackClick"></navBar>
+  <view class="bar">
+    <text class="{{switchBtn === 'LiveHouse' ? 'active' : ''}}" catchtap="switchBtn"
+      data-switchBtn="LiveHouse">LiveHouse</text>
+    <view class="line"></view>
+    <text class="{{switchBtn === 'mussic' ? 'active' : ''}}" catchtap="switchBtn" data-switchBtn="mussic">音乐节</text>
+    <view class="line"></view>
+    <text class="{{switchBtn === 'advance' ? 'active' : ''}}" catchtap="switchBtn" data-switchBtn="advance">联盟活动</text>
+  </view>
+  <scroll-view bindscrolltolower="scrolltolower" style="height:{{excludeHeight-150}}rpx" scroll-y>
+    <view hidden="{{switchBtn !== 'LiveHouse'}}">
+      <liveHouse id="LiveHouse" list="{{liveHouse}}" tableName="livehouse"></liveHouse>
+    </view>
+    <view hidden="{{switchBtn !== 'mussic'}}">
+      <liveHouse id="mussicList" list="{{festivals}}" tableName="musicfestival" ></liveHouse>
+    </view>
+    <view hidden="{{switchBtn !== 'advance'}}">
+      <allianceList alliances="{{alliances}}"></allianceList>
+    </view>
+
+ 
+  </scroll-view>
+  <image wx:if="{{switchBtn === 'advance'}}" catchtap="goAlliancePost" class="issueDynamic"
+    src="http://cdn.eigene.cn/square/issueDynamic.png"></image>
+</view>

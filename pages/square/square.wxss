@@ -1,0 +1,236 @@
+/* pages/square/square.wxss */
+
+.cardWrap {
+  display: flex;
+  justify-content: center;
+  margin: 40rpx 0;
+}
+
+.signInBackground {
+  background-image: url('http://cdn.eigene.cn/square/signInBackground.png');
+  width: 510rpx;
+  height: 330rpx;
+  background-size: 100% 100%;
+  position: relative;
+}
+
+.recommendBackground {
+  position: relative;
+  margin-left: 17rpx;
+  background-image: url('http://cdn.eigene.cn/square/recommendBackground.png');
+  width: 190rpx;
+  height: 330rpx;
+  background-size: 100% 100%;
+  overflow: hidden;
+}
+
+.everyday {
+  position: absolute;
+  top: 30rpx;
+  left: 35rpx;
+  font-size: 33rpx;
+  color: white;
+}
+
+.date {
+  position: absolute;
+  right: 20rpx;
+  top: 24rpx;
+  width: 150rpx;
+  align-items: flex-end;
+  display: flex;
+  flex-direction: column;
+  color: white;
+}
+.signInSumsWrap {
+  position: absolute;
+  left: 28rpx;
+  bottom: 50rpx;
+  width: 237rpx;
+  display: flex;
+  font-size: 65rpx;
+  height: 84rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.signInPart {
+  width: 47%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.date .yearMonth {
+  font-size: 20rpx;
+  /* margin-right: 10rpx; */
+}
+
+.date .day {
+  font-size: 75rpx;
+  line-height: 65rpx;
+}
+
+.signIn {
+  width: 155rpx;
+  height: 155rpx;
+  position: absolute;
+  bottom: 15rpx;
+  right: 0rpx;
+}
+
+.played {
+  position: absolute;
+  width: 110rpx;
+  height: 110rpx;
+  top: 117rpx;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+}
+
+.store {
+  position: absolute;
+  width: 45rpx;
+  height: 40rpx;
+  bottom: 15rpx;
+  right: 15rpx;
+}
+
+.topic {
+  position: relative;
+  background-image: url(http://cdn.eigene.cn/square/topic1.png);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  box-sizing: border-box;
+  padding: 15rpx 25rpx;
+  font-size: 23rpx;
+  display: inline-block;
+}
+.topicWrap {
+  margin-bottom: 25rpx;
+  height: 70rpx;
+}
+swiper-item {
+  height: 70rpx;
+  display: flex;
+  justify-content: space-around;
+}
+
+/* .topic image {
+  position: relative;
+} */
+
+/* .topic text {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  display: block;
+  font-size: 23rpx;
+  position: absolute;
+  z-index: 99;
+  line-height: 65rpx;
+} */
+
+/* .topic .topic1 {
+  height: 70rpx;
+  width: 200rpx;
+}
+
+.topic .topic2 {
+  height: 70rpx;
+  width: 300rpx;
+}
+
+.topic .topic3 {
+  height: 70rpx;
+  width: 186rpx;
+} */
+.scroll {
+  height: 100vh;
+}
+
+
+
+
+.issueDynamic {
+  width: 140rpx;
+  height: 140rpx;
+  position: fixed;
+  bottom: calc(140rpx + env(safe-area-inset-bottom));
+  right: 21rpx;
+}
+
+.hideBar {
+  position: fixed;
+  background-image: url('http://cdn.eigene.cn/square/hideBar.png');
+  background-size: 100%;
+  top: 77rpx;
+  left: 47rpx;
+  width: 100rpx;
+  height: 100rpx;
+  z-index: 999999;
+}
+
+.hideBarUnfold {
+  height: 739rpx;
+  opacity: 1;
+  visibility: visible;
+}
+
+.hideBarPackUp {
+  height: 0rpx;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.hideBarBackground {
+  box-sizing: border-box;
+  padding: 30rpx 0;
+  transition: 0.4s all;
+  width: 200rpx;
+  z-index: 99999;
+  background-image: url('http://cdn.eigene.cn/square/hideBarBackground.png');
+  background-size: 100%;
+  position: fixed;
+  top: 155rpx;
+  left: 0rpx;
+  /* right: 0;
+  margin: 0 auto; */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.hideBarBackground view {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+}
+
+.hideBarBackground image {
+  width: 100rpx;
+  height: 100rpx;
+}
+
+.hideBarBackground text {
+  color: white;
+  font-size: 22rpx;
+  margin-top: 8rpx;
+}
+
+.dayText {
+  position: absolute;
+  left: 300rpx;
+  bottom: 40rpx;
+  display: block;
+}
+
+.contentText {
+  font-size: 28rpx;
+}
