@@ -49,6 +49,12 @@
       </view>
     </scroll-view>
   </form>
+  <view  catchtap="cancelPopup" catchtouchmove="touchmove" class="mask {{dialogShow? 'shadeShow':''}}">
+      <view class="popup" catchtap="return" >
+        <textarea wx:if="{{dialogShow}}" value="{{linkUrl}}" bindinput="inputLinkUrl" class="popupTextarea" placeholder="请输入{{currentType==1?'音频':(currentType==2?'视频':'资料')}}链接" ></textarea>
+        <view class="complete" catchtap="complete">完成</view>
+      </view>
+    </view>
   <record class="record" id="record" bind:recordResult="recordResult" recordTime="{{recordTime}}"></record>
   <view class="footer" style="bottom:{{keyBoardHeight}}">
     <view class="footerInner">
