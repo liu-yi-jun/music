@@ -14,6 +14,7 @@ App({
   },
 
   requestUrls: requestUrls[env], // 给页面js用的
+  socketUrls: requestUrls['SocketProd'],
   Api,
   get: Req.fetch,
   post: (url, data, option = {}) => {

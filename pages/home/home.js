@@ -142,9 +142,7 @@ Page({
 
   },
   initSocketEvent() {
-    const socket = (app.socket = io(
-      'http://www.eigene.cn:8000/'
-    ))
+    const socket = (app.socket = io(app.socketUrls.baseUrl))
     socket.on('connect', () => {
       console.log('连接成功')
       let user = {
