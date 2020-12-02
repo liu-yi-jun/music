@@ -7,12 +7,6 @@
         <view class="left">
           <text class="username">{{item.nickName}}</text>
           <view class="time">{{item.releaseTime}}</view>
-          <!-- <view class="nameBottom">
-            <text wx:if="{{item.gender=== 1}}">♂</text>
-            <text wx:if="{{item.gender=== 2}}">♀</text>
-            <text class="constellation" wx:if="{{item.constellation}}">{{item.constellation}}</text>
-            <text wx:if="{{item.age}}">{{item.age}}岁</text>
-          </view> -->
         </view>
         <view class="right" wx:if="{{item.tableName==='groupdynamics'}}" catchtap="goOtherHome"
           data-id="{{item.groupId}}">{{item.groupName}}</view>
@@ -54,48 +48,19 @@
             <text>{{item.comment}}</text>
           </view>
         </view>
-        <image wx:if="{{item.userId === myId}}" class="delete" catchtap="delete" data-index="{{index}}"  src="http://cdn.eigene.cn/delete.png"></image>
+        <image wx:if="{{item.userId === myId}}" class="delete" catchtap="delete" data-index="{{index}}"
+          src="http://cdn.eigene.cn/delete.png"></image>
         <view wx:else catchtap="extend" class="extend">...</view>
       </view>
     </view>
   </view>
-  <!-- <view class="item">
-  <image catchtap="goPersonal" class="avatar" src="http://cdn.eigene.cn/avatar15.png"></image>
-  <view class="message-content">
-    <view class="message">
-      <view class="left">
-        <text class="username">Desperado</text>
-        <view class="nameBottom">
-          <text>♂</text>
-          <text class="constellation">射手座</text>
-          <text>24岁</text>
-        </view>
-      </view>
-      <view class="right">浙江大学吉他协会</view>
-    </view>
-    <view class="content" catchtap="goDynamicDetail">
-      <text class="contentText">No Fills ，Just Rock</text>
-      <view class="ul">
-        <view class="li">
-          <image mode="aspectFill" class="img" src="http://cdn.eigene.cn/square/dynamicImg1.png"></image>
-        </view>
-      </view>
-    </view>
-    <view class="like-comment-time">
-      <view class="like-comment">
-        <view class="like">
-          <image src="http://use.eigene.cn/like.png"></image>
-          <text>103</text>
-        </view>
-        <view class="comment">
-          <image src="http://use.eigene.cn/comment.png"></image>
-          <text>103</text>
-        </view>
-      </view>
-      <text class="time">30分钟前</text>
-    </view>
-  </view>
-</view> -->
+  <view class="mask">
 
+  </view>
+  <view class="btnWrap">
+    <button class="reportBtn" catchtap="reportBtn">举报</button>
+    <button class="shareBtn" catchtap="shareBtn">分享</button>
+    <button class="cancel" catchtap="cancel">取消</button>
+  </view>
 </view>
 <!-- mode="aspectFill" mode="widthFix" -->

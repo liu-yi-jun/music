@@ -2,6 +2,8 @@
 
 .list {
   padding: 0 20rpx 400rpx;
+  position: relative;
+  z-index: 999999999;
 }
 
 .item {
@@ -43,6 +45,7 @@
   color: #b7b8b8;
   font-size: 22rpx;
 }
+
 .constellation {
   margin: 0 10rpx;
 }
@@ -109,11 +112,11 @@
 }
 
 
-.item > .avatar {
+.item>.avatar {
   width: 80rpx;
   height: 80rpx;
   border-radius: 50%;
-  flex-shrink:0
+  flex-shrink: 0
 }
 
 .imgWrap {
@@ -129,17 +132,22 @@
   /* margin-right: 15rpx; */
 }
 
-.like, .comment {
+.like,
+.comment {
   display: flex;
   align-items: center;
 }
-.like >text, .comment  >text{
+
+.like>text,
+.comment>text {
   margin-left: 10rpx;
 }
+
 .like image {
   width: 40rpx;
   height: 40rpx;
 }
+
 .comment image {
   width: 40rpx;
   height: 40rpx;
@@ -157,42 +165,49 @@
   margin-top: 5rpx;
 }
 
-.ul{
-  padding:0px;
-  width:90%;
+.ul {
+  padding: 0px;
+  width: 90%;
   display: flex;
   /* justify-content: flex-end; //用于设置或检索弹性盒子元素在主轴（横轴）方向上的对齐方式。 */
-  flex-wrap: wrap; 
+  flex-wrap: wrap;
 }
-.li{
+
+.li {
   list-style: none;
-  width:32.3%;
-  height:176rpx;
+  width: 32.3%;
+  height: 176rpx;
   margin-top: 5px;
 }
+
 /* 除了每行最后的元素,其他都留右外边距 (100-32*3)/2*/
-.li:not(:nth-child(3n)){
-  margin-right: 1.5%; 
+.li:not(:nth-child(3n)) {
+  margin-right: 1.5%;
 }
+
 /* 当只有唯一一张图时 */
-.li:only-child{
+.li:only-child {
   width: 400rpx;
   height: auto;
-  margin: 0; 
+  margin: 0;
 }
+
 /* 有四张图时 */
 /* 不支持~ */
 
-.li:nth-last-child(4):first-child +.li + .li {
+.li:nth-last-child(4):first-child+.li+.li {
   margin-right: 1.5%;
-} 
-.li:nth-last-child(4):first-child + .li {
+}
+
+.li:nth-last-child(4):first-child+.li {
   margin-right: 32.3%;
-} 
-.li .img{
-  width:100%;
+}
+
+.li .img {
+  width: 100%;
   height: 100%;
 }
+
 .topic {
   position: relative;
   background-image: url('http://cdn.eigene.cn/square/topic1.png');
@@ -203,22 +218,28 @@
   font-size: 23rpx;
   display: inline-block;
 }
+
 .topicWrap {
   margin-top: 15rpx;
 }
+
 .recordWrap {
   margin-top: 15rpx;
 }
-.recordWrap{
+
+.recordWrap {
   box-sizing: border-box;
 }
+
 .recordImg {
   width: 54rpx;
   height: 30rpx;
 }
+
 .recordTime {
   font-size: 25rpx;
 }
+
 .record {
   width: 394rpx;
   height: 75rpx;
@@ -231,10 +252,12 @@
   justify-content: space-between;
   align-items: center;
 }
+
 video {
   width: 100%;
   height: 100%;
 }
+
 .wrapVideo {
   width: 400rpx;
   height: 300rpx;
@@ -249,6 +272,34 @@ video {
 .extend {
   color: white;
 }
-.contentText{
+
+.contentText {
   color: white;
+}
+
+.btnWrap {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 99999;
+}
+
+.reportBtn,
+.shareBtn,
+.cancel {
+  width: 100% !important;
+  background-color: white !important;
+  padding: 28rpx !important;
+  color: black;
+  border-radius: 0rpx !important;
+  padding-bottom: calc( 28rpx + env(safe-area-inset-bottom));
+}
+.cancel {
+  border-top: 10rpx solid #ece4fc !important;
+}
+.reportBtn {
+  border-top-left-radius: 20rpx !important;
+  border-top-right-radius: 20rpx !important;
+  border-bottom: 1rpx solid #ece4fc !important;
 }

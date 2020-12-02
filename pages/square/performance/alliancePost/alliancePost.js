@@ -30,7 +30,13 @@ Page({
     tempImagePaths: [],
     tempRecordPath: '',
     tempVideoPath: '',
-    isPlay: false
+    isPlay: false,
+    // 弹出的连接是什么类型
+    currentType: 0,
+    // 控制连接弹窗
+    dialogShow: false,
+    // 链接路径
+    linkUrl: ''
   },
 
   /**
@@ -63,12 +69,12 @@ Page({
     this.innerSoundContext.onEnded(() => {
       console.log('// 录音播放结束')
       this.setData({
-        isPlay:false
+        isPlay: false
       })
     })
-    this.innerSoundContext.onStop(()=> {
+    this.innerSoundContext.onStop(() => {
       this.setData({
-        isPlay:false
+        isPlay: false
       })
     })
     this.innerSoundContext.onPause(() => {
@@ -77,14 +83,14 @@ Page({
     })
   },
   playRecord() {
-    if(this.data.isPlay) return
+    if (this.data.isPlay) return
     let tempRecordPath = this.data.tempRecordPath
     this.innerSoundContext && this.innerSoundContext.destroy()
     this.initSound()
     this.innerSoundContext.src = tempRecordPath
     this.innerSoundContext.play()
     this.setData({
-      isPlay:true
+      isPlay: true
     })
   },
   getUserInfo() {
@@ -188,6 +194,8 @@ Page({
       success: res => {
         if (res.tapIndex === 1) {
           this.chooseImg()
+        } else if (res.tapIndex === 0) {
+          this.showPopup(3)
         }
       }
     })
@@ -208,6 +216,8 @@ Page({
         console.log(res)
         if (res.tapIndex === 1) {
           this.chooseVideo()
+        } else if (res.tapIndex === 0) {
+          this.showPopup(2)
         }
       }
     })
@@ -228,6 +238,8 @@ Page({
         if (res.tapIndex === 1) {
           let record = this.selectComponent('#record')
           record.startRecord()
+        } else if (res.tapIndex === 0) {
+          this.showPopup(1)
         }
       }
     })
@@ -296,7 +308,10 @@ Page({
         tempImagePaths,
         tempRecordPath
       } = this.data
-      let {date,time} = this.data
+      let {
+        date,
+        time
+      } = this.data
       if (!this.WxValidate.checkForm(params)) {
         console.log(this.WxValidate.errorList)
         const error = this.WxValidate.errorList[0].msg
@@ -308,7 +323,7 @@ Page({
       // let mold = tempImagePaths.length ? 0 : (tempVideoPath ? 1 : 2)
 
       let dates = this.data.date.split('-')
-  
+
       let activityTime = `${dates[0]}年${dates[1]}月${dates[2]}日${time}`
       return resolve({
         userId: app.userInfo.id,
@@ -412,6 +427,54 @@ Page({
       app.post(app.Api.postAlliance, data, {
         loading: false
       }).then(res => resolve(res)).catch(err => reject(err))
+    })
+  },
+  // 取消弹窗
+  cancelPopup() {
+    this.setData({
+      dialogShow: false,
+      linkUrl: ''
+    })
+  },
+  // 完成输入链接
+  complete() {
+    let currentType = this.data.currentType
+    if (currentType == 1) {
+      this.setData({
+        tempRecordPath: this.data.linkUrl,
+        dialogShow: false,
+        linkUrl: ''
+      })
+    } else if (currentType == 2) {
+      this.setData({
+        tempVideoPath: this.data.linkUrl,
+        dialogShow: false,
+        linkUrl: ''
+      })
+    } else if (currentType == 3) {
+      this.setData({
+        tempImagePaths: this.data.linkUrl ? [this.data.linkUrl] : '',
+        dialogShow: false,
+        linkUrl: ''
+      })
+    }
+  },
+  touchmove() {
+    return
+  },
+  inputLinkUrl(e) {
+    clearTimeout(this.point)
+    this.point = setTimeout(() => {
+      this.setData({
+        linkUrl: e.detail.value
+      })
+    }, 200)
+  },
+  // 显示弹窗
+  showPopup(currentType) {
+    this.setData({
+      currentType,
+      dialogShow: true
     })
   },
 })
