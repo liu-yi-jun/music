@@ -143,6 +143,7 @@ Page({
   },
   initSocketEvent() {
     const socket = (app.socket = io(app.socketUrls.baseUrl))
+    this.socket = socket
     socket.on('connect', () => {
       console.log('连接成功')
       let user = {
@@ -151,6 +152,7 @@ Page({
       socket.emit("login", user);
     })
     socket.on("message", (from, to, message) => {
+      console.log('okok')
       for (let key in app.cbObj) {
         app.cbObj[key] && app.cbObj[key](from, to, message)
       }
@@ -183,6 +185,8 @@ Page({
         key: 'threas',
       })
     })
+
+ 
   },
   groupPagingGetGroupdynamics(groupId) {
     let {
@@ -276,7 +280,9 @@ Page({
   onReady: function () {
     // this.getmoveDistance()
 
-
+    setTimeout(()=> {
+      this.socket.emit("getmessage");
+    },8000)
   },
 
   /**
