@@ -57,10 +57,6 @@
   <view class="mask">
 
   </view>
-  <view class="btnWrap">
-    <button class="reportBtn" catchtap="reportBtn">举报</button>
-    <button class="shareBtn" catchtap="shareBtn">分享</button>
-    <button class="cancel" catchtap="cancel">取消</button>
-  </view>
+
 </view>
 <!-- mode="aspectFill" mode="widthFix" -->

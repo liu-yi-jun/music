@@ -145,3 +145,7 @@
   text-align: center !important;
   line-height: 70rpx !important;
 }
+
+.lastItem {
+  margin-bottom: 200rpx;
+}

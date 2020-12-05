@@ -3,7 +3,6 @@
 .list {
   padding: 0 20rpx 400rpx;
   position: relative;
-  z-index: 999999999;
 }
 
 .item {
@@ -275,31 +274,4 @@ video {
 
 .contentText {
   color: white;
-}
-
-.btnWrap {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  z-index: 99999;
-}
-
-.reportBtn,
-.shareBtn,
-.cancel {
-  width: 100% !important;
-  background-color: white !important;
-  padding: 28rpx !important;
-  color: black;
-  border-radius: 0rpx !important;
-  padding-bottom: calc( 28rpx + env(safe-area-inset-bottom));
-}
-.cancel {
-  border-top: 10rpx solid #ece4fc !important;
-}
-.reportBtn {
-  border-top-left-radius: 20rpx !important;
-  border-top-right-radius: 20rpx !important;
-  border-bottom: 1rpx solid #ece4fc !important;
 }

@@ -3,7 +3,8 @@
     "showTabBar": "/components/common/showTabBar/showTabBar",
     "navBar": "/components/navBar/navBar",
     "marquee": "/components/square/marquee/marquee",
-    "dynamicList":"/components/square/dynamicList/dynamicList"
+    "dynamicList":"/components/square/dynamicList/dynamicList",
+    "menu":"/components/common/menu/menu"
   },
   "disableScroll": true
 }

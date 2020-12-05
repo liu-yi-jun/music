@@ -61,6 +61,7 @@
 
     </view>
   </scroll-view>
+  <!-- <menu></menu> -->
   <showTabBar tabBarBtnShow="{{tabBarBtnShow}}">
   </showTabBar>
 </view>

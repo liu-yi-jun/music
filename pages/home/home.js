@@ -149,15 +149,16 @@ Page({
         userId: app.userInfo.id,
       }
       socket.emit("login", user);
+      socket.emit("getmessage");
     })
     socket.on("message", (from, to, message) => {
       for (let key in app.cbObj) {
-        app.cbObj[key] && app.cbObj[key](from, to, message)
+          app.cbObj[key] && app.cbObj[key](from, to, message)
       }
     })
     app.onMessage('messageMain', (from, to, message) => {
       let threas = wx.getStorageSync('threas')
-      console.log(threas)
+      console.log('收到',threas)
       if (!threas) {
         threas = {}
       }

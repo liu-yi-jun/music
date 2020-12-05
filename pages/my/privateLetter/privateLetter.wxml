@@ -3,16 +3,16 @@
   <navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' back="{{true}}" iconTheme='white'
     bindback="handlerGobackClick"></navBar>
   <view class="head">Raymond</view>
-  <scroll-view scroll-y style="height:{{excludeHeight-104}}rpx" scroll-into-view="{{footer}}">
+  <scroll-view class="scroll" scroll-y style="height:{{excludeHeight-104}}rpx" scroll-into-view="{{footer}}">
     <!-- <view class="timeWrap">
       <text class="time"> 2020年6月23日 晚上 8：33</text>
     </view> -->
 
     <block wx:for="{{messages}}" wx:key="index">
-      <view class="myPart" wx:if="{{item.fromId === myId}}" id="message{{index}}">
+      <view class="myPart {{index=== messages.length -1?'lastItem': '' }}" wx:if="{{item.fromId === myId}}" id="message{{index}}">
         <view class="myContent">{{item.message}}</view>
       </view>
-      <view class="otherPart" wx:else id="message{{index}}">
+      <view class="otherPart  {{index=== messages.length -1?'lastItem': '' }}" wx:else id="message{{index}}">
         <image class="otherAvatar" src="{{to.avatarUrl}}"></image>
         <view class="otherName-content">
           <text class="otherName">{{to.nickName}}</text>
