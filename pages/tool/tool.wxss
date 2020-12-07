@@ -97,13 +97,13 @@
   /* width: 127rpx;
   height: 127rpx;
   background: linear-gradient(-100deg, rgba(226, 145, 227, 1), rgba(0, 69, 207, 1));
-  left: 333rpx;
+  left: 333rpx; 
   top: 132rpx; */
   animation-iteration-count: infinite;
   animation-direction: alternate;
   animation-timing-function: linear;
 }
-/* 
+
 @keyframes shake {
   from {
     transform: translateX(0) translateY(-10rpx);
@@ -112,75 +112,39 @@
   to {
     transform: translateX(0) translateY(10rpx);
   }
-} */
+}
 
-.circular text {
+.circular .top {
   color: white;
   position: absolute;
-  font-size: 22rpx;
-  left: 50%;
   display: block;
-  transform: translateX(-50%);
-  top: -40rpx;
+  top: -60rpx;
   white-space: nowrap;
 }
-
-.text1 {
-  color: white;
-  position: absolute;
-  left: 74rpx;
-  top: 22%;
+.top1 {
+  left: 18rpx !important;
 }
-.text2 {
-  color: white;
-  position: absolute;
-  left: 248rpx;
-  top: 27%;
+.top2 {
+  left: 18rpx !important;
 }
-
-.text3 {
-  color: white;
-  position: absolute;
-  left: 192rpx;
-  top: 39%;
+.top3 {
+  left: 40rpx !important;
 }
-
-.text4 {
-  color: white;
-  position: absolute;
-  left: 386rpx;
-  top: 48%;
+.top4 {
+  right: 10rpx !important;
 }
-
-.text5 {
-  color: white;
-  position: absolute;
-  left: 492rpx;
-  top: 64%;
+.top5 {
+  right: -55rpx !important;
 }
-
-.text6 {
-  color: white;
-  position: absolute;
-  left: 219rpx;
-  top: 71%;
+.top6 {
+  right: 0rpx !important;
 }
-
-
-.text7 {
-  color: white;
-  position: absolute;
-  left: 90rpx;
-  top: 81%;
+.top7 {
+  left: 15rpx !important;
 }
-
-.text8 {
-  color: white;
-  position: absolute;
-  left: 349rpx;
-  top: 87%;
+.top8 {
+  left: 25rpx !important;
 }
-
 
 .number {
   font-size: 42rpx;
@@ -188,9 +152,9 @@
 
 .name {
   font-size: 30rpx;
-  margin: 0 20rpx 0 10rpx;
+  margin: 0  10rpx 0 10rpx;
 }
 
 .author {
-  font-size: 20rpx;
+  font-size: 18rpx;
 }

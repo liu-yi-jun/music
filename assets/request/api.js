@@ -90,5 +90,6 @@ module.exports = {
   livehouseComment: "/api/performance/livehouseComment",
   livehouseDetail: "/api/performance/livehouseDetail",
   myStoreSecond: "/api/second/myStoreSecond",
-  myStoreTicket: "/api/ticket/myStoreTicket"
+  myStoreTicket: "/api/ticket/myStoreTicket",
+  getRandomTap: "/api/tap/getRandomTap"
 }
