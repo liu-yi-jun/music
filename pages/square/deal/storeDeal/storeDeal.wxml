@@ -1,19 +1,13 @@
-<!--pages/square/deal/deal.wxml-->
+<!--pages/square/deal/storeDeal/storeDeal.wxml-->
 <view class="deal">
   <navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' back="{{true}}" iconTheme='white'
     bindback="handlerGobackClick"></navBar>
   <view class="title">
     <text class="title-top">二手交易</text>
     <text class="title-bottom">flea market</text>
-    <image class="myStore" catchtap="storeDeal" src="http://cdn.eigene.cn/deal/myStore.png"></image>
   </view>
   <view class="head">
     <image class="logo" src="http://cdn.eigene.cn/deal/logo.png"></image>
-    <view class="searchWrap">
-      <input class="search" value="{{groupName}}"  bindconfirm="confirm">
-      </input>
-      <image class="searchLog" src="http://cdn.eigene.cn/search.png"></image>
-    </view>
     <view class="bar">
       <text class="{{switchBtn === 'second' ? 'active' : ''}}" catchtap="switchBtn" data-switchBtn="second">二手器乐</text>
       <view class="line"></view>
@@ -22,10 +16,10 @@
   </view>
   <scroll-view scroll-y style="height:{{excludeHeight-166}}rpx" bindscrolltolower="scrolltolower">
     <view hidden="{{switchBtn !== 'second'}}">
-      <second seconds="{{seconds}}"></second>
+      <second seconds="{{seconds}}" isShowAdd="{{false}}"></second>
     </view>
     <view hidden="{{switchBtn !== 'ticket'}}">
-      <ticket tickets="{{tickets}}"></ticket>
+      <ticket tickets="{{tickets}}" isShowAdd="{{false}}"></ticket>
     </view>
   </scroll-view>
 </view>

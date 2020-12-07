@@ -48,7 +48,8 @@
     "components/my/groupList/groupList",
     "pages/init/searchGroup/searchGroup",
     "pages/square/performance/liveHouseDetail/liveHouseDetail",
-    "components/common/menu/menu"
+    "components/common/menu/menu",
+    "pages/square/deal/storeDeal/storeDeal"
   ],
   "permission": {
     "scope.userLocation": {

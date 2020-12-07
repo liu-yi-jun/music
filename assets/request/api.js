@@ -89,4 +89,6 @@ module.exports = {
   livehouseLike: "/api/performance/livehouseLike",
   livehouseComment: "/api/performance/livehouseComment",
   livehouseDetail: "/api/performance/livehouseDetail",
+  myStoreSecond: "/api/second/myStoreSecond",
+  myStoreTicket: "/api/ticket/myStoreTicket"
 }

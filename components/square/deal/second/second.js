@@ -9,6 +9,10 @@ Component({
     seconds: {
       type: Array,
       value: []
+    },
+    isShowAdd: {
+      type: Boolean,
+      value:true
     }
   },
 

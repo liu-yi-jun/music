@@ -9,6 +9,10 @@ Component({
     tickets: {
       type: Array,
       value: []
+    },
+    isShowAdd: {
+      type: Boolean,
+      value:true
     }
   },
 

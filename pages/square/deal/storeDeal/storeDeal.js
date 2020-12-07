@@ -1,6 +1,6 @@
-// pages/square/deal/deal.js
+// pages/square/deal/storeDeal/storeDeal.js
 const app = getApp()
-const tool = require('../../../assets/tool/tool.js')
+const tool = require('../../../../assets/tool/tool.js')
 Page({
 
   /**
@@ -23,10 +23,6 @@ Page({
     seconds: [],
     tickets: [],
     // 品牌，型号
-    // 二手商品搜索关键词
-    brand: '',
-    // 票务搜索关键词
-    title: ''
   },
 
   /**
@@ -35,15 +31,14 @@ Page({
   onLoad: function (options) {
     // 获取去除上面导航栏，剩余的高度
     tool.navExcludeHeight(this)
-    this.searchSeconds(this.data.brand)
-    this.searchTickets(this.data.title)
+    this.getMySeconds()
+    this.getMyTickets()
   },
-  searchSeconds(brand) {
+  getMySeconds() {
     let secondPaging = this.data.secondPaging
-    app.get(app.Api.searchSeconds, {
+    app.get(app.Api.myStoreSecond, {
       ...secondPaging,
       userId: app.userInfo.id,
-      brand
     }).then(res => {
       if (res.length < secondPaging.pageSize) {
         this.setData({
@@ -64,12 +59,11 @@ Page({
       })
     })
   },
-  searchTickets(title) {
+  getMyTickets() {
     let ticketPaging = this.data.ticketPaging
-    app.get(app.Api.searchTickets, {
+    app.get(app.Api.myStoreTicket, {
       ...ticketPaging,
       userId: app.userInfo.id,
-      title
     }).then(res => {
       if (res.length < ticketPaging.pageSize) {
         this.setData({
@@ -82,26 +76,6 @@ Page({
       })
     })
   },
-  confirm(event) {
-    let value = event.detail.value
-    let switchBtn = this.data.switchBtn
-    if (switchBtn === 'second') {
-      this.setData({
-        seconds: [],
-        brand: value,
-        'secondPaging.isNotData': false,
-        'secondPaging.pageIndex': 1
-      }, () => this.searchSeconds(this.data.brand))
-    } else if (switchBtn === 'ticket') {
-      this.setData({
-        tickets: [],
-        title: value,
-        'ticketPaging.isNotData': false,
-        'ticketPaging.pageIndex': 1
-      }, () =>  this.searchTickets(this.data.title))
-     
-    }
-  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -113,39 +87,17 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    if (app.secondIssueBack) {
-      app.secondIssueBack = false
-      this.setData({
-        seconds: [],
-        brand: '',
-        'secondPaging.isNotData': false,
-        'secondPaging.pageIndex': 1
-      }, () => this.searchSeconds(this.data.brand))
-
-    }
-    if (app.ticketIssueBack) {
-      app.ticketIssueBack = false
-      this.setData({
-        tickets: [],
-        title: '',
-        'ticketPaging.isNotData': false,
-        'ticketPaging.pageIndex': 1
-      }, () => {
-        this.searchTickets(this.data.title)
-      })
-    }
   },
   scrolltolower() {
-    console.log(this.data.band)
     let {
       secondPaging,
       ticketPaging,
       switchBtn
     } = this.data
     if (switchBtn === 'second' && !secondPaging.isNotData) {
-      this.searchSeconds(this.data.brand)
+      this.getMySeconds()
     } else if (switchBtn === 'ticket' && !ticketPaging.isNotData) {
-      this.searchTickets(this.data.title)
+      this.getMyTickets()
     }
   },
   /**
@@ -189,11 +141,6 @@ Page({
     if (switchBtn === this.switchBtn) return
     this.setData({
       switchBtn
-    })
-  },
-  storeDeal() {
-    wx.navigateTo({
-      url: '/pages/square/deal/storeDeal/storeDeal',
     })
   }
 })
