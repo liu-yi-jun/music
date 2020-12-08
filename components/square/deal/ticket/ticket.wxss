@@ -48,10 +48,12 @@
   justify-content: space-between;
   margin-left: 20rpx;
   flex-grow: 1;
+
 }
 
 .title {
   font-size: 28rpx;
+
 }
 
 .message {
@@ -59,6 +61,15 @@
   display: flex;
   color: #808080;
   flex-direction: column;
+}
+.message > view > text:first-child {
+  font-weight: bold;
+  color: black;
+}
+.message > view > text, .title {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .bottom {

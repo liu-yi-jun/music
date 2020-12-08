@@ -36,7 +36,11 @@ Page({
     // 控制连接弹窗
     dialogShow: false,
     // 链接路径
-    linkUrl: ''
+    linkUrl: '',
+    // 标注是否输入了链接
+    isRecordLink: false,
+    isVideoLink: false,
+    isImageLink: false
   },
 
   /**
@@ -205,7 +209,8 @@ Page({
       this.setData({
         tempImagePaths: res.tempFilePaths,
         tempRecordPath: '',
-        tempVideoPath: ''
+        tempVideoPath: '',
+        isImageLink: false
       })
     })
   },
@@ -227,7 +232,8 @@ Page({
       this.setData({
         tempRecordPath: '',
         tempImagePaths: [],
-        tempVideoPath: res.tempFilePath
+        tempVideoPath: res.tempFilePath,
+        isVideoLink: false
       })
     })
   },
@@ -261,7 +267,8 @@ Page({
       tempVideoPath: '',
       tempRecordPath: e.detail.tempFilePath,
       duration: e.detail.duration,
-      soundWidth: this.initSoundWidth(e.detail.duration)
+      soundWidth: this.initSoundWidth(e.detail.duration),
+      isRecordLink: false
     })
   },
   handlerGobackClick: app.handlerGobackClick,
@@ -347,14 +354,17 @@ Page({
     let {
       tempVideoPath,
       tempImagePaths,
-      tempRecordPath
+      tempRecordPath,
+      isRecordLink,
+      isVideoLink,
+      isImageLink
     } = this.data
     try {
       params = await this.validate(params)
       common.showLoading('发布中')
-      if (tempRecordPath) params.voiceUrl = await this.uploadVoice(tempRecordPath)
-      if (tempVideoPath) params.videoUrl = await this.uploadVideo(tempVideoPath)
-      if (tempImagePaths.length) params.pictureUrls = await this.uploadImg(tempImagePaths)
+      if (tempRecordPath && !isRecordLink) params.voiceUrl = await this.uploadVoice(tempRecordPath)
+      if (tempVideoPath && !isVideoLink) params.videoUrl = await this.uploadVideo(tempVideoPath)
+      if (tempImagePaths.length && !isImageLink) params.pictureUrls = await this.uploadImg(tempImagePaths)
       const result = await this.postAlliance(params)
       console.log(result)
       if (result.affectedRows) {
@@ -443,19 +453,22 @@ Page({
       this.setData({
         tempRecordPath: this.data.linkUrl,
         dialogShow: false,
-        linkUrl: ''
+        linkUrl: '',
+        isRecordLink: true
       })
     } else if (currentType == 2) {
       this.setData({
         tempVideoPath: this.data.linkUrl,
         dialogShow: false,
-        linkUrl: ''
+        linkUrl: '',
+        isVideoLink: true
       })
     } else if (currentType == 3) {
       this.setData({
         tempImagePaths: this.data.linkUrl ? [this.data.linkUrl] : '',
         dialogShow: false,
-        linkUrl: ''
+        linkUrl: '',
+        isImageLink: true
       })
     }
   },

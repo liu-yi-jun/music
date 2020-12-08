@@ -54,11 +54,13 @@
   background: white;
   box-sizing: border-box;
   padding: 20rpx;
+  width: 340rpx;
 }
 
 .goods {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  font-size: 25rpx;
 }
 
 .left {
@@ -113,4 +115,14 @@
   position: fixed;
   bottom: calc(69rpx + env(safe-area-inset-bottom));
   right: 37rpx;
+}
+
+.bottomBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.goods > view > text:first-child {
+  font-weight: bold;
 }

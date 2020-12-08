@@ -35,7 +35,11 @@ Page({
     // 弹出的连接是什么类型
     currentType: 0,
     // 链接路径
-    linkUrl: ''
+    linkUrl: '',
+    // 标注是否是有输入链接
+    isAudioLink: false,
+    isVideoLink: false,
+    isDatumLink: false
   },
 
   /**
@@ -122,21 +126,27 @@ Page({
   complete() {
     let currentType = this.data.currentType
     if (currentType == 1) {
+      // 音频
       this.setData({
         tempRecordPath: this.data.linkUrl,
+        isAudioLink: true,
         dialogShow: false,
         linkUrl: ''
       })
     } else if (currentType == 2) {
+      // 视频
       this.setData({
         tempVideoPath: this.data.linkUrl,
         dialogShow: false,
+        isVideoLink: true,
         linkUrl: ''
       })
     } else if (currentType == 3) {
+      // 资料
       this.setData({
-        tempPicturePaths: this.data.linkUrl?[this.data.linkUrl]: '',
+        tempPicturePaths: this.data.linkUrl ? [this.data.linkUrl] : '',
         dialogShow: false,
+        isDatumLink: true,
         linkUrl: ''
       })
     }
@@ -229,15 +239,18 @@ Page({
     let type = e.currentTarget.dataset.type
     if (type == 1) {
       this.setData({
-        tempRecordPath: ''
+        tempRecordPath: '',
+        isAudioLink: false
       })
     } else if (type == 2) {
       this.setData({
-        tempVideoPath: ''
+        tempVideoPath: '',
+        isVideoLink: false
       })
     } else if (type == 3) {
       this.setData({
-        tempPicturePaths: []
+        tempPicturePaths: [],
+        isDatumLink: false
       })
     }
   },
@@ -411,7 +424,10 @@ Page({
     let {
       tempVideoPath,
       tempPicturePaths,
-      tempRecordPath
+      tempRecordPath,
+      isAudioLink,
+      isVideoLink,
+      isDatumLink
     } = this.data
     try {
       params = await this.validate(params)
@@ -419,9 +435,9 @@ Page({
       common.showLoading('发布中')
       let posterUrls = await this.uploadImg([params.posterUrl])
       params.posterUrl = posterUrls[0]
-      if (tempRecordPath) params.voiceUrl = await this.uploadVoice(tempRecordPath)
-      if (tempVideoPath) params.videoUrl = await this.uploadVideo(tempVideoPath)
-      if (tempPicturePaths.length) params.pictureUrls = await this.uploadImg(tempPicturePaths)
+      if (tempRecordPath && !isAudioLink) params.voiceUrl = await this.uploadVoice(tempRecordPath)
+      if (tempVideoPath && !isVideoLink) params.videoUrl = await this.uploadVideo(tempVideoPath)
+      if (tempPicturePaths.length && !isDatumLink) params.pictureUrls = await this.uploadImg(tempPicturePaths)
       console.log('33333333333', params)
       const result = await this.addCourse(params)
       console.log(result)

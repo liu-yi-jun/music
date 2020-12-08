@@ -3,23 +3,36 @@
   <view class="column" wx:for="{{seconds}}" wx:for-index="i" wx:for-item="second" wx:key="*this">
     <view class="card" wx:for="{{second}}" wx:for-index="j" wx:key="*this">
       <image class="img img{{item.id % 4}}" mode="aspectFill" src="{{item.pictureUrls[0]}}">
-      <image class="secondStore" data-i="{{i}}" data-j="{{j}}" catchtap="switchSecondStore"  src="http://cdn.eigene.cn/deal/secondStore{{item.isStore?'d':''}}.png"></image>
+        <image class="secondStore" data-i="{{i}}" data-j="{{j}}" catchtap="switchSecondStore"
+          src="http://cdn.eigene.cn/deal/secondStore{{item.isStore?'d':''}}.png"></image>
       </image>
       <view class="bottomContent">
         <view class="goods">
-          <view class="left">
-            <text class="name">{{item.brand}}</text>
-            <text class="degree">{{item.newOld}}</text>
+          <view class="brandWrap">
+            <text>品牌型号：</text>
+            <text>{{item.brand}}</text></view>
+          <view class="newOldWrap">
+            <text>新旧程度：</text>
+            <text>{{item.newOld}}</text></view>
+          <view class="contactWrap">
+            <text>联系方式：</text>
+            <text>{{item.contact}}</text>
+          </view>
+          <view wx:if="{{item.additional}}" class="additionalWrap">
+            <text>附加功能：</text>
+            <text>{{item.additional}}</text>
+          </view>
+        </view>
+        <view class="bottomBar">
+          <view class="avatar-username">
+            <image class="avatar" src="{{item.avatarUrl}}"></image>
+            <text class="username">{{item.nickName}}</text>
           </view>
           <view class="right">¥{{item.price}}</view>
-        </view>
-        <view class="wx">{{item.contact}}</view>
-        <view class="avatar-username">
-          <image class="avatar" src="{{item.avatarUrl}}"></image>
-          <text class="username">{{item.location}}</text>
         </view>
       </view>
     </view>
   </view>
-  <image wx:if="{{isShowAdd}}" class="issueDynamic" src="http://cdn.eigene.cn/deal/issueDynamic.png" catchtap="goSecondIssue"></image>
+  <image wx:if="{{isShowAdd}}" class="issueDynamic" src="http://cdn.eigene.cn/deal/issueDynamic.png"
+    catchtap="goSecondIssue"></image>
 </view>
