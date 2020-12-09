@@ -1828,6 +1828,12 @@
         {
           "name": "pages/square/performance/alliancePost/alliancePost",
           "pathName": "pages/square/performance/alliancePost/alliancePost",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/tool/tool",
+          "pathName": "pages/tool/tool",
           "scene": null
         }
       ]

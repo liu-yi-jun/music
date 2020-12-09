@@ -51,69 +51,75 @@ Page({
       top: 77.36,
       WH: 185,
     }],
-    circulars: [{
-        id: 1,
-        groupName: '宝贝',
-        author: '张悬',
-        src: 'http://www.echangwang.com//up/imgs/2011/5-201126102Z3.png'
-        // <img alt="解忧邵帅《写给黄淮》吉他谱1" src=""/>
-      },
-      {
-        id: 2,
-        groupName: '夏天的风',
-        author: '阿琦',
-        src: 'http://www.echangwang.com//up/imgs/2011/5-201126092319.png'
-      },
-      {
-        id: 3,
-        groupName: '认真地老去',
-        author: '曹方/张希',
-        src:'http://www.echangwang.com//up/imgs/2011/5-201125114614.png'
-      }, {
-        id: 4,
-        groupName: '七月上',
-        author: 'JAM',
-        src:'http://www.echangwang.com//up/imgs/2011/5-201125095554.png'
-      }, {
-        id: 5,
-        groupName: '下一站茶山刘',
-        author: '房东的猫',
-        src:'http://www.echangwang.com//up/imgs/2011/5-20111PU236.png'
-      }, {
-        id: 6,
-        groupName: '我会在每个有意义的时辰',
-        author: '黄楚桐',
-        src: 'http://www.echangwang.com//up/imgs/2011/5-201124141223.png'
-      },
-      {
-        id: 8,
-        groupName: '种种',
-        author: '张悬',
-        src: 'http://www.echangwang.com//up/imgs/2011/5-201124134204.png'
-      },
-      {
-        id: 9,
-        groupName: '去看星星好不好',
-        author: '开心',
-        src: 'http://www.echangwang.com//up/imgs/2011/5-201124114438.png'
-      },
-    ]
+    // circulars: [{
+    //     id: 1,
+    //     groupName: '宝贝',
+    //     author: '张悬',
+    //     src: 'http://www.echangwang.com//up/imgs/2011/5-201126102Z3.png'
+    //   },
+    //   {
+    //     id: 2,
+    //     groupName: '夏天的风',
+    //     author: '阿琦',
+    //     src: 'http://www.echangwang.com//up/imgs/2011/5-201126092319.png'
+    //   },
+    //   {
+    //     id: 3,
+    //     groupName: '认真地老去',
+    //     author: '曹方/张希',
+    //     src:'http://www.echangwang.com//up/imgs/2011/5-201125114614.png'
+    //   }, {
+    //     id: 4,
+    //     groupName: '七月上',
+    //     author: 'JAM',
+    //     src:'http://www.echangwang.com//up/imgs/2011/5-201125095554.png'
+    //   }, {
+    //     id: 5,
+    //     groupName: '下一站茶山刘',
+    //     author: '房东的猫',
+    //     src:'http://www.echangwang.com//up/imgs/2011/5-20111PU236.png'
+    //   }, {
+    //     id: 6,
+    //     groupName: '我会在每个有意义的时辰',
+    //     author: '黄楚桐',
+    //     src: 'http://www.echangwang.com//up/imgs/2011/5-201124141223.png'
+    //   },
+    //   {
+    //     id: 8,
+    //     groupName: '种种',
+    //     author: '张悬',
+    //     src: 'http://www.echangwang.com//up/imgs/2011/5-201124134204.png'
+    //   },
+    //   {
+    //     id: 9,
+    //     groupName: '去看星星好不好',
+    //     author: '开心',
+    //     src: 'http://www.echangwang.com//up/imgs/2011/5-201124114438.png'
+    //   },
+    // ],
+    circulars: [],
+    limit: 8
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.init()
+    this.getRandomTap()
   },
-  init() {
-    let circulars = this.data.circulars
+  getRandomTap(){
+    app.get(app.Api.getRandomTap,{
+      limit: this.data.limit
+    }).then(res=> {
+      // console.log(res)
+      this.init(res)
+    })
+  },
+  init(circulars) {
     let position = this.data.position
     let randomWH, deg, delay, duration
     circulars.forEach((item, index) => {
-        // randomWH = tool.randomNumber(27, 185)
         deg = tool.randomNumber(0, 360)
-        // delay = tool.randomNumber(0, 500)
         duration = tool.randomNumber(1500, 2500)
         item.style = `
     width: ${position[index].WH}rpx;
