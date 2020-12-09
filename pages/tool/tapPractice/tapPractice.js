@@ -1,4 +1,4 @@
-// pages/home/puchCard/puchCard.js
+// pages/tool/tapPractice/tapPractice.js
 const app = getApp()
 const tool = require('../../../assets/tool/tool.js')
 const common = require('../../../assets/tool/common')
@@ -30,34 +30,27 @@ Page({
       minWidth: 110,
       maxWidth: 330,
     },
-    groupDuty: 0,
-    pagingGroupCard: {
-      pageSize: 5,
-      pageIndex: 1
+    // 播放条分页
+    pagingTapRecord: {
+      pageSize: 10,
+      pageIndex: 1,
+      isNoData: false,
     },
-
-    groupCards: [],
+    // 控制切换
+    flag: 'practice',
+    tapDetail: {},
+    tapRecord: [],
     cardCurrent: 0,
-    showGroupId: 0,
-    // 没有卡片了
-    pagingGroupCardIsNoData: false,
-    // 是否是自己的小组
-    isMyGroup: false
+
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let showGroupId = options.showGroupId
     // 获取去除上面导航栏，剩余的高度
     tool.navExcludeHeight(this)
-    this.setData({
-      groupDuty: app.userInfo.groupDuty,
-      showGroupId: showGroupId,
-      isMyGroup: showGroupId == app.userInfo.groupId
-    })
-    this.getPagingGroupCard(showGroupId)
+    this.getTapDetail(options.id)
     this.initialization()
     this.getProgressBoxInfo()
   },
@@ -121,33 +114,29 @@ Page({
       this.innerSoundContext.stop()
     })
   },
+
   playSound(e) {
     console.log(e)
     let {
       recordurl,
-      i,
       j
     } = e.currentTarget.dataset
-    console.log(i, j)
-    let groupCards = this.data.groupCards
-    let oldI = this.i,
-      oldJ = this.j
-    console.log(oldI, oldJ)
+    let tapRecord = this.data.tapRecord
+    oldJ = this.j
     let flag = false
-    if ((oldI !== i || oldJ !== j)) {
+    if ((oldJ !== j)) {
       flag = true
-    } else if (!groupCards[i].soundRowArr[j].isPlay) {
+    } else if (!tapRecord[j].isPlay) {
       flag = true
     }
     if (flag) {
-      this.i = i
       this.j = j
-      if (oldI !== undefined) {
-        groupCards[oldI].soundRowArr[oldJ].isPlay = false
+      if (oldJ !== undefined) {
+        tapRecord[oldJ].isPlay = false
       }
-      groupCards[i].soundRowArr[j].isPlay = true;
+      tapRecord[j].isPlay = true;
       this.setData({
-        groupCards
+        tapRecord
       })
       this.innerSoundContext && this.innerSoundContext.destroy()
       this.initSound()
@@ -156,87 +145,41 @@ Page({
     }
 
   },
-  // 获取分页打卡信息
-  getPagingGroupCard(showGroupId) {
-    let pagingGroupCard = this.data.pagingGroupCard
-    app.get(app.Api.getPagingGroupCard, {
-      pageSize: pagingGroupCard.pageSize,
-      pageIndex: pagingGroupCard.pageIndex,
-      groupId: showGroupId
-    }).then(res => {
-      if (res.length < pagingGroupCard.pageSize) {
-        this.setData({
-          pagingGroupCardIsNoData: true
-        })
-      }
-      res.forEach((item, index) => {
-        item.pageSize = 10
-        item.pageIndex = 1
-        item.soundRowArr = []
-        item.pagingGroupCardRecordIsNoData = false
-        item.first = true
-        if (item.datumUrls.length) {
-          item.flag = 'practice'
-        } else {
-          item.flag = 'demonstration'
-        }
-      })
-      pagingGroupCard.pageIndex = pagingGroupCard.pageIndex + 1
-      this.setData({
-        groupCards: this.data.groupCards.concat(res),
-        pagingGroupCard
-      }, () => {
-        if (this.data.cardCurrent == 0 && res.length) {
-          this.getPagingGroupCardRecord(this.data.cardCurrent)
-        }
-        if (!this.data.groupCards.length) {
-          if (!this.data.isMyGroup || this.data.groupDuty == -1) {
-            return common.Tip('小组管理员暂无发布打卡')
-          }
-        }
-      })
-    }).catch(err => {
-      console.log(err)
-      common.Toast(err)
-    })
-  },
-  // 获取分页打卡信息的录音
-  getPagingGroupCardRecord(cardCurrent) {
-    let groupCards = this.data.groupCards
-    let groupCard = groupCards[cardCurrent]
-    app.get(app.Api.getPagingGroupCardRecord, {
-      pageSize: groupCard.pageSize,
-      pageIndex: groupCard.pageIndex,
-      groupcardId: groupCard.id,
+  getTapDetail(id) {
+    let pagingTapRecord = this.data.pagingTapRecord
+    app.get(app.Api.getTapDetail, {
+      pageSize: pagingTapRecord.pageSize,
+      pageIndex: pagingTapRecord.pageIndex,
+      tapId: id,
       userId: app.userInfo.id
     }).then(res => {
-      if (res.length < groupCard.pageSize) {
-        groupCard.pagingGroupCardRecordIsNoData = true
+      if (res.length < pagingTapRecord.pageSize) {
+        this.setData({
+          'pagingTapRecord.isNoData': true
+        })
       }
-      groupCard.pageIndex = groupCard.pageIndex + 1
-      let soundRowArr = this.initSoundWidth(res)
-      groupCard.soundRowArr = groupCard.soundRowArr.concat(soundRowArr)
-      groupCards[cardCurrent] = groupCard
+      pagingTapRecord.pageIndex = pagingTapRecord.pageIndex + 1
+      let tapRecord = this.initSoundWidth(res.tapRecord)
       this.setData({
-        groupCards
+        pagingTapRecord,
+        tapDetail: res.tapDetail,
+        tapRecord: this.data.tapRecord.concat(tapRecord)
       })
-    }).catch(err => {
-      console.log(err)
-      common.Toast(err)
     })
   },
+
   // 处理声音条的宽度
-  initSoundWidth(soundRowArr) {
+  initSoundWidth(tapRecord) {
     const recordTime = this.data.recordTime
     const {
       minWidth,
       maxWidth
     } = this.data.voiceBar
     const changeRange = maxWidth - minWidth
-    soundRowArr.forEach((item, index) => {
+    tapRecord.forEach((item, index) => {
       item.width = item.duration * changeRange / recordTime + minWidth
     })
-    return (soundRowArr)
+    return (tapRecord)
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -248,21 +191,7 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
-    if (app.issuePuchCardBack) {
-      this.setData({
-        groupCards: [],
-        cardCurrent: 0,
-        pagingGroupCard: {
-          pageSize: 5,
-          pageIndex: 1
-        }
-      }, () => {
-        this.getPagingGroupCard(this.data.showGroupId)
-      })
-      app.issuePuchCardBack = false
-    }
-  },
+  onShow: function () {},
 
   /**
    * 生命周期函数--监听页面卸载
@@ -280,17 +209,13 @@ Page({
   previewImage(e) {
     console.log(e)
     let url = e.target.dataset.preview
-    common.previewImage(url)
+    let tapPicLink = this.data.tapDetail.tapPicLink
+    common.previewImage(tapPicLink, url)
   },
   switch (e) {
     let flag = e.target.dataset.flag
-    let index = e.target.dataset.index
-    let groupCards = this.data.groupCards
-    console.log(e)
-    if (groupCards[index].flag === flag) return
-    groupCards[index].flag = flag
     this.setData({
-      groupCards
+      flag
     })
   },
   getProgressBoxInfo() {
@@ -362,15 +287,8 @@ Page({
   },
   // 开始录音
   startRecord() {
-    let groupDuty = this.data.groupDuty
     this.innerSoundContext && this.innerSoundContext.stop()
-    if (!this.data.groupCards.length) {
-      if (groupDuty === 0 || groupDuty == 1) {
-        return common.Tip('需要先发布打卡练习哦')
-      } else {
-        return common.Tip('暂时还没有打卡信息,请联系管理员或组长发布打卡吧')
-      }
-    }
+
     const options = {
       duration: this.data.recordTime * 1000,
       format: 'mp3'
@@ -433,11 +351,6 @@ Page({
       current: 2
     })
   },
-  issuePuchCard() {
-    wx.navigateTo({
-      url: '/pages/home/puchCard/issuePuchCard/issuePuchCard',
-    })
-  },
   drawProgressbg: function () {
     let {
       width,
@@ -497,31 +410,14 @@ Page({
     console.log(duration, currentTime)
     this.drawCircle(currentTime * (1.4 / duration))
   },
-  // 切换卡
-  changeCard(e) {
-    let current = e.detail.current
-    let groupCards = this.data.groupCards
-    if (groupCards[current].first && current != 0) {
-      this.getPagingGroupCardRecord(current)
-    }
-    if (current == groupCards.length - 1 && !this.data.pagingGroupCardIsNoData) {
-      this.getPagingGroupCard(this.data.showGroupId)
-    }
-    groupCards[current].first = false
-    this.setData({
-      groupCards: this.data.groupCards,
-      cardCurrent: e.detail.current
-    })
-  },
   // 发送录音
-  async sendGroupCardRecord() {
+  async sendTapRecord() {
     try {
       common.showLoading('发送中')
-      let recordUrl = await this.uploadGroupCardRecord(this.data.tempFilePath)
-      let result = await this.issueGroupCardRecord(recordUrl)
+      let recordUrl = await this.uploadTapRecord(this.data.tempFilePath)
+      let result = await this.issueTapRecord(recordUrl)
       await this.setSoundRowArr(result[0])
 
-      
       common.Toast('已发送')
       this.drawCircle(0)
       this.setData({
@@ -553,12 +449,12 @@ Page({
     })
   },
   // 上传录音
-  uploadGroupCardRecord(tempImgParh) {
+  uploadTapRecord(tempImgParh) {
     return new Promise((resolve, reject) => {
       let option = {
           userId: app.userInfo.id,
           type: 'voice',
-          module: 'groupcardrecord'
+          module: 'taprecord'
         },
         conf = {
           loading: false,
@@ -568,20 +464,19 @@ Page({
     })
   },
   // 发布录音
-  issueGroupCardRecord(recordUrl) {
+  issueTapRecord(recordUrl) {
     return new Promise((resolve, reject) => {
       let {
-        groupCards,
-        cardCurrent,
+        tapDetail,
         duration
       } = this.data
       let {
         id,
         avatarUrl
       } = app.userInfo
-      app.post(app.Api.issueGroupCardRecord, {
+      app.post(app.Api.issueTapRecord, {
         userid: id,
-        groupcardId: groupCards[cardCurrent].id,
+        tapId: tapDetail.id,
         recordUrl,
         avatarUrl,
         duration
@@ -589,9 +484,8 @@ Page({
     })
   },
   scrolltolower() {
-    let cardCurrent = this.data.cardCurrent
-    if (!this.data.groupCards[cardCurrent].pagingGroupCardRecordIsNoData) {
-      this.getPagingGroupCardRecord(cardCurrent)
+    if (!this.data.pagingTapRecord.isNoData) {
+      this.getTapDetail(this.data.tapDetail.id)
     }
   }
 })

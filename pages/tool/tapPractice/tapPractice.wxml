@@ -1,0 +1,94 @@
+<!--pages/tool/tapPractice/tapPractice.wxml-->
+<view>
+  <navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' back="{{true}}" iconTheme='white'
+    bindback="handlerGobackClick"></navBar>
+  <!-- <view class='progress_box'>
+        <canvas class="progress_bg"   canvas-id="canvasProgressbg">  </canvas> 
+        <canvas class="progress_canvas"   canvas-id="canvasProgress">  </canvas> 
+        <view class="progress_text">
+            <view class="progress_dot"></view> 
+            <text class='progress_info'> {{progress_txt}}</text>
+        </view>     
+    </view> -->
+
+  <!-- <swiper style="height:{{excludeHeight}}rpx" bindchange="changeCard">
+    <swiper-item wx:for="{{groupCards}}" wx:key="inex" wx:for-index="i"> -->
+  <view class="card">
+    <view class="head">
+      <view class="bar">
+        <text wx:if="{{tapDetail.tapPicLink.length}}" class="practice {{flag==='practice'?'active':''}}"
+          catchtap="switch" data-flag="practice">练习资料</text>
+        <text wx:if="{{tapDetail.tapVideoLink.length}}" class="demonstration  {{flag==='demonstration'?'active':''}}"
+          catchtap="switch" data-flag="demonstration">演示视频</text>
+      </view>
+      <view class="avatar-userName">
+        <!-- <image class="avatar" src="{{tapDetail.adminAvatar}}"></image> -->
+        <text class="userName">{{tapDetail.author}}</text>
+      </view>
+    </view>
+    <view class="MusicscoreWrap">
+      <swiper class="swiper" wx:if="{{flag==='practice'}}">
+        <swiper-item class="swiper-item " wx:for="{{tapDetail.tapPicLink}}">
+          <image class="Musicscore" mode="aspectFill" src="{{item}}"
+            data-preview="{{item}}" catchtap="previewImage"></image>
+        </swiper-item>
+      </swiper>
+      <video wx:else src="{{tapDetail.tapVideoLink}}" class="video" object-fit="fill"></video>
+    </view>
+    <view class="timeWrap">
+      <text class="time">{{tapDetail.releaseTime}}</text>
+    </view>
+    <view class="time-sound {{flag==='demonstration'?'videoSound':''}}">
+      <scroll-view bindscrolltolower="scrolltolower" class="scroll" scroll-y enhanced show-scrollbar="{{false}}">
+        <view class="soundRowWrap">
+          <view class="soundRow" wx:for="{{tapRecord}}" wx:key="id" wx:for-item="soundRow" wx:for-index="j">
+            <view class="avatarWrap">
+              <text class="rank" wx:if="{{j===0||j===1||j===2}}">{{j+1}}</text>
+              <image wx:if="{{j===0}}" class="avatarBackground" src="http://cdn.eigene.cn/puchCard/firstBackground.png">
+              </image>
+              <image wx:if="{{j===1}}" class="avatarBackground"
+                src="http://cdn.eigene.cn/puchCard/secondBackground.png"></image>
+              <image wx:if="{{j===2}}" class="avatarBackground" src="http://cdn.eigene.cn/puchCard/thirdBackground.png">
+              </image>
+              <image class="avatar" src="{{soundRow.avatarUrl}}"></image>
+            </view>
+            <view class="recordingStripWrap">
+              <view catchtap="playSound"  data-j="{{j}}" class="recordingStrip"
+                style="width:{{soundRow.width}}rpx" data-recordurl="{{soundRow.recordUrl}}">
+                <image src="http://cdn.eigene.cn/play{{soundRow.isPlay?'ing':''}}.gif" class="voice"></image>
+                <text>{{soundRow.duration}}s</text>
+              </view>
+            </view>
+            <view class="likeWrap" data-islike="{{soundRow.isLike}}" data-index="{{j}}" catchtap="toLike">
+              <!-- <image class="like" src="http://cdn.eigene.cn/puchCard/like.png"></image> -->
+              <image class="like" src="http://cdn.eigene.cn/dynamicLike{{soundRow.isLike?'d':''}}.png"></image>
+              <text class="likeNumber">{{soundRow.likes}}</text>
+            </view>
+          </view>
+        </view>
+      </scroll-view>
+    </view>
+  </view>
+  <!-- </swiper-item>
+  </swiper> -->
+  <image class="soundBackground{{current!==0?'2':'1'}}"
+    src="http://cdn.eigene.cn/puchCard/soundBackground{{current!==0?'2':'1'}}.png">
+    <view class='progress_box' id="progress_box">
+      <image wx:if="{{current===0}}" class="sound" src="http://cdn.eigene.cn/puchCard/sound.png" catchtap="startRecord">
+      </image>
+      <image wx:elif="{{current===1}}" class="sound" src="http://cdn.eigene.cn/puchCard/recording.png"
+        catchtap="endRecord"></image>
+      <image wx:elif="{{current===2}}" class="playSound" src="http://cdn.eigene.cn/puchCard/playSound.png"
+        catchtap="startPlay"></image>
+      <image wx:elif="{{current===3}}" class="playingSound" src="http://cdn.eigene.cn/puchCard/playingSound.png"
+        catchtap="pausePlay"></image>
+      <canvas hidden="{{current===0}}" class="progress_bg" canvas-id="canvasProgressbg"> </canvas>
+      <canvas hidden="{{current===0}}" class="progress_canvas" canvas-id="canvasProgress"> </canvas>
+    </view>
+    <image wx:if="{{current===2 || current===3}}" class="deleteSound"
+      src="http://cdn.eigene.cn/puchCard/deleteSound.png" catchtap="deleteSound"></image>
+    <image catchtap="sendTapRecord" wx:if="{{current===2 || current===3}}" class="completeSound"
+      src="http://cdn.eigene.cn/puchCard/completeSound.png"></image>
+  </image>
+
+</view>

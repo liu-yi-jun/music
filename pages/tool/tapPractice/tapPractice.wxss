@@ -1,0 +1,553 @@
+/* pages/tool/tapPractice/tapPractice.wxss */
+
+
+.issuePuchCard {
+  width: 101rpx;
+  height: 119rpx;
+  position: fixed;
+  top: 321rpx;
+  left: 0;
+  z-index: 999;
+}
+
+
+
+.bar {
+  color: white;
+  font-size: 28rpx;
+}
+
+.avatar-userName {
+  display: flex;
+  align-items: center;
+}
+
+.avatar {
+  width: 50rpx;
+  height: 50rpx;
+  border-radius: 50%;
+}
+
+.userName {
+  color: white;
+  font-size: 22rpx;
+  margin-left: 10rpx;
+}
+
+.card {
+  margin: 30rpx auto 0;
+  width: 615rpx;
+  height: 1059rpx;
+  box-sizing: border-box;
+  padding: 30rpx;
+  background: linear-gradient(180deg, #ea9fe1, #6067d1);
+  border-radius: 30rpx;
+  display: flex;
+  flex-direction: column;
+}
+
+.time-sound {
+  height: 405rpx;
+}
+
+.head {
+  display: flex;
+  justify-content: space-between;
+}
+
+.MusicscoreWrap {
+  margin-top: 10rpx;
+  width: 100%;
+}
+
+.Musicscore {
+  width: 100%;
+  height: 511rpx;
+}
+
+.timeWrap {
+  display: flex;
+  justify-content: flex-end;
+  font-size: 18rpx;
+  color: #b7b8b8;
+  margin-right: 5rpx;
+  margin-bottom: 10rpx;
+}
+
+.soundRow {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16rpx;
+}
+
+.soundRow .avatarWrap {
+  width: 120rpx;
+  height: 87rpx;
+  position: relative;
+}
+
+.soundRow .rank {
+  position: absolute;
+  display: block;
+  color: white;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 10rpx;
+  font-size: 20rpx;
+}
+
+.soundRow .avatarBackground {
+  width: 100%;
+  height: 100%;
+}
+
+.soundRow .avatar {
+  position: absolute;
+  height: 73rpx;
+  width: 73rpx;
+  border-radius: 50%;
+  right: 7rpx;
+  top: 0;
+  bottom: 0;
+  margin: auto 0;
+}
+
+.recordingStripWrap {
+  flex-grow: 1;
+}
+
+.recordingStrip {
+  width: 300rpx;
+  height: 63rpx;
+  border-radius: 999rem;
+  background-color: #ece4fc;
+  margin-left: 16rpx;
+}
+
+.like {
+  width: 40rpx;
+  height: 40rpx;
+  margin-right: 5rpx;
+}
+
+.likeWrap {
+  display: flex;
+  align-items: center;
+}
+
+.likeNumber {
+  font-size: 18rpx;
+  color: white;
+  margin-left: 5rpx;
+}
+
+.soundBackground1 {
+  /* transition: all 0.4s; */
+  position: fixed;
+  width: 100%;
+  height: 159rpx;
+  bottom: 0;
+  left: 0;
+}
+
+.soundBackground2 {
+  /* transition: all 0.4s; */
+  position: fixed;
+  width: 100%;
+  height: 242rpx;
+  bottom: 0;
+  left: 0;
+}
+
+.sound {
+  width: 67rpx;
+  height: 77rpx;
+  position: absolute;
+  left: 38rpx;
+  top: 33rpx;
+  z-index: 99;
+}
+
+.playSound {
+  width: 60rpx;
+  height: 66rpx;
+  position: absolute;
+  left: 47rpx;
+  top: 35rpx;
+  z-index: 99;
+}
+
+.playingSound {
+  width: 52rpx;
+  height: 62rpx;
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: auto;
+  top: 35rpx;
+  z-index: 99;
+}
+
+.progress_box {
+  /* background: white; */
+  top: 9rpx;
+  left: 305rpx;
+  position: absolute;
+  /* width: 72px;
+  height: 72px; */
+  width: 144rpx;
+  height: 144rpx;
+  /* // 这里的宽高是必须大于等于canvas圆环的直径 否则绘制到盒子外面就看不见了
+// 一开始设置 width:440rpx; height:440rpx; 发现 在360X640分辨率的设备，下绘制的圆环跑盒子外去了
+// 小程序使用rpx单位适配 ，但是canvas绘制的是px单位的。所以只能用px单位绘制的圆环在盒子内显示 */
+}
+
+.progress_bg {
+  position: absolute;
+  /* width: 72px; */
+  left: 0;
+  top: 0;
+  /* height: 72px; */
+  width: 144rpx;
+  height: 144rpx;
+}
+
+.progress_canvas {
+  left: 0;
+  top: 0;
+  position: absolute;
+  /* width: 72px;
+  height: 72px; */
+  width: 144rpx;
+  height: 144rpx;
+}
+
+.deleteSound {
+  position: absolute;
+  left: 292rpx;
+  top: 157rpx;
+  width: 54rpx;
+  height: 54rpx;
+}
+
+.completeSound {
+  position: absolute;
+  right: 275rpx;
+  top: 157rpx;
+  width: 72rpx;
+  height: 56rpx;
+}
+
+.scroll {
+  height: 100%;
+}
+
+.recordingStrip {
+  box-sizing: border-box;
+  padding: 0 15rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+
+.recordingStrip text {
+  color: black;
+  font-size: 20rpx;
+
+}
+
+.active {
+  color: white !important;
+}
+
+.practice {
+  color: #dddddd;
+}
+
+.demonstration {
+  color: #dddddd;
+  margin-left: 20rpx;
+}
+.video {
+  height: 380rpx;
+  width: 100%;
+}
+.videoSound {
+  height: 526rpx!important;
+}
+.voice {
+  height: 30rpx;
+  width: 54rpx;
+}
+@media screen and (max-aspect-ratio: 1/2) {
+  .voice {
+    height: 30rpx;
+    width: 54rpx;
+  }
+  .video {
+    height: 380rpx;
+    width: 100%;
+  }
+  .videoSound {
+    height: 770rpx!important;
+  }
+  .demonstration {
+    color: #dddddd;
+    margin-left: 20rpx;
+  }
+
+  .practice {
+    color: #dddddd;
+  }
+
+  .active {
+    color: white !important;
+  }
+
+  .scroll {
+    height: 100%;
+  }
+
+  .issuePuchCard {
+    width: 101rpx;
+    height: 119rpx;
+    position: fixed;
+    top: 321rpx;
+    left: 0;
+    z-index: 999;
+  }
+
+
+
+  .bar {
+    color: white;
+    font-size: 28rpx;
+  }
+
+  .avatar-userName {
+    display: flex;
+    align-items: center;
+  }
+
+  .avatar {
+    width: 50rpx;
+    height: 50rpx;
+    border-radius: 50%;
+  }
+
+  .userName {
+    color: white;
+    font-size: 22rpx;
+    margin-left: 10rpx;
+  }
+
+  .card {
+    display: flex;
+    flex-direction: column;
+    margin: 20rpx auto 0;
+    width: 80.10%;
+    height: 81.58vh;
+    box-sizing: border-box;
+    padding: 30rpx;
+    background: linear-gradient(180deg, #ea9fe1, #6067d1);
+    border-radius: 30rpx;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .time-sound {
+    height: 490rpx;
+  }
+
+  .head {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10rpx;
+  }
+
+  .MusicscoreWrap {
+    margin-top:0rpx;
+    width: 100%;
+  }
+
+  .Musicscore {
+    width: 100%;
+    height: 658rpx;
+  }
+
+  .timeWrap {
+    display: flex;
+    justify-content: flex-end;
+    font-size: 21rpx;
+    align-items: center;
+    height: 30rpx;
+    align-items: center;
+    height: 40rpx;
+    margin-right: 5rpx;
+    color: #b7b8b8;
+  }
+
+  .soundRow {
+    display: flex;
+    align-items: center;
+    margin-top: 20rpx;
+  }
+
+  .soundRow .avatarWrap {
+    width: 120rpx;
+    height: 87rpx;
+    position: relative;
+  }
+
+  .soundRow .rank {
+    position: absolute;
+    display: block;
+    color: white;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 10rpx;
+    font-size: 20rpx;
+  }
+
+  .soundRow .avatarBackground {
+    width: 100%;
+    height: 100%;
+  }
+
+  .soundRow .avatar {
+    position: absolute;
+    height: 73rpx;
+    width: 73rpx;
+    border-radius: 50%;
+    right: 7rpx;
+    top: 0;
+    bottom: 0;
+    margin: auto 0;
+  }
+
+  .recordingStripWrap {
+    flex-grow: 1;
+  }
+
+  .recordingStrip {
+    height: 63rpx;
+    border-radius: 999rem;
+    background-color: #ece4fc;
+    margin-left: 16rpx;
+  }
+
+  .like {
+    width: 40rpx;
+    height: 40rpx;
+  }
+
+  .likeWrap {
+    display: flex;
+    align-items: center;
+  }
+
+  .likeNumber {
+    font-size: 18rpx;
+    color: white;
+    margin-left: 5rpx;
+  }
+
+  .soundBackground1 {
+    /* transition: all 0.4s; */
+    position: fixed;
+    width: 100%;
+    height: 9.92%;
+    bottom: 0;
+    left: 0;
+  }
+
+  .soundBackground2 {
+    /* transition: all 0.4s; */
+    position: fixed;
+    width: 100%;
+    height: 14.89%;
+    bottom: 0;
+    left: 0;
+  }
+
+  .sound {
+    width: 67rpx;
+    height: 77rpx;
+    position: absolute;
+    left: 38rpx;
+    top: 33rpx;
+    z-index: 99;
+  }
+
+  .playSound {
+    width: 60rpx;
+    height: 66rpx;
+    position: absolute;
+    left: 47rpx;
+    top: 35rpx;
+    z-index: 99;
+  }
+
+  .playingSound {
+    width: 52rpx;
+    height: 62rpx;
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: auto;
+    top: 35rpx;
+    z-index: 99;
+  }
+
+  .progress_box {
+    /* background: white; */
+    top: 9rpx;
+    left: 305rpx;
+    position: absolute;
+    /* width: 72px;
+    height: 72px; */
+    width: 144rpx;
+    height: 144rpx;
+    /* // 这里的宽高是必须大于等于canvas圆环的直径 否则绘制到盒子外面就看不见了
+  // 一开始设置 width:440rpx; height:440rpx; 发现 在360X640分辨率的设备，下绘制的圆环跑盒子外去了
+  // 小程序使用rpx单位适配 ，但是canvas绘制的是px单位的。所以只能用px单位绘制的圆环在盒子内显示 */
+  }
+
+  .progress_bg {
+    position: absolute;
+    /* width: 72px; */
+    left: 0;
+    top: 0;
+    /* height: 72px; */
+    width: 144rpx;
+    height: 144rpx;
+  }
+
+  .progress_canvas {
+    left: 0;
+    top: 0;
+    position: absolute;
+    /* width: 72px;
+    height: 72px; */
+    width: 144rpx;
+    height: 144rpx;
+  }
+
+  .deleteSound {
+    position: absolute;
+    left: 292rpx;
+    top: 157rpx;
+    width: 54rpx;
+    height: 54rpx;
+  }
+
+  .completeSound {
+    position: absolute;
+    right: 275rpx;
+    top: 157rpx;
+    width: 72rpx;
+    height: 56rpx;
+  }
+}

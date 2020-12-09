@@ -196,8 +196,12 @@ Page({
       show: false
     })
   },
-  previewImage(e) {
-    let src = e.currentTarget.dataset.src
-    common.previewImage([src], src)
-  }
+  goTapPractice(e) {
+    let circulars = this.data.circulars
+    let index = e.currentTarget.dataset.index
+    let id = circulars[index].id
+    wx.navigateTo({
+      url: `/pages/tool/tapPractice/tapPractice?id=${id}`,
+    })
+  },
 })
