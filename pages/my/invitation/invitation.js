@@ -146,7 +146,22 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
+  onShareAppMessage: function (e) {
+    let index = e.target.dataset.index
+    let dynamics = this.data.dynamics
+    setTimeout(() => {
+      app.post(app.Api.share, {
+        table: dynamics[index].tableName,
+        id: dynamics[index].id
+      }, {
+        loading: false
+      }).then(res => {
+        dynamics[index].share++
+        this.setData({
+          dynamics
+        })
+      })
+    }, 3000)
 
   },
   goOtherHome(e) {

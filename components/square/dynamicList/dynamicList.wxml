@@ -47,6 +47,11 @@
             <image src="http://cdn.eigene.cn/dynamicComment.png"></image>
             <text>{{item.comment}}</text>
           </view>
+          <view class="share">
+            <button class="shareBtn" open-type='share' data-index="{{index}}" plain='true'></button>
+            <image src="http://cdn.eigene.cn/dynamicShare.png"></image>
+            <text>{{item.share}}</text>
+          </view>
         </view>
         <image wx:if="{{item.userId === myId}}" class="delete" catchtap="delete" data-index="{{index}}"
           src="http://cdn.eigene.cn/delete.png"></image>

@@ -46,14 +46,13 @@ Component({
   methods: {
     extend() {
       wx.showActionSheet({
-        itemList: ['举报', '分享'],
+        itemList: ['举报'],
         success: res => {
           console.log(res)
           if (res.tapIndex === 1) {
             // 分享
-          } else if (res.tapIndex === 2) {
-            // 举报
-          }
+          } // 举报
+          
         }
       })
     },
