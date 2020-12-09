@@ -59,13 +59,12 @@ Page({
       index,
       islike
     } = e.currentTarget.dataset
-    let current = this.data.current
-    let groupCards = this.data.groupCards
-    let soundRow = groupCards[current].soundRowArr[index]
+    let tapRecord = this.data.tapRecord
+    let soundRow = tapRecord[index]
     soundRow.isLike = !islike
     soundRow.isLike ? ++soundRow.likes : --soundRow.likes
     this.setData({
-      groupCards
+      tapRecord
     }, () => {
       core.operateMultiple(app.Api.groupCardRecordLike, {
         operate: soundRow.isLike,
@@ -122,7 +121,7 @@ Page({
       j
     } = e.currentTarget.dataset
     let tapRecord = this.data.tapRecord
-    oldJ = this.j
+    let oldJ = this.j
     let flag = false
     if ((oldJ !== j)) {
       flag = true
@@ -416,6 +415,7 @@ Page({
       common.showLoading('发送中')
       let recordUrl = await this.uploadTapRecord(this.data.tempFilePath)
       let result = await this.issueTapRecord(recordUrl)
+      console.log('1111111111111111111',result)
       await this.setSoundRowArr(result[0])
 
       common.Toast('已发送')
@@ -432,19 +432,18 @@ Page({
   },
   setSoundRowArr(soundRow) {
     return new Promise((resolve, reject) => {
-      let groupCards = this.data.groupCards
-      let soundRowArr = groupCards[this.data.cardCurrent].soundRowArr
+      let tapRecord = this.data.tapRecord
       let soundRows = this.initSoundWidth([soundRow])
-      if (soundRowArr.length >= 4) {
+      if (tapRecord.length >= 4) {
         // 插入到第三下标
-        soundRowArr.splice(3, 0, soundRows[0])
+        tapRecord.splice(3, 0, soundRows[0])
       } else {
         // 插入到最后
-        soundRowArr.push(soundRows[0])
+        tapRecord.push(soundRows[0])
       }
       resolve()
       this.setData({
-        groupCards
+        tapRecord
       })
     })
   },
