@@ -10,7 +10,16 @@ App.requestUrls = requestUrls[env]; // 公共文件用的
 
 App({
   onLaunch: function () {
-
+    let guide = wx.getStorageSync('guide')
+    if (!guide) {
+      guide = {
+        home: true,
+        square: true,
+        union: true
+      }
+      wx.setStorageSync('guide', guide)
+    }
+    this.globalData.guide = guide
   },
 
   requestUrls: requestUrls[env], // 给页面js用的
@@ -23,10 +32,10 @@ App({
   },
   userInfo: null,
   globalData: {
-
+    guide: {}
   },
   switchData: {},
-  cbObj : {},
+  cbObj: {},
   // 回退
   handlerGobackClick: function (delta) {
     const pages = getCurrentPages();

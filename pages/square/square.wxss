@@ -235,3 +235,41 @@ swiper-item {
   font-size: 28rpx;
 }
 
+
+.guideMask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 9999999;
+  opacity: 0;
+  transition: 0.4s all;
+}
+
+.showGuide {
+  visibility: visible;
+  opacity: 1;
+}
+
+.hideGuide {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.leftGuide {
+  position: absolute;
+  left: 9%;
+  top: 8%;
+  width: 175rpx;
+  height: 135rpx;
+}
+
+
+.leftGuideText {
+  position: absolute;
+  left: 9%;
+  top: 22%;
+  color: white;
+}

@@ -4,4 +4,8 @@
   <view data-id="{{item.id}}" catchtap="goOtherHome" class="circular"  wx:for="{{circulars}}" style="{{item.style}}" >
     <text>{{item.groupName}}</text>
   </view>
+  <view class="guideMask {{unionGuide?'showGuide': 'hideGuide'}}" >
+    <image class="shakeGuide" src="http://cdn.eigene.cn/guide/shake.png"></image>
+    <view class="shakeGuideText">“摇一摇”手机 显示新的小组</view>
+  </view>
 </view>

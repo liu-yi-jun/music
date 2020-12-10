@@ -30,7 +30,8 @@ Page({
     isNotData: false,
     dynamics: [],
     topics: [],
-    song: {}
+    song: {},
+    squareGuide: false
   },
 
   /**
@@ -45,7 +46,8 @@ Page({
     this.getDate()
     this.getRandomSong()
     this.setData({
-      signInSums
+      signInSums,
+      squareGuide: app.globalData.guide.square,
     })
     wx.onBackgroundAudioStop(() => {
       this.marquee.pauseScroll()
@@ -319,4 +321,14 @@ Page({
       this.getSquaredynamics()
     }
   },
+  click() {
+    let guide =  wx.getStorageSync('guide')
+      guide.square = false
+      wx.setStorageSync('guide', guide)
+      this.setData({
+        squareGuide: false,
+        hideBarShow: true
+      })
+   },
+  
 })

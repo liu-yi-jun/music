@@ -51,7 +51,8 @@ Page({
       top: 77.36,
       WH: 185,
     }],
-    circulars: []
+    circulars: [],
+    unionGuide: false
   },
 
   /**
@@ -61,7 +62,6 @@ Page({
     // 获取去除上面导航栏，剩余的高度
     tool.navExcludeHeight(this)
     this.getRandomGroup()
-    common.Tip('摇一摇可以切换小组哦！', '提示', '好的')
   },
 
   getRandomGroup(){
@@ -71,7 +71,8 @@ Page({
       loading:false
     }).then(res=> {
       this.setData({
-        circulars: res
+        circulars: res,
+        unionGuide: app.globalData.guide.union,
       },()=> {
         this.init()
       })
@@ -112,6 +113,7 @@ Page({
    */
   onShow: function () {
     tool.shake(() => {
+      this.click()
       this.getRandomGroup()
       wx.hideLoading()
     })
@@ -159,5 +161,15 @@ Page({
     wx.navigateTo({
       url: `/pages/home/otherHome/otherHome?showGroupId=${id}`,
     })
-  }
+  },
+  click() {
+    let guide =  wx.getStorageSync('guide')
+    if(guide.union) {
+      guide.union = false
+      wx.setStorageSync('guide', guide)
+      this.setData({
+        unionGuide: false
+      })
+    }
+   }
 })

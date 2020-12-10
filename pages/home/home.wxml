@@ -23,7 +23,8 @@
         <text class="organization">{{groupNamebuttom}}</text>
       </view>
     </image>
-    <image class="follow" src="http://cdn.eigene.cn/home/follow{{groupInfo.isFollow?'ed':''}}.png" catchtap="follow"></image>
+    <image class="follow" src="http://cdn.eigene.cn/home/follow{{groupInfo.isFollow?'ed':''}}.png" catchtap="follow">
+    </image>
     <view mark:district="functionBar" class="functionBar {{functionBarShow? 'functionBarShow':''}}">
       <view catchtap="goPuchCard" class="puchCard {{functionBarShow? 'puchCardShow':''}}">
         <image src="http://cdn.eigene.cn/home/puchCard.png"></image>
@@ -36,7 +37,8 @@
     </view>
   </view>
   <!-- mark:area不行 -->
-  <view mark:district="dynamic" class="dynamicShowBackground {{dynamicIsShow?'showDynamic':'hideDynamic'}}" bindtouchstart="dynamicTouchstart" bindtouchend="dynamicTouchend">
+  <view mark:district="dynamic" class="dynamicShowBackground {{dynamicIsShow?'showDynamic':'hideDynamic'}}"
+    bindtouchstart="dynamicTouchstart" bindtouchend="dynamicTouchend">
     <text class="userName">{{showContent.nickName}}</text>
     <view class="title-time">
       <text class="title">{{showContent.introduce}}</text>
@@ -47,13 +49,14 @@
         <image class="dynamicImg" mode="aspectFill" src="{{item}}"></image>
       </swiper-item>
     </swiper>
-    <video  mark:operation="No" class="video"  object-fit="cover" hidden="{{showContent.mold !== 1 || !showVideo}}"
+    <video mark:operation="No" class="video" object-fit="cover" hidden="{{showContent.mold !== 1 || !showVideo}}"
       src="{{showContent.videoUrl}}"></video>
-      
-    <view hidden="{{showContent.mold !== 2}}" mark:operation="No" class="soundWrap" >
+
+    <view hidden="{{showContent.mold !== 2}}" mark:operation="No" class="soundWrap">
       <playRecord id="playRecord" voiceUrl="{{showContent.voiceUrl}}"></playRecord>
     </view>
-    <image wx:if="{{showContent.userId === myId}}"  mark:operation="No" class="delete" catchtap="delete" data-index="{{index}}"  src="http://cdn.eigene.cn/delete.png"></image>
+    <image wx:if="{{showContent.userId === myId}}" mark:operation="No" class="delete" catchtap="delete"
+      data-index="{{index}}" src="http://cdn.eigene.cn/delete.png"></image>
     <view class="like-comment" mark:operation="No">
       <view class="like" catchtap="toLike">
         <image src="http://cdn.eigene.cn/dynamicLike{{showContent.isLike?'d':''}}.png"></image>
@@ -133,5 +136,18 @@
         <image catchtap="yesJoin" src="http://cdn.eigene.cn/home/yes.png"></image>
       </view>
     </view>
+  </view>
+  <view class="guideMask {{homeGuide?'showGuide': 'hideGuide'}}" catchtap="stopBubbling">
+    <block wx:if="{{leftGuide}}">
+      <image class="leftGuide" src="http://cdn.eigene.cn/guide/left.png" catchtap="click" data-click="leftGuide">
+      </image>
+      <view class="leftGuideText">点击发现隐藏版块</view>
+    </block>
+    <block wx:if="{{bottomGuide}}">
+      <image class="bottomGuide" src="http://cdn.eigene.cn/guide/bottom.png" catchtap="click" data-click="bottomGuide">
+      </image>
+      <view class="bottomGuideText">点击展开下栏</view>
+    </block>
+
   </view>
 </view>

@@ -86,6 +86,9 @@ Page({
     member: [],
     showContent: {},
     showVideo: false,
+    homeGuide: false,
+    leftGuide: true,
+    bottomGuide: true
   },
 
 
@@ -93,6 +96,8 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+
+
     let {
       groupId: myGroupId,
       groupDuty
@@ -104,6 +109,7 @@ Page({
     this.getGroupInfo(myGroupId)
     this.groupPagingGetGroupdynamics(myGroupId).then(() => {
       this.urlPush()
+
     })
     if (groupDuty === -1) {
       let tip = '请求1小时后自动失效，可重新选择小组'
@@ -155,12 +161,12 @@ Page({
     socket.on("message", (from, to, message) => {
       console.log('okok')
       for (let key in app.cbObj) {
-          app.cbObj[key] && app.cbObj[key](from, to, message)
+        app.cbObj[key] && app.cbObj[key](from, to, message)
       }
     })
     app.onMessage('messageMain', (from, to, message) => {
       let threas = wx.getStorageSync('threas')
-      console.log('收到',threas)
+      console.log('收到', threas)
       if (!threas) {
         threas = {}
       }
@@ -187,7 +193,7 @@ Page({
       })
     })
 
- 
+
   },
   groupPagingGetGroupdynamics(groupId) {
     let {
@@ -253,26 +259,41 @@ Page({
     const styleLeight = this.data.styleLeight
     let member = this.data.member
     if (member.length >= 5 && member.length < styleLeight) {
-        member = member.concat(member)
+      member = member.concat(member)
     }
     for (i; i < styleLeight; i++) {
       showMember.push(member[i])
     }
-    this.setData({
-      showMember,
-      member,
-      showContent: showMember[0],
-      pointer: styleLeight - 1,
-      dynamicIsShow: member.length ? true : false,
-    }, () => {
-      if (showMember[0].mold === 1) {
-        setTimeout(() => {
-          this.setData({
-            showVideo: true
-          })
-        }, 500)
-      }
-    })
+
+    if (app.globalData.guide.home) {
+      this.getTabBar().setData({
+        show: false
+      })
+      this.setData({
+        showMember,
+        member,
+        pointer: styleLeight - 1,
+        homeGuide: app.globalData.guide.home,
+        tabBarBtnShow: true
+      })
+    } else {
+      this.setData({
+        showMember,
+        member,
+        showContent: showMember[0],
+        pointer: styleLeight - 1,
+        dynamicIsShow: member.length ? true : false
+      }, () => {
+        if (showMember[0].mold === 1) {
+          setTimeout(() => {
+            this.setData({
+              showVideo: true
+            })
+          }, 500)
+        }
+      })
+    }
+
   },
 
   /**
@@ -281,9 +302,9 @@ Page({
   onReady: function () {
     // this.getmoveDistance()
 
-    setTimeout(()=> {
+    setTimeout(() => {
       this.socket.emit("getmessage");
-    },8000)
+    }, 8000)
   },
 
   /**
@@ -801,4 +822,43 @@ Page({
       }
     })
   },
+  stopBubbling() {
+    return
+  },
+  click(e) {
+    let click = e.currentTarget.dataset.click
+    if (click === 'leftGuide') {
+      this.setData({
+        leftGuide: false,
+        functionBarShow: true
+      })
+    } else {
+      this.getTabBar().setData({
+        show: true
+      })
+      this.setData({
+        bottomGuide: false,
+        tabBarBtnShow: false
+      })
+    }
+    if (!this.data.leftGuide && !this.data.bottomGuide) {
+      const showMember = this.data.showMember
+      let member = this.data.member
+      let guide = wx.getStorageSync('guide')
+      guide.home = false
+      wx.setStorageSync('guide', guide)
+      this.setData({
+        homeGuide: false,
+      },()=> {
+        setTimeout(() => {
+          this.setData({
+            functionBarShow: false,
+            showContent: showMember[0],
+            dynamicIsShow: member.length ? true : false
+          })
+        }, 1000);
+      })
+    }
+
+  }
 })

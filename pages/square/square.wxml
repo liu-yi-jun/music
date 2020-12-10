@@ -64,4 +64,8 @@
   <!-- <menu></menu> -->
   <showTabBar tabBarBtnShow="{{tabBarBtnShow}}">
   </showTabBar>
+  <view class="guideMask {{squareGuide?'showGuide': 'hideGuide'}}" >
+    <image class="leftGuide" src="http://cdn.eigene.cn/guide/left.png" catchtap="click"></image>
+    <view class="leftGuideText">点击发现隐藏版块</view>
+  </view>
 </view>
