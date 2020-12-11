@@ -72,7 +72,7 @@ Page({
     }).then(res=> {
       this.setData({
         circulars: res,
-        unionGuide: app.globalData.guide.union,
+        // unionGuide: app.globalData.guide.union,
       },()=> {
         this.init()
       })

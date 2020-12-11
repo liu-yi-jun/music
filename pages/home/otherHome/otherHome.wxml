@@ -34,7 +34,7 @@
     </view>
   </view>
   <!-- mark:area不行 -->
-  <view mark:district="dynamic" class="dynamicShowBackground {{dynamicIsShow?'showDynamic':'hideDynamic'}}" catchtap="dynamicDetail">
+  <view mark:district="dynamic" class="dynamicShowBackground {{dynamicIsShow?'showDynamic':'hideDynamic'}}"  bindtouchstart="dynamicTouchstart" bindtouchend="dynamicTouchend">
     <text class="userName">{{showContent.nickName}}</text>
     <view class="title-time">
       <text class="title">{{showContent.introduce}}</text>

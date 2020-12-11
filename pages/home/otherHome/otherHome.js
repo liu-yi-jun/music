@@ -9,8 +9,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-      // 点击第一个头像后显示光圈
-      dynamicIsShow: false,
+    // 点击第一个头像后显示光圈
+    dynamicIsShow: false,
     // 打卡、课程功能板块
     functionBarShow: false,
     // 控制弹出框
@@ -112,7 +112,7 @@ Page({
         pageSize,
         pageIndex,
         groupId,
-        userId:app.userInfo.id
+        userId: app.userInfo.id
       }).then(res => {
         console.log('res.length', res.length)
         if (res.length < pageSize) {
@@ -163,12 +163,26 @@ Page({
     const showMember = this.data.showMember
     const styleLeight = this.data.styleLeight
     const member = this.data.member
+    if (member.length >= 5 && member.length < styleLeight) {
+      member = member.concat(member)
+    }
     for (i; i < styleLeight; i++) {
       showMember.push(member[i])
     }
     this.setData({
       showMember,
-      pointer: styleLeight - 1
+      member,
+      showContent: showMember[0],
+      pointer: styleLeight - 1,
+      dynamicIsShow: member.length ? true : false
+    }, () => {
+      if (showMember[0] && showMember[0].mold === 1) {
+        setTimeout(() => {
+          this.setData({
+            showVideo: true
+          })
+        }, 500)
+      }
     })
   },
 
@@ -182,8 +196,7 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
-  },
+  onShow: function () {},
 
   /**
    * 生命周期函数--监听页面隐藏
@@ -200,6 +213,73 @@ Page({
 
   },
   handlerGobackClick: app.handlerGobackClick,
+  dynamicTouchstart(e) {
+    this.dynamicStartY = e.changedTouches[0].clientY
+    this.dynamicStartX = e.changedTouches[0].clientX
+  },
+  dynamicTouchend(e) {
+    this.dynamicEndX = e.changedTouches[0].clientX
+    this.dynamicEndY = e.changedTouches[0].clientY
+    this.dynamicMoveRealize(e).then(() => {
+      let {
+        ableIndex,
+        styleLeight,
+        showMember,
+      } = this.data
+      let memberLeight = this.data.member.length
+      let showContent = showMember[(ableIndex - 1) % styleLeight]
+      this.setData({
+        dynamicIsShow: true,
+        showContent
+      }, () => {
+        if (showContent.mold === 1) {
+          setTimeout(() => {
+            this.setData({
+              showVideo: true
+            })
+          }, 500)
+        }
+      })
+      console.log('(ableIndex + styleLeight*2 >= memberLeight', ableIndex + styleLeight * 2 >= memberLeight)
+      console.log('!this.data.isNotData', !this.data.isNotData)
+      if (ableIndex + styleLeight * 2 >= memberLeight && !this.data.isNotData) {
+        this.groupPagingGetGroupdynamics(this.data.groupInfo.id)
+      }
+    })
+  },
+  dynamicMoveRealize(e) {
+    return new Promise((resolve, reject) => {
+      let dynamicEndX = this.dynamicEndX
+      let dynamicEndY = this.dynamicEndY
+      let dynamicStartX = this.dynamicStartX
+      let dynamicStartY = this.dynamicStartY
+      let pointer = this.data.pointer
+      let memberLength = this.data.member.length
+      let styleLeight = this.data.styleLeight
+      console.log('dynamicEndY', dynamicEndY)
+      console.log('dynamicStartY', dynamicStartY)
+      console.log('dynamicEndX', dynamicEndX)
+      console.log('dynamicStartX', dynamicStartX)
+      if (Math.abs(dynamicEndY - dynamicStartY) > 5 || Math.abs(dynamicEndX - dynamicStartX) > 5) {
+        if (Math.abs(dynamicEndX - dynamicStartX) > 50) return
+        this.setData({
+          dynamicIsShow: false
+        }, () => {
+          setTimeout(() => {
+            // 滑
+            if (dynamicStartY - dynamicEndY > 50 && pointer != styleLeight - 1) {
+              this.upSilde().then(() => resolve())
+              return
+            } else if (dynamicEndY - dynamicStartY > 50 && pointer !== memberLength + styleLeight - 2) {
+              this.downSilde().then(() => resolve())
+            }
+          }, 210)
+        })
+      } else {
+        this.dynamicDetail(e)
+      }
+    })
+  },
   touchstart(e) {
     this.tap(e)
     this.startY = e.changedTouches[0].clientY
@@ -225,12 +305,14 @@ Page({
       this.setData({
         dynamicIsShow: true,
         showContent
-      },()=> {
-        setTimeout(()=> {
-          this.setData({
-            showVideo: true
-          })
-        },500)
+      }, () => {
+        if (showContent.mold === 1) {
+          setTimeout(() => {
+            this.setData({
+              showVideo: true
+            })
+          }, 500)
+        }
       })
       console.log('(ableIndex + styleLeight*2 >= memberLeight', ableIndex + styleLeight * 2 >= memberLeight)
       console.log('!this.data.isNotData', !this.data.isNotData)
@@ -299,28 +381,27 @@ Page({
     })
   },
   upSilde() {
-    console.log('向上滑')
-    var i = 0
-    var temp
-    let style = this.data.style
-    let pointer = this.data.pointer
-    let showMember = this.data.showMember
-    let member = this.data.member
-    let styleLeight = this.data.styleLeight
-    temp = style[style.length - 1]
-    i = style.length - 1
-    for (i; i > 0; i--) {
-      style[i] = style[i - 1]
-    }
-    style[i] = temp
-    showMember[(pointer - styleLeight) % styleLeight] = member[pointer - styleLeight]
-    this.setData({
-      showMember,
-      pointer: pointer - 1,
-      ableIndex: this.data.ableIndex - 1,
-      style
-    }, () => {
-      console.log('1111111111', this.data.ableIndex)
+    return new Promise((resolve, reject) => {
+      var i = 0
+      var temp
+      let style = this.data.style
+      let pointer = this.data.pointer
+      let showMember = this.data.showMember
+      let member = this.data.member
+      let styleLeight = this.data.styleLeight
+      temp = style[style.length - 1]
+      i = style.length - 1
+      for (i; i > 0; i--) {
+        style[i] = style[i - 1]
+      }
+      style[i] = temp
+      showMember[(pointer - styleLeight - 1) % styleLeight] = member[pointer - styleLeight - 1]
+      this.setData({
+        showMember,
+        pointer: pointer - 1,
+        ableIndex: this.data.ableIndex - 1,
+        style
+      }, () => resolve())
     })
   },
   downSilde() {
@@ -338,6 +419,12 @@ Page({
         style[i] = style[i + 1]
       }
       style[i] = temp
+      if (member.length >= 5 && pointer + 1 >= member.length) {
+        console.log('进来了')
+        this.setData({
+          member: member.concat(member)
+        })
+      }
       if (!member[pointer]) {
         showMember[pointer % styleLeight] = 0;
       } else {
@@ -380,7 +467,7 @@ Page({
       id,
       isLike,
       isStore,
-      table:'groupdynamics'
+      table: 'groupdynamics'
     }
     param = JSON.stringify(param)
     wx.navigateTo({
@@ -415,7 +502,7 @@ Page({
       // if (examine === 1) {
       //   let tip = '请求1小时后自动失效，可重新选择小组'
       //   common.Tip(tip, '等待审核中')
-      if(examine == 0) {
+      if (examine == 0) {
         let tip = '欢迎您，加入这个大家庭'
         common.Tip(tip, '加入成功')
       }
@@ -430,15 +517,15 @@ Page({
   },
   completeLike(commenetBarData) {
     let showContent = this.data.showContent
-    showContent.isLike = commenetBarData.isLike 
-    showContent.likes = commenetBarData.likes 
+    showContent.isLike = commenetBarData.isLike
+    showContent.likes = commenetBarData.likes
     this.setData({
       showContent
     })
   },
-  completeStore(commenetBarData){
+  completeStore(commenetBarData) {
     let showContent = this.data.showContent
-    showContent.isStore = commenetBarData.isStore 
+    showContent.isStore = commenetBarData.isStore
     showContent.store = showContent.store
     this.setData({
       showContent
@@ -447,27 +534,33 @@ Page({
   toLike() {
     let showContent = this.data.showContent
     showContent.isLike = !showContent.isLike
-    showContent.isLike?++showContent.likes:--showContent.likes
+    showContent.isLike ? ++showContent.likes : --showContent.likes
     this.setData({
       showContent
-    },()=> {
-      core.operateLike(app.Api.groupdynamicsLike,{
+    }, () => {
+      core.operateLike(app.Api.groupdynamicsLike, {
         operate: showContent.isLike,
         relation: {
           userId: app.userInfo.id,
           themeId: showContent.id
+        },
+        extra: {
+          otherId: showContent.userId,
+          avatarUrl: app.userInfo.avatarUrl,
+          nickName: app.userInfo.nickName,
+          themeTitle: showContent.introduce
         }
       })
     })
   },
   follow() {
     let fansNumber = this.data.groupInfo.fansNumber
-    let isFollow = this.data.groupInfo.isFollow 
+    let isFollow = this.data.groupInfo.isFollow
     this.setData({
       'groupInfo.isFollow': !isFollow,
-      'groupInfo.fansNumber': !isFollow?fansNumber + 1:fansNumber - 1
-    },()=> {
-      core.operateFollow(app.Api.followGroup,{
+      'groupInfo.fansNumber': !isFollow ? fansNumber + 1 : fansNumber - 1
+    }, () => {
+      core.operateFollow(app.Api.followGroup, {
         operate: this.data.groupInfo.isFollow,
         relation: {
           userId: app.userInfo.id,
@@ -475,7 +568,7 @@ Page({
         }
       })
     })
-    
+
   },
   goComment() {
     let {
@@ -488,7 +581,7 @@ Page({
       isLike,
       isStore,
       isComment: true,
-      table:'groupdynamics'
+      table: 'groupdynamics'
     }
     param = JSON.stringify(param)
     wx.navigateTo({

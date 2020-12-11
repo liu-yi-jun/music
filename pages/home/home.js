@@ -284,7 +284,7 @@ Page({
         pointer: styleLeight - 1,
         dynamicIsShow: member.length ? true : false
       }, () => {
-        if (showMember[0].mold === 1) {
+        if (showMember[0] && showMember[0].mold === 1) {
           setTimeout(() => {
             this.setData({
               showVideo: true
@@ -474,7 +474,7 @@ Page({
       if (Math.abs(endY - startY) > 5 || Math.abs(endX - startX) > 5) {
         // 滑
         if (startY - endY > 50 && pointer != styleLeight - 1) {
-          this.upSilde().then(() => resolve())
+          this.upSilde()
           return
         } else if (endY - startY > 50 && pointer !== memberLength + styleLeight - 2) {
           this.downSilde().then(() => resolve())
@@ -533,7 +533,6 @@ Page({
         style[i] = style[i - 1]
       }
       style[i] = temp
-      console.log(pointer, 'pointerpointerpointerpointerpointerpointer')
       showMember[(pointer - styleLeight - 1) % styleLeight] = member[pointer - styleLeight - 1]
       this.setData({
         showMember,
