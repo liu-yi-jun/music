@@ -570,6 +570,18 @@ page::before {
   transition: 0.4s all;
 }
 
+.cross {
+  transition: 2s all;
+  background: rgba(0, 0, 0, 1);
+}
+.hideCross {
+  opacity: 0;
+}
+.showCross{
+
+  opacity: 1;
+}
+
 .showGuide {
   visibility: visible;
   opacity: 1;
@@ -588,6 +600,28 @@ page::before {
   height: 135rpx;
 }
 
+.leftGuideText {
+  position: absolute;
+  left: 49%;
+  top: 28%;
+  color: white;
+}
+
+.issueGuide {
+  position: absolute;
+  left: 15%;
+  top: 74%;
+  width: 175rpx;
+  height: 135rpx;
+}
+
+.issueGuideText {
+  position: absolute;
+  left: 20%;
+  top: 87%;
+  color: white;
+}
+
 .bottomGuide {
   position: absolute;
   right: 7%;
@@ -603,11 +637,14 @@ page::before {
   color: white;
 }
 
-.leftGuideText {
+
+.travel {
+  transition: 2s all;
   position: absolute;
-  left: 49%;
-  top: 28%;
+  left: 50%;
+  top: 50%;
   color: white;
+  transform: translate(-50%, -50%);
 }
 
 @media screen and (max-aspect-ratio: 1/2) {

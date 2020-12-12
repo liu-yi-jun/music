@@ -34,7 +34,10 @@
     <view class="bottom">
       <view class="avatar-name">
         <image class="avatar" src="{{item.avatarUrl}}"></image>
-        <text class="name">{{item.nickName}}{{item.location}}}</text>
+        <view class="nameLocation">
+          <text class="name">{{item.nickName}}</text>
+          <text >{{item.location}}</text>
+        </view>
       </view>
       <view class="money">¥{{item.price}}</view>
     </view>

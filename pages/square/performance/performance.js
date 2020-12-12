@@ -63,6 +63,8 @@ Page({
     app.get(app.Api.getFestival, {
       ...festivalPaging,
       userId: app.userInfo.id
+    }, {
+      loading: false
     }).then(res => {
       if (res.length < festivalPaging.pageSize) {
         this.setData({
@@ -79,6 +81,8 @@ Page({
     let alliancePaging = this.data.alliancePaging
     app.get(app.Api.getAlliance, {
       ...alliancePaging,
+    }, {
+      loading: false
     }).then(res => {
       if (res.length < alliancePaging.pageSize) {
         this.setData({

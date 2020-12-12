@@ -57,7 +57,7 @@
 }
 
 .message {
-  font-size: 18rpx;
+  font-size: 20rpx;
   display: flex;
   color: #808080;
   flex-direction: column;
@@ -90,11 +90,17 @@
   align-items: flex-end;
 }
 
-.name {
+.nameLocation {
   margin-left: 10rpx;
-  margin-bottom: 10rpx;
   font-size: 16rpx;
   color: #808080;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.name {
+ 
 }
 
 .money {

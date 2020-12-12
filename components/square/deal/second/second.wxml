@@ -19,7 +19,7 @@
             <text>{{item.contact}}</text>
           </view>
           <view wx:if="{{item.additional}}" class="additionalWrap">
-            <text>附加功能：</text>
+            <text>附加信息：</text>
             <text>{{item.additional}}</text>
           </view>
         </view>
