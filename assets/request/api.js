@@ -93,5 +93,6 @@ module.exports = {
   myStoreTicket: "/api/ticket/myStoreTicket",
   getRandomTap: "/api/tap/getRandomTap",
   getTapDetail: "/api/tap/getTapDetail",
-  issueTapRecord: "/api/tap/issueTapRecord"
+  issueTapRecord: "/api/tap/issueTapRecord",
+  searchTap: "/api/tap/searchTap"
 }

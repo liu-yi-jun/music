@@ -204,4 +204,27 @@ Page({
       url: `/pages/tool/tapPractice/tapPractice?id=${id}`,
     })
   },
+  confirm(event) {
+    if(event.detail.value) {
+      this.setData({
+        circulars: []
+      },()=> {
+        this.search(event.detail.value)
+      })
+    } else {
+      this.setData({
+        circulars: []
+      },()=> {
+        this.getRandomTap()
+      })
+    }
+  },
+  search(value) {
+    app.get(app.Api.searchTap,{
+      tapTitle: value,
+      limit: this.data.limit
+    }).then(res=>{
+      this.init(res)
+    })
+  }
 })

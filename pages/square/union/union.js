@@ -52,7 +52,7 @@ Page({
       WH: 185,
     }],
     circulars: [],
-    unionGuide: false
+    unionGuide: true
   },
 
   /**

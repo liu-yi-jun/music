@@ -95,17 +95,17 @@ Page({
     })
     this.innerSoundContext.onEnded(() => {
       console.log('// 录音播放结束')
-      let groupCards = this.data.groupCards
-      groupCards[this.i].soundRowArr[this.j].isPlay = false
+      let tapRecord = this.data.tapRecord
+      tapRecord[this.j].isPlay = false
       this.setData({
-        groupCards
+        tapRecord
       })
     })
     this.innerSoundContext.onStop(() => {
-      let groupCards = this.data.groupCards
-      groupCards[this.i].soundRowArr[this.j].isPlay = false
+      let tapRecord = this.data.tapRecord
+      tapRecord[this.j].isPlay = false
       this.setData({
-        groupCards
+        tapRecord
       })
     })
     this.innerSoundContext.onPause(() => {

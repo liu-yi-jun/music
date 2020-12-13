@@ -17,13 +17,14 @@
     <view class="head">
       <view class="bar">
         <text wx:if="{{tapDetail.tapPicLink.length}}" class="practice {{flag==='practice'?'active':''}}"
-          catchtap="switch" data-flag="practice">练习资料</text>
-        <text wx:if="{{tapDetail.tapVideoLink.length}}" class="demonstration  {{flag==='demonstration'?'active':''}}"
+          catchtap="switch" data-flag="practice">曲谱资料</text>
+        <text wx:if="{{tapDetail.tapVideoLink !=='无'}}" class="demonstration  {{flag==='demonstration'?'active':''}}"
           catchtap="switch" data-flag="demonstration">演示视频</text>
       </view>
       <view class="avatar-userName">
         <!-- <image class="avatar" src="{{tapDetail.adminAvatar}}"></image> -->
         <text class="userName">{{tapDetail.author}}</text>
+        <text>{{tapDetail.source}}</text>
       </view>
     </view>
     <view class="MusicscoreWrap">

@@ -1840,6 +1840,12 @@
         {
           "name": "pages/square/union/union",
           "pathName": "pages/square/union/union",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/tool/tool",
+          "pathName": "pages/tool/tool",
           "scene": null
         }
       ]

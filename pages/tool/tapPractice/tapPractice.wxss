@@ -15,11 +15,16 @@
 .bar {
   color: white;
   font-size: 28rpx;
+  display: flex;
+  align-items: center;
 }
 
 .avatar-userName {
   display: flex;
-  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  color: white;
+  font-size: 16rpx;
 }
 
 .avatar {
@@ -30,8 +35,6 @@
 
 .userName {
   color: white;
-  font-size: 22rpx;
-  margin-left: 10rpx;
 }
 
 .card {
@@ -39,7 +42,7 @@
   width: 615rpx;
   height: 1059rpx;
   box-sizing: border-box;
-  padding: 30rpx;
+  padding: 0 40rpx 40rpx;
   background: linear-gradient(180deg, #ea9fe1, #6067d1);
   border-radius: 30rpx;
   display: flex;
@@ -53,16 +56,16 @@
 .head {
   display: flex;
   justify-content: space-between;
+  height: 82rpx;
 }
 
 .MusicscoreWrap {
-  margin-top: 10rpx;
   width: 100%;
 }
 
 .Musicscore {
   width: 100%;
-  height: 511rpx;
+  height: 522rpx;
 }
 
 .timeWrap {
@@ -281,6 +284,9 @@
   height: 30rpx;
   width: 54rpx;
 }
+.swiper {
+  height: 511rpx;
+}
 @media screen and (max-aspect-ratio: 1/2) {
   .voice {
     height: 30rpx;
@@ -328,7 +334,10 @@
 
   .avatar-userName {
     display: flex;
-    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    color: white;
+    font-size: 18rpx;
   }
 
   .avatar {
@@ -339,18 +348,16 @@
 
   .userName {
     color: white;
-    font-size: 22rpx;
-    margin-left: 10rpx;
   }
 
   .card {
     display: flex;
     flex-direction: column;
     margin: 20rpx auto 0;
-    width: 80.10%;
-    height: 81.58vh;
+    width: 87.90%;
+    height: 81.81vh;
     box-sizing: border-box;
-    padding: 30rpx;
+    padding: 0 40rpx 40rpx;
     background: linear-gradient(180deg, #ea9fe1, #6067d1);
     border-radius: 30rpx;
     display: flex;
@@ -358,13 +365,13 @@
   }
 
   .time-sound {
-    height: 490rpx;
+    height: 280rpx;
   }
 
   .head {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 10rpx;
+    height: 80rpx;
   }
 
   .MusicscoreWrap {
@@ -374,7 +381,7 @@
 
   .Musicscore {
     width: 100%;
-    height: 658rpx;
+    height: 879rpx;
   }
 
   .timeWrap {
@@ -549,5 +556,8 @@
     top: 157rpx;
     width: 72rpx;
     height: 56rpx;
+  }
+  .swiper {
+    height: 879rpx;
   }
 }
