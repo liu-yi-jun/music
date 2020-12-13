@@ -273,3 +273,7 @@ swiper-item {
   top: 22%;
   color: white;
 }
+.cross {
+  transition: 2s all;
+  background: rgba(0, 0, 0, 1);
+}

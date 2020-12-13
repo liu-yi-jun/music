@@ -873,7 +873,7 @@ Page({
           let member = this.data.member
           let guide = wx.getStorageSync('guide')
           guide.home = false
-          app.globalData.guide = false
+          app.globalData.guide.home = false
           wx.setStorageSync('guide', guide)
           this.setData({
             cross: true

@@ -1,6 +1,6 @@
 <!--pages/tool/tool.wxml-->
 <view catchtap="tap" class="tool">
-  <navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' iconTheme='white'></navBar>
+  <navBar bind:toScrollTop="toScrollTop"  backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' iconTheme='white'></navBar>
   <view class="head">
     <view class="title">
       <text class="title-top">搜索曲谱</text>
@@ -17,7 +17,7 @@
       </view>
     </view>
   </view>
-  <scroll-view bindscrolltolower="scrolltolower" scroll-y style="height:{{excludeHeight-172}}rpx">
+  <scroll-view bindscrolltolower="scrolltolower" scroll-with-animation  scroll-top="{{scrollTop}}" scroll-y style="height:{{excludeHeight-172}}rpx">
     <view data-index="{{index}}" class="circular" wx:for="{{circulars}}" style="{{item.style}}" catchtap="goTapPractice"
       data-src="{{item.src}}">
       <view class="top top{{index + 1}}" style="{{item.TextStyle}}">

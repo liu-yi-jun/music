@@ -1,7 +1,7 @@
 <!--pages/square/square.wxml-->
 <view class="square" catchtap="tap">
-  <scroll-view class="scroll" scroll-y bindscrolltolower="scrolltolower" >
-    <navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' iconTheme='white'></navBar>
+  <scroll-view class="scroll" scroll-with-animation scroll-y bindscrolltolower="scrolltolower" scroll-top="{{scrollTop}}">
+    <navBar  backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' iconTheme='white' bind:toScrollTop="toScrollTop"></navBar>
     <view class="hideBar" catchtap="hideBar">
     </view>
     <view mark:district="hideBarBackground" class="hideBarBackground {{hideBarShow? 'hideBarUnfold': 'hideBarPackUp'}}">
@@ -64,8 +64,8 @@
   <!-- <menu></menu> -->
   <showTabBar tabBarBtnShow="{{tabBarBtnShow}}">
   </showTabBar>
-  <view class="guideMask {{squareGuide?'showGuide': 'hideGuide'}}" >
-    <image class="leftGuide" src="http://cdn.eigene.cn/guide/left.png" catchtap="click"></image>
-    <view class="leftGuideText">点击发现隐藏版块</view>
+  <view class="guideMask {{squareGuide?'showGuide': 'hideGuide'}} {{cross?'cross':''}}" >
+    <image wx:if="{{leftGuide}}" class="leftGuide" src="http://cdn.eigene.cn/guide/left.png" catchtap="click"></image>
+    <view wx:if="{{leftGuide}}" class="leftGuideText">点击发现隐藏版块</view>
   </view>
 </view>

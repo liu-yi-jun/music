@@ -232,6 +232,9 @@ Component({
         // console.log('systemInfo', systemInfo);
         return systemInfo;
       }
+    },
+    toScrollTop() {
+      this.triggerEvent('toScrollTop')
     }
   }
 });

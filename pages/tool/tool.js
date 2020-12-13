@@ -15,12 +15,18 @@ Page({
     circulars: [],
     limit: 50,
     isNotData: false,
-    value: ''
+    value: '',
+    scrollTop: 0
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
+  toScrollTop() {
+    this.setData({
+      scrollTop: 0
+    })
+  },
   onLoad: function (options) {
     // 获取去除上面导航栏，剩余的高度
     tool.navExcludeHeight(this)

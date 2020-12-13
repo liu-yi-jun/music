@@ -31,13 +31,23 @@ Page({
     dynamics: [],
     topics: [],
     song: {},
-    squareGuide: false
+    squareGuide: false,
+    scrollTop: 0,
+    cross: false,
+    leftGuide: true
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
+  toScrollTop() {
+    this.setData({
+      scrollTop: 0
+    })
+  },
   onLoad: function (options) {
+    console.log('squareGuidesquareGuidesquareGuide', app.globalData.guide.square)
+    console.log(app.globalData.guide)
     // 获取去除上面导航栏，剩余的高度
     tool.navExcludeHeight(this)
     let signInSums = this.handleSignInSum(app.userInfo.signInSum)
@@ -45,6 +55,7 @@ Page({
     this.getTopic()
     this.getDate()
     this.getRandomSong()
+
     this.setData({
       signInSums,
       squareGuide: app.globalData.guide.square,
@@ -322,13 +333,32 @@ Page({
     }
   },
   click() {
-    let guide =  wx.getStorageSync('guide')
-      guide.square = false
-      wx.setStorageSync('guide', guide)
-      this.setData({
-        squareGuide: false,
-        hideBarShow: true
-      })
-   },
-  
+
+    this.setData({
+      hideBarShow: true,
+      leftGuide:false
+    }, () => {
+      setTimeout(() => {
+        this.setData({
+          cross: true
+        }, () => {
+          setTimeout(() => {
+            let guide = wx.getStorageSync('guide')
+            guide.square = false
+            wx.setStorageSync('guide', guide)
+            this.setData({
+              squareGuide: false,
+            },()=> {
+              setTimeout(()=>{
+                this.setData({
+                  hideBarShow:false
+                })
+              },1000)
+            })
+          }, 1000)
+        })
+      }, 1000)
+    })
+  },
+
 })
