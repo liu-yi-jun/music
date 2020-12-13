@@ -49,9 +49,12 @@
         <image class="dynamicImg" mode="aspectFill" src="{{item}}"></image>
       </swiper-item>
     </swiper>
-    <video mark:operation="No" class="video" object-fit="cover" hidden="{{showContent.mold !== 1 || !showVideo}}"
-      src="{{showContent.videoUrl}}"></video>
-
+    <view hidden="{{showContent.mold !== 1 || !showVideo}}">
+      <view class="videoLoad" hidden="{{showContent.videoLoad}}">加载中........</view>
+      <video mark:operation="No" bindloadedmetadata="loadedmetadata" class="video" object-fit="cover"
+        hidden="{{!showContent.videoLoad}}" src="{{showContent.videoUrl}}"></video>
+    </view>
+    <!--  -->
     <view hidden="{{showContent.mold !== 2}}" mark:operation="No" class="soundWrap">
       <playRecord id="playRecord" voiceUrl="{{showContent.voiceUrl}}"></playRecord>
     </view>

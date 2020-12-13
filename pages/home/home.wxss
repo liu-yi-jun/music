@@ -385,6 +385,13 @@ page::before {
   transition: all .4s;
 }
 
+.videoLoad {
+  left: 50%;
+  top: 30%;
+  transform: translate(-50%, -50%);
+  position: absolute;
+}
+
 /* .videoShow {
   opacity: 1;
   visibility: visible;
@@ -574,10 +581,12 @@ page::before {
   transition: 2s all;
   background: rgba(0, 0, 0, 1);
 }
+
 .hideCross {
   opacity: 0;
 }
-.showCross{
+
+.showCross {
 
   opacity: 1;
 }

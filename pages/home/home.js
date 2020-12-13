@@ -278,6 +278,14 @@ Page({
         pointer: styleLeight - 1,
         homeGuide: app.globalData.guide.home,
         tabBarBtnShow: true
+      }, () => {
+        if (showMember[0] && showMember[0].mold === 1) {
+          setTimeout(() => {
+            this.setData({
+              showVideo: true
+            })
+          }, 500)
+        }
       })
     } else {
       this.getTabBar().setData({
@@ -382,6 +390,7 @@ Page({
         if (showContent.mold === 1) {
           setTimeout(() => {
             this.setData({
+
               showVideo: true
             })
           }, 500)
@@ -456,7 +465,8 @@ Page({
         if (showContent.mold === 1) {
           setTimeout(() => {
             this.setData({
-              showVideo: true
+              showVideo: true,
+
             })
           }, 500)
         }
@@ -863,6 +873,7 @@ Page({
           let member = this.data.member
           let guide = wx.getStorageSync('guide')
           guide.home = false
+          app.globalData.guide = false
           wx.setStorageSync('guide', guide)
           this.setData({
             cross: true
@@ -890,5 +901,13 @@ Page({
         }, 1000);
       })
     }
+  },
+  loadedmetadata(e) {
+    let showContent = this.data.showContent
+    showContent.videoLoad = true
+    console.log(1111111111111111)
+    this.setData({
+      showContent
+    })
   }
 })
