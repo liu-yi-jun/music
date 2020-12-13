@@ -111,6 +111,7 @@
 
 .location {
   font-size: 26rpx;
+  color: #B7B8B8;
 }
 
 .introduce>.right {
@@ -209,4 +210,14 @@
 }
 .right-bottom {
   margin-top: 30rpx;
+}
+
+.locationLogo {
+  width: 26rpx;
+  height: 36rpx;
+
+}
+
+.location > text {
+  margin-left: 8rpx;
 }

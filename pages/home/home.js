@@ -79,6 +79,7 @@ Page({
     styleLeight: 7,
     ableIndex: 1,
     pointer: 0,
+    // 动态发布按钮
     switchIssue: false,
     showMember: [],
     pageSize: 28,
@@ -88,7 +89,9 @@ Page({
     showVideo: false,
     homeGuide: false,
     leftGuide: true,
-    bottomGuide: true
+    bottomGuide: false,
+    issueGuide: false,
+    cross: false
   },
 
 
@@ -277,9 +280,13 @@ Page({
         tabBarBtnShow: true
       })
     } else {
+      this.getTabBar().setData({
+        show: false
+      })
       this.setData({
         showMember,
         member,
+        tabBarBtnShow: true,
         showContent: showMember[0],
         pointer: styleLeight - 1,
         dynamicIsShow: member.length ? true : false
@@ -598,19 +605,23 @@ Page({
       common.Tip('你还未成为该小组成员，暂不能发布动态')
     } else {
       this.setData({
-        switchIssue: !this.data.switchIssue
+        switchIssue: !this.data.switchIssue,
+        dynamicIsShow: false,
+        functionBarShow: false
       })
     }
 
   },
   switchFunctionBar() {
     this.setData({
-      functionBarShow: !this.data.functionBarShow
+      functionBarShow: !this.data.functionBarShow,
+      dynamicIsShow: false,
+      switchIssue: false
     })
   },
   putIssueBtn() {
     this.setData({
-      switchIssue: false,
+      switchIssue: false
     })
   },
 
@@ -829,7 +840,15 @@ Page({
     if (click === 'leftGuide') {
       this.setData({
         leftGuide: false,
-        functionBarShow: true
+        issueGuide: true,
+        functionBarShow: true,
+
+      })
+    } else if (click === 'issueGuide') {
+      this.setData({
+        issueGuide: false,
+        bottomGuide: true,
+        switchIssue: true,
       })
     } else {
       this.getTabBar().setData({
@@ -838,26 +857,38 @@ Page({
       this.setData({
         bottomGuide: false,
         tabBarBtnShow: false
-      })
-    }
-    if (!this.data.leftGuide && !this.data.bottomGuide) {
-      const showMember = this.data.showMember
-      let member = this.data.member
-      let guide = wx.getStorageSync('guide')
-      guide.home = false
-      wx.setStorageSync('guide', guide)
-      this.setData({
-        homeGuide: false,
-      },()=> {
+      }, () => {
         setTimeout(() => {
+          const showMember = this.data.showMember
+          let member = this.data.member
+          let guide = wx.getStorageSync('guide')
+          guide.home = false
+          wx.setStorageSync('guide', guide)
           this.setData({
-            functionBarShow: false,
-            showContent: showMember[0],
-            dynamicIsShow: member.length ? true : false
+            cross: true
+          }, () => {
+            // 过渡动画
+            setTimeout(() => {
+              this.setData({
+                homeGuide: false,
+              }, () => {
+                setTimeout(() => {
+                  this.getTabBar().setData({
+                    show: false
+                  })
+                  this.setData({
+                    switchIssue: false,
+                    functionBarShow: false,
+                    tabBarBtnShow: true,
+                    showContent: showMember[0],
+                    dynamicIsShow: member.length ? true : false
+                  })
+                }, 1000);
+              })
+            }, 2000);
           })
         }, 1000);
       })
     }
-
   }
 })

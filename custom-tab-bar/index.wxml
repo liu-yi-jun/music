@@ -5,4 +5,5 @@
     <view hidden="{{index!==3 || !showTabBarRedDot}}" class="red"></view>
     </image>
   </view>
+  
 </view>

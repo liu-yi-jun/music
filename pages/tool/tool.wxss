@@ -92,7 +92,9 @@
 
 
 .circular {
-  position: absolute;
+  margin: 80rpx 0;
+  /* position: absolute; */
+  position: relative;
   border-radius: 50%;
   /* width: 127rpx;
   height: 127rpx;

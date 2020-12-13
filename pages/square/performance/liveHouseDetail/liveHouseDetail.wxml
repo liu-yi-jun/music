@@ -19,7 +19,10 @@
             </view>
           </view>
         </view>
-        <view class="location">{{detail.showAddress}}</view>
+        <view class="location">
+          <image class="locationLogo" src="http://cdn.eigene.cn/squarePost/locationLogo.png"></image>
+          <text>{{detail.showAddress}}</text>
+        </view>
       </view>
       <image class="buy" src="http://cdn.eigene.cn/liveHouseDetail/buy.png"></image>
     </view>
@@ -54,7 +57,7 @@
       </view>
       <view class="commentWrap {{current === 'comment' ? 'active' : ''}}" catchtap="switchBtn" data-current="comment">
         <image class="comment" src="http://cdn.eigene.cn/courseDetail/comment.png"></image>
-        <text>评论</text>
+        <text>讨论区</text>
       </view>
     </view>
     <view class="richTextWrap" hidden="{{current !== 'datum'}}">
