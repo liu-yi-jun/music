@@ -41,7 +41,8 @@ Page({
     tapDetail: {},
     tapRecord: [],
     cardCurrent: 0,
-
+    imgheights: [],
+    imgCurrent: 0
   },
 
   /**
@@ -53,7 +54,10 @@ Page({
     this.getTapDetail(options.id)
     this.initialization()
     this.getProgressBoxInfo()
+
   },
+
+
   toLike(e) {
     let {
       index,
@@ -159,12 +163,25 @@ Page({
       }
       pagingTapRecord.pageIndex = pagingTapRecord.pageIndex + 1
       let tapRecord = this.initSoundWidth(res.tapRecord)
+      res.tapDetail.tapVideoLink = this.getParam(res.tapDetail.tapVideoLink,'vid')
       this.setData({
         pagingTapRecord,
         tapDetail: res.tapDetail,
         tapRecord: this.data.tapRecord.concat(tapRecord)
       })
     })
+  },
+  getParam(url, name) {
+    try {
+      var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+      var r = url.split('?')[1].match(reg);
+      if (r != null) {
+        return r[2];
+      }
+      return ""; //如果此处只写return;则返回的是undefined
+    } catch (e) {
+      return ""; //如果此处只写return;则返回的是undefined
+    }
   },
 
   // 处理声音条的宽度
@@ -415,7 +432,7 @@ Page({
       common.showLoading('发送中')
       let recordUrl = await this.uploadTapRecord(this.data.tempFilePath)
       let result = await this.issueTapRecord(recordUrl)
-      console.log('1111111111111111111',result)
+      console.log('1111111111111111111', result)
       await this.setSoundRowArr(result[0])
 
       common.Toast('已发送')
@@ -486,5 +503,29 @@ Page({
     if (!this.data.pagingTapRecord.isNoData) {
       this.getTapDetail(this.data.tapDetail.id)
     }
-  }
+  },
+  imageLoad: function (e) { //获取图片真实宽度  
+    var query = wx.createSelectorQuery();
+    query.select('#MusicscoreWrap').boundingClientRect(rect => {
+      console.log(rect.width)
+      var imgwidth = e.detail.width
+      var imgheight = e.detail.height
+      var ratio = imgwidth / imgheight
+      var viewHeight = rect.width / ratio
+      var imgheight = viewHeight
+      var imgheights = this.data.imgheights
+      console.log("imgheights11", imgheights)
+      //把每一张图片的对应的高度记录到数组里 +90是因为我给图片了一个width:100% 让图片宽撑满屏幕 如把100%去掉这个+90可去掉
+      imgheights[e.target.dataset.index] = imgheight;
+      console.log("imgheights22", imgheights)
+      this.setData({
+        imgheights: imgheights
+      })
+    }).exec()
+  },
+  bindchange: function (e) {
+    this.setData({
+      imgCurrent: e.detail.current
+    })
+  },
 })

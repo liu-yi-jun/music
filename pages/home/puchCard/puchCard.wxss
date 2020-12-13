@@ -1,5 +1,9 @@
 /* pages/home/puchCard/puchCard.wxss */
 
+.noMinH {
+  min-height: 0 !important;
+  overflow: visible !important;
+}
 .issuePuchCard {
   width: 101rpx;
   height: 119rpx;
@@ -38,7 +42,7 @@
   width: 615rpx;
   height: 1059rpx;
   box-sizing: border-box;
-  padding: 30rpx;
+  padding:0 30rpx 30rpx;
   background: linear-gradient(180deg, #ea9fe1, #6067d1);
   border-radius: 30rpx;
   display: flex;
@@ -46,17 +50,25 @@
 }
 
 .time-sound {
-  height: 405rpx;
+  transition: 0.3s all;
+  flex-grow: 1;
+  overflow: scroll;
 }
 
 .head {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  height: 80rpx;
+  flex-shrink: 0;
 }
 
 .MusicscoreWrap {
-  margin-top: 10rpx;
   width: 100%;
+  min-height: 616rpx;
+  overflow: auto;
+  height: auto;
+  transition: 0.3s all;
 }
 
 .Musicscore {
@@ -70,7 +82,6 @@
   font-size: 18rpx;
   color: #b7b8b8;
   margin-right: 5rpx;
-  margin-bottom: 10rpx;
 }
 
 .soundRow {
@@ -346,34 +357,38 @@
     display: flex;
     flex-direction: column;
     margin: 20rpx auto 0;
-    width: 80.10%;
-    height: 81.58vh;
+    width: 87.90%;
+    height: 81.81vh;
     box-sizing: border-box;
-    padding: 30rpx;
+    padding: 0 30rpx 30rpx;
     background: linear-gradient(180deg, #ea9fe1, #6067d1);
     border-radius: 30rpx;
-    display: flex;
-    flex-direction: column;
   }
 
   .time-sound {
-    height: 490rpx;
+    flex-grow: 1;
+    overflow: scroll;
   }
 
   .head {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 10rpx;
+    align-items: center;
+    height: 80rpx;
+    flex-shrink: 0;
   }
 
   .MusicscoreWrap {
+    min-height: 837rpx;
     margin-top:0rpx;
     width: 100%;
+    overflow: auto;
+    height:auto
   }
 
   .Musicscore {
     width: 100%;
-    height: 658rpx;
+    /* height: 658rpx; */
   }
 
   .timeWrap {
@@ -386,12 +401,14 @@
     height: 40rpx;
     margin-right: 5rpx;
     color: #b7b8b8;
+    flex-shrink: 0;
+    margin-bottom: 0
   }
 
   .soundRow {
     display: flex;
     align-items: center;
-    margin-top: 20rpx;
+    margin-bottom: 16rpx;
   }
 
   .soundRow .avatarWrap {

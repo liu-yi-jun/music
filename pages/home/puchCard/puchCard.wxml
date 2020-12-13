@@ -33,8 +33,8 @@
             <text class="userName">{{item.adminName}}</text>
           </view>
         </view>
-        <view class="MusicscoreWrap">
-          <image wx:if="{{item.flag==='practice'}}" class="Musicscore" mode="aspectFill" src="{{item.datumUrls}}"
+        <view class="MusicscoreWrap {{item.flag==='demonstration'? 'noMinH':''}}">
+          <image wx:if="{{item.flag==='practice'}}" class="Musicscore" mode="widthFix" src="{{item.datumUrls}}"
             data-preview="{{item.datumUrls}}" catchtap="previewImage"></image>
           <video wx:else src="{{item.videoUrl}}" class="video" object-fit="fill"></video>
         </view>

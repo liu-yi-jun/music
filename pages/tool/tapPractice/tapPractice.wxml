@@ -18,7 +18,7 @@
       <view class="bar">
         <text wx:if="{{tapDetail.tapPicLink.length}}" class="practice {{flag==='practice'?'active':''}}"
           catchtap="switch" data-flag="practice">曲谱资料</text>
-        <text wx:if="{{tapDetail.tapVideoLink !=='无'}}" class="demonstration  {{flag==='demonstration'?'active':''}}"
+        <text wx:if="{{tapDetail.tapVideoLink}}" class="demonstration  {{flag==='demonstration'?'active':''}}"
           catchtap="switch" data-flag="demonstration">演示视频</text>
       </view>
       <view class="avatar-userName">
@@ -27,14 +27,17 @@
         <text>{{tapDetail.source}}</text>
       </view>
     </view>
-    <view class="MusicscoreWrap">
-      <swiper class="swiper" wx:if="{{flag==='practice'}}">
+    <view class="MusicscoreWrap {{flag==='demonstration'? 'noMinH':''}}" id="MusicscoreWrap">
+      <swiper class="swiper" hidden="{{flag !== 'practice'}}" bindchange="bindchange" style="height:{{imgheights[imgCurrent]}}px;">
         <swiper-item class="swiper-item " wx:for="{{tapDetail.tapPicLink}}">
-          <image class="Musicscore" mode="aspectFill" src="{{item}}"
+          <image data-index='{{index}}' bindload="imageLoad" class="Musicscore" mode="widthFix" src="{{item}}"
             data-preview="{{item}}" catchtap="previewImage"></image>
         </swiper-item>
       </swiper>
-      <video wx:else src="{{tapDetail.tapVideoLink}}" class="video" object-fit="fill"></video>
+      <view hidden="{{flag !== 'demonstration'}}">
+      <txv-video class="video" height="380" vid="{{tapDetail.tapVideoLink}}" playerid="txv1"></txv-video>
+    </view>
+      <!-- <video wx:else src="{{tapDetail.tapVideoLink}}" class="video" object-fit="fill"></video> -->
     </view>
     <view class="timeWrap">
       <text class="time">{{tapDetail.releaseTime}}</text>

@@ -1,6 +1,9 @@
 /* pages/tool/tapPractice/tapPractice.wxss */
 
-
+.noMinH {
+  min-height: 0 !important;
+  overflow: visible !important;
+}
 .issuePuchCard {
   width: 101rpx;
   height: 119rpx;
@@ -50,22 +53,26 @@
 }
 
 .time-sound {
-  height: 405rpx;
+  overflow: scroll;
+  flex-grow: 1;
 }
 
 .head {
   display: flex;
   justify-content: space-between;
   height: 82rpx;
+  flex-shrink: 0;
 }
 
 .MusicscoreWrap {
   width: 100%;
+  min-height: 616rpx;
+  overflow: scroll;
 }
 
 .Musicscore {
   width: 100%;
-  height: 522rpx;
+  flex-shrink: 0;
 }
 
 .timeWrap {
@@ -285,7 +292,8 @@
   width: 54rpx;
 }
 .swiper {
-  height: 511rpx;
+  height: 100%;
+  transition: 0.3s all;
 }
 @media screen and (max-aspect-ratio: 1/2) {
   .voice {
@@ -365,7 +373,8 @@
   }
 
   .time-sound {
-    height: 280rpx;
+    overflow: scroll;
+    flex-grow: 1;
   }
 
   .head {
@@ -376,6 +385,7 @@
 
   .MusicscoreWrap {
     margin-top:0rpx;
+    min-height: 680rpx;
     width: 100%;
   }
 
@@ -399,7 +409,7 @@
   .soundRow {
     display: flex;
     align-items: center;
-    margin-top: 20rpx;
+    margin-bottom: 16rpx;
   }
 
   .soundRow .avatarWrap {

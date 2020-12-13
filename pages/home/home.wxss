@@ -618,16 +618,16 @@ page::before {
 
 .issueGuide {
   position: absolute;
-  left: 15%;
-  top: 74%;
+  left: 9%;
+  top: 75%;
   width: 175rpx;
   height: 135rpx;
 }
 
 .issueGuideText {
   position: absolute;
-  left: 20%;
-  top: 87%;
+  left: 16%;
+  top: 86%;
   color: white;
 }
 
