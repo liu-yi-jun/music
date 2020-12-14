@@ -24,7 +24,7 @@
           </view>
         </view>
         <view class="bottomBar">
-          <view class="avatar-username">
+          <view class="avatar-username" data-userid="{{item.userId}}" catchtap="goPersonal">
             <image class="avatar" src="{{item.avatarUrl}}"></image>
             <text class="username">{{item.nickName}}</text>
           </view>

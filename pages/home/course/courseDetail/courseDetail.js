@@ -216,8 +216,9 @@ Page({
   handlerGobackClick: app.handlerGobackClick,
 
   goPersonal() {
+    let userId = this.data.detail.userId
     wx.navigateTo({
-      url: '/pages/my/invitation/invitation',
+      url: `/pages/my/invitation/invitation?userId=${userId}`,
     })
   },
   switchBtn(e) {

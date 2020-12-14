@@ -105,6 +105,8 @@ Page({
    */
   onUnload: function () {
     this.innerSoundContext && this.innerSoundContext.destroy()
+    let record = this.selectComponent('#record')
+    record.stopRecord()
   },
   handlerGobackClick: app.handlerGobackClick,
   inputLinkUrl(e) {
@@ -233,6 +235,7 @@ Page({
 
   previewImage(e) {
     let src = e.currentTarget.dataset.src
+    console.log('111111111', src)
     common.previewImage(this.data.tempPicturePaths, src)
   },
   deleteData(e) {
@@ -254,7 +257,14 @@ Page({
       })
     }
   },
-
+  deleteImg(e) {
+    let index = e.currentTarget.dataset.index
+    let tempPicturePaths = this.data.tempPicturePaths
+    tempPicturePaths.splice(index, 1)
+    this.setData({
+      tempPicturePaths
+    })
+  },
   // 进行校验
   validate(params) {
     let {
@@ -357,6 +367,11 @@ Page({
         imgNumber,
         tempPicturePaths: this.data.tempPicturePaths.concat(res.tempFilePaths)
       })
+    })
+  },
+  deletePoster() {
+    this.setData({
+      posterUrl: ''
     })
   },
   // 上传视频

@@ -28,7 +28,7 @@
             <text wx:if="{{item.videoUrl}}" class="demonstration  {{item.flag==='demonstration'?'active':''}}"
               catchtap="switch" data-flag="demonstration" data-index="{{i}}">演示视频</text>
           </view>
-          <view class="avatar-userName" data-userid="{{item.adminId}}">
+          <view class="avatar-userName" data-userid="{{item.adminId}}" catchtap="goPersonal">
             <image class="avatar" src="{{item.adminAvatar}}"></image>
             <text class="userName">{{item.adminName}}</text>
           </view>
@@ -45,7 +45,7 @@
           <scroll-view bindscrolltolower="scrolltolower" class="scroll" scroll-y enhanced show-scrollbar="{{false}}">
             <view class="soundRowWrap">
               <view class="soundRow" wx:for="{{item.soundRowArr}}" wx:key="id" wx:for-item="soundRow" wx:for-index="j">
-                <view class="avatarWrap">
+                <view class="avatarWrap" data-userid="{{soundRow.userId}}" catchtap="goPersonal">
                   <text class="rank" wx:if="{{j===0||j===1||j===2}}">{{j+1}}</text>
                   <image wx:if="{{j===0}}" class="avatarBackground"
                     src="http://cdn.eigene.cn/puchCard/firstBackground.png"></image>

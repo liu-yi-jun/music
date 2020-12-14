@@ -593,5 +593,11 @@ Page({
     if (!this.data.groupCards[cardCurrent].pagingGroupCardRecordIsNoData) {
       this.getPagingGroupCardRecord(cardCurrent)
     }
-  }
+  },
+  goPersonal(e) {
+    let userId = e.currentTarget.dataset.userid
+    wx.navigateTo({
+      url: `/pages/my/invitation/invitation?userId=${userId}`,
+    })
+  },
 })

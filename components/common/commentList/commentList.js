@@ -41,7 +41,7 @@ Component({
         indexObject:{commentindex,replyindex},
         param: {
           commentId: comment.id,
-          parentReplyId: reply ? reply.id : -1,
+          parentReplyId: reply ? reply.replyPersonId : -1,
           parentAvatar: reply ? reply.replyPersonAvatar : comment.commenterAvatar,
           parentName: reply ? reply.replyPersonName : comment.commenterName,
           replyPersonId:app.userInfo.id,
@@ -49,6 +49,13 @@ Component({
           replyPersonName:app.userInfo.nickName
         }
       })
-    }
+    },
+    goPersonal(e) {
+      let userId = e.currentTarget.dataset.userid
+      console.log('1111111111111111111111',userId)
+      wx.navigateTo({
+        url: `/pages/my/invitation/invitation?userId=${userId}`,
+      })
+    },
   }
 })

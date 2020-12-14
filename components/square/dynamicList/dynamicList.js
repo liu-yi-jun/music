@@ -52,7 +52,7 @@ Component({
           if (res.tapIndex === 1) {
             // 分享
           } // 举报
-          
+
         }
       })
     },
@@ -206,6 +206,8 @@ Component({
       })
     },
     dynamicDetail(e) {
+      let notDo = e.mark.notDo
+      if (notDo) return;
       let index = e.currentTarget.dataset.index
       this.index = index
       let content = this.properties.dynamics[index]
@@ -254,6 +256,14 @@ Component({
       this.setData({
         dynamics
       })
+    },
+    previewImage(e) {
+      let {
+        i,
+        j
+      } = e.currentTarget.dataset
+      let pictureUrls = this.properties.dynamics[i].pictureUrls
+      common.previewImage(pictureUrls, pictureUrls[j])
     }
   }
 })

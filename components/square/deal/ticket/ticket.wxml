@@ -4,7 +4,7 @@
     <image class="ticketStore" data-index="{{index}}" catchtap="switchTicketStore"
       src="http://cdn.eigene.cn/deal/ticketStore{{item.isStore?'d':''}}.png"></image>
     <view class="top">
-      <image class="img" src="{{item.pictureUrls[0]}}"></image>
+      <image class="img" mode="aspectFill" src="{{item.pictureUrls[0]}}"></image>
       <view class="introduce">
         <text class="title">{{item.title}}</text>
         <view class="message">
@@ -33,7 +33,7 @@
     </view>
     <view class="bottom">
       <view class="avatar-name">
-        <image class="avatar" src="{{item.avatarUrl}}"></image>
+        <image class="avatar"  data-userid="{{item.userId}}" catchtap="goPersonal"src="{{item.avatarUrl}}"></image>
         <view class="nameLocation">
           <text class="name">{{item.nickName}}</text>
           <text >{{item.location}}</text>

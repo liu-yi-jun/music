@@ -8,7 +8,7 @@
     </issueHead>
     <scroll-view style="height:{{excludeHeight-160}}rpx" scroll-y>
       <view class="wrap">
-        <textarea name="introduce" maxlength="5000" placeholder="说点什么吧……" placeholder-class="placeholder"
+        <textarea class="introduce" name="introduce" maxlength="5000" placeholder="说点什么吧……" placeholder-class="placeholder"
           auto-height></textarea>
         <view class="imgWrap" wx:if="{{tempImagePaths.length}}">
           <view class="imgArea">
@@ -20,10 +20,10 @@
         <view class="wrapVideo" wx:if="{{tempVideoPath}}">
           <video object-fit="cover" src="{{tempVideoPath}}"></video>
         </view>
-        <view class="recordWrap" wx:if="{{tempRecordPath}}" >
+        <view class="recordWrap" wx:if="{{tempRecordPath}}">
           <view class="playRecord" catchtap="playRecord" style="width:{{soundWidth}}rpx">
             <image class="recordImg" src="http://cdn.eigene.cn/play{{isPlay?'ing':''}}.gif"></image>
-            <text class="recordTime">{{duration}}s</text>
+            <text class="recordTime" wx:if="{{duration}}" >{{duration}}s</text>
           </view>
         </view>
         <view class="topicWrap" wx:if="{{topicIndex !== undefine}}">
@@ -45,6 +45,13 @@
       </view>
     </scroll-view>
   </form>
+  <view catchtap="cancelPopup" catchtouchmove="touchmove" class="mask {{dialogShow? 'shadeShow':''}}">
+    <view class="popup" catchtap="return">
+      <textarea wx:if="{{dialogShow}}" value="{{linkUrl}}" bindinput="inputLinkUrl" class="popupTextarea"
+        placeholder="请输入{{currentType==1?'音频':(currentType==2?'视频':'资料')}}链接"></textarea>
+      <view class="complete" catchtap="complete">完成</view>
+    </view>
+  </view>
   <record class="record" id="record" bind:recordResult="recordResult" recordTime="{{recordTime}}"></record>
   <view class="footer" style="bottom:{{keyBoardHeight}}">
     <view class="footerInner">
@@ -58,9 +65,9 @@
         <image src="http://cdn.eigene.cn/squarePost/topic.png"></image>
       </view>
 
-      <image catchtap="chooseImg" src="http://cdn.eigene.cn/squarePost/picture.png"></image>
-      <image catchtap="chooseVideo" src="http://cdn.eigene.cn/squarePost/video.png"></image>
-      <image src="http://cdn.eigene.cn/squarePost/record.png" catchtap="record"></image>
+      <image catchtap="imgSheet" src="http://cdn.eigene.cn/squarePost/picture.png"></image>
+      <image catchtap="videoSheet" src="http://cdn.eigene.cn/squarePost/video.png"></image>
+      <image src="http://cdn.eigene.cn/squarePost/record.png" catchtap="recordSheet"></image>
     </view>
   </view>
 

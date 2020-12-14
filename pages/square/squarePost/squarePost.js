@@ -34,8 +34,13 @@ Page({
       minWidth: 130,
       maxWidth: 400,
     },
-    soundWidth: 0,
-    isPlay:false
+    soundWidth: 500,
+    isPlay: false,
+    // 标注是否输入了链接
+    isRecordLink: false,
+    isVideoLink: false,
+    isImageLink: false,
+    linkUrl: ''
   },
 
   /**
@@ -134,12 +139,12 @@ Page({
     this.innerSoundContext.onEnded(() => {
       console.log('// 录音播放结束')
       this.setData({
-        isPlay:false
+        isPlay: false
       })
     })
-    this.innerSoundContext.onStop(()=> {
+    this.innerSoundContext.onStop(() => {
       this.setData({
-        isPlay:false
+        isPlay: false
       })
     })
     this.innerSoundContext.onPause(() => {
@@ -148,20 +153,17 @@ Page({
     })
   },
   playRecord() {
-    if(this.data.isPlay) return
+    if (this.data.isPlay) return
     let tempRecordPath = this.data.tempRecordPath
     this.innerSoundContext && this.innerSoundContext.destroy()
     this.initSound()
     this.innerSoundContext.src = tempRecordPath
     this.innerSoundContext.play()
     this.setData({
-      isPlay:true
+      isPlay: true
     })
   },
-  record() {
-    let record = this.selectComponent('#record')
-    record.startRecord()
-  },
+
   // 处理声音条的宽度
   initSoundWidth(duration) {
     const recordTime = this.data.recordTime
@@ -179,8 +181,50 @@ Page({
       tempVideoPath: '',
       tempRecordPath: e.detail.tempFilePath,
       duration: e.detail.duration,
-      soundWidth: this.initSoundWidth(e.detail.duration) 
+      soundWidth: this.initSoundWidth(e.detail.duration),
+      isRecordLink: false
     })
+  },
+  imgSheet() {
+    wx.showActionSheet({
+      itemList: ['添加网络链接', '从手机选择图片'],
+      success: res => {
+        if (res.tapIndex === 1) {
+          this.chooseImg()
+        } else if (res.tapIndex === 0) {
+          this.showPopup(3)
+        }
+      }
+    })
+  },
+  videoSheet() {
+    wx.showActionSheet({
+      itemList: ['添加网络链接', '从手机选择视频'],
+      success: res => {
+        console.log(res)
+        if (res.tapIndex === 1) {
+          this.chooseVideo()
+        } else if (res.tapIndex === 0) {
+          this.showPopup(2)
+        }
+      }
+    })
+  },
+  recordSheet() {
+    wx.showActionSheet({
+      itemList: ['添加网络链接', '在线录音'],
+      success: res => {
+        if (res.tapIndex === 1) {
+          this.record()
+        } else if (res.tapIndex === 0) {
+          this.showPopup(1)
+        }
+      }
+    })
+  },
+  record() {
+    let record = this.selectComponent('#record')
+    record.startRecord()
   },
   chooseImg() {
     common.chooseImage(9).then(res => {
@@ -188,7 +232,8 @@ Page({
         tempImagePaths: res.tempFilePaths,
         tempRecordPath: '',
         tempVideoPath: '',
-        restCount: this.data.restCount - res.tempFilePaths.length
+        restCount: this.data.restCount - res.tempFilePaths.length,
+        isImageLink: false
       })
     })
   },
@@ -197,7 +242,8 @@ Page({
       this.setData({
         tempRecordPath: '',
         tempImagePaths: [],
-        tempVideoPath: res.tempFilePath
+        tempVideoPath: res.tempFilePath,
+        isVideoLink: false
       })
     })
   },
@@ -289,14 +335,17 @@ Page({
     let {
       tempVideoPath,
       tempImagePaths,
-      tempRecordPath
+      tempRecordPath,
+      isRecordLink,
+      isVideoLink,
+      isImageLink
     } = this.data
     try {
       params = await this.validate(params)
       common.showLoading('发布中')
-      if (tempRecordPath) params.voiceUrl = await this.uploadVoice(tempRecordPath)
-      if (tempVideoPath) params.videoUrl = await this.uploadVideo(tempVideoPath)
-      if (tempImagePaths.length) params.pictureUrls = await this.uploadImg(tempImagePaths)
+      if (tempRecordPath && !isRecordLink) params.voiceUrl = await this.uploadVoice(tempRecordPath)
+      if (tempVideoPath && !isVideoLink) params.videoUrl = await this.uploadVideo(tempVideoPath)
+      if (tempImagePaths.length && !isImageLink) params.pictureUrls = await this.uploadImg(tempImagePaths)
       const result = await this.squarePost(params)
       console.log(result)
       if (result.affectedRows) {
@@ -369,6 +418,63 @@ Page({
       app.post(app.Api.squarePost, data, {
         loading: false
       }).then(res => resolve(res)).catch(err => reject(err))
+    })
+  }, 
+  // 取消弹窗
+  cancelPopup() {
+    this.setData({
+      dialogShow: false,
+      linkUrl: ''
+    })
+  },
+  // 完成输入链接
+  complete() {
+    let currentType = this.data.currentType
+    if (currentType == 1) {
+      this.setData({
+        tempRecordPath: this.data.linkUrl,
+        dialogShow: false,
+        linkUrl: '',
+        tempImagePaths: '',
+        tempVideoPath: '',
+        isRecordLink: true
+      })
+    } else if (currentType == 2) {
+      this.setData({
+        tempVideoPath: this.data.linkUrl,
+        dialogShow: false,
+        linkUrl: '',
+        tempImagePaths: '',
+        tempRecordPath: '',
+        isVideoLink: true
+      })
+    } else if (currentType == 3) {
+      this.setData({
+        tempImagePaths: this.data.linkUrl ? [this.data.linkUrl] : '',
+        dialogShow: false,
+        linkUrl: '',
+        tempRecordPath: '',
+        tempVideoPath: '',
+        isImageLink: true
+      })
+    }
+  },
+  touchmove() {
+    return
+  },
+  inputLinkUrl(e) {
+    clearTimeout(this.point)
+    this.point = setTimeout(() => {
+      this.setData({
+        linkUrl: e.detail.value
+      })
+    }, 200)
+  },
+  // 显示弹窗
+  showPopup(currentType) {
+    this.setData({
+      currentType,
+      dialogShow: true
     })
   },
 

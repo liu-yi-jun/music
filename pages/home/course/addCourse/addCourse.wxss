@@ -114,6 +114,7 @@
 .poster {
   width: 80%;
   height: 80%;
+  position: relative;
 }
 
 .popup {
@@ -123,6 +124,7 @@
   left: 50%;
   transform: translateX(-50%);
 }
+
 .complete {
   height: 80rpx;
   text-align: center;
@@ -133,6 +135,7 @@
   margin-top: 20rpx;
 
 }
+
 .popupTextarea {
   padding: 10rpx;
   background-color: #ECE4FC;
@@ -162,9 +165,11 @@
 
 
 .video {
-  width: 500rpx;
-  height: 250rpx;
+  width: 100%;
+  height: 340rpx;
   border-radius: 20rpx;
+  display: block;
+  margin: auto;
 }
 
 
@@ -179,6 +184,9 @@
 .btnWrap {
   margin: 30rpx 0;
   width: 100%;
+  /* display: flex;
+  align-items: center;
+  justify-content: center; */
 }
 
 .btn {
@@ -216,7 +224,9 @@
 .datumImg {
   margin-top: 18rpx;
   width: 242rpx;
-  height: 330rpx;
+  height: 350rpx;
+  border-radius: 15rpx;
+  position: relative;
 }
 
 .addDatum>.row {
@@ -267,4 +277,23 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+
+.deleteImg {
+  position: absolute;
+  right: 8rpx;
+  top: 8rpx;
+  font-size: 35rpx;
+  z-index: 10;
+  color: rgba(191, 191, 191, 0.8);
+}
+
+.deletePoster {
+  position: absolute;
+  right: 10rpx;
+  top: 10rpx;
+  font-size: 38rpx;
+  z-index: 10;
+  color: rgba(191, 191, 191, 0.8);
 }

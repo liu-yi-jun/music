@@ -1,6 +1,6 @@
 <!--components/square/dynamicList/dynamicList.wxml-->
 <view class="list">
-  <view class="item" wx:for="{{dynamics}}" wx:key="id">
+  <view class="item" wx:for="{{dynamics}}" wx:key="id" wx:for-index="i">
     <image data-userid="{{item.userId}}" catchtap="goPersonal" class="avatar" src="{{item.avatarUrl}}"></image>
     <view class="message-content">
       <view class="message">
@@ -14,22 +14,22 @@
           data-id="{{item.groupId}}">{{item.groupName}}</view>
         <view class="right" wx:else>广场动态</view>
       </view>
-      <view class="content" catchtap="dynamicDetail" data-index="{{index}}">
+      <view class="content" catchtap="dynamicDetail" data-index="{{i}}">
         <text class="contentText">{{item.introduce}}</text>
         <view class="recordWrap" wx:if="{{item.voiceUrl}}">
-          <view class="record" catchtap="playRecord" data-index="{{index}}" data-voiceurl="{{item.voiceUrl}}"
+          <view class="record" catchtap="playRecord" data-index="{{i}}" data-voiceurl="{{item.voiceUrl}}"
             style="width:{{item.soundWidth}}rpx">
             <image class="recordImg" src="http://cdn.eigene.cn/play{{item.isPlay?'ing':''}}.gif"></image>
-            <text class="recordTime">{{item.duration}}s</text>
+            <text class="recordTime" wx:if="{{duration}}" >{{item.duration}}s</text>
           </view>
         </view>
         <view class="imgWrap ul" wx:if="{{item.pictureUrls.length}}">
-          <view class="li" wx:for="{{item.pictureUrls}}" wx:key="index" wx:for-item="imgUrl">
-            <image mode="{{item.pictureUrls.length==1?'widthFix':'aspectFill'}}" class="img" src="{{imgUrl}}"></image>
+          <view class="li" wx:for="{{item.pictureUrls}}" wx:key="i" wx:for-item="imgUrl" wx:for-index="j">
+            <image catchtap="previewImage" data-i="{{i}}" data-j="{{j}}" mode="{{item.pictureUrls.length==1?'widthFix':'aspectFill'}}" class="img" src="{{imgUrl}}"></image>
           </view>
         </view>
-        <view class="wrapVideo" wx:if="{{item.videoUrl}}">
-          <video object-fit="cover" src="{{item.videoUrl}}"></video>
+        <view  class="wrapVideo" mark:notDo="video" wx:if="{{item.videoUrl}}">
+          <video  object-fit="cover" src="{{item.videoUrl}}"></video>
         </view>
       </view>
       <view wx:if="{{item.topicName}}" class="topicWrap">
@@ -39,21 +39,21 @@
       </view>
       <view class="like-comment-time">
         <view class="like-comment">
-          <view class="like" catchtap="toLike" data-index="{{index}}">
+          <view class="like" catchtap="toLike" data-index="{{i}}">
             <image src="http://cdn.eigene.cn/dynamicLike{{item.isLike?'d':''}}.png"></image>
             <text>{{item.likes}}</text>
           </view>
-          <view class="comment" catchtap="goComment" data-index="{{index}}">
+          <view class="comment" catchtap="goComment" data-index="{{i}}">
             <image src="http://cdn.eigene.cn/dynamicComment.png"></image>
             <text>{{item.comment}}</text>
           </view>
           <view class="share">
-            <button class="shareBtn" open-type='share' data-index="{{index}}" plain='true'></button>
+            <button class="shareBtn" open-type='share' data-index="{{i}}" plain='true'></button>
             <image src="http://cdn.eigene.cn/dynamicShare.png"></image>
             <text>{{item.share}}</text>
           </view>
         </view>
-        <image wx:if="{{item.userId === myId}}" class="delete" catchtap="delete" data-index="{{index}}"
+        <image wx:if="{{item.userId === myId}}" class="delete" catchtap="delete" data-index="{{i}}"
           src="http://cdn.eigene.cn/delete.png"></image>
         <view wx:else catchtap="extend" class="extend">...</view>
       </view>

@@ -260,8 +260,8 @@ video {
 }
 
 .wrapVideo {
-  width: 400rpx;
-  height: 300rpx;
+  width: 93%;
+  height: 380rpx;
   margin-top: 15rpx;
 }
 

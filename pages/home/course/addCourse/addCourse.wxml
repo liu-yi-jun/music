@@ -14,7 +14,9 @@
             <image catchtap="addImg" mode="aspectFill" class="addImg" src="http://use.eigene.cn/bigAdd.png"></image>
             <text class="limit">上传课程封面海报，图需小于2M</text>
           </view>
-          <image wx:else class="poster" src="{{posterUrl}}" mode="aspectFill"></image>
+          <image wx:else class="poster" src="{{posterUrl}}" mode="aspectFill">
+            <view class="deletePoster iconfont icondelete" catchtap="deletePoster"></view>
+          </image>
         </view>
         <view class="courseNameWrap">
           <text class="courseName">课程名称：</text>
@@ -57,7 +59,8 @@
               <view wx:if="{{!tempPicturePaths.length}}" class="btn" catchtap="pictureurlSheet">上传资料</view>
               <view class="imgWrap" wx:else>
                 <image mode="aspectFill" class="datumImg" wx:for="{{tempPicturePaths}}" wx:key="index" src="{{item}}"
-                  catchtap="previewImage" data-src="item">
+                  catchtap="previewImage" data-src="{{item}}">
+                  <view class="deleteImg iconfont icondelete" catchtap="deleteImg" data-index="{{index}}"></view>
                 </image>
                 <view catchtap="choosePicture" class="addDatum" wx:if="{{tempPicturePaths.length < 4}}">
                   <view class="row"></view>
@@ -69,9 +72,10 @@
         </view>
       </view>
     </scroll-view>
-    <view  catchtap="cancelPopup" catchtouchmove="touchmove" class="mask {{dialogShow? 'shadeShow':''}}">
-      <view class="popup" catchtap="return" >
-        <textarea wx:if="{{dialogShow}}" value="{{linkUrl}}" bindinput="inputLinkUrl" class="popupTextarea" placeholder="请输入{{currentType==1?'音频':(currentType==2?'视频':'资料')}}链接" ></textarea>
+    <view catchtap="cancelPopup" catchtouchmove="touchmove" class="mask {{dialogShow? 'shadeShow':''}}">
+      <view class="popup" catchtap="return">
+        <textarea wx:if="{{dialogShow}}" value="{{linkUrl}}" bindinput="inputLinkUrl" class="popupTextarea"
+          placeholder="请输入{{currentType==1?'音频':(currentType==2?'视频':'资料')}}链接"></textarea>
         <view class="complete" catchtap="complete">完成</view>
       </view>
     </view>

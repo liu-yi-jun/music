@@ -92,7 +92,8 @@
 
 
 .circular {
-  margin: 80rpx 0;
+  margin: 70rpx 0;
+  
   /* position: absolute; */
   position: relative;
   border-radius: 50%;
@@ -104,6 +105,7 @@
   animation-iteration-count: infinite;
   animation-direction: alternate;
   animation-timing-function: linear;
+ 
 }
 
 @keyframes shake {
@@ -123,7 +125,7 @@
   top: -60rpx;
   white-space: nowrap;
 }
-.top1 {
+/* .top1 {
   left: 18rpx !important;
 }
 .top2 {
@@ -146,7 +148,7 @@
 }
 .top8 {
   left: 25rpx !important;
-}
+} */
 
 .number {
   font-size: 42rpx;

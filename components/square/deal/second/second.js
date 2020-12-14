@@ -83,6 +83,12 @@ Component({
           }
         }, seconds[i][j].id)
       })
-    }
+    },
+    goPersonal(e) {
+      let userId = e.currentTarget.dataset.userid
+      wx.navigateTo({
+        url: `/pages/my/invitation/invitation?userId=${userId}`,
+      })
+    },
   }
 })

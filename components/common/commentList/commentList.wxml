@@ -2,19 +2,19 @@
 <view>
 
   <view class="item" wx:for="{{commentArr}}" wx:key="id" wx:for-item="comment" wx:for-index="commentIndex">
-    <image class="avatar" src="{{comment.commenterAvatar}}"></image>
+    <image class="avatar" src="{{comment.commenterAvatar}}" data-userid="{{comment.commenterId}}" catchtap="goPersonal"></image>
     <view class="right">
-      <view class="user1" catchtap="toReply" data-commentindex="{{commentIndex}}">
-        <text class="userName">{{comment.commenterName}}</text>
-        <text class="content1">{{comment.commentCotent}}</text>
+      <view class="user1" >
+        <text class="userName" catchtap="goPersonal" data-userid="{{comment.commenterId}}">{{comment.commenterName}}</text>
+        <text class="content1" catchtap="toReply" data-commentindex="{{commentIndex}}" >{{comment.commentCotent}}</text>
       </view>
-      <view class="user2" wx:for="{{comment.replyArr}}" wx:for-index="replyIndex" wx:key="id" catchtap="toReply" data-commentindex="{{commentIndex}}" data-replyindex="{{replyIndex}}">
+      <view class="user2" wx:for="{{comment.replyArr}}" wx:for-index="replyIndex" wx:key="id" >
         <view class="angle"></view>
-        <text class="userName">{{item.replyPersonName}}</text>
+        <text class="userName" catchtap="goPersonal" data-userid="{{item.replyPersonId}}">{{item.replyPersonName}}</text>
         <text class="reply">回复：</text>
-        <text class="userName" wx:if="{{item.parentReplyId!==-1}}">{{item.parentName}}</text>
-        <text class="content2">{{item.replyContent}}</text>
-        <text class="replyTime">{{item.releaseTime}}</text>
+        <text class="userName" wx:if="{{item.parentReplyId!==-1}}" catchtap="goPersonal" data-userid="{{item.parentReplyId}}">{{item.parentName}}</text>
+        <text class="content2" catchtap="toReply" data-commentindex="{{commentIndex}}" data-replyindex="{{replyIndex}}">{{item.replyContent}}</text>
+        <text class="replyTime" >{{item.releaseTime}}</text>
       </view>
       <view class="time">
         <text>{{comment.releaseTime}}</text>

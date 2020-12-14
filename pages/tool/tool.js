@@ -12,90 +12,10 @@ Page({
     excludeHeight: 0,
     // 控制右下角三角show
     tabBarBtnShow: false,
-    position: [{
-      left: 58,
-      top: 26.9,
-      WH: 57,
-    }, {
-      left: 225,
-      top: 32,
-      WH: 59,
-    }, {
-      left: 154,
-      top: 44,
-      WH: 100,
-    }, {
-      left: 495,
-      top: 52.9,
-      WH: 129,
-    }, {
-      left: 624,
-      top: 68.5,
-      WH: 30,
-    }, {
-      left: 424,
-      top: 75.9,
-      WH: 100,
-    }, {
-      left: 58,
-      top: 85.1,
-      WH: 54,
-    }, {
-      left: 308,
-      top: 90.5,
-      WH: 68,
-    }, {
-      left: 147,
-      top: 76.01,
-      WH: 81,
-    }, {
-      left: 431,
-      top: 77.36,
-      WH: 185,
-    },
-    {
-      left: 58,
-      top: 26.9,
-      WH: 57,
-    }, {
-      left: 225,
-      top: 32,
-      WH: 59,
-    }, {
-      left: 154,
-      top: 44,
-      WH: 100,
-    }, {
-      left: 495,
-      top: 52.9,
-      WH: 129,
-    }, {
-      left: 624,
-      top: 68.5,
-      WH: 30,
-    }, {
-      left: 424,
-      top: 75.9,
-      WH: 100,
-    }, {
-      left: 58,
-      top: 85.1,
-      WH: 54,
-    }, {
-      left: 308,
-      top: 90.5,
-      WH: 68,
-    }, {
-      left: 147,
-      top: 76.01,
-      WH: 81,
-    }, {
-      left: 431,
-      top: 77.36,
-      WH: 185,
-    }],
     circulars: [],
-    limit: 16
+    limit: 50,
+    isNotData: false,
+    value: ''
   },
 
   /**
@@ -115,23 +35,44 @@ Page({
     })
   },
   init(circulars) {
-   
-    let position = this.data.position
-    let randomWH, deg, delay, duration
+    const deviceW = 750
+    let randomWH, deg, delay, duration, circularLeft
+    let direction, translate
     circulars.forEach((item, index) => {
         deg = tool.randomNumber(0, 360)
         duration = tool.randomNumber(1500, 2500)
-        item.style = `
-    width: ${position[index].WH}rpx;
-    height: ${position[index].WH}rpx;
+        randomWH = tool.randomNumber(30, 180)
+        circularLeft = tool.randomNumber(0, deviceW - randomWH)
+
+        if (randomWH / 2 + circularLeft <= deviceW/2) {
+          direction = 'left'
+        } else {
+          direction = 'right'
+        }
+        translate = 50 / (deviceW / 2 - randomWH / 2) * circularLeft
+        if (direction === 'left') {
+          translate = -translate
+        } else {
+          translate = 100 - translate
+        }
+      
+
+    item.style = `
+    width: ${randomWH}rpx;
+    height: ${randomWH}rpx;
     background: linear-gradient(${deg}deg, rgba(226, 145, 227, 1), rgba(0, 69, 207, 1));
-    left: ${position[index].left}rpx;
+    left: ${circularLeft}rpx;
     top: 0rpx;
     animation-duration: ${duration}ms;
     animation-name: shake;`
+
+    item.TextStyle = `
+    ${direction}: 50%;
+    transform: translateX(${translate}%);
+    `
       }),
       this.setData({
-        circulars
+        circulars : this.data.circulars.concat(circulars)
       })
   },
   /**
@@ -205,26 +146,42 @@ Page({
     })
   },
   confirm(event) {
-    if(event.detail.value) {
+    if (event.detail.value) {
       this.setData({
-        circulars: []
-      },()=> {
+        circulars: [],
+        isNotData: false
+      }, () => {
         this.search(event.detail.value)
-      })
+        this.setData({
+          value:event.detail.value
+        })
+      })   
     } else {
       this.setData({
         circulars: []
-      },()=> {
+      }, () => {
         this.getRandomTap()
       })
     }
   },
   search(value) {
-    app.get(app.Api.searchTap,{
+    app.get(app.Api.searchTap, {
       tapTitle: value,
       limit: this.data.limit
-    }).then(res=>{
+    }).then(res => {
+      if(res.length < this.data.limit) {
+        isNotData: true
+      }
       this.init(res)
     })
-  }
+  },
+  scrolltolower() {
+    let value = this.data.value
+    if(value &&  !this.data.isNotData) {
+      this.search(value)
+    } else {
+      this.getRandomTap()
+    }
+   
+  },
 })
