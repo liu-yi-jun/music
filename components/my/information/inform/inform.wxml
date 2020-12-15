@@ -11,6 +11,7 @@
         <text class="elaborate" wx:if="{{item.theme === 'groupcourse'}}">赞了你的课程</text>
       </view>
       <text class="words">{{item.themeTitle}}</text>
+      <view class="number" wx:if="{{item.isNew}}">{{item.isNew}}</view>
     </view>
   </view>
   <!-- <view class="row">

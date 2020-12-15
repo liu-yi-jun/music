@@ -1,4 +1,5 @@
 // components/my/information/inform/inform.js
+const app = getApp()
 Component({
   /**
    * 组件的属性列表
@@ -25,6 +26,18 @@ Component({
       let index = e.currentTarget.dataset.index
       let informs = this.data.informs
       let detail = informs[index]
+      if (detail.isNew) {
+        app.post(app.Api.modifyInform, {
+          theme: detail.theme,
+          themeId: detail.themeId
+        }).then((res) => {
+          console.log(res)
+          detail.isNew = 0
+          this.setData({
+            informs
+          })
+        })
+      }
       if (detail.theme === 'groupdynamics' || detail.theme === 'squaredynamics') {
         let param = {
           id: detail.themeId,
@@ -36,11 +49,11 @@ Component({
         wx.navigateTo({
           url: `/pages/home/dynamicDetail/dynamicDetail?param=${param}`
         })
-      } else if(detail.theme === 'alliance') {
+      } else if (detail.theme === 'alliance') {
         wx.navigateTo({
           url: `/pages/square/performance/allianceDetail/allianceDetail?id=${detail.themeId}`,
-       })
-      } else if(detail.theme === 'groupcourse') {
+        })
+      } else if (detail.theme === 'groupcourse') {
         wx.navigateTo({
           url: `/pages/home/course/courseDetail/courseDetail?id=${detail.themeId}`,
         })

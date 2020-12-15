@@ -94,5 +94,7 @@ module.exports = {
   getRandomTap: "/api/tap/getRandomTap",
   getTapDetail: "/api/tap/getTapDetail",
   issueTapRecord: "/api/tap/issueTapRecord",
-  searchTap: "/api/tap/searchTap"
+  getTaps: "/api/tap/getTaps",
+  searchTap: "/api/tap/searchTap",
+  modifyInform: "/api/inform/modifyInform"
 }

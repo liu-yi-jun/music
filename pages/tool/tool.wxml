@@ -11,7 +11,7 @@
     <view class="logo-search">
       <image class="logo" src="http://use.eigene.cn/picture.png"></image>
       <view class="searchWrap">
-        <input class="search" value="{{groupName}}" bindconfirm="confirm">
+        <input class="search" value="{{value}}" bindconfirm="confirm">
         </input>
         <image class="searchLog" src="http://cdn.eigene.cn/search.png"></image>
       </view>

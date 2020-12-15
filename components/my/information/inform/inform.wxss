@@ -3,10 +3,12 @@
 .inform {
   margin-top: 70rpx;
 }
+
 .avatar {
   width: 100rpx;
   height: 100rpx;
   border-radius: 50%;
+  flex-shrink: 0;
 }
 
 .row {
@@ -22,6 +24,7 @@
   display: flex;
   flex-direction: column;
   justify-items: center;
+  position: relative;
 }
 
 .name {
@@ -37,4 +40,21 @@
 .words {
   font-size: 28rpx;
   margin-top: 20rpx;
+}
+
+.number {
+  position: absolute;
+  right: 0rpx;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 28rpx;
+  display: block;
+  background: #cc1a00;
+  border-radius: 50%;
+  width: 35rpx;
+  height: 35rpx;
+  line-height: 35rpx;
+  color: white;
+  text-align: center;
+  box-sizing: border-box;
 }

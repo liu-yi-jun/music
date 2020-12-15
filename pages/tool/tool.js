@@ -16,7 +16,12 @@ Page({
     limit: 50,
     isNotData: false,
     value: '',
-    scrollTop: 0
+    scrollTop: 0,
+    taPPaging: {
+      pageSize: 50,
+      pageIndex: 1,
+      isNotData: false
+    },
   },
 
   /**
@@ -30,7 +35,25 @@ Page({
   onLoad: function (options) {
     // 获取去除上面导航栏，剩余的高度
     tool.navExcludeHeight(this)
-    this.getRandomTap()
+    // this.getRandomTap()
+    this.gettaps(this.data.value)
+  },
+  gettaps(tapTitle) {
+    let taPPaging = this.data.taPPaging
+    app.get(app.Api.getTaps, {
+      tapTitle,
+      ...taPPaging
+    }).then(res => {
+      if (res.length < taPPaging.pageSize) {
+        this.setData({
+          'taPPaging.isNotData': true
+        })
+      }
+      this.setData({
+        'taPPaging.pageIndex': taPPaging.pageIndex + 1
+      })
+      this.init(res)
+    })
   },
   getRandomTap() {
     app.get(app.Api.getRandomTap, {
@@ -50,7 +73,7 @@ Page({
         randomWH = tool.randomNumber(30, 180)
         circularLeft = tool.randomNumber(0, deviceW - randomWH)
 
-        if (randomWH / 2 + circularLeft <= deviceW/2) {
+        if (randomWH / 2 + circularLeft <= deviceW / 2) {
           direction = 'left'
         } else {
           direction = 'right'
@@ -61,9 +84,9 @@ Page({
         } else {
           translate = 100 - translate
         }
-      
 
-    item.style = `
+
+        item.style = `
     width: ${randomWH}rpx;
     height: ${randomWH}rpx;
     background: linear-gradient(${deg}deg, rgba(226, 145, 227, 1), rgba(0, 69, 207, 1));
@@ -72,13 +95,13 @@ Page({
     animation-duration: ${duration}ms;
     animation-name: shake;`
 
-    item.TextStyle = `
+        item.TextStyle = `
     ${direction}: 50%;
     transform: translateX(${translate}%);
     `
       }),
       this.setData({
-        circulars : this.data.circulars.concat(circulars)
+        circulars: this.data.circulars.concat(circulars)
       })
   },
   /**
@@ -152,30 +175,25 @@ Page({
     })
   },
   confirm(event) {
-    if (event.detail.value) {
-      this.setData({
-        circulars: [],
+    this.setData({
+      value: event.detail.value,
+      circulars:[],
+      taPPaging: {
+        pageSize: 50,
+        pageIndex: 1,
         isNotData: false
-      }, () => {
-        this.search(event.detail.value)
-        this.setData({
-          value:event.detail.value
-        })
-      })   
-    } else {
-      this.setData({
-        circulars: []
-      }, () => {
-        this.getRandomTap()
-      })
-    }
+      },
+    }, () => [
+      this.gettaps(event.detail.value)
+    ])
+
   },
   search(value) {
     app.get(app.Api.searchTap, {
       tapTitle: value,
       limit: this.data.limit
     }).then(res => {
-      if(res.length < this.data.limit) {
+      if (res.length < this.data.limit) {
         isNotData: true
       }
       this.init(res)
@@ -183,11 +201,9 @@ Page({
   },
   scrolltolower() {
     let value = this.data.value
-    if(value &&  !this.data.isNotData) {
-      this.search(value)
-    } else {
-      this.getRandomTap()
+    let isNotData = this.data.taPPaging.isNotData
+    if (!isNotData) {
+      this.gettaps(value)
     }
-   
   },
 })
