@@ -55,11 +55,11 @@ Page({
     this.getTopic()
     this.getDate()
     this.getRandomSong()
-
     this.setData({
-      signInSums,
-      squareGuide: app.globalData.guide.square,
+      signInSums
     })
+
+
     wx.onBackgroundAudioStop(() => {
       this.marquee.pauseScroll()
       this.setData({
@@ -92,6 +92,19 @@ Page({
       if (res.length < squaredynamicsPaging.pageSize) {
         this.setData({
           isNotData: true
+        })
+      }
+      console.log('app.globalData.guide.square',app.globalData.guide.square)
+      if (app.globalData.guide.square) {
+        this.getTabBar().setData({
+          show: false,
+        })
+        this.setData({
+          tabBarBtnShow: true,
+        }, () => {
+          this.setData({
+            squareGuide: app.globalData.guide.square,
+          })
         })
       }
       this.setData({
@@ -261,12 +274,12 @@ Page({
     let district = e.mark.district
     if (district) return;
     this.setData({
-      // tabBarBtnShow: true,
+      tabBarBtnShow: true,
       hideBarShow: false
     })
-    // this.getTabBar().setData({
-    //   show: false
-    // })
+    this.getTabBar().setData({
+      show: false
+    })
   },
   // 控制隐藏栏
   hideBar() {
@@ -333,10 +346,9 @@ Page({
     }
   },
   click() {
-
     this.setData({
       hideBarShow: true,
-      leftGuide:false
+      leftGuide: false
     }, () => {
       setTimeout(() => {
         this.setData({
@@ -348,12 +360,12 @@ Page({
             wx.setStorageSync('guide', guide)
             this.setData({
               squareGuide: false,
-            },()=> {
-              setTimeout(()=>{
+            }, () => {
+              setTimeout(() => {
                 this.setData({
-                  hideBarShow:false
+                  hideBarShow: false
                 })
-              },1000)
+              }, 1000)
             })
           }, 1000)
         })

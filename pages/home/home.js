@@ -53,6 +53,7 @@ let Style = [{
     scaleY: 1,
     opacity: 0,
   },
+
 ]
 Page({
 
@@ -91,7 +92,8 @@ Page({
     leftGuide: true,
     bottomGuide: false,
     issueGuide: false,
-    cross: false
+    cross: false,
+    showFakeTab: false
   },
 
 
@@ -861,12 +863,11 @@ Page({
         switchIssue: true,
       })
     } else {
-      this.getTabBar().setData({
-        show: true
-      })
+
       this.setData({
         bottomGuide: false,
-        tabBarBtnShow: false
+        tabBarBtnShow: false,
+        showFakeTab: true
       }, () => {
         setTimeout(() => {
           const showMember = this.data.showMember
@@ -884,15 +885,13 @@ Page({
                 homeGuide: false,
               }, () => {
                 setTimeout(() => {
-                  this.getTabBar().setData({
-                    show: false
-                  })
                   this.setData({
                     switchIssue: false,
                     functionBarShow: false,
                     tabBarBtnShow: true,
                     showContent: showMember[0],
-                    dynamicIsShow: member.length ? true : false
+                    dynamicIsShow: member.length ? true : false,
+                    showFakeTab: false
                   })
                 }, 1000);
               })

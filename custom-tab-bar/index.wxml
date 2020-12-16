@@ -1,9 +1,9 @@
 <!--miniprogram/custom-tab-bar/index.wxml-->
+
 <view class="tab-bar {{show?'':'hideTabBar'}}" style="transition:{{transition}}"  >
   <view wx:for="{{list}}" wx:key="index" class="tab-bar-item" data-path="{{item.pagePath}}" data-index="{{index}}" bindtap="switchTab">
     <image src="{{selected === index ? item.selectedIconPath : item.iconPath}}">
     <view hidden="{{index!==3 || !showTabBarRedDot}}" class="red"></view>
     </image>
   </view>
-  
 </view>

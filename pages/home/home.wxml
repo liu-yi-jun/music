@@ -161,4 +161,19 @@
   <block>
     <view class="travel {{cross?'showCross':'hideCross'}}">音乐之旅启动中...</view>
   </block>
+
+</view>
+<view class="fakeTab-bar {{showFakeTab?'':'hideFakeTab-bar'}}">
+  <view class="tab-bar-item">
+    <image src="../../images/homeSelect.png"></image>
+  </view>
+  <view class="tab-bar-item">
+    <image src="../../images/tool.png"></image>
+  </view>
+  <view class="tab-bar-item">
+    <image src="../../images/square.png"></image>
+  </view>
+  <view class="tab-bar-item">
+    <image src="../../images/my.png"></image>
+  </view>
 </view>

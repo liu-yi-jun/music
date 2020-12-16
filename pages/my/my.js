@@ -83,12 +83,12 @@ Page({
   },
   // 控制bar栏
   tap() {
-    // this.setData({
-    //   tabBarBtnShow: true
-    // })
-    // this.getTabBar().setData({
-    //   show: false
-    // })
+    this.setData({
+      tabBarBtnShow: true
+    })
+    this.getTabBar().setData({
+      show: false
+    })
   },
   goSong() {
     wx.navigateTo({
