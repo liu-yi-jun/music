@@ -1,4 +1,6 @@
 /* pages/tool/tapPractice/tapPractice.wxss */
+/* tapPractice/tapPracticeBackGround.png	 */
+
 
 .noMinH {
   min-height: 0 !important;
@@ -294,6 +296,15 @@
 .swiper {
   height: 100%;
   transition: 0.3s all;
+}
+.wx-swiper-dots {
+  position: relative;
+  left: unset !important;
+  right: -10rpx;
+}
+
+.wx-swiper-dots.wx-swiper-dots-horizontal {
+  margin-bottom: -5rpx;
 }
 @media screen and (max-aspect-ratio: 1/2) {
   .voice {
