@@ -7,7 +7,16 @@ let Api = require("./assets/request/api.js");
 let Req = require("./assets/request/Req.js");
 let env = "Dev";
 App.requestUrls = requestUrls[env]; // 公共文件用的
-
+App.getToken = function getToken(code) {
+  return new Promise((resolve, reject) => {
+    Req.fetch(Api.getToken, {
+      code
+    }).then(res => {
+      wx.setStorageSync('wx-token', res)
+      resolve()
+    }).catch(err => reject(err))
+  })
+}
 App({
   onLaunch: function () {
     let guide = wx.getStorageSync('guide')
@@ -30,6 +39,7 @@ App({
     option.method = "post";
     return Req.fetch(url, data, option);
   },
+
   userInfo: null,
   globalData: {
     guide: {}

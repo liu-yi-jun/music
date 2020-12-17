@@ -1,5 +1,7 @@
 module.exports = {
+  getToken: "/api/user/getToken",
   login: "/api/user/login",
+  getServerUserInfo: "/api/user/getServerUserInfo",
   register: "/api/user/register",
   getAllGroup: "/api/group/getAllGroup",
   createGroup: "/api/group/createGroup",

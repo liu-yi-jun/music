@@ -6,6 +6,7 @@
  *    4.对请求头的处理！！！机型、大小、系统、屏幕
  */
 let system = wx.getSystemInfoSync();
+let app = getApp()
 
 const clientInfo = {
   "clientType": "mp",
@@ -32,17 +33,30 @@ module.exports = {
       }
 
       let env = App.requestUrls.baseUrl;
-      
+
       wx.request({
         url: env + url,
         data,
         method,
         header: {
-          "clientInfo": JSON.stringify(clientInfo)
+          "clientInfo": JSON.stringify(clientInfo),
+          "token": wx.getStorageSync('wx-token')
         },
         success: function (res) {
           console.log(env + url, res)
           let result = res.data; // { code:0,data:"",message:"" }
+          console.log(result)
+          if (result.code === -2) {
+            // 无效token
+            wx.login({
+              success: res => {
+                App.getToken(res.code).then(res => {
+                  module.exports.fetch(url, data, option).then(res => resolve(res)).catch(err => reject(err))
+                })
+              }
+            })
+            return
+          }
           result.code == 0 ? resolve(result.data) : reject(result.message)
           if (toast.length) {
             wx.showToast({

@@ -19,36 +19,32 @@ Page({
    */
   onLoad: function (options) {
     // 登录操作，如果用户存在返回信息，如果不存返回openid
-
-    this.login()
+    this.initLogin()
+    // this.login()
   },
   cancel() {
     this.setData({
       dialogShow: false
     })
   },
-  login() {
-    let openid = wx.getStorageSync('openid')
-    if (openid) {
-      //  用openid获取用户信息
-      this.getUserInfo('openid', openid)
+  initLogin() {
+    let token = wx.getStorageSync('wx-token')
+    if (token) {
+      this.getServerUserInfo()
     } else {
-      //  用code获取用户信息
       wx.login({
         success: res => {
           if (res.code) {
-            this.getUserInfo('code', res.code)
+            App.getToken(res.code).then(() => {
+              this.getServerUserInfo()
+            })
           }
         }
       })
     }
   },
-  getUserInfo(param, value) {
-    app.get(Api.login, {
-      [param]: value
-    }).then(res => {
-      // 存入openid,下次请求可以直接用openid请求
-      wx.setStorageSync('openid', res.openid)
+  getServerUserInfo() {
+    app.get(Api.getServerUserInfo).then(res => {
       if (res.userInfo) {
         // 有用户信息，存入app
         app.userInfo = res.userInfo
@@ -62,13 +58,56 @@ Page({
       } else {
         // 没有用户信息等待用户授权
         this.setData({
-          dialogShow:true
+          dialogShow: true
         })
         this.getAllGroup()
       }
-      
+
     })
   },
+
+  // login() {
+  //   let openid = wx.getStorageSync('openid')
+  //   if (openid) {
+  //     //  用openid获取用户信息
+  //     this.getUserInfo('openid', openid)
+  //   } else {
+  //     //  用code获取用户信息
+  //     wx.login({
+  //       success: res => {
+  //         if (res.code) {
+  //           this.getUserInfo('code', res.code)
+  //         }
+  //       }
+  //     })
+  //   }
+  // },
+  // getUserInfo(param, value) {
+  //   app.get(Api.login, {
+  //     [param]: value
+  //   }).then(res => {
+  //     // 存入openid,下次请求可以直接用openid请求
+  //     wx.setStorageSync('openid', res.openid)
+  //     if (res.userInfo) {
+  //       // 有用户信息，存入app
+  //       app.userInfo = res.userInfo
+  //       // 判断用户是否已有小组再进行跳转
+  //       let groupId = app.userInfo.groupId
+  //       if (groupId) {
+  //         this.goHome()
+  //       } else {
+  //         this.getAllGroup()
+  //       }
+  //     } else {
+  //       // 没有用户信息等待用户授权
+  //       this.setData({
+  //         dialogShow: true
+  //       })
+  //       this.getAllGroup()
+  //     }
+
+  //   })
+  // },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -120,9 +159,9 @@ Page({
   confirm(event) {
     if (!app.userInfo) {
       return this.setData({
-         dialogShow: true
-       })
-     }
+        dialogShow: true
+      })
+    }
     let value = event.detail.value
     this.goSearchGroup(value)
   },
@@ -154,7 +193,7 @@ Page({
       if (!app.userInfo) {
         // 没有用户信息，进行注册
         app.post(Api.register, {
-          openid: wx.getStorageSync('openid'),
+          // openid: wx.getStorageSync('openid'),
           userInfo: data.detail.userInfo
         }, {
           loading: false
@@ -172,7 +211,7 @@ Page({
 
   goOther(event) {
     if (!app.userInfo) {
-     return this.setData({
+      return this.setData({
         dialogShow: true
       })
     }
@@ -181,7 +220,7 @@ Page({
       url: `/pages/home/otherHome/otherHome?showGroupId=${id}`,
     })
   },
-  goHome(){
+  goHome() {
     wx.switchTab({
       url: '/pages/home/home',
     })
@@ -189,9 +228,9 @@ Page({
   goGroupSettlement() {
     if (!app.userInfo) {
       return this.setData({
-         dialogShow: true
-       })
-     }
+        dialogShow: true
+      })
+    }
     wx.navigateTo({
       url: '/pages/init/groupSettlement/groupSettlement',
     })
