@@ -1,6 +1,7 @@
 // components/square/deal/ticket/ticket.js
 const app = getApp()
 const core = require('../../../../assets/tool/core')
+let tool = require('../../../../assets/tool/common')
 Component({
   /**
    * 组件的属性列表
@@ -53,5 +54,10 @@ Component({
         url: `/pages/my/invitation/invitation?userId=${userId}`,
       })
     },
+    pre(e) {
+      let url = e.currentTarget.dataset.url
+      let urls = e.currentTarget.dataset.urls
+      tool.previewImage(urls,url)
+    }
   }
 })

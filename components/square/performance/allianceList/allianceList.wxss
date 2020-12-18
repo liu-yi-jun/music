@@ -3,7 +3,7 @@
   height: 100%;
   width: 100%;
   box-sizing: border-box;
-  padding: 0 30rpx;
+  padding: 0 30rpx 100rpx;
 }
 .userName {
   font-size: 20rpx;

@@ -186,16 +186,16 @@ Page({
     })
   },
   imgSheet() {
-    wx.showActionSheet({
-      itemList: ['添加网络链接', '从手机选择图片'],
-      success: res => {
-        if (res.tapIndex === 1) {
+    // wx.showActionSheet({
+    //   itemList: ['添加网络链接', '从手机选择图片'],
+    //   success: res => {
+    //     if (res.tapIndex === 1) {
           this.chooseImg()
-        } else if (res.tapIndex === 0) {
-          this.showPopup(3)
-        }
-      }
-    })
+    //     } else if (res.tapIndex === 0) {
+    //       this.showPopup(3)
+    //     }
+    //   }
+    // })
   },
   videoSheet() {
     wx.showActionSheet({
@@ -477,5 +477,17 @@ Page({
       dialogShow: true
     })
   },
-
+  toDelete(ev) {
+    const id = ev.target.dataset.id;
+    // 删除数组中对应index的元素，会改变原数组,修改的是tempFilePaths里面的元素,tempFilePaths本身引用没有改变，页面没有监听到
+    // const tempFilePath = this.data.tempFilePaths.splice(index, 1);
+    //过滤生成一个新的数组
+    const tempImagePaths = this.data.tempImagePaths.filter((item, index) => {
+      return index != id
+    })
+    this.setData({
+      restCount: this.data.restCount + 1,
+      tempImagePaths
+    })
+  },
 })

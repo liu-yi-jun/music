@@ -14,6 +14,7 @@
           <view class="imgArea">
             <image mode="aspectFill" catchtap="previewImage" data-id="{{index}}" wx:key="index" src="{{item}}"
               wx:for="{{tempImagePaths}}">
+              <view class="delete iconfont icondelete" catchtap="toDelete" data-id="{{index}}"></view>
             </image>
           </view>
         </view>

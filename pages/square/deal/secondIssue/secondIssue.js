@@ -76,12 +76,14 @@ Page({
   },
   chooseImage(data) {
     this.setData({
-      tempImagePaths: data.detail.tempImagePaths
+      tempImagePaths: data.detail.tempImagePaths,
+      tempVideoPath: ''
     })
   },
   chooseVideo(data) {
     this.setData({
-      tempVideoPath: data.detail.tempVideoPath
+      tempVideoPath: data.detail.tempVideoPath,
+      tempImagePaths: []
     })
   },
   // 获取定位

@@ -162,7 +162,7 @@ Page({
     let i = 0
     const showMember = this.data.showMember
     const styleLeight = this.data.styleLeight
-    const member = this.data.member
+    let member = this.data.member
     if (member.length >= 5 && member.length < styleLeight) {
       member = member.concat(member)
     }

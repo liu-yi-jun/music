@@ -42,6 +42,9 @@
         let env = App.requestUrls.baseUrl;
         wx.uploadFile({
           url: env + url,
+          header: {
+            "token": wx.getStorageSync('wx-token')
+          },
           filePath: tempFilePath,
           name: 'file',
           formData: option,

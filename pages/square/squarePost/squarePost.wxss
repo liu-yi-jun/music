@@ -225,7 +225,7 @@ video {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translate(-50%,-50%);
 }
 
 .shadeShow {
@@ -250,4 +250,13 @@ video {
   border-radius: 10rpx;
   margin-top: 20rpx;
 
+}
+
+.delete {
+  position: absolute;
+  right: 8rpx;
+  top: 8rpx;
+  font-size: 35rpx;
+  z-index: 10;
+  color: rgba(191, 191, 191, 0.8);
 }

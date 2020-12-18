@@ -232,10 +232,9 @@ Page({
       }, {
         loading: false
       }).then(res => {
-        dynamics[index].share++
-        this.setData({
-          dynamics
-        })
+        const dynamicList = this.selectComponent('#dynamicList');
+        dynamicList.completeShare(index)
+     
       })
     }, 3000)
 
@@ -350,10 +349,10 @@ Page({
       hideBarShow: true,
       leftGuide: false
     }, () => {
-      setTimeout(() => {
-        this.setData({
-          cross: true
-        }, () => {
+      // setTimeout(() => {
+      //   this.setData({
+      //     cross: true
+      //   }, () => {
           setTimeout(() => {
             let guide = wx.getStorageSync('guide')
             guide.square = false
@@ -368,9 +367,15 @@ Page({
               }, 1000)
             })
           }, 1000)
-        })
-      }, 1000)
+      //   })
+      // }, 1000)
     })
   },
-
+  move() {
+    if(this.data.hideBarShow) {
+      this.setData({
+        hideBarShow:false
+      })
+    }
+  }
 })

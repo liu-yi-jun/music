@@ -30,11 +30,12 @@
   height: 350rpx;
 }
 
-.img{
+.img {
   width: 340rpx;
   font-size: 0;
   position: relative;
 }
+
 .secondStore {
   position: absolute;
   right: 17rpx;
@@ -43,11 +44,25 @@
   height: 45rpx;
   z-index: 999;
 }
+
+.video {
+  border-top-left-radius: 40rpx !important;
+  border-top-right-radius: 40rpx !important;
+}
+
+swiper {
+  border-top-left-radius: 40rpx !important;
+  border-top-right-radius: 40rpx !important;
+  overflow: hidden;
+  transform: translateY(0);
+}
+
 .card {
   overflow: hidden;
   border-radius: 40rpx;
   background: white;
   margin: 10rpx 0rpx;
+  position: relative;
 }
 
 .bottomContent {
@@ -123,6 +138,16 @@
   align-items: center;
 }
 
-.goods > view > text:first-child {
+.goods>view>text:first-child {
   font-weight: bold;
+}
+
+.wx-swiper-dots {
+  position: relative;
+  left: unset !important;
+  right: -10rpx;
+}
+
+.wx-swiper-dots.wx-swiper-dots-horizontal {
+  margin-bottom: -5rpx;
 }

@@ -493,3 +493,14 @@ page::before {
   width: 160rpx;
   height: 160rpx;
 }
+
+
+.soundWrap {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 264rpx;
+  width: 332rpx;
+  height: 332rpx;
+  margin: auto;
+}

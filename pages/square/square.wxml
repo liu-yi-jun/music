@@ -1,6 +1,6 @@
 <!--pages/square/square.wxml-->
 <view class="square" catchtap="tap">
-  <scroll-view class="scroll" scroll-with-animation scroll-y bindscrolltolower="scrolltolower" scroll-top="{{scrollTop}}">
+  <scroll-view bindscroll="move" class="scroll" scroll-with-animation scroll-y bindscrolltolower="scrolltolower" scroll-top="{{scrollTop}}">
     <navBar  backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' iconTheme='white' bind:toScrollTop="toScrollTop"></navBar>
     <view class="hideBar" catchtap="hideBar">
     </view>

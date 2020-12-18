@@ -52,7 +52,7 @@ Page({
       WH: 185,
     }],
     circulars: [],
-    unionGuide: true
+    unionGuide: false
   },
 
   /**
@@ -60,6 +60,12 @@ Page({
    */
   onLoad: function (options) {
     // 获取去除上面导航栏，剩余的高度
+    let guide =  wx.getStorageSync('guide')
+    if(guide.union) {
+      this.setData({
+        unionGuide: true
+      })
+    }
     tool.navExcludeHeight(this)
     this.getRandomGroup()
   },

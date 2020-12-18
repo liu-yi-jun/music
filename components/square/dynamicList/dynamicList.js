@@ -159,6 +159,7 @@ Component({
 
     },
     toLike(e) {
+      console.log('toLiketoLike')
       let index = e.currentTarget.dataset.index
       let dynamics = this.properties.dynamics
       let content = dynamics[index]
@@ -240,6 +241,7 @@ Component({
       })
     },
     completeLike(commenetBarData) {
+      console.log(222222222222)
       let dynamics = this.properties.dynamics
       let content = dynamics[this.index]
       content.isLike = commenetBarData.isLike
@@ -253,6 +255,13 @@ Component({
       let content = dynamics[this.index]
       content.isStore = commenetBarData.isStore
       content.store = commenetBarData.store
+      this.setData({
+        dynamics
+      })
+    },
+    completeShare(index){
+      let dynamics = this.properties.dynamics
+      dynamics[index].share++
       this.setData({
         dynamics
       })
