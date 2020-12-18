@@ -31,4 +31,11 @@
       </view>
     </view>
   </view>
+  <view class="guideMask {{initGuide?'showGuide': 'hideGuide'}} " catchtap="stopBubbling">
+  <block wx:if="{{leftGuide}}">
+    <image class="leftGuide" src="http://cdn.eigene.cn/guide/left.png" catchtap="click" data-click="leftGuide">
+    </image>
+    <view class="leftGuideText">点击发现小组</view>
+  </block>
+</view>
 </image>

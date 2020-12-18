@@ -2,7 +2,7 @@
 <view class="showInformationList">
   <view class="card" wx:for="{{list}}" wx:key="id" catchtap="goLiveHouseDetail" data-id="{{item.id}}" data-index="{{index}}">
     <view class="top">
-      <image class="img" src="{{item.showPoster}}"></image>
+      <image class="img" src="{{item.showPoster}}" lazy-load="{{true}}"></image>
       <view class="introduce">
         <text class="title">#{{item.showTitle}}#</text>
         <view class="message">
@@ -14,19 +14,19 @@
     <view class="bottom">
       <view class="fontBar">
         <view class="fontWrap" catchtap="toLike" data-index="{{index}}">
-          <image src="http://cdn.eigene.cn/liveHouse/like{{item.isLike?'d':''}}.png"></image>
+          <image src="http://cdn.eigene.cn/liveHouse/like{{item.isLike?'d':''}}.png" lazy-load="{{true}}"></image>
           <text>{{item.likes}}</text>
         </view>
         <view class="fontWrap" catchtap="toStore" data-index="{{index}}">
-          <image src="http://cdn.eigene.cn/liveHouse/store{{item.isStore?'d':''}}.png"></image>
+          <image src="http://cdn.eigene.cn/liveHouse/store{{item.isStore?'d':''}}.png" lazy-load="{{true}}"></image>
           <text>{{item.store}}</text>
         </view>
         <view class="fontWrap">
-          <image src="http://cdn.eigene.cn/liveHouse/comment.png"></image>
+          <image src="http://cdn.eigene.cn/liveHouse/comment.png" lazy-load="{{true}}"></image>
           <text>{{item.comment}}</text>
         </view>
         <view class="fontWrap">
-          <image src="http://cdn.eigene.cn/liveHouse/share.png"></image>
+          <image src="http://cdn.eigene.cn/liveHouse/share.png" lazy-load="{{true}}"></image>
           <text>{{item.share}}</text>
         </view>
       </view>
@@ -34,98 +34,4 @@
       <view class="money" wx:else>暂无</view>
     </view>
   </view>
-
-  <!-- <view wx:for="{{list}}" wx:key="id" class="card" catchtap="goLiveHouseDetail" data-id="{{item.id}}">
-    <image mode="aspectFill" class="img" src="{{item.showPoster}}">
-      <view class="warp">
-        <view class="details">
-          <text class="team">{{item.showTitle}}</text>
-          <view class=" themeCity">
-            <text>{{item.showTitle}}</text>
-            <text>{{item.showCity}}</text>
-          </view>
-          <view class="timeLocation">
-            <text>演出时间：{{item.showTime}}</text>
-            <text>场地: {{item.showAddress}}</text>
-          </view>
-        </view>
-      </view>
-    </image>
-    <view class="bottomBar">
-      <view class="part">
-        <image src="http://use.eigene.cn/store.png"></image>
-        <text>{{item.store}}</text>
-      </view>
-      <view class="part">
-        <image class="min" src="http://use.eigene.cn/comment.png"></image>
-        <text>{{item.comment}}</text>
-      </view>
-      <view class="part">
-        <image src="http://use.eigene.cn/share.png"></image>
-        <text>{{item.share}}</text>
-      </view>
-    </view>
-  </view> -->
-  <!-- <view class="card" catchtap="gosalonDetail">
-    <image mode="aspectFill" class="img" src="http://use.eigene.cn/xwh8DO.png">
-      <view class="warp">
-        <view class="details">
-          <text class="team">动物园钉子户</text>
-          <view class=" themeCity">
-            <text>Live at MAO</text>
-            <text>杭州</text>
-          </view>
-          <view class="timeLocation">
-            <text>演出时间：06月01日</text>
-            <text>场地: 杭州 MAO livehouse杭州</text>
-          </view>
-        </view>
-      </view>
-    </image>
-    <view class="bottomBar">
-      <view class="part">
-        <image src="http://use.eigene.cn/store.png"></image>
-        <text>23</text>
-      </view>
-      <view class="part">
-        <image class="min" src="http://use.eigene.cn/comment.png"></image>
-        <text>12</text>
-      </view>
-      <view class="part">
-        <image src="http://use.eigene.cn/share.png"></image>
-        <text>3</text>
-      </view>
-    </view>
-  </view>
-  <view class="card" catchtap="gosalonDetail">
-    <image mode="aspectFill" class="img" src="http://use.eigene.cn/1843.png">
-      <view class="warp">
-        <view class="details">
-          <text class="team">动物园钉子户</text>
-          <view class=" themeCity">
-            <text>Live at MAO</text>
-            <text>杭州</text>
-          </view>
-          <view class="timeLocation">
-            <text>演出时间：06月01日</text>
-            <text>场地: 杭州 MAO livehouse杭州</text>
-          </view>
-        </view>
-      </view>
-    </image>
-    <view class="bottomBar">
-      <view class="part">
-        <image src="http://use.eigene.cn/store.png"></image>
-        <text>23</text>
-      </view>
-      <view class="part">
-        <image class="min" src="http://use.eigene.cn/comment.png"></image>
-        <text>12</text>
-      </view>
-      <view class="part">
-        <image src="http://use.eigene.cn/share.png"></image>
-        <text>3</text>
-      </view>
-    </view>
-  </view> -->
 </view>

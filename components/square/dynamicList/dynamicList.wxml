@@ -1,7 +1,7 @@
 <!--components/square/dynamicList/dynamicList.wxml-->
 <view class="list">
   <view class="item" wx:for="{{dynamics}}" wx:key="id" wx:for-index="i">
-    <image data-userid="{{item.userId}}" catchtap="goPersonal" class="avatar" src="{{item.avatarUrl}}"></image>
+    <image data-userid="{{item.userId}}" catchtap="goPersonal" class="avatar" src="{{item.avatarUrl}}" lazy-load="{{true}}"></image>
     <view class="message-content">
       <view class="message">
         <view class="left">
@@ -19,13 +19,13 @@
         <view class="recordWrap" wx:if="{{item.voiceUrl}}">
           <view class="record" catchtap="playRecord" data-index="{{i}}" data-voiceurl="{{item.voiceUrl}}"
             style="width:{{item.soundWidth}}rpx">
-            <image class="recordImg" src="http://cdn.eigene.cn/play{{item.isPlay?'ing':''}}.gif"></image>
+            <image class="recordImg" src="http://cdn.eigene.cn/play{{item.isPlay?'ing':''}}.gif" lazy-load="{{true}}"></image>
             <text class="recordTime" wx:if="{{duration}}" >{{item.duration}}s</text>
           </view>
         </view>
         <view class="imgWrap ul" wx:if="{{item.pictureUrls.length}}">
           <view class="li" wx:for="{{item.pictureUrls}}" wx:key="i" wx:for-item="imgUrl" wx:for-index="j">
-            <image catchtap="previewImage" data-i="{{i}}" data-j="{{j}}" mode="{{item.pictureUrls.length==1?'widthFix':'aspectFill'}}" class="img" src="{{imgUrl}}"></image>
+            <image catchtap="previewImage" data-i="{{i}}" data-j="{{j}}" mode="{{item.pictureUrls.length==1?'widthFix':'aspectFill'}}" class="img" src="{{imgUrl}}" lazy-load="{{true}}"></image>
           </view>
         </view>
         <view  class="wrapVideo" mark:notDo="video" wx:if="{{item.videoUrl}}">
@@ -40,21 +40,21 @@
       <view class="like-comment-time">
         <view class="like-comment">
           <view class="like" catchtap="toLike" data-index="{{i}}">
-            <image src="http://cdn.eigene.cn/dynamicLike{{item.isLike?'d':''}}.png"></image>
+            <image src="http://cdn.eigene.cn/dynamicLike{{item.isLike?'d':''}}.png" lazy-load="{{true}}"></image>
             <text>{{item.likes}}</text>
           </view>
           <view class="comment" catchtap="goComment" data-index="{{i}}">
-            <image src="http://cdn.eigene.cn/dynamicComment.png"></image>
+            <image src="http://cdn.eigene.cn/dynamicComment.png" lazy-load="{{true}}"></image>
             <text>{{item.comment}}</text>
           </view>
           <view class="share">
             <button class="shareBtn" open-type='share' data-index="{{i}}" plain='true'></button>
-            <image src="http://cdn.eigene.cn/dynamicShare.png"></image>
+            <image src="http://cdn.eigene.cn/dynamicShare.png" lazy-load="{{true}}"></image>
             <text>{{item.share}}</text>
           </view>
         </view>
         <image wx:if="{{item.userId === myId}}" class="delete" catchtap="delete" data-index="{{i}}"
-          src="http://cdn.eigene.cn/delete.png"></image>
+          src="http://cdn.eigene.cn/delete.png" lazy-load="{{true}}"></image>
         <view wx:else catchtap="extend" class="extend">...</view>
       </view>
     </view>

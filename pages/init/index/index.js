@@ -11,7 +11,9 @@ Page({
     // 控制搜索列表
     listIsShow: false,
     groups: [],
-    dialogShow: false
+    dialogShow: false,
+    initGuide: false,
+    leftGuide: true
   },
 
   /**
@@ -31,12 +33,14 @@ Page({
     let token = wx.getStorageSync('wx-token')
     if (token) {
       this.getServerUserInfo()
+      this.getAllGroup()
     } else {
       wx.login({
         success: res => {
           if (res.code) {
             App.getToken(res.code).then(() => {
               this.getServerUserInfo()
+              this.getAllGroup()
             })
           }
         }
@@ -53,14 +57,14 @@ Page({
         if (groupId) {
           this.goHome()
         } else {
-          this.getAllGroup()
+          // this.getAllGroup()
         }
       } else {
         // 没有用户信息等待用户授权
         this.setData({
           dialogShow: true
         })
-        this.getAllGroup()
+        // this.getAllGroup()
       }
 
     })
@@ -182,7 +186,7 @@ Page({
       loading: false
     }).then(res => {
       this.setData({
-        groups: res
+        groups: res,
       })
     })
   },
@@ -201,6 +205,9 @@ Page({
           // 将返回的数据存储到app
           console.log(res)
           app.userInfo = res.userInfo
+          this.setData({
+            initGuide: app.globalData.guide.init,
+          })
         })
       }
       this.setData({
@@ -235,4 +242,26 @@ Page({
       url: '/pages/init/groupSettlement/groupSettlement',
     })
   },
+  click() {
+    this.setData({
+      leftGuide: false,
+      listIsShow: true
+    }, () => {
+      setTimeout(() => {
+        let guide = wx.getStorageSync('guide')
+        guide.init = false
+        wx.setStorageSync('guide', guide)
+        app.globalData.guide.init = false
+        this.setData({
+          initGuide: false,
+        }, () => {
+          setTimeout(() => {
+            this.setData({
+              listIsShow: false
+            })
+          }, 1000)
+        })
+      }, 1000)
+    })
+  }
 })

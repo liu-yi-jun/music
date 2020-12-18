@@ -24,7 +24,8 @@ App({
       guide = {
         home: true,
         square: true,
-        union: true
+        union: true,
+        init: true
       }
       wx.setStorageSync('guide', guide)
     }

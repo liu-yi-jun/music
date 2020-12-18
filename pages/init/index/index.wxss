@@ -247,3 +247,86 @@ picker-view-column view {
   color: black;
   background-color: transparent;
 } */
+
+
+
+.guideMask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 9999999999999;
+  opacity: 0;
+  transition: 0.4s all;
+}
+
+.cross {
+  transition: 2s all;
+  background: rgba(0, 0, 0, 1);
+}
+
+.hideCross {
+  opacity: 0;
+}
+
+.showCross {
+
+  opacity: 1;
+}
+
+.showGuide {
+  visibility: visible;
+  opacity: 1;
+}
+
+.hideGuide {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.leftGuide {
+  position: absolute;
+  left: 74%;
+  top: 61%;
+  width: 175rpx;
+  height: 135rpx;
+}
+
+.leftGuideText {
+  position: absolute;
+  left: 71%;
+  top: 74%;
+  color: white;
+}
+
+.issueGuide {
+  position: absolute;
+  left: 9%;
+  top: 75%;
+  width: 175rpx;
+  height: 135rpx;
+}
+
+.issueGuideText {
+  position: absolute;
+  left: 16%;
+  top: 86%;
+  color: white;
+}
+
+.bottomGuide {
+  position: absolute;
+  right: 7%;
+  bottom: 5%;
+  height: 175rpx;
+  width: 135rpx;
+}
+
+.bottomGuideText {
+  position: absolute;
+  right: 10%;
+  bottom: 20%;
+  color: white;
+}

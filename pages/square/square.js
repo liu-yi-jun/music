@@ -357,6 +357,7 @@ Page({
             let guide = wx.getStorageSync('guide')
             guide.square = false
             wx.setStorageSync('guide', guide)
+            app.globalData.guide.square = false
             this.setData({
               squareGuide: false,
             }, () => {
