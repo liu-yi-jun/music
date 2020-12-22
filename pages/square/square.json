@@ -5,6 +5,5 @@
     "marquee": "/components/square/marquee/marquee",
     "dynamicList":"/components/square/dynamicList/dynamicList",
     "menu":"/components/common/menu/menu"
-  },
-  "disableScroll": true
+  }
 }

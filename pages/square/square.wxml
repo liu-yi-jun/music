@@ -1,7 +1,8 @@
 <!--pages/square/square.wxml-->
 <view class="square" catchtap="tap">
-  <scroll-view bindscroll="move" class="scroll" scroll-with-animation scroll-y bindscrolltolower="scrolltolower" scroll-top="{{scrollTop}}">
-    <navBar  backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' iconTheme='white' bind:toScrollTop="toScrollTop"></navBar>
+  <!-- <scroll-view enable-back-to-top="{{true}}" bindscroll="move" class="scroll" scroll-with-animation scroll-y bindscrolltolower="scrolltolower" scroll-top="{{scrollTop}}"> -->
+    <navBar  backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' iconTheme='white' ></navBar>
+    <!-- bind:toScrollTop="toScrollTop" -->
     <view class="hideBar" catchtap="hideBar">
     </view>
     <view mark:district="hideBarBackground" class="hideBarBackground {{hideBarShow? 'hideBarUnfold': 'hideBarPackUp'}}">
@@ -56,11 +57,11 @@
           </view>
         </swiper-item>
       </swiper>
-      <dynamicList id="dynamicList" dynamics="{{dynamics}}"></dynamicList>
+      <dynamicList bind:fullscreenchange="fullscreenchange" id="dynamicList" dynamics="{{dynamics}}"></dynamicList>
       <image class="issueDynamic" src="http://cdn.eigene.cn/square/issueDynamic.png" catchtap="goSquarePost"></image>
 
     </view>
-  </scroll-view>
+  <!-- </scroll-view> -->
   <!-- <menu></menu> -->
   <showTabBar tabBarBtnShow="{{tabBarBtnShow}}">
   </showTabBar>

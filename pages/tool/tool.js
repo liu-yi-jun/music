@@ -16,7 +16,6 @@ Page({
     limit: 50,
     isNotData: false,
     value: '',
-    scrollTop: 0,
     taPPaging: {
       pageSize: 50,
       pageIndex: 1,

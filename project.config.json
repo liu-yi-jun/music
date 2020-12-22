@@ -38,7 +38,7 @@
   },
   "appid": "wxa158839a69c014d3",
   "projectname": "musicMonster",
-  "libVersion": "2.13.1",
+  "libVersion": "2.14.0",
   "simulatorType": "wechat",
   "simulatorPluginLibVersion": {},
   "condition": {

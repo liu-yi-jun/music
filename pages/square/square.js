@@ -40,11 +40,11 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  toScrollTop() {
-    this.setData({
-      scrollTop: 0
-    })
-  },
+  // toScrollTop() {
+  //   this.setData({
+  //     scrollTop: 0
+  //   })
+  // },
   onLoad: function (options) {
     console.log('squareGuidesquareGuidesquareGuide', app.globalData.guide.square)
     console.log(app.globalData.guide)
@@ -94,7 +94,7 @@ Page({
           isNotData: true
         })
       }
-      console.log('app.globalData.guide.square',app.globalData.guide.square)
+      console.log('app.globalData.guide.square', app.globalData.guide.square)
       if (app.globalData.guide.square) {
         this.getTabBar().setData({
           show: false,
@@ -234,7 +234,7 @@ Page({
       }).then(res => {
         const dynamicList = this.selectComponent('#dynamicList');
         dynamicList.completeShare(index)
-     
+
       })
     }, 3000)
 
@@ -339,6 +339,11 @@ Page({
     const dynamicList = this.selectComponent('#dynamicList');
     dynamicList.completeStore(commenetBarData)
   },
+  onReachBottom() {
+    if (!this.data.isNotData) {
+      this.getSquaredynamics()
+    }
+  },
   scrolltolower() {
     if (!this.data.isNotData) {
       this.getSquaredynamics()
@@ -353,30 +358,61 @@ Page({
       //   this.setData({
       //     cross: true
       //   }, () => {
+      setTimeout(() => {
+        let guide = wx.getStorageSync('guide')
+        guide.square = false
+        wx.setStorageSync('guide', guide)
+        app.globalData.guide.square = false
+        this.setData({
+          squareGuide: false,
+        }, () => {
           setTimeout(() => {
-            let guide = wx.getStorageSync('guide')
-            guide.square = false
-            wx.setStorageSync('guide', guide)
-            app.globalData.guide.square = false
             this.setData({
-              squareGuide: false,
-            }, () => {
-              setTimeout(() => {
-                this.setData({
-                  hideBarShow: false
-                })
-              }, 1000)
+              hideBarShow: false
             })
           }, 1000)
+        })
+      }, 1000)
       //   })
       // }, 1000)
     })
   },
-  move() {
-    if(this.data.hideBarShow) {
+  move(e) {
+    this.scrollTop = e.detail.scrollTop
+    console.log(this.scrollTop,33333333333)
+    console.log(this.tempScrollTop ,'22222222')
+    if (this.data.hideBarShow) {
       this.setData({
-        hideBarShow:false
+        hideBarShow: false
       })
     }
+  },
+  fullscreenchange(e) {
+    let fullScreen = e.detail.fullScreen //值true为进入全屏，false为退出全屏
+    if (!fullScreen) { //退出全屏
+      console.log('退出全屏', this.tempScrollTop)
+      console.log('111',this.tempScrollTop ? this.tempScrollTop : this.data.scrollTop)
+      setTimeout(()=> {
+        this.setData({
+          scrollTop: this.tempScrollTop ? this.tempScrollTop : this.data.scrollTop
+        })
+      },100)
+  
+      if (this.show) {
+        this.getTabBar().setData({
+          show: true
+        })
+      }
+    } else { //进入全屏
+      console.log('进入全屏')
+      this.tempScrollTop = this.scrollTop
+      this.show = this.getTabBar().data.show
+      if (this.getTabBar().data.show) {
+        this.getTabBar().setData({
+          show: false
+        })
+      }
+    }
+
   }
 })

@@ -51,7 +51,7 @@
     </swiper>
     <view hidden="{{showContent.mold !== 1 || !showVideo}}">
       <view class="videoLoad" hidden="{{showContent.videoLoad}}">加载中........</view>
-      <video mark:operation="No" bindloadedmetadata="loadedmetadata" class="video" object-fit="cover"
+      <video  mark:operation="No" bindloadedmetadata="loadedmetadata" bindfullscreenchange="bindfullscreenchange" class="video" object-fit="cover"
         hidden="{{!showContent.videoLoad}}" src="{{showContent.videoUrl}}"></video>
     </view>
     <!--  -->

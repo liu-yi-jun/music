@@ -908,5 +908,24 @@ Page({
     this.setData({
       showContent
     })
-  }
+  },
+  bindfullscreenchange: function (e) {
+    let fullScreen = e.detail.fullScreen //值true为进入全屏，false为退出全屏
+    if (!fullScreen) { //退出全屏
+      console.log('退出全屏')
+      if(this.show) {
+        this.getTabBar().setData({
+          show: true
+        })
+      }
+    } else { //进入全屏
+      console.log('进入全屏')
+      this.show = this.getTabBar().data.show
+      if (this.getTabBar().data.show) {
+        this.getTabBar().setData({
+          show: false
+        })
+      }
+    }
+  },
 })

@@ -29,7 +29,7 @@
           </view>
         </view>
         <view  class="wrapVideo" mark:notDo="video" wx:if="{{item.videoUrl}}">
-          <video  object-fit="cover" src="{{item.videoUrl}}"></video>
+          <video data-index="{{i}}" id="video{{i}}"  bindplay="startPlay" bindfullscreenchange="bindfullscreenchange" object-fit="cover" src="{{item.videoUrl}}"></video>
         </view>
       </view>
       <view wx:if="{{item.topicName}}" class="topicWrap">

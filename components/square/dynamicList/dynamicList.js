@@ -259,7 +259,7 @@ Component({
         dynamics
       })
     },
-    completeShare(index){
+    completeShare(index) {
       let dynamics = this.properties.dynamics
       dynamics[index].share++
       this.setData({
@@ -273,6 +273,23 @@ Component({
       } = e.currentTarget.dataset
       let pictureUrls = this.properties.dynamics[i].pictureUrls
       common.previewImage(pictureUrls, pictureUrls[j])
+    },
+    bindfullscreenchange: function (e) {
+      console.log(e.detail.fullScreen)
+      let fullScreen = e.detail.fullScreen
+      this.triggerEvent('fullscreenchange', {
+        fullScreen
+      })
+    },
+    startPlay(e) {
+      let index = e.currentTarget.dataset.index
+      if (this.videoId && (this.videoId !== index)) {
+        let videoContext = wx.createVideoContext(`video${this.videoId}`, this)
+        videoContext.pause()
+      }
+      this.videoId = index
     }
-  }
+  },
+
+
 })
