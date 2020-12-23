@@ -1846,6 +1846,12 @@
         {
           "name": "pages/tool/tool",
           "pathName": "pages/tool/tool",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/tool/tool",
+          "pathName": "pages/tool/tool",
           "scene": null
         }
       ]
