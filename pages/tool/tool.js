@@ -37,12 +37,19 @@ Page({
     // 获取去除上面导航栏，剩余的高度
     tool.navExcludeHeight(this)
     // this.getRandomTap()
-    this.gettaps(this.data.value)
+    // this.gettaps(this.data.value)
 
   },
   initrecorderManager() {
     console.log(1)
     this.recorderManager = wx.getRecorderManager()
+    this.innerAudioContext = wx.createInnerAudioContext()
+    this.innerAudioContext.onPlay(() => {
+      console.log('开始播放录音')
+    })
+    this.innerAudioContext.onEnded(() => {
+      console.log('// 录音播放结束')
+    })
     this.recorderManager.onError((err) => {
       console.log(err, '// 录音失败的回调处理');
     });
@@ -52,21 +59,31 @@ Page({
     })
     this.recorderManager.onStop((res) => {
       console.log('// 录音结束')
-
+      const tempFilePath = res.tempFilePath
+      console.log(tempFilePath)
+      this.innerAudioContext.src = tempFilePath
     })
     this.recorderManager.onFrameRecorded((res) => {
-      console.log(res.frameBuffer)
-      let Array = new Int8Array(res.frameBuffer)
-      let newArray
-      if (Array.length >= 800) {
-        // 切
-        newArray = Array.subarray(0, 800)
-      } else {
-        // 加
-        newArray = this.concatenate(Int8Array, Array, new Int8Array(800 - Array.length))
+      console.log(new Int32Array(res.frameBuffer))
+      let input = new Float32Array(800);
+      input.fill(0);
+      let array = Array.prototype.slice.call(new Int32Array(res.frameBuffer))
+      for(let i = 0 ; i < array.length; i++)
+      {
+        input[i]=array[i]/Math.pow(2,32);
       }
+      console.log(input)
+      // let Array = new Int8Array(res.frameBuffer)
+      // let newArray
+      // if (Array.length >= 800) {
+      //   // 切
+      //   newArray = Array.subarray(0, 800)
+      // } else {
+      //   // 加
+      //   newArray = this.concatenate(Int8Array, Array, new Int8Array(800 - Array.length))
+      // }
       let endArry = []
-      newArray.forEach(element => {
+      input.forEach(element => {
         endArry.push(element)
       })
 
@@ -94,15 +111,28 @@ Page({
     }
     return result;
   },
+  play() {
+    console.log(222222222)
+    this.innerAudioContext.play()
+  },
   start() {
 
+    // const options = {
+    //   format: 'pcm',
+    //   frameSize: 3.2,
+    //   numberOfChannels: 1,
+    //   sampleRate: 8000,
+    //   duration: 60000
+    // }
     const options = {
-      format: 'mp3',
-      frameSize: 1,
-      numberOfChannels: 1,
-      sampleRate: 8000,
-      duration: 60000
-    }
+      duration :60000,       //指定录音采样时间100ms
+      sampleRate: 8000,    //采样率最低8k
+      numberOfChannels: 1, //录音通道数
+      encodeBitRate: 32000, //8k采样率对应16k~48k
+      format: 'pcm',       //音频格式，有效值acc/mp3/wav/pcm
+      frameSize: 3.2,          //指定帧大小，单位KB
+      audioSource: 'auto',
+    };
     this.recorderManager.start(options)
 
   },

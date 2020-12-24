@@ -3,7 +3,7 @@
   <navBar bind:toScrollTop="toScrollTop"  backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' iconTheme='white'></navBar>
   <view class="head">
     <view class="title">
-      <text class="title-top">搜索曲谱</text>
+      <text class="title-top" catchtap="play">搜索曲谱</text>
       <text class="title-bottom">Search Score</text>
     </view>
   </view>

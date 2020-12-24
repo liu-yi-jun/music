@@ -1,6 +1,7 @@
 const requestUrls = {
   Dev:{
-    baseUrl:"http://localhost:3001"
+    baseUrl:"http://192.168.1.173:3001"
+    // baseUrl:"http://localhost:3001"
     // baseUrl:"http://eigene.cn:3000"
     // baseUrl:"http://eigene.free.idcfengye.com"
   },
