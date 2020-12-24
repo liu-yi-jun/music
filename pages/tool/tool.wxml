@@ -9,7 +9,7 @@
   </view>
   <view class="wrap">
     <view class="logo-search">
-      <image class="logo" src="http://use.eigene.cn/picture.png"></image>
+      <image class="logo" src="http://use.eigene.cn/picture.png" catchtap="start" ></image>
       <view class="searchWrap">
         <input class="search" value="{{value}}" bindconfirm="confirm">
         </input>

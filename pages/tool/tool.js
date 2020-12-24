@@ -32,10 +32,79 @@ Page({
     })
   },
   onLoad: function (options) {
+    this.initrecorderManager()
     // 获取去除上面导航栏，剩余的高度
     tool.navExcludeHeight(this)
     // this.getRandomTap()
-    this.gettaps(this.data.value)
+    // this.gettaps(this.data.value)
+
+  },
+  initrecorderManager() {
+    console.log(1)
+    this.recorderManager = wx.getRecorderManager()
+    this.recorderManager.onError((err) => {
+      console.log(err, '// 录音失败的回调处理');
+    });
+    this.recorderManager.onStart(() => {
+      console.log('// 录音开始')
+
+    })
+    this.recorderManager.onStop((res) => {
+      console.log('// 录音结束')
+
+    })
+    this.recorderManager.onFrameRecorded((res) => {
+      console.log(new Int8Array(res.frameBuffer))
+      // let Array = new Int8Array(res.frameBuffer)
+      // let newArray
+      // if (Array.length >= 800) {
+      //   // 切
+      //   newArray = Array.subarray(0, 800)
+      // } else {
+      //   // 加
+      //   newArray = this.concatenate(Int8Array, Array, new Int8Array(800 - Array.length))
+      // }
+      // let endArry = []
+      // newArray.forEach(element => {
+      //   endArry.push(element)
+      // })
+      // // endArry = Array.apply([], newArray)
+
+      // this.analysis(endArry)
+    })
+
+  },
+  analysis(endArry) {
+    app.post(app.Api.analysis, {
+      endArry
+    }).then(res => {
+      console.log(res)
+    })
+  },
+  concatenate(resultConstructor, ...arrays) {
+    let totalLength = 0;
+    for (let arr of arrays) {
+      totalLength += arr.length;
+    }
+    let result = new resultConstructor(totalLength);
+    let offset = 0;
+    for (let arr of arrays) {
+      result.set(arr, offset);
+      offset += arr.length;
+    }
+    return result;
+  },
+  start() {
+
+    const options = {
+      format: 'mp3',
+      frameSize: 1,
+      numberOfChannels: 1,
+      sampleRate: 8000,
+      duration: 10000
+    }
+    this.recorderManager.start(options)
+
   },
   gettaps(tapTitle) {
     let taPPaging = this.data.taPPaging
@@ -176,7 +245,7 @@ Page({
   confirm(event) {
     this.setData({
       value: event.detail.value,
-      circulars:[],
+      circulars: [],
       taPPaging: {
         pageSize: 50,
         pageIndex: 1,

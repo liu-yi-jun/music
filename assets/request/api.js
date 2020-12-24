@@ -49,6 +49,7 @@ module.exports = {
   share: "/api/index/share",
   allTopic: "/api/index/allTopic",
   getNotice: "/api/index/getNotice",
+  analysis: "/api/index/analysis",
   squarePost: "/api/squaredynamics/squarePost",
   getSquaredynamics: "/api/squaredynamics/getSquaredynamics",
   squaredynamicsLike: "/api/squaredynamics/squaredynamicsLike",
