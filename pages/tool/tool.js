@@ -37,7 +37,12 @@ Page({
     tool.navExcludeHeight(this)
     // this.getRandomTap()
     // this.gettaps(this.data.value)
-
+    this.initSocket()
+  },
+  initSocket(){
+    app.socket.on('completeAnalysis',(data)=> {
+      console.log(data)
+    })
   },
   initrecorderManager() {
     console.log(1)
@@ -81,11 +86,12 @@ Page({
     })
   },
   analysis(endArry) {
-    app.post(app.Api.analysis, {
-      endArry
-    }).then(res => {
-      console.log(res)
-    })
+    app.socket.emit('analysis', endArry);
+    // app.post(app.Api.analysis, {
+    //   endArry
+    // }).then(res => {
+    //   console.log(res)
+    // })
   },
   concatenate(resultConstructor, ...arrays) {
     let totalLength = 0;
