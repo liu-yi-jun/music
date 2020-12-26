@@ -50,7 +50,8 @@
     "pages/square/performance/liveHouseDetail/liveHouseDetail",
     "components/common/menu/menu",
     "pages/square/deal/storeDeal/storeDeal",
-    "pages/tool/tapPractice/tapPractice"
+    "pages/tool/tapPractice/tapPractice",
+    "pages/tool/analysis/analysis"
   ],
   "permission": {
     "scope.userLocation": {

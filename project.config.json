@@ -1858,6 +1858,12 @@
         {
           "name": "pages/tool/tool",
           "pathName": "pages/tool/tool",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/tool/analysis/analysis",
+          "pathName": "pages/tool/analysis/analysis",
           "scene": null
         }
       ]

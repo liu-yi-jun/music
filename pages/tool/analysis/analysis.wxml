@@ -1,0 +1,29 @@
+<!--pages/tool/analysis/analysis.wxml-->
+<view class="analysis">
+  <navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' iconTheme='white'></navBar>
+  <view class="title">音调测试</view>
+  <view class="bar">
+    <view catchtap="start">开始</view>
+    <!-- <view catchtap="pause">暂停</view> -->
+    <view catchtap="stop" >结束</view>
+    <!-- <view catchtap="play">播放</view> -->
+  </view>
+  <view class="wrap">
+    <view class="part">
+      <text>Frequency:</text>
+      <text>{{analysis.frequency}}</text>
+    </view>
+    <view class="part">
+      <text>Pitch Names:</text>
+      <text>{{analysis.pitch}}</text>
+    </view>
+    <view class="part">
+      <text>Group:</text>
+      <text>{{analysis.group}}</text>
+    </view>
+    <view class="part">
+      <text>Cent</text>
+      <text>{{analysis.cent}}</text>
+    </view>
+  </view>
+</view>

@@ -1,7 +1,7 @@
 const requestUrls = {
   Dev:{
-    baseUrl:"http://192.168.1.173:3001"
-    // baseUrl:"http://localhost:3001"
+    // baseUrl:"http://192.168.31.72:3000"
+    baseUrl:"http://localhost:3000"
     // baseUrl:"http://eigene.cn:3000"
     // baseUrl:"http://eigene.free.idcfengye.com"
   },
@@ -12,7 +12,7 @@ const requestUrls = {
     baseUrl:"http://iwenwiki.com"
   },
   SocketProd: {
-      baseUrl:"http://192.168.1.173:8000/",
+      baseUrl:"http://192.168.31.72:8000/",
       // baseUrl:"http://www.eigene.cn:8000/"
   }
 }

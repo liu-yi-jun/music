@@ -17,7 +17,7 @@ Page({
     isNotData: false,
     value: '',
     taPPaging: {
-      pageSize: 50,
+      pageSize: 10,
       pageIndex: 1,
       isNotData: false
     },
@@ -32,97 +32,17 @@ Page({
     })
   },
   onLoad: function (options) {
-    this.initrecorderManager()
+
     // 获取去除上面导航栏，剩余的高度
     tool.navExcludeHeight(this)
     // this.getRandomTap()
-    // this.gettaps(this.data.value)
-    this.initSocket()
-  },
-  initSocket(){
-    app.socket.on('completeAnalysis',(data)=> {
-      console.log(data)
-    })
-  },
-  initrecorderManager() {
-    console.log(1)
-    this.recorderManager = wx.getRecorderManager()
-    this.innerAudioContext = wx.createInnerAudioContext()
-    this.innerAudioContext.onPlay(() => {
-      console.log('开始播放录音')
-    })
-    this.innerAudioContext.onEnded(() => {
-      console.log('// 录音播放结束')
-    })
-    this.recorderManager.onError((err) => {
-      console.log(err, '// 录音失败的回调处理');
-    });
-    this.recorderManager.onStart(() => {
-      console.log('// 录音开始')
+    this.gettaps(this.data.value)
 
+  },
+  toAnalysis() {
+    wx.navigateTo({
+      url: '/pages/tool/analysis/analysis',
     })
-    this.recorderManager.onStop((res) => {
-      console.log('// 录音结束')
-      const tempFilePath = res.tempFilePath
-      console.log(tempFilePath)
-      this.innerAudioContext.src = tempFilePath
-    })
-    this.recorderManager.onFrameRecorded((res) => {
-      console.log(new Int16Array(res.frameBuffer))
-      let Array = new Int16Array(res.frameBuffer)
-      let newArray
-      if (Array.length >= 800) {
-        // 切
-        newArray = Array.subarray(0, 800)
-      } else {
-        // 加
-        newArray = this.concatenate(Int8Array, Array, new Int8Array(800 - Array.length))
-      }
-      let endArry = []
-      newArray.forEach(element => {
-        endArry.push(element)
-      })
-      this.analysis(endArry)
-    })
-  },
-  analysis(endArry) {
-    app.socket.emit('analysis', endArry);
-    // app.post(app.Api.analysis, {
-    //   endArry
-    // }).then(res => {
-    //   console.log(res)
-    // })
-  },
-  concatenate(resultConstructor, ...arrays) {
-    let totalLength = 0;
-    for (let arr of arrays) {
-      totalLength += arr.length;
-    }
-    let result = new resultConstructor(totalLength);
-    let offset = 0;
-    for (let arr of arrays) {
-      result.set(arr, offset);
-      offset += arr.length;
-    }
-    return result;
-  },
-  play() {
-    // this.innerAudioContext.play()
-  },
-  start() {
-    const options = {
-      duration: 10000, //指定录音采样时间100ms
-      sampleRate: 8000, //采样率最低8k
-      numberOfChannels: 1, //录音通道数
-      encodeBitRate: 32000, //8k采样率对应16k~48k
-      format: 'pcm', //音频格式，有效值acc/mp3/wav/pcm
-      // frameSize: 3.2,          //指定帧大小，单位KB
-      frameSize: 0.8, //指定帧大小，单位KB
-      audioSource: 'auto',
-    };
-
-    this.recorderManager.start(options)
-
   },
   gettaps(tapTitle) {
     let taPPaging = this.data.taPPaging
@@ -145,7 +65,6 @@ Page({
     app.get(app.Api.getRandomTap, {
       limit: this.data.limit
     }).then(res => {
-      // console.log(res)
       this.init(res)
     })
   },

@@ -3,13 +3,13 @@
   <navBar   backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' iconTheme='white'></navBar>
   <view class="head">
     <view class="title">
-      <text class="title-top" catchtap="play">搜索曲谱</text>
+      <text class="title-top" >搜索曲谱</text>
       <text class="title-bottom">Search Score</text>
     </view>
   </view>
   <view class="wrap">
     <view class="logo-search">
-      <image class="logo" src="http://use.eigene.cn/picture.png" catchtap="start" ></image>
+      <image class="logo" src="http://use.eigene.cn/picture.png" catchtap="toAnalysis" ></image>
       <view class="searchWrap">
         <input class="search" value="{{value}}" bindconfirm="confirm">
         </input>

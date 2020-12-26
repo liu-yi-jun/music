@@ -1,0 +1,35 @@
+/* pages/tool/analysis/analysis.wxss */
+.title {
+  margin-left: 30rpx;
+  font-size: 34rpx;
+}
+.analysis {
+  color: white;
+}
+.wrap {
+  width: 80%;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.part {
+  margin-top: 20rpx;
+  display: flex;
+  justify-content: space-between;
+  font-size: 34rpx;
+}
+
+.bar {
+  margin-top: 70rpx;
+  display: flex;
+  justify-content: space-between;
+  box-sizing: border-box;
+  padding: 0 120rpx;
+  font-size: 36rpx;
+}
+.bar > view {
+  flex-grow: 1;
+  text-align: center;
+}
