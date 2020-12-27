@@ -79,11 +79,15 @@ Page({
     isNotData: false,
     styleLeight: 7,
     ableIndex: 1,
-    pointer: 0,
+    SM_UpPointer: 0,
+    SM_DownPointer: 0,
+    MB_UpPointer: 0,
+    MB_DownPointer: 0,
+    MB_Index: 0,
     // 动态发布按钮
     switchIssue: false,
     showMember: [],
-    pageSize: 28,
+    pageSize: 20,
     pageIndex: 1,
     member: [],
     showContent: {},
@@ -93,7 +97,9 @@ Page({
     bottomGuide: false,
     issueGuide: false,
     cross: false,
-    showFakeTab: false
+    showFakeTab: false,
+    isLoop: false,
+    lessMember: false
   },
 
 
@@ -121,37 +127,38 @@ Page({
       common.Tip(tip, '等待审批')
     }
   },
-  initOnMessage(socket) {
+  // 
+  // initOnMessage(socket) {
+  //   socket.on("message", (from, to, message) => {
+  //     resolve()
+  //     console.log(from, to, message)
+  //     let threas = wx.getStorageSync('threas')
+  //     console.log(threas)
+  //     if (!threas) {
+  //       threas = {}
+  //     }
+  //     if (!threas[from.userId]) {
+  //       threas[from.userId] = {
+  //         userId: from.userId,
+  //         avatarUrl: from.avatarUrl,
+  //         nickName: from.nickName,
+  //         messages: []
+  //       }
+  //     }
+  //     threas[from.userId].messages.push({
+  //       fromId: from.userId,
+  //       toId: to.userId,
+  //       message
+  //     })
+  //     wx.setStorage({
+  //       data: threas,
+  //       key: 'threas',
+  //     })
+  //     return resolve
+  //   })
 
-    socket.on("message", (from, to, message) => {
-      resolve()
-      console.log(from, to, message)
-      let threas = wx.getStorageSync('threas')
-      console.log(threas)
-      if (!threas) {
-        threas = {}
-      }
-      if (!threas[from.userId]) {
-        threas[from.userId] = {
-          userId: from.userId,
-          avatarUrl: from.avatarUrl,
-          nickName: from.nickName,
-          messages: []
-        }
-      }
-      threas[from.userId].messages.push({
-        fromId: from.userId,
-        toId: to.userId,
-        message
-      })
-      wx.setStorage({
-        data: threas,
-        key: 'threas',
-      })
-      return resolve
-    })
-
-  },
+  // },
+  // 初始化通讯
   initSocketEvent() {
     const socket = (app.socket = io(app.socketUrls.baseUrl))
     this.socket = socket
@@ -200,9 +207,9 @@ Page({
 
 
   },
+  // 获取分页动态
   groupPagingGetGroupdynamics(groupId) {
     let {
-      pointer,
       member
     } = this.data
     return new Promise((resolve, reject) => {
@@ -232,6 +239,7 @@ Page({
       }).catch(err => reject(err))
     })
   },
+  // 获取小组详情
   getGroupInfo(groupId) {
     console.log(groupId)
     app.get(app.Api.getGroupInfo, {
@@ -257,60 +265,74 @@ Page({
       app.groupInfo = res
     }).catch(err => err)
   },
-
+  // 提取member到showMember
   urlPush() {
     let i = 0
     const showMember = this.data.showMember
     const styleLeight = this.data.styleLeight
     let member = this.data.member
-    if (member.length >= 5 && member.length < styleLeight) {
-      member = member.concat(member)
+    let SM_UpPointer = this.data.SM_UpPointer
+    let SM_DownPointer = this.data.SM_DownPointer
+    let MB_UpPointer = this.data.MB_UpPointer
+    let MB_DownPointer = this.data.MB_DownPointer
+    if (member.length < styleLeight - 2) {
+      this.data.lessMember = true
     }
-    for (i; i < styleLeight; i++) {
-      showMember.push(member[i])
+    if (member.length - 5 <= this.data.MB_Index) {
+      // 但倒数第一个出现时开启循环
+      if (!this.data.isLoop) {
+        wx.showToast({
+          title: '为您开启循环模式',
+          icon:'none',
+        })
+        this.data.isLoop = true
+      }
     }
+    for (i; i < styleLeight - 1; i++) {
+      if (this.data.lessMember) {
+        showMember.push(member[i])
+        MB_DownPointer = MB_DownPointer + 1
+      } else {
+        showMember.push(member[i % member.length])
+        MB_DownPointer = (MB_DownPointer + 1) % member.length
+      }
+    }
+    if (!this.data.lessMember) {
+      showMember[i] = member[member.length - 1]
 
-    if (app.globalData.guide.home) {
-      this.getTabBar().setData({
-        show: false
-      })
-      this.setData({
-        showMember,
-        member,
-        pointer: styleLeight - 1,
-        homeGuide: app.globalData.guide.home,
-        tabBarBtnShow: true
-      }, () => {
-        if (showMember[0] && showMember[0].mold === 1) {
-          setTimeout(() => {
-            this.setData({
-              showVideo: true
-            })
-          }, 500)
-        }
-      })
     } else {
-      this.getTabBar().setData({
-        show: false
-      })
+      showMember[i] = null
+    }
+    SM_UpPointer = i - 1
+    MB_UpPointer = member.length - 2
+    SM_DownPointer = i
+    if (app.globalData.guide.home) {
       this.setData({
-        showMember,
-        member,
-        tabBarBtnShow: true,
-        showContent: showMember[0],
-        pointer: styleLeight - 1,
-        dynamicIsShow: member.length ? true : false
-      }, () => {
-        if (showMember[0] && showMember[0].mold === 1) {
-          setTimeout(() => {
-            this.setData({
-              showVideo: true
-            })
-          }, 500)
-        }
+        homeGuide: app.globalData.guide.home,
       })
     }
-
+    this.getTabBar().setData({
+      show: false
+    })
+    this.setData({
+      showMember,
+      member,
+      tabBarBtnShow: true,
+      showContent: showMember[0],
+      SM_UpPointer,
+      SM_DownPointer,
+      MB_DownPointer,
+      MB_UpPointer,
+      dynamicIsShow: member.length ? true : false
+    }, () => {
+      if (showMember[0] && showMember[0].mold === 1) {
+        setTimeout(() => {
+          this.setData({
+            showVideo: true
+          })
+        }, 500)
+      }
+    })
   },
 
   /**
@@ -343,10 +365,17 @@ Page({
         showMember: [],
         pageIndex: 1,
         ableIndex: 1,
+        SM_UpPointer: 0,
+        SM_DownPointer: 0,
+        MB_UpPointer: 0,
+        MB_DownPointer: 0,
         member: [],
         style: JSON.parse(JSON.stringify(Style)),
         isNotData: false,
         showVideo: false,
+        lessMember: false,
+        isLoop: false,
+        MB_Index: 0
       }, () => {
         this.groupPagingGetGroupdynamics(this.data.groupInfo.id).then(() => {
           this.urlPush()
@@ -370,10 +399,12 @@ Page({
   onUnload: function () {
 
   },
+  // 动态显示时-触碰开始事件
   dynamicTouchstart(e) {
     this.dynamicStartY = e.changedTouches[0].clientY
     this.dynamicStartX = e.changedTouches[0].clientX
   },
+  // 动态显示时-触碰结束事件
   dynamicTouchend(e) {
     this.dynamicEndX = e.changedTouches[0].clientX
     this.dynamicEndY = e.changedTouches[0].clientY
@@ -398,22 +429,20 @@ Page({
           }, 500)
         }
       })
-      console.log('(ableIndex + styleLeight*2 >= memberLeight', ableIndex + styleLeight * 2 >= memberLeight)
-      console.log('!this.data.isNotData', !this.data.isNotData)
-      if (ableIndex + styleLeight * 2 >= memberLeight && !this.data.isNotData) {
+      let MB_Index = this.data.MB_Index
+      if (MB_Index + styleLeight * 2 >= memberLeight && !this.data.isNotData) {
         this.groupPagingGetGroupdynamics(this.data.groupInfo.id)
       }
     })
   },
+  // 动态显示时-触碰结果
   dynamicMoveRealize(e) {
     return new Promise((resolve, reject) => {
       let dynamicEndX = this.dynamicEndX
       let dynamicEndY = this.dynamicEndY
       let dynamicStartX = this.dynamicStartX
       let dynamicStartY = this.dynamicStartY
-      let pointer = this.data.pointer
       let memberLength = this.data.member.length
-      let styleLeight = this.data.styleLeight
       console.log('dynamicEndY', dynamicEndY)
       console.log('dynamicStartY', dynamicStartY)
       console.log('dynamicEndX', dynamicEndX)
@@ -425,12 +454,20 @@ Page({
         }, () => {
           setTimeout(() => {
             // 滑
-            if (dynamicStartY - dynamicEndY > 50 && pointer != styleLeight - 1) {
+            // 改
+            if (dynamicStartY - dynamicEndY > 50) {
+              if ((this.data.lessMember || !this.data.isLoop) && this.data.MB_Index == 0) {
+                return
+              }
               this.upSilde().then(() => resolve())
               return
-            } else if (dynamicEndY - dynamicStartY > 50 && pointer !== memberLength + styleLeight - 2) {
+            } else if (dynamicEndY - dynamicStartY > 50) {
+              if ((this.data.lessMember || !this.data.isLoop) && this.data.MB_Index == memberLength - 1) {
+                return
+              }
               this.downSilde().then(() => resolve())
             }
+            // && pointer !== memberLength + styleLeight - 2
           }, 210)
         })
       } else {
@@ -438,6 +475,7 @@ Page({
       }
     })
   },
+  // 成员动态列-触碰开始事件
   touchstart(e) {
     this.tap(e)
     this.startY = e.changedTouches[0].clientY
@@ -448,7 +486,7 @@ Page({
     // }
 
   },
-
+  // 成员动态列-触碰结束事件
   touchend(e) {
     this.endX = e.changedTouches[0].clientX
     this.endY = e.changedTouches[0].clientY
@@ -475,27 +513,35 @@ Page({
       })
       console.log('(ableIndex + styleLeight*2 >= memberLeight', ableIndex + styleLeight * 2 >= memberLeight)
       console.log('!this.data.isNotData', !this.data.isNotData)
-      if (ableIndex + styleLeight * 2 >= memberLeight && !this.data.isNotData) {
+      // 看
+      let MB_Index = this.data.MB_Index
+      if (MB_Index + styleLeight * 2 >= memberLeight && !this.data.isNotData) {
         this.groupPagingGetGroupdynamics(this.data.groupInfo.id)
       }
 
     })
   },
+  // 成员动态列-触碰结果
   moveRealize() {
     return new Promise((resolve, reject) => {
       let endX = this.endX
       let endY = this.endY
       let startX = this.startX
       let startY = this.startY
-      let pointer = this.data.pointer
       let memberLength = this.data.member.length
       let styleLeight = this.data.styleLeight
       if (Math.abs(endY - startY) > 5 || Math.abs(endX - startX) > 5) {
         // 滑
-        if (startY - endY > 50 && pointer != styleLeight - 1) {
+        if (startY - endY > 50) {
+          if ((this.data.lessMember || !this.data.isLoop) && this.data.MB_Index == 0) {
+            return
+          }
           this.upSilde()
           return
-        } else if (endY - startY > 50 && pointer !== memberLength + styleLeight - 2) {
+        } else if (endY - startY > 50) {
+          if ((this.data.lessMember || !this.data.isLoop) && this.data.MB_Index == memberLength - 1) {
+            return
+          }
           this.downSilde().then(() => resolve())
         }
       } else {
@@ -515,8 +561,9 @@ Page({
           while (number < ableIndex) {
             number = number + styleLeight
           }
-          if (number > memberLength) return
-          console.log(number)
+          // 超过不让点,改
+          // if (number > memberLength) return
+          // console.log(number)
           let p = Promise.resolve()
           let that = this
           for (i; i < number - ableIndex; i++) {
@@ -537,65 +584,106 @@ Page({
       }
     })
   },
+  // 上滑实现
   upSilde() {
     return new Promise((resolve, reject) => {
       var i = 0
       var temp
       let style = this.data.style
-      let pointer = this.data.pointer
       let showMember = this.data.showMember
       let member = this.data.member
       let styleLeight = this.data.styleLeight
+      let SM_UpPointer = this.data.SM_UpPointer
+      let SM_DownPointer = this.data.SM_DownPointer
+      let MB_UpPointer = this.data.MB_UpPointer
+      let MB_DownPointer = this.data.MB_DownPointer
       temp = style[style.length - 1]
       i = style.length - 1
       for (i; i > 0; i--) {
         style[i] = style[i - 1]
       }
       style[i] = temp
-      showMember[(pointer - styleLeight - 1) % styleLeight] = member[pointer - styleLeight - 1]
+      showMember[SM_UpPointer] = member[MB_UpPointer]
+      let ableIndex = this.data.ableIndex
+      if (ableIndex == 1) {
+        ableIndex = styleLeight + 1
+      }
+      this.data.MB_Index = this.data.MB_Index - 1
       this.setData({
         showMember,
-        pointer: pointer - 1,
-        ableIndex: this.data.ableIndex - 1,
+        SM_DownPointer: (SM_DownPointer - 1 == -1) ? styleLeight - 1 : (SM_DownPointer - 1) % styleLeight,
+        SM_UpPointer: (SM_UpPointer - 1 == -1) ? styleLeight - 1 : (SM_UpPointer - 1) % styleLeight,
+        MB_DownPointer: (MB_DownPointer - 1 == -1) ? member.length - 1 : (MB_DownPointer - 1) % member.length,
+        MB_UpPointer: (MB_UpPointer - 1 == -1) ? member.length - 1 : (MB_UpPointer - 1) % member.length,
+        // 改
+        ableIndex: ableIndex - 1,
         style
       }, () => resolve())
     })
   },
+  // 下滑实现
   downSilde() {
     return new Promise((resolve, reject) => {
       var i = 0
       var temp
       let style = this.data.style
-      let pointer = this.data.pointer
       let showMember = this.data.showMember
       let member = this.data.member
       let styleLeight = this.data.styleLeight
+      let SM_UpPointer = this.data.SM_UpPointer
+      let SM_DownPointer = this.data.SM_DownPointer
+      let MB_UpPointer = this.data.MB_UpPointer
+      let MB_DownPointer = this.data.MB_DownPointer
       console.log('向下滑')
       temp = style[0]
       for (i; i < style.length - 1; i++) {
         style[i] = style[i + 1]
       }
       style[i] = temp
-      if (member.length >= 5 && pointer + 1 >= member.length) {
-        console.log('进来了')
-        this.setData({
-          member: member.concat(member)
-        })
+      // 完了补充
+      // if (member.length >= 5 && pointer + 1 >= member.length) {
+      //   console.log('进来了')
+      //   this.setData({
+      //     member: member.concat(member)
+      //   })
+      // }
+      // if (!member[pointer]) {
+      // showMember[pointer % styleLeight] = 0;
+      // 开启循环 pointer 等于 memberLeight
+      // wx.showToast({
+      //   title: '已开启循环',
+      // })
+      // }
+      if (member.length - 5 <= this.data.MB_Index) {
+        // 但倒数第一个出现时开启循环
+        if (!this.data.isLoop) {
+          wx.showToast({
+            title: '为您开启循环模式',
+            icon:'none',
+          })
+          this.data.isLoop = true
+        }
       }
-
-      if (!member[pointer]) {
-        showMember[pointer % styleLeight] = 0;
+      if (this.data.lessMember) {
+        showMember[SM_DownPointer] = 0
       } else {
-        showMember[pointer % styleLeight] = member[pointer]
+        showMember[SM_DownPointer] = member[MB_DownPointer]
       }
+      let ableIndex = this.data.ableIndex
+      if (ableIndex == styleLeight) {
+        ableIndex = 0
+      }
+      this.data.MB_Index = this.data.MB_Index + 1
       this.setData({
         showMember,
-        pointer: pointer + 1,
-        ableIndex: this.data.ableIndex + 1,
+        SM_DownPointer: (SM_DownPointer + 1) % styleLeight,
+        SM_UpPointer: (SM_UpPointer + 1) % styleLeight,
+        MB_DownPointer: (MB_DownPointer + 1) % member.length,
+        MB_UpPointer: (MB_UpPointer + 1) % member.length,
+        // 改
+        ableIndex: ableIndex + 1,
         style
       }, () => {
-        console.log('pointerpointerpointer', pointer)
-
         resolve()
       })
     })
@@ -611,7 +699,7 @@ Page({
       rotateX
     })
   },
-
+  // 发布按钮切换
   switchIssue() {
     if (app.userInfo.groupDuty === -1) {
       common.Tip('你还未成为该小组成员，暂不能发布动态')
@@ -624,6 +712,13 @@ Page({
     }
 
   },
+  // 隐藏发布按钮
+  putIssueBtn() {
+    this.setData({
+      switchIssue: false
+    })
+  },
+  // 控制打卡，课程显示
   switchFunctionBar() {
     this.setData({
       functionBarShow: !this.data.functionBarShow,
@@ -631,12 +726,7 @@ Page({
       switchIssue: false
     })
   },
-  putIssueBtn() {
-    this.setData({
-      switchIssue: false
-    })
-  },
-
+  // 点击空白区域收起所有
   tap(e) {
     let district = e.mark.district
     if (district) return;
@@ -655,6 +745,7 @@ Page({
     })
     console.log(e)
   },
+  // 去评论
   goComment() {
     let {
       isLike,
@@ -673,6 +764,7 @@ Page({
       url: `/pages/home/dynamicDetail/dynamicDetail?param=${param}`
     })
   },
+  // 去动态详情
   dynamicDetail(e) {
     let operation = e.mark.operation
     if (operation === "No") return
@@ -692,6 +784,7 @@ Page({
       url: `/pages/home/dynamicDetail/dynamicDetail?param=${param}`
     })
   },
+  // 关注
   follow() {
     let fansNumber = this.data.groupInfo.fansNumber
     let isFollow = this.data.groupInfo.isFollow
@@ -709,16 +802,19 @@ Page({
     })
 
   },
+  // 去课程
   goCourse() {
     wx.navigateTo({
       url: `/pages/home/course/course?showGroupId=${this.data.groupInfo.id}`,
     })
   },
+  // 去小组管理
   goMassManagement() {
     wx.navigateTo({
       url: '/pages/home/massManagement/massManagement',
     })
   },
+  // 去发布视频动态
   goUploadVideo() {
     common.chooseVideo().then(res => {
       let tempFilePath = JSON.stringify(res.tempFilePath)
@@ -728,7 +824,7 @@ Page({
     })
 
   },
-
+  // 去发布图片动态
   goIssueImg() {
     common.chooseImage(9).then(res => {
       let tempFilePaths = JSON.stringify(res.tempFilePaths)
@@ -737,11 +833,13 @@ Page({
       })
     })
   },
+  // 去发布视频动态
   goUploadVoice() {
     wx.navigateTo({
       url: '/pages/home/uploadVoice/uploadVoice',
     })
   },
+  // 去打卡
   goPuchCard() {
     wx.navigateTo({
       url: `/pages/home/puchCard/puchCard?showGroupId=${this.data.groupInfo.id}`,
@@ -769,6 +867,7 @@ Page({
       })
     })
   },
+  // 动态详情页点击点赞会触发
   completeLike(commenetBarData) {
     let showContent = this.data.showContent
     showContent.isLike = commenetBarData.isLike
@@ -777,6 +876,7 @@ Page({
       showContent
     })
   },
+  // 动态详情页点击收藏会触发
   completeStore(commenetBarData) {
     let showContent = this.data.showContent
     showContent.isStore = commenetBarData.isStore
@@ -785,6 +885,7 @@ Page({
       showContent
     })
   },
+  // 删除自己动态
   delete(e) {
     common.Tip('是否删除该动态', '提示', '确认', true).then(res => {
       if (res.confirm) {
@@ -802,8 +903,7 @@ Page({
       showMember,
       member,
       styleLeight,
-      ableIndex,
-      pointer
+      ableIndex
     } = this.data
 
     // showMember(ableIndex - 1) % styleLeight]
@@ -822,10 +922,17 @@ Page({
           showMember: [],
           pageIndex: 1,
           ableIndex: 1,
+          SM_UpPointer: 0,
+          SM_DownPointer: 0,
+          MB_UpPointer: 0,
+          MB_DownPointer: 0,
           member: [],
           style: JSON.parse(JSON.stringify(Style)),
           isNotData: false,
-          showVideo: false
+          showVideo: false,
+          lessMember: false,
+          isLoop: false,
+          MB_Index: 0
         }, () => {
           this.groupPagingGetGroupdynamics(this.data.groupInfo.id).then(() => {
             this.urlPush()
@@ -844,9 +951,11 @@ Page({
       }
     })
   },
+  // 停止冒泡
   stopBubbling() {
     return
   },
+  // 新手指导点击
   click(e) {
     let click = e.currentTarget.dataset.click
     if (click === 'leftGuide') {
@@ -901,19 +1010,18 @@ Page({
       })
     }
   },
+  // 视频加载完成
   loadedmetadata(e) {
-    let showContent = this.data.showContent
-    showContent.videoLoad = true
-    console.log(1111111111111111)
     this.setData({
-      showContent
+      'showContent.videoLoad': true
     })
   },
+  // 视频是否进入全屏模式,进入将下栏隐藏
   bindfullscreenchange: function (e) {
     let fullScreen = e.detail.fullScreen //值true为进入全屏，false为退出全屏
     if (!fullScreen) { //退出全屏
       console.log('退出全屏')
-      if(this.show) {
+      if (this.show) {
         this.getTabBar().setData({
           show: true
         })
