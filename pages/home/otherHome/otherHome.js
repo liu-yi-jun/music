@@ -74,11 +74,17 @@ Page({
     isNotData: false,
     styleLeight: 7,
     ableIndex: 1,
-    pointer: 0,
+    SM_UpPointer: 0,
+    SM_DownPointer: 0,
+    MB_UpPointer: 0,
+    MB_DownPointer: 0,
+    MB_Index: 0,
     showMember: [],
     pageSize: 28,
     pageIndex: 1,
     reqFirst: true,
+    isLoop: false,
+    lessMember: false,
     member: [],
     showContent: {}
   },
@@ -147,7 +153,6 @@ Page({
       } else {
         groupNameTop = res.groupName
       }
-      console.log(groupNameTop, groupNamebuttom)
       this.setData({
         groupInfo: res,
         groupNameTop,
@@ -163,17 +168,49 @@ Page({
     const showMember = this.data.showMember
     const styleLeight = this.data.styleLeight
     let member = this.data.member
-    if (member.length >= 5 && member.length < styleLeight) {
-      member = member.concat(member)
+    let SM_UpPointer = this.data.SM_UpPointer
+    let SM_DownPointer = this.data.SM_DownPointer
+    let MB_UpPointer = this.data.MB_UpPointer
+    let MB_DownPointer = this.data.MB_DownPointer
+    if (member.length < styleLeight - 2) {
+      this.data.lessMember = true
     }
-    for (i; i < styleLeight; i++) {
-      showMember.push(member[i])
+    if (member.length - 5 <= this.data.MB_Index) {
+      // 但倒数第一个出现时开启循环
+      if (!this.data.isLoop) {
+        wx.showToast({
+          title: '为您开启循环模式',
+          icon: 'none',
+        })
+        this.data.isLoop = true
+      }
     }
+    for (i; i < styleLeight - 1; i++) {
+      if (this.data.lessMember) {
+        showMember.push(member[i])
+        MB_DownPointer = MB_DownPointer + 1
+      } else {
+        showMember.push(member[i % member.length])
+        MB_DownPointer = (MB_DownPointer + 1) % member.length
+      }
+    }
+    if (!this.data.lessMember) {
+      showMember[i] = member[member.length - 1]
+    } else {
+      showMember[i] = null
+    }
+    SM_UpPointer = i - 1
+    MB_UpPointer = member.length - 2
+    SM_DownPointer = i
     this.setData({
       showMember,
       member,
       showContent: showMember[0],
-      pointer: styleLeight - 1,
+      showContent: showMember[0],
+      SM_UpPointer,
+      SM_DownPointer,
+      MB_DownPointer,
+      MB_UpPointer,
       dynamicIsShow: member.length ? true : false
     }, () => {
       if (showMember[0] && showMember[0].mold === 1) {
@@ -225,6 +262,8 @@ Page({
         ableIndex,
         styleLeight,
         showMember,
+        MB_Index,
+        isNotData
       } = this.data
       let memberLeight = this.data.member.length
       let showContent = showMember[(ableIndex - 1) % styleLeight]
@@ -240,9 +279,7 @@ Page({
           }, 500)
         }
       })
-      console.log('(ableIndex + styleLeight*2 >= memberLeight', ableIndex + styleLeight * 2 >= memberLeight)
-      console.log('!this.data.isNotData', !this.data.isNotData)
-      if (ableIndex + styleLeight * 2 >= memberLeight && !this.data.isNotData) {
+      if (MB_Index + styleLeight * 2 >= memberLeight && !isNotData) {
         this.groupPagingGetGroupdynamics(this.data.groupInfo.id)
       }
     })
@@ -253,13 +290,7 @@ Page({
       let dynamicEndY = this.dynamicEndY
       let dynamicStartX = this.dynamicStartX
       let dynamicStartY = this.dynamicStartY
-      let pointer = this.data.pointer
       let memberLength = this.data.member.length
-      let styleLeight = this.data.styleLeight
-      console.log('dynamicEndY', dynamicEndY)
-      console.log('dynamicStartY', dynamicStartY)
-      console.log('dynamicEndX', dynamicEndX)
-      console.log('dynamicStartX', dynamicStartX)
       if (Math.abs(dynamicEndY - dynamicStartY) > 5 || Math.abs(dynamicEndX - dynamicStartX) > 5) {
         if (Math.abs(dynamicEndX - dynamicStartX) > 50) return
         this.setData({
@@ -267,10 +298,16 @@ Page({
         }, () => {
           setTimeout(() => {
             // 滑
-            if (dynamicStartY - dynamicEndY > 50 && pointer != styleLeight - 1) {
+            if (dynamicStartY - dynamicEndY > 50) {
+              if ((this.data.lessMember || !this.data.isLoop) && this.data.MB_Index == 0) {
+                return
+              }
               this.upSilde().then(() => resolve())
               return
-            } else if (dynamicEndY - dynamicStartY > 50 && pointer !== memberLength + styleLeight - 2) {
+            } else if (dynamicEndY - dynamicStartY > 50) {
+              if ((this.data.lessMember || !this.data.isLoop) && this.data.MB_Index == memberLength - 1) {
+                return
+              }
               this.downSilde().then(() => resolve())
             }
           }, 210)
@@ -285,12 +322,7 @@ Page({
     this.startY = e.changedTouches[0].clientY
     this.startX = e.changedTouches[0].clientX
     this.index = e.mark.index
-    // if (!scrollArea) {
-    //   fixedindex = e.instance.getDataset().fixedindex
-    // }
-
   },
-
   touchend(e) {
     this.endX = e.changedTouches[0].clientX
     this.endY = e.changedTouches[0].clientY
@@ -298,7 +330,9 @@ Page({
       let {
         ableIndex,
         styleLeight,
-        showMember
+        showMember,
+        MB_Index,
+        isNotData
       } = this.data
       let memberLeight = this.data.member.length
       let showContent = showMember[(ableIndex - 1) % styleLeight]
@@ -309,14 +343,12 @@ Page({
         if (showContent.mold === 1) {
           setTimeout(() => {
             this.setData({
-              showVideo: true
+              showVideo: true,
             })
           }, 500)
         }
       })
-      console.log('(ableIndex + styleLeight*2 >= memberLeight', ableIndex + styleLeight * 2 >= memberLeight)
-      console.log('!this.data.isNotData', !this.data.isNotData)
-      if (ableIndex + styleLeight * 2 >= memberLeight && !this.data.isNotData) {
+      if (MB_Index + styleLeight * 2 >= memberLeight && !isNotData) {
         this.groupPagingGetGroupdynamics(this.data.groupInfo.id)
       }
     })
@@ -327,18 +359,20 @@ Page({
       let endY = this.endY
       let startX = this.startX
       let startY = this.startY
-      let pointer = this.data.pointer
       let memberLength = this.data.member.length
       let styleLeight = this.data.styleLeight
       if (Math.abs(endY - startY) > 5 || Math.abs(endX - startX) > 5) {
         // 滑
-        if (startY - endY > 50 && pointer != styleLeight - 1) {
+        if (startY - endY > 50) {
+          if ((this.data.lessMember || !this.data.isLoop) && this.data.MB_Index == 0) {
+            return
+          }
           this.upSilde()
           return
-          // this.setData({
-          //   dynamicIsShow: 'showDynamic'
-          // })
-        } else if (endY - startY > 50 && pointer !== memberLength + styleLeight - 2) {
+        } else if (endY - startY > 50) {
+          if ((this.data.lessMember || !this.data.isLoop) && this.data.MB_Index == memberLength - 1) {
+            return
+          }
           this.downSilde().then(() => resolve())
         }
       } else {
@@ -348,7 +382,6 @@ Page({
         let ableIndex = this.data.ableIndex
         console.log(index, ableIndex)
         if (!this.index) return
-        console.log('1111111111', this.data.ableIndex)
         if (index === ableIndex % styleLeight) {
           console.log('点击第一个')
           return resolve()
@@ -358,8 +391,9 @@ Page({
           while (number < ableIndex) {
             number = number + styleLeight
           }
-          if (number > memberLength) return
-          console.log(number)
+          // 超过不让点,改
+          // if (number > memberLength) return
+          // console.log(number)
           let p = Promise.resolve()
           let that = this
           for (i; i < number - ableIndex; i++) {
@@ -384,58 +418,90 @@ Page({
     return new Promise((resolve, reject) => {
       var i = 0
       var temp
-      let style = this.data.style
-      let pointer = this.data.pointer
-      let showMember = this.data.showMember
-      let member = this.data.member
-      let styleLeight = this.data.styleLeight
+      let {
+        style,
+        showMember,
+        member,
+        styleLeight,
+        SM_UpPointer,
+        SM_DownPointer,
+        MB_UpPointer,
+        MB_DownPointer
+      } = this.data
       temp = style[style.length - 1]
       i = style.length - 1
       for (i; i > 0; i--) {
         style[i] = style[i - 1]
       }
       style[i] = temp
-      showMember[(pointer - styleLeight - 1) % styleLeight] = member[pointer - styleLeight - 1]
+      showMember[SM_UpPointer] = member[MB_UpPointer]
+      let ableIndex = this.data.ableIndex
+      if (ableIndex == 1) {
+        ableIndex = styleLeight + 1
+      }
+      this.data.MB_Index = this.data.MB_Index - 1
       this.setData({
         showMember,
-        pointer: pointer - 1,
-        ableIndex: this.data.ableIndex - 1,
+        SM_DownPointer: (SM_DownPointer - 1 == -1) ? styleLeight - 1 : (SM_DownPointer - 1) % styleLeight,
+        SM_UpPointer: (SM_UpPointer - 1 == -1) ? styleLeight - 1 : (SM_UpPointer - 1) % styleLeight,
+        MB_DownPointer: (MB_DownPointer - 1 == -1) ? member.length - 1 : (MB_DownPointer - 1) % member.length,
+        MB_UpPointer: (MB_UpPointer - 1 == -1) ? member.length - 1 : (MB_UpPointer - 1) % member.length,
+        ableIndex: ableIndex - 1,
         style
       }, () => resolve())
     })
   },
+  // 下滑实现
   downSilde() {
     return new Promise((resolve, reject) => {
       var i = 0
       var temp
-      let style = this.data.style
-      let pointer = this.data.pointer
-      let showMember = this.data.showMember
-      let member = this.data.member
-      let styleLeight = this.data.styleLeight
+      let {
+        style,
+        showMember,
+        member,
+        styleLeight,
+        SM_UpPointer,
+        SM_DownPointer,
+        MB_UpPointer,
+        MB_DownPointer
+      } = this.data
       console.log('向下滑')
       temp = style[0]
       for (i; i < style.length - 1; i++) {
         style[i] = style[i + 1]
       }
       style[i] = temp
-      if (member.length >= 5 && pointer + 1 >= member.length) {
-        console.log('进来了')
-        this.setData({
-          member: member.concat(member)
-        })
+      if (member.length - 5 <= this.data.MB_Index) {
+        if (!this.data.isLoop) {
+          wx.showToast({
+            title: '为您开启循环模式',
+            icon: 'none',
+          })
+          this.data.isLoop = true
+        }
       }
-      if (!member[pointer]) {
-        showMember[pointer % styleLeight] = 0;
+      if (this.data.lessMember) {
+        showMember[SM_DownPointer] = 0
       } else {
-        showMember[pointer % styleLeight] = member[pointer]
+        showMember[SM_DownPointer] = member[MB_DownPointer]
       }
+      let ableIndex = this.data.ableIndex
+      if (ableIndex == styleLeight) {
+        ableIndex = 0
+      }
+      this.data.MB_Index = this.data.MB_Index + 1
       this.setData({
         showMember,
-        pointer: pointer + 1,
-        ableIndex: this.data.ableIndex + 1,
+        SM_DownPointer: (SM_DownPointer + 1) % styleLeight,
+        SM_UpPointer: (SM_UpPointer + 1) % styleLeight,
+        MB_DownPointer: (MB_DownPointer + 1) % member.length,
+        MB_UpPointer: (MB_UpPointer + 1) % member.length,
+        ableIndex: ableIndex + 1,
         style
-      }, () => resolve())
+      }, () => {
+        resolve()
+      })
     })
   },
   switchFunctionBar() {
