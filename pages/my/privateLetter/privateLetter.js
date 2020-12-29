@@ -16,13 +16,16 @@ Page({
     footer: '',
     keyBoardHeight: 0,
     first: true,
-    message: ''
+    message: '',
+    formH:0,
+    inputBottom:0
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    this.getFormH()
     wx.onKeyboardHeightChange(res => {
       this.keyBoardChange(res.height)
     })
@@ -36,9 +39,21 @@ Page({
     tool.navExcludeHeight(this)
     this.setMessages(to.userId)
     this.WhachMessage()
-
+    
   },
+  getFormH() {
+    setTimeout(() => {
+      const query = wx.createSelectorQuery();
+      query.select('#form').boundingClientRect();
+      query.exec(res => {
+        let formH = parseInt(res[0].height);
+        this.setData({
+          formH
+        })
+      })
 
+    }, 100)
+  },
   keyBoardChange(height) {
     console.log(height)
     if (this.data.first) {
@@ -139,6 +154,20 @@ Page({
     })
   },
 
+  //获取聚焦(软键盘弹出)
+	focus: function(e) {
+		keyHeight = e.detail.height;
+		this.setData({
+			inputBottom: keyHeight
+		})
+	},
+	  
+	//失去聚焦(软键盘消失)
+	blur: function(e) {
+		this.setData({
+			inputBottom: 0
+		})
+	},
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

@@ -1864,6 +1864,12 @@
         {
           "name": "pages/tool/analysis/analysis",
           "pathName": "pages/tool/analysis/analysis",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/my/privateLetter/privateLetter",
+          "pathName": "pages/my/privateLetter/privateLetter",
           "scene": null
         }
       ]
