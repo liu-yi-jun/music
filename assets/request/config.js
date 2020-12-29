@@ -2,7 +2,9 @@ const requestUrls = {
   Dev:{
     // baseUrl:"http://192.168.31.72:3000"
     // baseUrl:"https://localhost"
+    // baseUrl:"https://127.0.0.1"
     baseUrl:"http://eigene.cn:3000"
+      // baseUrl:"https://eigene.cn"
     // baseUrl:"http://eigene.free.idcfengye.com"
   },
   Test:{
