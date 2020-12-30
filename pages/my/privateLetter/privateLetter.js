@@ -17,15 +17,14 @@ Page({
     keyBoardHeight: 0,
     first: true,
     message: '',
-    formH:0,
-    inputBottom:0
+    formH: 0,
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.getFormH()
+
     wx.onKeyboardHeightChange(res => {
       this.keyBoardChange(res.height)
     })
@@ -39,20 +38,21 @@ Page({
     tool.navExcludeHeight(this)
     this.setMessages(to.userId)
     this.WhachMessage()
-    
+    wx.getSystemInfo({
+      success: (res) => {
+        console.log(res, '====设备信息====');
+      }
+    })
   },
   getFormH() {
-    setTimeout(() => {
-      const query = wx.createSelectorQuery();
-      query.select('#form').boundingClientRect();
-      query.exec(res => {
-        let formH = parseInt(res[0].height);
-        this.setData({
-          formH
-        })
+    const query = wx.createSelectorQuery();
+    query.select('#form').boundingClientRect();
+    query.exec(res => {
+      let formH = parseInt(res[0].height);
+      this.setData({
+        formH
       })
-
-    }, 100)
+    })
   },
   keyBoardChange(height) {
     console.log(height)
@@ -64,10 +64,14 @@ Page({
       let keyBoardHeight = height
       this.setData({
         keyBoardHeight
+      },()=> {
+        this.getFormH()
       })
       if (keyBoardHeight === 0) {
         this.setData({
           keyBoardHeight
+        },()=> {
+          this.getFormH()
         })
       }
     }
@@ -154,25 +158,28 @@ Page({
     })
   },
 
-  //获取聚焦(软键盘弹出)
-	focus: function(e) {
-		keyHeight = e.detail.height;
-		this.setData({
-			inputBottom: keyHeight
-		})
-	},
-	  
-	//失去聚焦(软键盘消失)
-	blur: function(e) {
-		this.setData({
-			inputBottom: 0
-		})
-	},
+  // //获取聚焦(软键盘弹出)
+  // focus: function(e) {
+  //   let keyHeight = e.detail.height;
+  //   console.log(keyHeight,'focus keyHeight')
+  // 	this.setData({
+  // 		keyBoardHeight: keyHeight
+  //   })
+
+  // },
+
+  // //失去聚焦(软键盘消失)
+  // blur: function(e) {
+  //   console.log('blur keyHeight')
+  // 	this.setData({
+  // 		keyBoardHeight: 0
+  // 	})
+  // },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-
+    this.getFormH()
   },
 
   /**

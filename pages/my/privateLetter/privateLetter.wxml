@@ -2,10 +2,12 @@
 <view class="privateLetter">
   <navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' back="{{true}}" iconTheme='white'
     bindback="handlerGobackClick"></navBar>
-  <view class="wrap" style="height:{{excludeHeight}}rpx; ">
+  <view class="wrap" style="height:{{excludeHeight}}px; ">
     <!-- padding-bottom:{{formH + keyBoardHeight}}px -->
     <view class="head">Raymond</view>
-    <scroll-view class="scroll" scroll-y scroll-into-view="{{footer}}">
+    <scroll-view class="scroll" scroll-y scroll-into-view="{{footer}}"
+      style="height: calc({{excludeHeight  - formH - keyBoardHeight}}px - 104rpx);">
+      <!--  -->
       <!-- <view class="timeWrap">
       <text class="time"> 2020年6月23日 晚上 8：33</text>
     </view> -->
@@ -42,7 +44,8 @@
     <view class="messageBox"
       style="padding-bottom:{{!keyBoardHeight?'calc(20rpx + env(safe-area-inset-bottom))':'20rpx'}}">
       <textarea adjust-position="{{false}}" name="message" disable-default-padding auto-height
-        show-confirm-bar="{{false}}" hold-keyboard="{{true}}" bindfocus="focus" bindblur="blur" bindinput="getValue"></textarea>
+        show-confirm-bar="{{false}}" hold-keyboard="{{true}}" 
+        bindinput="getValue"></textarea>
       <!-- hold-keyboard="{{true}}" -->
       <button catchtap="formSubmit">发送</button>
     </view>
