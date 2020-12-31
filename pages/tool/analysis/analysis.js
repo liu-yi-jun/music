@@ -16,6 +16,9 @@ Page({
     this.initrecorderManager()
     this.initSocket()
   },
+  onUnload: function () {
+    this.stop()
+  },
   initSocket() {
     app.socket.on('completeAnalysis', (data) => {
       console.log(data)
@@ -44,8 +47,13 @@ Page({
     this.recorderManager.onStop((res) => {
       console.log('// 录音结束')
       const tempFilePath = res.tempFilePath
-      console.log(tempFilePath)
       this.innerAudioContext.src = tempFilePath
+      if(!this.isStop){
+        console.log('开始新一轮录音')
+        this.start()
+      }
+   
+
     })
     this.recorderManager.onFrameRecorded((res) => {
       let Array = new Int16Array(res.frameBuffer)
@@ -88,13 +96,15 @@ Page({
   },
   stop() {
     this.recorderManager.stop()
+    this.isStop = true
   },
   pause() {
     this.recorderManager.pause()
   },
   start() {
+    this.isStop = false
     const options = {
-      duration: 30000, //指定录音采样时间100ms
+      duration: 10000, //指定录音采样时间100ms
       sampleRate: 8000, //采样率最低8k
       numberOfChannels: 1, //录音通道数
       encodeBitRate: 32000, //8k采样率对应16k~48k
@@ -131,9 +141,7 @@ Page({
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function () {
 
-  },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
