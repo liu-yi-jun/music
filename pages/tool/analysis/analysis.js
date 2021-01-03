@@ -56,20 +56,17 @@ Page({
 
     })
     this.recorderManager.onFrameRecorded((res) => {
-      let Array = new Int16Array(res.frameBuffer)
-      let newArray
-      if (Array.length >= 800) {
-        // 切
-        newArray = Array.subarray(0, 800)
-      } else {
-        // 加
-        newArray = this.concatenate(Int8Array, Array, new Int8Array(800 - Array.length))
-      }
-      let endArry = []
-      newArray.forEach(element => {
-        endArry.push(element)
-      })
-      this.analysis(endArry)
+      console.log(res.frameBuffer)
+      let array = new Int16Array(res.frameBuffer)
+      // window
+      // if (array.length >= 800) {
+      //   // 切
+      //   array = array.subarray(0, 800)
+      // } else {
+      //   // 加
+      //   array = this.concatenate(Int16Array, array, new Int16Array(800 - array.length))
+      // }
+      this.analysis(Array.prototype.slice.call(array))
     })
   },
 
@@ -104,13 +101,14 @@ Page({
   start() {
     this.isStop = false
     const options = {
-      duration: 10000, //指定录音采样时间100ms
+      duration: 600000, //指定录音采样时间100ms
       sampleRate: 8000, //采样率最低8k
       numberOfChannels: 1, //录音通道数
       encodeBitRate: 32000, //8k采样率对应16k~48k
       format: 'pcm', //音频格式，有效值acc/mp3/wav/pcm
       // frameSize: 3.2,          //指定帧大小，单位KB
-      frameSize: 0.8, //指定帧大小，单位KB
+      frameSize: 1.6, //指定帧大小，单位KB
+      // frameSize: 0.8, //指定帧大小，单位KB
       audioSource: 'auto',
     };
 

@@ -124,7 +124,7 @@
   align-items: center;
   z-index: 10;
   background: linear-gradient(to bottom, rgba(226, 145, 227, 0.5), rgba(0, 69, 207, 0.5));
-  transition: 0.5s;
+  /* transition: 0.2s; */
 }
 
 .messageBox textarea {
@@ -148,14 +148,18 @@
 }
 
 .lastItem {
-  margin-bottom: 200rpx;
+  padding-bottom: 50rpx;
+  
 }
 
 .wrap {
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
 }
 
 .scroll {
-height: 400rpx; 
+  flex-grow: 1; 
+  height: 100rpx;
+  transition: all 0.4s;
 }

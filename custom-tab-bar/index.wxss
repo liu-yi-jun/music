@@ -5,9 +5,9 @@
   left: 0;
   width: 100%;
   background: linear-gradient(to bottom, rgba(226, 145, 227, 0.8), rgba(0, 69, 207, 0.8));
-  padding-bottom: env(safe-area-inset-bottom);
+  padding-bottom: calc(env(safe-area-inset-bottom) - 24rpx) ;
   visibility: visible;
-  display: flex;
+  display: flex; 
   height: 130rpx;
   opacity: 1;
   transform: translateY(0rpx);

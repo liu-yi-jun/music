@@ -7,7 +7,7 @@ function navExcludeHeight(that) {
     screenHeight
   } = app.globalSystemInfo
   that.setData({
-    excludeHeight: (screenHeight - navBarHeight - navBarExtendHeight) * 2
+    excludeHeight: (screenHeight - navBarHeight - navBarExtendHeight) 
   })
 }
 // 将逆地址解析

@@ -17,14 +17,13 @@ Page({
     keyBoardHeight: 0,
     first: true,
     message: '',
-    formH: 0,
+    formH: 0
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
     wx.onKeyboardHeightChange(res => {
       this.keyBoardChange(res.height)
     })
@@ -38,11 +37,6 @@ Page({
     tool.navExcludeHeight(this)
     this.setMessages(to.userId)
     this.WhachMessage()
-    wx.getSystemInfo({
-      success: (res) => {
-        console.log(res, '====设备信息====');
-      }
-    })
   },
   getFormH() {
     const query = wx.createSelectorQuery();
@@ -55,7 +49,8 @@ Page({
     })
   },
   keyBoardChange(height) {
-    console.log(height)
+    this.getFormH()
+    
     if (this.data.first) {
       this.setData({
         first: false
@@ -65,13 +60,16 @@ Page({
       this.setData({
         keyBoardHeight
       },()=> {
-        this.getFormH()
+        // this.getFormH()
       })
       if (keyBoardHeight === 0) {
         this.setData({
           keyBoardHeight
         },()=> {
-          this.getFormH()
+          setTimeout(()=> {
+        
+          },300)
+         
         })
       }
     }
@@ -158,23 +156,20 @@ Page({
     })
   },
 
-  // //获取聚焦(软键盘弹出)
-  // focus: function(e) {
-  //   let keyHeight = e.detail.height;
-  //   console.log(keyHeight,'focus keyHeight')
-  // 	this.setData({
-  // 		keyBoardHeight: keyHeight
-  //   })
+  //获取聚焦(软键盘弹出)
+  focus: function(e) {
+    this.getFormH()
+    this.setData({
+      footer:this.data.footer
+    })
+  },
 
-  // },
-
-  // //失去聚焦(软键盘消失)
-  // blur: function(e) {
-  //   console.log('blur keyHeight')
-  // 	this.setData({
-  // 		keyBoardHeight: 0
-  // 	})
-  // },
+  //失去聚焦(软键盘消失)
+  blur: function(e) {
+    // this.setData({
+    //   footer:this.data.footer
+    // })
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

@@ -32,19 +32,17 @@ Page({
   initLogin() {
     let token = wx.getStorageSync('wx-token')
     if (token) {
-      this.getServerUserInfo()
-      this.getAllGroup()
-    } else {
-      wx.login({
-        success: res => {
-          if (res.code) {
-            App.getToken(res.code).then(() => {
-              this.getServerUserInfo()
-              this.getAllGroup()
-            })
-          }
+      wx.checkSession({
+        success: () => {
+          this.getServerUserInfo()
+          this.getAllGroup()
+        },
+        fail: () => {
+          this.login()
         }
       })
+    } else {
+      this.login()
     }
   },
   getServerUserInfo() {
@@ -70,48 +68,21 @@ Page({
     })
   },
 
-  // login() {
-  //   let openid = wx.getStorageSync('openid')
-  //   if (openid) {
-  //     //  用openid获取用户信息
-  //     this.getUserInfo('openid', openid)
-  //   } else {
-  //     //  用code获取用户信息
-  //     wx.login({
-  //       success: res => {
-  //         if (res.code) {
-  //           this.getUserInfo('code', res.code)
-  //         }
-  //       }
-  //     })
-  //   }
-  // },
-  // getUserInfo(param, value) {
-  //   app.get(Api.login, {
-  //     [param]: value
-  //   }).then(res => {
-  //     // 存入openid,下次请求可以直接用openid请求
-  //     wx.setStorageSync('openid', res.openid)
-  //     if (res.userInfo) {
-  //       // 有用户信息，存入app
-  //       app.userInfo = res.userInfo
-  //       // 判断用户是否已有小组再进行跳转
-  //       let groupId = app.userInfo.groupId
-  //       if (groupId) {
-  //         this.goHome()
-  //       } else {
-  //         this.getAllGroup()
-  //       }
-  //     } else {
-  //       // 没有用户信息等待用户授权
-  //       this.setData({
-  //         dialogShow: true
-  //       })
-  //       this.getAllGroup()
-  //     }
+  login() {
+    return new Promise((resolve, reject) => {
+      wx.login({
+        success: res => {
+          App.getToken(res.code).then(() => {
+            this.getServerUserInfo()
+            this.getAllGroup()
+            resolve()
+          })
+        },
+        fail: err => reject(err)
+      })
+    })
+  },
 
-  //   })
-  // },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

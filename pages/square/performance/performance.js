@@ -14,17 +14,17 @@ Page({
     festivals: [],
     liveHouse: [],
     alliancePaging: {
-      pageSize: 20,
+      pageSize: 10,
       pageIndex: 1,
       isNotData: false
     },
     festivalPaging: {
-      pageSize: 20,
+      pageSize: 10,
       pageIndex: 1,
       isNotData: false
     },
     livehousePaging: {
-      pageSize: 20,
+      pageSize: 10,
       pageIndex: 1,
       isNotData: false
     }
@@ -37,9 +37,11 @@ Page({
   onLoad: function (options) {
     // 获取去除上面导航栏，剩余的高度
     tool.navExcludeHeight(this)
-    this.getAlliance()
-    this.getMusicFestival()
     this.getLiveHouse()
+    this.getMusicFestival()
+    this.getAlliance()
+  
+   
   },
   getLiveHouse() {
     let livehousePaging = this.data.livehousePaging
