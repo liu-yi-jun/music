@@ -4,7 +4,7 @@
   <navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' back="{{true}}" iconTheme='white'
     bindback="handlerGobackClick"></navBar>
   <view class="head">小组{{(groupDuty===0 || groupDuty===1)?'管理':'信息'}}</view>
-  <scroll-view style="height:{{excludeHeight-84}}rpx" scroll-y>
+  <scroll-view  style="height: calc({{excludeHeight}}px - 84rpx);" scroll-y>
     <view class="logo-group">
       <view class="logoWrap">
         <image catchtap="previewImage" class="logo" src="{{tempFilePaths[0]}}" mode="aspectFill">

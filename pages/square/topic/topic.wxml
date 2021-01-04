@@ -2,7 +2,7 @@
 <view class="topic">
   <navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' back="{{true}}" iconTheme='white'
     bindback="handlerGobackClick"></navBar>
-  <scroll-view style="height:{{excludeHeight}}rpx" bindscrolltolower="scrolltolower" scroll-y>
+  <scroll-view style="height:{{excludeHeight}}px"  bindscrolltolower="scrolltolower" scroll-y>
     <dynamicList dynamics="{{dynamics}}" id="dynamicList"></dynamicList>
   </scroll-view>
 </view>

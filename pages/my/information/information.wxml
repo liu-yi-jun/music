@@ -10,7 +10,7 @@
     <view class="line"></view>
     <text class="{{switchBtn === 'system' ? 'active' : ''}}" catchtap="switchBtn" data-switchBtn="system">系统</text>
   </view>
-  <scroll-view scroll-y style="height:{{excludeHeight-131}}rpx" bindscrolltolower="scrolltolower">
+  <scroll-view scroll-y  style="height: calc({{excludeHeight}}px - 131rpx);" bindscrolltolower="scrolltolower">
     <view hidden="{{switchBtn !== 'privateLetter'}}">
       <privateLetter userMessage="{{userMessage}}">
       </privateLetter>

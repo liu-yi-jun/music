@@ -2,7 +2,7 @@
 <view class="invitation">
   <navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' back="{{true}}" iconTheme='white'
     bindback="handlerGobackClick"></navBar>
-    <scroll-view bindscrolltolower="scrolltolower" style="height:{{excludeHeight}}rpx" scroll-y>
+    <scroll-view bindscrolltolower="scrolltolower"  style="height: {{excludeHeight}}px;" scroll-y>
     <view class="information">
       <image class="backgroundImg" src="{{personal.bgWall}}" mode="aspectFill">
         <image wx:if="{{userId!==otherId}}" class="follow" catchtap="followUser" src="http://cdn.eigene.cn/invitation/follow{{personal.isFollow?'ed':''}}.png" ></image>

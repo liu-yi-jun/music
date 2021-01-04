@@ -127,37 +127,6 @@ Page({
       common.Tip(tip, '等待审批')
     }
   },
-  // 
-  // initOnMessage(socket) {
-  //   socket.on("message", (from, to, message) => {
-  //     resolve()
-  //     console.log(from, to, message)
-  //     let threas = wx.getStorageSync('threas')
-  //     console.log(threas)
-  //     if (!threas) {
-  //       threas = {}
-  //     }
-  //     if (!threas[from.userId]) {
-  //       threas[from.userId] = {
-  //         userId: from.userId,
-  //         avatarUrl: from.avatarUrl,
-  //         nickName: from.nickName,
-  //         messages: []
-  //       }
-  //     }
-  //     threas[from.userId].messages.push({
-  //       fromId: from.userId,
-  //       toId: to.userId,
-  //       message
-  //     })
-  //     wx.setStorage({
-  //       data: threas,
-  //       key: 'threas',
-  //     })
-  //     return resolve
-  //   })
-
-  // },
   // 初始化通讯
   initSocketEvent() {
     const socket = (app.socket = io(app.socketUrls.baseUrl))
@@ -312,6 +281,7 @@ Page({
     this.getTabBar().setData({
       show: false
     })
+
     this.setData({
       showMember,
       member,
@@ -321,7 +291,7 @@ Page({
       SM_DownPointer,
       MB_DownPointer,
       MB_UpPointer,
-      dynamicIsShow: member.length ? true : false
+      dynamicIsShow: app.globalData.guide.home ? false : (member.length ? true : false)
     }, () => {
       if (showMember[0] && showMember[0].mold === 1) {
         setTimeout(() => {

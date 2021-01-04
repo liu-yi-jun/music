@@ -6,7 +6,7 @@
     <view class="title">{{detail.title}}</view>
     <view class="time">{{detail.releaseTime}}</view>
   </view>
-  <scroll-view style="height:{{excludeHeight-140}}rpx" scroll-y>
+  <scroll-view  style="height: calc({{excludeHeight}}px - 140rpx);" scroll-y>
     <view class="Wrap">
       <view class="info">
         <text>组织者：</text>

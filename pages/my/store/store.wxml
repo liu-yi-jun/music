@@ -14,7 +14,7 @@
     <text class="{{switchBtn === 'storePerformance' ? 'active' : ''}}" catchtap="switchBtn"
       data-switchBtn="storePerformance">演出咨讯</text>
   </view>
-  <scroll-view bindscrolltolower="scrolltolower" scroll-y style="height:{{excludeHeight-130}}rpx">
+  <scroll-view bindscrolltolower="scrolltolower" scroll-y  style="height: calc({{excludeHeight}}px - 130rpx);">
     <view hidden="{{switchBtn !== 'storeDynamic'}}">
       <dynamicList id="dynamicList" isInvitation="{{true}}" dynamics="{{dynamics}}"></dynamicList>
     </view>

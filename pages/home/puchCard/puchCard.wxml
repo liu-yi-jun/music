@@ -18,7 +18,7 @@
 
   <image wx:if="{{isMyGroup && (groupDuty === 0 || groupDuty === 1)}}" catchtap="issuePuchCard" class="issuePuchCard"
     src="http://cdn.eigene.cn/puchCard/issuePuchCard.png"></image>
-  <swiper style="height:{{excludeHeight}}rpx" bindchange="changeCard">
+  <swiper  style="height: {{excludeHeight}}px;" bindchange="changeCard">
     <swiper-item wx:for="{{groupCards}}" wx:key="inex" wx:for-index="i">
       <view class="card">
         <view class="head">

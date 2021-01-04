@@ -13,7 +13,7 @@
       </view>
     </view>
   </view>
-  <scroll-view style="height:{{excludeHeight-176}}rpx" scroll-y>
+  <scroll-view  style="height: calc({{excludeHeight}}px - 176rpx);" scroll-y>
     <video class="video" src="{{detail.videoUrl}}"
       enable-auto-rotation show-mute-btn object-fit="cover"> </video>
     <view class="fontWrap">
