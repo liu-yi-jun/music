@@ -7,7 +7,7 @@
     <view class="line"></view>
     <text class="{{switchBtn === 'follow' ? 'active' : ''}}" catchtap="switchBtn" data-switchBtn="follow">{{isMy?'我': 'TA'}}的关注</text>
   </view>
-  <scroll-view bindscrolltolower="scrolltolower" scroll-y style="height:{{excludeHeight-150}}rpx">
+  <scroll-view bindscrolltolower="scrolltolower" scroll-y  style="height: calc({{excludeHeight}}px - 150rpx);">
     <view hidden="{{switchBtn !== 'fans'}}">
       <fansFollowList list="{{fans}}"> </fansFollowList>
     </view>

@@ -7,7 +7,7 @@
   <form bindsubmit="formSubmit">
     <issueHead avatarUrl="{{avatarUrl}}" nickName="{{nickName}}">
     </issueHead>
-    <scroll-view scroll-y style="height:{{excludeHeight-161}}rpx" scroll-into-view="{{id}}">
+    <scroll-view scroll-y  style="height: calc({{excludeHeight}}px - 161rpx);" scroll-into-view="{{id}}">
       <view class="wrap">
         <input placeholder="标       题" placeholder-class="placeholder" name="title"></input>
         <picker class="date" mode="date" value="{{date}}" start="2017-09-01" end="2025-09-01"

@@ -2,7 +2,7 @@
 <view>
   <navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' back="{{true}}" iconTheme='white'
     bindback="handlerGobackClick"></navBar>
-  <scroll-view style="height:{{excludeHeight}}rpx" scroll-y bindscrolltolower="scrolltolower">
+  <scroll-view  style="height:{{excludeHeight}}px;" scroll-y bindscrolltolower="scrolltolower">
     <view class="ticketWrap">
       <image class="poster" src="{{detail.showPoster}}"></image>
       <view class="introduce">

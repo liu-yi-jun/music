@@ -17,7 +17,7 @@ Page({
     isNotData: false,
     value: '',
     taPPaging: {
-      pageSize: 10,
+      pageSize: 20,
       pageIndex: 1,
       isNotData: false
     },

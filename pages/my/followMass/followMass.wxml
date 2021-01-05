@@ -13,7 +13,7 @@
 
     </view>
   </view>
-  <scroll-view  bindscrolltolower="scrolltolower" style="height:{{excludeHeight-130}}rpx" scroll-y>
+  <scroll-view  bindscrolltolower="scrolltolower"  style="height: calc({{excludeHeight}}px - 130rpx);" scroll-y>
     <groupList groups="{{groups}}"></groupList>
   </scroll-view>
 </view>

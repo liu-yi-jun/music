@@ -6,7 +6,7 @@
   <form bindsubmit="formSubmit">
     <issueHead avatarUrl="{{avatarUrl}}" nickName="{{nickName}}">
     </issueHead>
-    <scroll-view style="height:{{excludeHeight-160}}rpx" scroll-y>
+    <scroll-view  style="height: calc({{excludeHeight}}px - 160rpx);" scroll-y>
       <view class="wrap">
         <textarea class="introduce" name="introduce" maxlength="5000" placeholder="说点什么吧……" placeholder-class="placeholder"
           auto-height></textarea>
