@@ -1,4 +1,5 @@
 <!--pages/tool/analysis/analysis.wxml-->
+<canvas type="2d" id="canvas"  style="width: 300px; height: 300px;"></canvas>
 <view class="analysis">
   <navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' iconTheme='white'></navBar>
   <view class="title">音调测试</view>
