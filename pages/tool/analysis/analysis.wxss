@@ -10,8 +10,8 @@
   width: 80%;
   position: absolute;
   left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+  top: 450rpx;
+  transform: translateX(-50%);
 }
 
 .part {
@@ -32,4 +32,12 @@
 .bar > view {
   flex-grow: 1;
   text-align: center;
+}
+
+canvas {
+  border: 1rpx solid black;
+  position: absolute;
+  left: 50%;
+  bottom: 200rpx;
+  transform: translateX(-50%);
 }
