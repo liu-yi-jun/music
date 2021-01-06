@@ -114,7 +114,7 @@ Page({
     }
     ctx.stroke();
     spots.forEach((item, index) => {
-      item.x = item.x - 20
+      item.x = item.x - 60
     })
     spots.unshift({
       x: width / 1.5,
