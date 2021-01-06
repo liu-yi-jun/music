@@ -1,13 +1,11 @@
 <!--pages/tool/analysis/analysis.wxml-->
-<canvas type="2d" id="canvas"  style="width: 300px; height: 300px;"></canvas>
+<!-- <canvas type="2d" id="canvas"  style="width: 300px; height: 300px;"></canvas>
 <view class="analysis">
   <navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' iconTheme='white'></navBar>
   <view class="title">音调测试</view>
   <view class="bar">
     <view catchtap="start">开始</view>
-    <!-- <view catchtap="pause">暂停</view> -->
     <view catchtap="stop" >结束</view>
-    <!-- <view catchtap="play">播放</view> -->
   </view>
   <view class="wrap">
     <view class="part">
@@ -25,6 +23,58 @@
     <view class="part">
       <text>Cent</text>
       <text>{{analysis.cent}}</text>
+    </view>
+  </view>
+</view> -->
+
+<view>
+  <navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' iconTheme='white'></navBar>
+  <view class="header">
+    <view>调音器</view>
+    <view>Tuner</view>
+  </view>
+  <view class="middle">
+    <view class="left">标准</view>
+    <view class="right">
+      <text>自动</text>
+      <switch checked="{{examine}}" bindchange="changeExamine"></switch>
+    </view>
+  </view>
+  <canvas type="2d" id="canvas" style="width: 100%; height: 300rpx;"></canvas>
+  <view class="letter" style="color:{{color}};">
+    <view class="middleLetter">
+      <view class="leftLetter">{{analysis.pitchFirst}}</view>
+      <view class="rightLetter">
+        <view class="topLetter">{{analysis.pitchTwo}}</view>
+        <view class="bottomLetter">{{analysis.group}}</view>
+      </view>
+    </view>
+  </view>
+  <view class="stringWrap">
+    <view class="column"></view>
+    <view class="string">
+      <view class="circular">E2</view>
+      <view class="line"></view>
+    </view>
+    <view class="string">
+      <view class="circular">A2</view>
+      <view class="line"></view>
+    </view>
+    <view class="string">
+      <view class="circular">D3</view>
+      <view class="line"></view>
+    </view>
+    <view class="string">
+      <view class="circular">G3</view>
+      <view class="line"></view>
+    </view>
+    <view class="string">
+      <view class="circular">B4</view>
+      <view class="line"></view>
+    </view>
+    <view class="string">
+      <view class="circular">E4</view>
+      <view class="line"></view>
     </view>
   </view>
 </view>
