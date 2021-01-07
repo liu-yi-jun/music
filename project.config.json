@@ -38,7 +38,7 @@
   },
   "appid": "wxa158839a69c014d3",
   "projectname": "musicMonster",
-  "libVersion": "2.14.0",
+  "libVersion": "2.14.1",
   "simulatorType": "wechat",
   "simulatorPluginLibVersion": {},
   "condition": {
@@ -1870,6 +1870,12 @@
         {
           "name": "pages/my/privateLetter/privateLetter",
           "pathName": "pages/my/privateLetter/privateLetter",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/tool/analysis/analysis",
+          "pathName": "pages/tool/analysis/analysis",
           "scene": null
         }
       ]

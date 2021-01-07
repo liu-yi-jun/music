@@ -8,13 +8,28 @@ Page({
   data: {
     analysis: {},
     line: 440,
-    spots: []
+    spots: [],
+    // 圆位于哪里上下波动 width/1.5 
+    // 越大距离左边越近
+    seat: 1.3,
+    // 小球半径
+    radius: 4,
+    // 轨迹点的密集程度（值越大越稀疏）
+    dense: 80,
+    // 轨迹点最多的数量
+    pointCount: 80,
+    // 整体颜色
+    color: '#FF5791',
+    letter: 'D#',
+    // 返回的音调与基础音调的误差
+    disparity: 10
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    this.can = true
     this.initrecorderManager()
     this.initSocket()
     wx.createSelectorQuery()
@@ -23,7 +38,8 @@ Page({
         node: true,
         size: true,
       })
-      .exec(this.init.bind(this))
+      .exec(this.initCanvas.bind(this))
+    this.start()
   },
   // 在电脑上1px 就是1物理像素,那么就不用加dpr转化了
 
@@ -45,65 +61,74 @@ Page({
   // 那么就要对绘制的图形进行缩放,使它在不同设备能够正常像素
 
   // 总结:可以将画布上的像素认为是物理像素
-  init(res) {
-    // 解决不同设备中一致性
+  initCanvas(res) {
     const width = res[0].width
     const height = res[0].height
     const canvas = res[0].node
-    console.log(canvas)
     const ctx = canvas.getContext('2d')
     const dpr = wx.getSystemInfoSync().pixelRatio
     canvas.width = width * dpr
     canvas.height = height * dpr
     ctx.scale(dpr, dpr)
-
-
-    // 清除画布
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.beginPath();
-    // 绘制球
-    ctx.arc(width / 1.5, height - 10, 10, 0, Math.PI * 2);
-    ctx.fillStyle = 'red'
-    // ctx.lineWidth = 1;
-    // 	填充当前绘图（路径）。
-    ctx.fill();
-    // 绘制已定义的路径。
-    ctx.stroke();
-    this.drawLine(ctx, width, height)
-    this.ctx = ctx
     this.width = width
     this.height = height
     this.canvas = canvas
+    this.ctx = ctx
+    console.log(ctx)
   },
-  drawLine(ctx, width, height) {
+  drawLine() {
+    let width = this.width
+    let height = this.height
+    let ctx = this.ctx
+    let color = this.data.color
     ctx.beginPath();
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 1;
     ctx.moveTo(0, height / 2);
     ctx.lineTo(width, height / 2);
     ctx.stroke();
   },
-  motionBall(frequency, ctx, width, height, canvas) {
-    if(frequency >= this.data.line * 2) {
-      frequency = this.data.line * 2
-    }
-    console.log('画')
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+  drawBall(frequency) {
+    let width = this.width
+    let height = this.height
+    let ctx = this.ctx
+    let {
+      seat,
+      radius,
+      line
+    } = this.data
+    let y = (frequency * (height - 2 * radius)) / (2 * line)
     ctx.beginPath();
-    let line = this.data.line
-    this.drawLine(ctx, width, height)
-    ctx.beginPath();
-    // // 圆心
-    let y = (frequency * (height - 2 * 10)) / (2 * line)
-    console.log('y', y)
-    ctx.arc(width / 1.5, height - 10 - y, 10, 0, Math.PI * 2);
-    ctx.fillStyle = 'red'
+    ctx.arc(width / seat, height - radius - y, radius, 0, Math.PI * 2);
+    // ctx.shadowBlur = 5;
+    // ctx.shadowColor = "white";
+    ctx.fillStyle = "white"
+    ctx.strokeStyle = "white"
     ctx.fill();
-    // // 绘制已定义的路径。
     ctx.stroke();
+  },
+  drawTrajectory(frequency) {
+    let ctx = this.ctx
+    let width = this.width
+    let height = this.height
+    let {
+      spots,
+      radius,
+      seat,
+      line,
+      dense,
+      pointCount
+    } = this.data
+    let y = (frequency * (height - 2 * radius)) / (2 * line)
     ctx.beginPath();
-
-    let spots = this.data.spots
-    // 第一种方式
-    ctx.moveTo(width / 1.5, height - 10 - y);
+    ctx.lineWidth = 3;
+    // ctx.shadowBlur = 5;
+    // ctx.shadowColor = "white";
+    var gradient = ctx.createLinearGradient(0, 0, width / seat, 0);
+    gradient.addColorStop(0, 'rgba(255,255,255,0)');
+    gradient.addColorStop(1, "white");
+    ctx.strokeStyle = gradient;
+    ctx.moveTo(width / seat, height - radius - y);
     for (var i = 0; i < spots.length - 1; i++) {
       var x_mid = (spots[i].x + spots[i + 1].x) / 2;
       var y_mid = (spots[i].y + spots[i + 1].y) / 2;
@@ -114,24 +139,58 @@ Page({
     }
     ctx.stroke();
     spots.forEach((item, index) => {
-      item.x = item.x - 20
+      item.x = item.x - dense
     })
     spots.unshift({
-      x: width / 1.5,
-      y: height - 10 - y,
+      x: width / seat,
+      y: height - radius - y,
     })
-    if (spots.length > 100) {
+    if (spots.length > pointCount) {
       spots.pop()
     }
   },
-
+  motionBall(frequency) {
+    let ctx = this.ctx
+    let canvas = this.canvas
+    let line = this.data.line
+    if (frequency >= line * 2) {
+      frequency = line * 2
+    }
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    this.drawLine()
+    this.drawBall(frequency)
+    this.drawTrajectory(frequency)
+  },
   onUnload: function () {
     this.stop()
   },
   initSocket() {
     app.socket.on('completeAnalysis', (data) => {
+      let disparity = this.data.disparity
+      let line = this.data.line
       console.log(data)
-      this.motionBall(data.frequency, this.ctx, this.width, this.height, this.canvas)
+      if (this.can) {
+        this.can = false
+        setTimeout(() => {
+          this.can = true
+          let color
+          if (Math.abs(data.frequency - line) <= disparity) {
+            color = '#3DDB62'
+          } else {
+            color = '#FF5791'
+          }
+          if (color !== this.data.color) {
+            this.setData({
+              color
+            }, () => {
+              this.motionBall(data.frequency)
+            })
+          } else {
+            this.motionBall(data.frequency)
+          }
+        }, 240)
+      }
+
       this.setData({
         analysis: data
       })
@@ -152,7 +211,6 @@ Page({
     });
     this.recorderManager.onStart(() => {
       console.log('// 录音开始')
-
     })
     this.recorderManager.onStop((res) => {
       console.log('// 录音结束')
@@ -179,8 +237,6 @@ Page({
       this.analysis(Array.prototype.slice.call(array))
     })
   },
-
-
   analysis(endArry) {
     app.socket.emit('analysis', endArry);
   },
@@ -197,21 +253,13 @@ Page({
     }
     return result;
   },
-  play() {
-    console.log('播放')
-    this.innerAudioContext.play()
-  },
+
   stop() {
     this.recorderManager.stop()
     this.isStop = true
   },
-  pause() {
-    this.recorderManager.pause()
-  },
+
   start() {
-
-
-
     this.isStop = false
     const options = {
       duration: 600000, //指定录音采样时间100ms
@@ -234,44 +282,195 @@ Page({
   onReady: function () {
 
   },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  }
+  // onLoad: function (options) {
+  //   this.initrecorderManager()
+  //   this.initSocket()
+  //   this.initCanvas()
+  //   this.start()
+  // },
+  // initCanvas() {
+  //   // const width = res[0].width
+  //   // const height = res[0].height
+  //   // const canvas = res[0].node
+  //   // const ctx = canvas.getContext('2d')
+  //   // const dpr = wx.getSystemInfoSync().pixelRatio
+  //   // canvas.width = width * dpr
+  //   // canvas.height = height * dpr
+  //   // ctx.scale(dpr, dpr)
+  //   const ctx = wx.createCanvasContext('canvas')
+  //   console.log(ctx)
+  //   this.width = 300
+  //   this.height = 300
+  //   // this.canvas = canvas
+  //   this.ctx = ctx
+  // },
+  // drawLine() {
+  //   let width = this.width
+  //   let height = this.height
+  //   let ctx = this.ctx
+  //   let color = this.data.color
+  //   ctx.beginPath();
+  //   ctx.strokeStyle = color;
+  //   ctx.lineWidth = 1;
+  //   ctx.moveTo(0, height / 2);
+  //   ctx.lineTo(width, height / 2);
+  //   ctx.stroke();
+  // },
+  // drawBall(frequency) {
+  //   let width = this.width
+  //   let height = this.height
+  //   let ctx = this.ctx
+  //   let {
+  //     seat,
+  //     radius,
+  //     line
+  //   } = this.data
+  //   let y = (frequency * (height - 2 * radius)) / (2 * line)
+  //   ctx.beginPath();
+  //   ctx.arc(width / seat, height - radius - y, radius, 0, Math.PI * 2);
+  //   ctx.shadowBlur = 5;
+  //   ctx.shadowColor = "white";
+  //   ctx.fillStyle = "white"
+  //   ctx.strokeStyle = "white"
+  //   ctx.fill();
+  //   ctx.stroke();
+  // },
+  // drawTrajectory(frequency) {
+  //   let ctx = this.ctx
+  //   let width = this.width
+  //   let height = this.height
+  //   let {
+  //     spots,
+  //     radius,
+  //     seat,
+  //     line,
+  //     dense,
+  //     pointCount
+  //   } = this.data
+  //   let y = (frequency * (height - 2 * radius)) / (2 * line)
+  //   ctx.beginPath();
+  //   ctx.lineWidth = 3;
+  //   ctx.shadowBlur = 5;
+  //   ctx.shadowColor = "white";
+  //   var gradient = ctx.createLinearGradient(0, 0, width / seat, 0);
+  //   gradient.addColorStop(0, 'rgba(255,255,255,0)');
+  //   gradient.addColorStop(1, "white");
+  //   ctx.strokeStyle = gradient;
+  //   ctx.moveTo(width / seat, height - radius - y);
+  //   for (var i = 0; i < spots.length - 1; i++) {
+  //     var x_mid = (spots[i].x + spots[i + 1].x) / 2;
+  //     var y_mid = (spots[i].y + spots[i + 1].y) / 2;
+  //     var cp_x1 = (x_mid + spots[i].x) / 2;
+  //     var cp_x2 = (x_mid + spots[i + 1].x) / 2;
+  //     ctx.quadraticCurveTo(cp_x1, spots[i].y, x_mid, y_mid);
+  //     ctx.quadraticCurveTo(cp_x2, spots[i + 1].y, spots[i + 1].x, spots[i + 1].y);
+  //   }
+  //   ctx.stroke();
+  //   spots.forEach((item, index) => {
+  //     item.x = item.x - dense
+  //   })
+  //   spots.unshift({
+  //     x: width / seat,
+  //     y: height - radius - y,
+  //   })
+  //   if (spots.length > pointCount) {
+  //     spots.pop()
+  //   }
+  // },
+  // motionBall(frequency) {
+  //   let ctx = this.ctx
+  //   let line = this.data.line
+  //   if (frequency >= line * 2) {
+  //     frequency = line * 2
+  //   }
+  //   ctx.clearRect(0, 0, this.width, this.height);
+  //   this.drawLine()
+  //   this.drawBall(frequency)
+  //   this.drawTrajectory(frequency)
+  // },
+  // drawLine() {
+  //   let width = this.width
+  //   let height = this.height
+  //   let ctx = this.ctx
+  //   let color = this.data.color
+  //   ctx.beginPath();
+  //   ctx.strokeStyle = color;
+  //   ctx.lineWidth = 1;
+  //   ctx.moveTo(0, height / 2);
+  //   ctx.lineTo(width, height / 2);
+  //   ctx.stroke();
+  // },
+  // drawBall(frequency) {
+  //   let width = this.width
+  //   let height = this.height
+  //   let ctx = this.ctx
+  //   let {
+  //     seat,
+  //     radius,
+  //     line
+  //   } = this.data
+  //   let y = (frequency * (height - 2 * radius)) / (2 * line)
+  //   ctx.beginPath();
+  //   ctx.arc(width / seat, height - radius - y, radius, 0, Math.PI * 2);
+  //   ctx.shadowBlur = 5;
+  //   ctx.shadowColor = "white";
+  //   ctx.fillStyle = "white"
+  //   ctx.strokeStyle = "white"
+  //   ctx.fill();
+  //   ctx.stroke();
+  // },
+  // drawTrajectory(frequency) {
+  //   let ctx = this.ctx
+  //   let width = this.width
+  //   let height = this.height
+  //   let {
+  //     spots,
+  //     radius,
+  //     seat,
+  //     line,
+  //     dense,
+  //     pointCount
+  //   } = this.data
+  //   let y = (frequency * (height - 2 * radius)) / (2 * line)
+  //   ctx.beginPath();
+  //   ctx.lineWidth = 3;
+  //   ctx.shadowBlur = 5;
+  //   ctx.shadowColor = "white";
+  //   var gradient = ctx.createLinearGradient(0, 0, width / seat, 0);
+  //   gradient.addColorStop(0, 'rgba(255,255,255,0)');
+  //   gradient.addColorStop(1, "white");
+  //   ctx.strokeStyle = gradient;
+  //   ctx.moveTo(width / seat, height - radius - y);
+  //   for (var i = 0; i < spots.length - 1; i++) {
+  //     var x_mid = (spots[i].x + spots[i + 1].x) / 2;
+  //     var y_mid = (spots[i].y + spots[i + 1].y) / 2;
+  //     var cp_x1 = (x_mid + spots[i].x) / 2;
+  //     var cp_x2 = (x_mid + spots[i + 1].x) / 2;
+  //     ctx.quadraticCurveTo(cp_x1, spots[i].y, x_mid, y_mid);
+  //     ctx.quadraticCurveTo(cp_x2, spots[i + 1].y, spots[i + 1].x, spots[i + 1].y);
+  //   }
+  //   ctx.stroke();
+  //   spots.forEach((item, index) => {
+  //     item.x = item.x - dense
+  //   })
+  //   spots.unshift({
+  //     x: width / seat,
+  //     y: height - radius - y,
+  //   })
+  //   if (spots.length > pointCount) {
+  //     spots.pop()
+  //   }
+  // },
+  // motionBall(frequency) {
+  //   let ctx = this.ctx
+  //   let canvas = this.canvas
+  //   let line = this.data.line
+  //   if (frequency >= line * 2) {
+  //     frequency = line * 2
+  //   }
+  //   ctx.clearRect(0, 0, canvas.width, canvas.height);
+  //   this.drawLine()
+  //   this.drawBall(frequency)
+  //   this.drawTrajectory(frequency)
+  // },
 })

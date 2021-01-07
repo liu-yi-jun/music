@@ -3,9 +3,11 @@
   margin-left: 30rpx;
   font-size: 34rpx;
 }
+
 .analysis {
   color: white;
 }
+
 .wrap {
   width: 80%;
   position: absolute;
@@ -29,15 +31,109 @@
   padding: 0 120rpx;
   font-size: 36rpx;
 }
-.bar > view {
+
+.bar>view {
   flex-grow: 1;
   text-align: center;
 }
 
 canvas {
-  border: 1rpx solid black;
-  position: absolute;
-  left: 50%;
-  bottom: 200rpx;
-  transform: translateX(-50%);
+  margin-top: 20rpx;
+}
+
+
+/* ......................................... */
+.header {
+  height: 80rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  color: white;
+}
+
+.middle {
+  height: 80rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 30rpx;
+  color: white;
+}
+
+.left {
+  padding: 10rpx 20rpx;
+}
+
+.bar {
+  display: flex;
+  align-items: center;
+}
+
+
+.wx-switch-input {
+  border: 1rpx solid #b37ae5 !important;
+  width: 90rpx !important;
+  height: 50rpx !important;
+  background: #b37ae5 !important;
+}
+
+/* off */
+
+.wx-switch-input::before {
+  width: 90rpx !important;
+  height: 50rpx !important;
+}
+
+/* 圆 */
+
+.wx-switch-input::after {
+  width: 50rpx !important;
+  height: 50rpx !important;
+}
+
+.switchWarp {
+  margin-top: 40rpx;
+  display: flex;
+  justify-content: space-between;
+  color: white;
+  font-size: 24rpx;
+}
+
+
+.letter {
+  text-align: center;
+  margin-top: 50rpx;
+  font-size: 140rpx;
+}
+
+.stringWrap {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 20rpx;
+}
+
+.string {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.circular {
+  width: 70rpx;
+  height: 70rpx;
+  border-radius: 999rem;
+  background-color: rgba(255, 255, 255, 0.5);
+  text-align: center;
+  line-height: 70rpx;
+  color: white;
+  font-size: 30rpx;
+}
+.line {
+  background-color: white;
+  height: 240rpx ;
+  width: 4rpx;
+  margin-top: 20rpx;
 }
