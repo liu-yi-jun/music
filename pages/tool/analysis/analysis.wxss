@@ -1,4 +1,17 @@
 /* pages/tool/analysis/analysis.wxss */
+page::before {
+  content: ' ';
+  position: fixed;
+  z-index: -999;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url("http://cdn.eigene.cn/analysis/background.png") no-repeat;
+  /* background: url("http://cdn.eigene.cn/aaa/background.png") no-repeat; */
+  background-size: 100% 100%;
+}
+
 .title {
   margin-left: 30rpx;
   font-size: 34rpx;
@@ -38,34 +51,37 @@
 }
 
 canvas {
-  margin-top: 20rpx;
+  margin-top: 0.03vh;
 }
 
 
 /* ......................................... */
 .header {
-  height: 80rpx;
+  height: 5.99vh;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
   color: white;
+  position: relative;
+  top: -30rpx;
 }
 
 .middle {
-  height: 80rpx;
+  height: 5.99vh;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 30rpx;
   color: white;
+  margin-top: 1vh;
 }
 
 .left {
-  padding: 6rpx 18rpx;
+  padding: 3rpx 18rpx;
   border: 1px solid white;
   border-radius: 999rem;
-  font-size: 28rpx;
+  font-size: 26rpx;
 }
 
 .bar {
@@ -76,23 +92,23 @@ canvas {
 
 .wx-switch-input {
   border: 1rpx solid #b37ae5 !important;
-  width: 90rpx !important;
-  height: 50rpx !important;
+  width: 80rpx !important;
+  height: 40rpx !important;
   background: #b37ae5 !important;
 }
 
 /* off */
 
 .wx-switch-input::before {
-  width: 90rpx !important;
-  height: 50rpx !important;
+  width: 80rpx !important;
+  height: 40rpx !important;
 }
 
 /* 圆 */
 
 .wx-switch-input::after {
-  width: 50rpx !important;
-  height: 50rpx !important;
+  width: 40rpx !important;
+  height: 40rpx !important;
 }
 
 .switchWarp {
@@ -105,11 +121,13 @@ canvas {
 
 
 .letter {
-  height: 200rpx;
+  height: 14.9vh;
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-top: 3.5vh;
 }
+
 .middleLetter {
   display: flex;
   /* line-height: 0rpx; */
@@ -122,19 +140,20 @@ canvas {
   font-size: 200rpx;
   line-height: 195rpx;
 }
+
 .rightLetter {
   font-size: 72rpx;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
- 
+
 }
 
 .stringWrap {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  margin-top: 50rpx;
+  margin-top: 7vh;
   padding: 0rpx 40rpx;
   box-sizing: border-box;
   position: relative;
@@ -148,25 +167,25 @@ canvas {
 }
 
 .circular {
-  width: 65rpx;
-  height: 65rpx;
+  width: 60rpx;
+  height: 60rpx;
   border-radius: 999rem;
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.2);
   text-align: center;
   line-height: 65rpx;
   color: white;
-  font-size: 28rpx;
+  font-size: 24rpx;
 }
 
 .line {
-  background-color: white;
-  height: 240rpx;
-  width: 4rpx;
-  margin-top: 70rpx;
+  /* background-color: white; */
+  height: 18.44vh;
+  width: 3rpx;
+  margin-top: 5.24vh;
 }
 
 .right>text {
-  margin-right: 10rpx;
+  margin-right: 14rpx;
   font-size: 28rpx;
 }
 
@@ -176,37 +195,50 @@ canvas {
 }
 
 .column {
-  width: 80%;
+  width: 75%;
   left: 50%;
   transform: translateX(-50%);
   position: absolute;
-  top: 100rpx;
+  top: 7.49vh;
   height: 2rpx;
-  background-color: white;
 }
-.topLetter,.bottomLetter {
+
+.columnTrue {
+  width: 607.2rpx;
+  left: 50%;
+  height: 7rpx;
+  top: 7.49vh;
+  transform: translateX(-50%);
+  position: absolute;
+  z-index: 9999;
+  overflow:visible;
+}
+
+.topLetter,
+.bottomLetter {
   line-height: 115rpx;
   position: absolute;
 }
+
 .topLetter {
   right: 0;
   top: -13rpx;
 }
+
 .bottomLetter {
   right: 0;
   bottom: 0;
 }
+
 .calibration {
-  background-color: blue;
+  background-color: #3DDB62;
 }
 
 .logo {
-  width: 50rpx;
-  height: 50rpx;
-  border-radius: 50%;
-  background-color: red;
+  width: 40rpx;
+  height: 40rpx;
   position: absolute;
   top: 50%;
-  left: 0;
+  left: -20rpx;
   transition: all 0.1s;
 }

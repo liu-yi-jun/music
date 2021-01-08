@@ -18,7 +18,9 @@ page::before {
   /* background: url("http://cdn.eigene.cn/aaa/background.png") no-repeat; */
   background-size: 100% 100%;
 }
-
+.header > view:first-child{
+  font-size: 34rpx;
+}
 .avatar {
   width: 80%;
   height: 80%;

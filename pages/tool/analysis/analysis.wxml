@@ -40,7 +40,7 @@
       <switch checked="{{isAuto}}" bindchange="changeAuto"></switch>
     </view>
   </view>
-  <canvas type="2d" id="canvas" style="width: 100%; height: 300rpx;"></canvas>
+  <canvas type="2d" id="canvas" style="width: 100%; height: 15vh;"></canvas>
   <view class="letter" style="color:{{color}};">
     <view class="middleLetter">
       <view class="leftLetter">{{analysis.pitchFirst}}</view>
@@ -52,11 +52,17 @@
   </view>
   <view class="stringWrap">
     <view class="column" id="column">
-      <view class="logo" id="logo" style="transform: translate({{logoLeft}}px,-50%);background-color: {{color}};"></view>
+
     </view>
+    <image class="columnTrue" src="http://cdn.eigene.cn/analysis/row.png">
+      <image class="logo" id="logo" style="transform: translate({{logoTranslateX}}px,-50%);"
+        src="http://cdn.eigene.cn/analysis/logo{{color=='#FF5791'?'Red':'Green'}}.png">
+      </image>
+    </image>
     <view class="string" wx:for="{{standard}}" wx:key="index" catchtap="string" data-index="{{index}}">
       <view class="circular {{standardCurrent===index?'calibration':''}}">{{item.name}}</view>
-      <view class="line"></view>
+      <!-- <view class="line"></view> -->
+      <image class="line" src="http://cdn.eigene.cn/analysis/column.png"></image>
     </view>
   </view>
 </view>

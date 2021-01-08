@@ -22,7 +22,7 @@ Page({
     color: '#FF5791',
     letter: 'D#',
     // 返回的音调与基础音调的误差
-    disparity: 10,
+    disparity: 1,
     standard: [{
         name: 'E2',
         frequency: 82.41
@@ -40,7 +40,7 @@ Page({
         frequency: 196
       },
       {
-        name: 'B4',
+        name: 'B3',
         frequency: 246.95
       }, {
         name: 'E4',
@@ -51,10 +51,9 @@ Page({
     standardCurrent: 0,
     // 是否自动
     isAuto: true,
-    // logo移动的范围
-    logoMoveRange: 0,
-    logoWidth: 0,
-    logoLeft: 0
+    // 玄的之前的宽度 logo移动的范围 / 5
+    stringWidt: 0,
+    logoTranslateX: 0
   },
 
   /**
@@ -78,25 +77,26 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-    this.initLogoMoveRange()
-    this.initLogoWidth()
+    this.initStringWidt()
   },
-  initLogoMoveRange() {
+  initStringWidt() {
     let query = wx.createSelectorQuery();
+    let standard = this.data.standard
     query.select('#column').boundingClientRect(rect => {
       this.setData({
-        logoMoveRange: rect.width
+        stringWidt: rect.width / (standard.length - 1)
       })
     }).exec();
   },
-  initLogoWidth() {
-    let query = wx.createSelectorQuery();
-    query.select('#logo').boundingClientRect(rect => {
-      this.setData({
-        logoWidth: rect.width
-      })
-    }).exec();
-  },
+  // initLogoWidth() {
+  //   let query = wx.createSelectorQuery();
+  //   let standard = this.data.standard
+  //   query.select('#logo').boundingClientRect(rect => {
+  //     this.setData({
+  //       stringWidt: rect.width / (standard.length - 1)
+  //     })
+  //   }).exec();
+  // },
   // 在电脑上1px 就是1物理像素,那么就不用加dpr转化了
 
   // 1px 在苹果678 中 等于 2物理像素 ， 所以dpr = 2/1 = 2
@@ -251,56 +251,51 @@ Page({
             analysis
           })
 
-          // 校准哪一个
+          // 校准哪一个 + logo位置
           this.calibration(data.frequency)
-          // logo位置
-          this.logoPlace(data.frequency)
         }, 100)
       }
-    })
-  },
-  logoPlace(frequency) {
-    let {
-      logoMoveRange,
-      logoWidth,
-      standard
-    } = this.data
-    if (frequency >= standard[standard.length - 1].frequency) {
-      frequency = standard[standard.length - 1].frequency
-    }
-    if (frequency <= standard[0].frequency) {
-      frequency = standard[0].frequency
-    }
-    let logoLeft = (frequency - standard[0].frequency) * (logoMoveRange - logoWidth) / (standard[standard.length - 1].frequency - standard[0].frequency)
-    this.setData({
-      logoLeft
     })
   },
   calibration(frequency) {
     let {
       isAuto,
       standardCurrent,
-      standard
+      standard,
+      stringWidt
     } = this.data
+    let logoTranslateX = 0
+    if (frequency >= standard[standard.length - 1].frequency) {
+      standardCurrent = standard.length - 1
+      logoTranslateX = stringWidt * (standard.length - 1)
+    } else if (frequency >= standard[4].frequency) {
+      standardCurrent = ((frequency - standard[4].frequency) - (standard[standard.length - 1].frequency - frequency) > 0) ? standard.length - 1 : 4
+      logoTranslateX = (stringWidt * 4) + stringWidt * (frequency - standard[4].frequency) / (standard[standard.length - 1].frequency - standard[4].frequency)
+    } else if (frequency >= standard[3].frequency) {
+      standardCurrent = ((frequency - standard[3].frequency) - (standard[4].frequency - frequency) > 0) ? 4 : 3
+      logoTranslateX = (stringWidt * 3) + stringWidt * (frequency - standard[3].frequency) / (standard[4].frequency - standard[3].frequency)
+    } else if (frequency >= standard[2].frequency) {
+      standardCurrent = ((frequency - standard[2].frequency) - (standard[3].frequency - frequency) > 0) ? 3 : 2
+      logoTranslateX = (stringWidt * 2) + stringWidt * (frequency - standard[2].frequency) / (standard[3].frequency - standard[2].frequency)
+    } else if (frequency >= standard[1].frequency) {
+      standardCurrent = ((frequency - standard[1].frequency) - (standard[2].frequency - frequency) > 0) ? 2 : 1
+      logoTranslateX = (stringWidt * 1) + stringWidt * (frequency - standard[1].frequency) / (standard[2].frequency - standard[1].frequency)
+    } else if (frequency >= standard[0].frequency) {
+      standardCurrent = ((frequency - standard[0].frequency) - (standard[1].frequency - frequency) > 0) ? 1 : 0
+      logoTranslateX = (stringWidt * 0) + stringWidt * (frequency - standard[0].frequency) / (standard[1].frequency - standard[0].frequency)
+    } else {
+      standardCurrent = 0
+      logoTranslateX = 0
+    }
     if (isAuto) {
-      if (frequency >= standard[standard.length - 1].frequency) {
-        standardCurrent = standard.length - 1
-      } else if (frequency >= standard[4].frequency) {
-        standardCurrent = ((frequency - standard[4].frequency) - (standard[standard.length - 1].frequency - frequency) > 0) ? standard.length - 1 : 4
-      } else if (frequency >= standard[3].frequency) {
-        standardCurrent = ((frequency - standard[3].frequency) - (standard[4].frequency - frequency) > 0) ? 4 : 3
-      } else if (frequency >= standard[2].frequency) {
-        standardCurrent = ((frequency - standard[2].frequency) - (standard[3].frequency - frequency) > 0) ? 3 : 2
-      } else if (frequency >= standard[1].frequency) {
-        standardCurrent = ((frequency - standard[1].frequency) - (standard[2].frequency - frequency) > 0) ? 2 : 1
-      } else if (frequency >= standard[0].frequency) {
-        standardCurrent = ((frequency - standard[0].frequency) - (standard[1].frequency - frequency) > 0) ? 1 : 0
-      } else {
-        standardCurrent = 0
-      }
       this.setData({
         standardCurrent,
-        line: this.data.standard[standardCurrent].frequency
+        line: this.data.standard[standardCurrent].frequency,
+        logoTranslateX
+      })
+    } else {
+      this.setData({
+        logoTranslateX
       })
     }
   },
