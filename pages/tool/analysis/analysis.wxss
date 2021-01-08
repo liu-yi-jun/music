@@ -196,3 +196,17 @@ canvas {
   right: 0;
   bottom: 0;
 }
+.calibration {
+  background-color: blue;
+}
+
+.logo {
+  width: 50rpx;
+  height: 50rpx;
+  border-radius: 50%;
+  background-color: red;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transition: all 0.1s;
+}

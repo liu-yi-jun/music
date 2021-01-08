@@ -22,7 +22,39 @@ Page({
     color: '#FF5791',
     letter: 'D#',
     // 返回的音调与基础音调的误差
-    disparity: 10
+    disparity: 10,
+    standard: [{
+        name: 'E2',
+        frequency: 82.41
+      },
+      {
+        name: 'A2',
+        frequency: 110
+      },
+      {
+        name: 'D3',
+        frequency: 146.83
+      },
+      {
+        name: 'G3',
+        frequency: 196
+      },
+      {
+        name: 'B4',
+        frequency: 246.95
+      }, {
+        name: 'E4',
+        frequency: 329.64
+      }
+    ],
+    // 当前校验的下标
+    standardCurrent: 0,
+    // 是否自动
+    isAuto: true,
+    // logo移动的范围
+    logoMoveRange: 0,
+    logoWidth: 0,
+    logoLeft: 0
   },
 
   /**
@@ -39,7 +71,31 @@ Page({
         size: true,
       })
       .exec(this.initCanvas.bind(this))
+
     this.start()
+  },
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function () {
+    this.initLogoMoveRange()
+    this.initLogoWidth()
+  },
+  initLogoMoveRange() {
+    let query = wx.createSelectorQuery();
+    query.select('#column').boundingClientRect(rect => {
+      this.setData({
+        logoMoveRange: rect.width
+      })
+    }).exec();
+  },
+  initLogoWidth() {
+    let query = wx.createSelectorQuery();
+    query.select('#logo').boundingClientRect(rect => {
+      this.setData({
+        logoWidth: rect.width
+      })
+    }).exec();
   },
   // 在电脑上1px 就是1物理像素,那么就不用加dpr转化了
 
@@ -194,8 +250,64 @@ Page({
           this.setData({
             analysis
           })
+
+          // 校准哪一个
+          this.calibration(data.frequency)
+          // logo位置
+          this.logoPlace(data.frequency)
         }, 100)
       }
+    })
+  },
+  logoPlace(frequency) {
+    let {
+      logoMoveRange,
+      logoWidth,
+      standard
+    } = this.data
+    if (frequency >= standard[standard.length - 1].frequency) {
+      frequency = standard[standard.length - 1].frequency
+    }
+    if (frequency <= standard[0].frequency) {
+      frequency = standard[0].frequency
+    }
+    let logoLeft = (frequency - standard[0].frequency) * (logoMoveRange - logoWidth) / (standard[standard.length - 1].frequency - standard[0].frequency)
+    this.setData({
+      logoLeft
+    })
+  },
+  calibration(frequency) {
+    let {
+      isAuto,
+      standardCurrent,
+      standard
+    } = this.data
+    if (isAuto) {
+      if (frequency >= standard[standard.length - 1].frequency) {
+        standardCurrent = standard.length - 1
+      } else if (frequency >= standard[4].frequency) {
+        standardCurrent = ((frequency - standard[4].frequency) - (standard[standard.length - 1].frequency - frequency) > 0) ? standard.length - 1 : 4
+      } else if (frequency >= standard[3].frequency) {
+        standardCurrent = ((frequency - standard[3].frequency) - (standard[4].frequency - frequency) > 0) ? 4 : 3
+      } else if (frequency >= standard[2].frequency) {
+        standardCurrent = ((frequency - standard[2].frequency) - (standard[3].frequency - frequency) > 0) ? 3 : 2
+      } else if (frequency >= standard[1].frequency) {
+        standardCurrent = ((frequency - standard[1].frequency) - (standard[2].frequency - frequency) > 0) ? 2 : 1
+      } else if (frequency >= standard[0].frequency) {
+        standardCurrent = ((frequency - standard[0].frequency) - (standard[1].frequency - frequency) > 0) ? 1 : 0
+      } else {
+        standardCurrent = 0
+      }
+      this.setData({
+        standardCurrent,
+        line: this.data.standard[standardCurrent].frequency
+      })
+    }
+  },
+  changeAuto() {
+    this.setData({
+      isAuto: !this.data.isAuto,
+      standardCurrent: -1
     })
   },
   initrecorderManager() {
@@ -275,11 +387,14 @@ Page({
     this.recorderManager.start(options)
 
   },
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
+  string(e) {
+    if (!this.data.isAuto) {
+      let index = e.currentTarget.dataset.index
+      this.setData({
+        standardCurrent: index,
+        line: this.data.standard[index].frequency
+      })
+    }
   },
   // onLoad: function (options) {
   //   this.initrecorderManager()

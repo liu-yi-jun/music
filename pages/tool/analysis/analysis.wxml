@@ -37,7 +37,7 @@
     <view class="left">标准</view>
     <view class="right">
       <text>自动</text>
-      <switch checked="{{examine}}" bindchange="changeExamine"></switch>
+      <switch checked="{{isAuto}}" bindchange="changeAuto"></switch>
     </view>
   </view>
   <canvas type="2d" id="canvas" style="width: 100%; height: 300rpx;"></canvas>
@@ -51,29 +51,11 @@
     </view>
   </view>
   <view class="stringWrap">
-    <view class="column"></view>
-    <view class="string">
-      <view class="circular">E2</view>
-      <view class="line"></view>
+    <view class="column" id="column">
+      <view class="logo" id="logo" style="transform: translate({{logoLeft}}px,-50%);background-color: {{color}};"></view>
     </view>
-    <view class="string">
-      <view class="circular">A2</view>
-      <view class="line"></view>
-    </view>
-    <view class="string">
-      <view class="circular">D3</view>
-      <view class="line"></view>
-    </view>
-    <view class="string">
-      <view class="circular">G3</view>
-      <view class="line"></view>
-    </view>
-    <view class="string">
-      <view class="circular">B4</view>
-      <view class="line"></view>
-    </view>
-    <view class="string">
-      <view class="circular">E4</view>
+    <view class="string" wx:for="{{standard}}" wx:key="index" catchtap="string" data-index="{{index}}">
+      <view class="circular {{standardCurrent===index?'calibration':''}}">{{item.name}}</view>
       <view class="line"></view>
     </view>
   </view>
