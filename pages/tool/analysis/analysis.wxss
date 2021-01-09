@@ -52,6 +52,24 @@ page::before {
 
 canvas {
   margin-top: 0.03vh;
+  position: relative;
+}
+.cover-wrap {
+  width: 36px;
+  height: 30px;
+  position: absolute; 
+}
+.cover-image {
+  width: 100%;
+  height: 100%;
+}
+.cover-text{
+  color: white;
+  font-size: 24rpx;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 4px;
 }
 
 
@@ -125,7 +143,7 @@ canvas {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 3.5vh;
+  margin-top: 1.5vh;
 }
 
 .middleLetter {
@@ -195,11 +213,11 @@ canvas {
 }
 
 .column {
-  width: 75%;
+  width: 93%;
   left: 50%;
-  transform: translateX(-50%);
+  top: 50%;
+  transform: translate(-50%, -50%);
   position: absolute;
-  top: 7.49vh;
   height: 2rpx;
 }
 
@@ -211,7 +229,7 @@ canvas {
   transform: translateX(-50%);
   position: absolute;
   z-index: 9999;
-  overflow:visible;
+  overflow: visible;
 }
 
 .topLetter,
@@ -223,6 +241,7 @@ canvas {
 .topLetter {
   right: 0;
   top: -13rpx;
+  font-style: italic;
 }
 
 .bottomLetter {

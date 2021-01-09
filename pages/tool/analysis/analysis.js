@@ -11,9 +11,9 @@ Page({
     spots: [],
     // 圆位于哪里上下波动 width/1.5 
     // 越大距离左边越近
-    seat: 1.3,
+    seat: 1.5,
     // 小球半径
-    radius: 4,
+    radius: 5,
     // 轨迹点的密集程度（值越大越稀疏）
     dense: 130,
     // 轨迹点最多的数量
@@ -53,7 +53,9 @@ Page({
     isAuto: true,
     // 玄的之前的宽度 logo移动的范围 / 5
     stringWidt: 0,
-    logoTranslateX: 0
+    logoTranslateX: 0,
+    circleCenterX: 0,
+    circleCenterY: 0
   },
 
   /**
@@ -77,6 +79,7 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
+
     this.initStringWidt()
   },
   initStringWidt() {
@@ -131,6 +134,9 @@ Page({
     this.canvas = canvas
     this.ctx = ctx
     console.log(ctx)
+    // this.setData({
+
+    // })
   },
   drawLine() {
     let width = this.width
@@ -162,6 +168,10 @@ Page({
     ctx.strokeStyle = "white"
     ctx.fill();
     ctx.stroke();
+    this.setData({
+      circleCenterX: width / seat,
+      circleCenterY: height - radius - y
+    })
   },
   drawTrajectory(frequency) {
     let ctx = this.ctx
@@ -193,6 +203,7 @@ Page({
       ctx.quadraticCurveTo(cp_x1, spots[i].y, x_mid, y_mid);
       ctx.quadraticCurveTo(cp_x2, spots[i + 1].y, spots[i + 1].x, spots[i + 1].y);
     }
+
     ctx.stroke();
     spots.forEach((item, index) => {
       item.x = item.x - dense
@@ -267,7 +278,7 @@ Page({
     let logoTranslateX = 0
     if (frequency >= standard[standard.length - 1].frequency) {
       standardCurrent = standard.length - 1
-      logoTranslateX = stringWidt * (standard.length - 1)
+      logoTranslateX = stringWidt * (standard.length - 1) + 8
     } else if (frequency >= standard[4].frequency) {
       standardCurrent = ((frequency - standard[4].frequency) - (standard[standard.length - 1].frequency - frequency) > 0) ? standard.length - 1 : 4
       logoTranslateX = (stringWidt * 4) + stringWidt * (frequency - standard[4].frequency) / (standard[standard.length - 1].frequency - standard[4].frequency)
@@ -285,7 +296,7 @@ Page({
       logoTranslateX = (stringWidt * 0) + stringWidt * (frequency - standard[0].frequency) / (standard[1].frequency - standard[0].frequency)
     } else {
       standardCurrent = 0
-      logoTranslateX = 0
+      logoTranslateX = -8
     }
     if (isAuto) {
       this.setData({

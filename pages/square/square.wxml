@@ -3,7 +3,7 @@
   <!-- <scroll-view enable-back-to-top="{{true}}" bindscroll="move" class="scroll" scroll-with-animation scroll-y bindscrolltolower="scrolltolower" scroll-top="{{scrollTop}}"> -->
     <navBar  backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' iconTheme='white' ></navBar>
     <!-- bind:toScrollTop="toScrollTop" -->
-    <view class="hideBar" catchtap="hideBar">
+    <!-- <view class="hideBar" catchtap="hideBar">
     </view>
     <view mark:district="hideBarBackground" class="hideBarBackground {{hideBarShow? 'hideBarUnfold': 'hideBarPackUp'}}">
       <view catchtap="goUnion">
@@ -11,18 +11,18 @@
         <text>小组联盟</text>
       </view>
       <view catchtap="goBand">
-        <image src="http://cdn.eigene.cn/square/band.png"></image>
+        <image src="http://cdn.eigene.cn/square/band1.png"></image>
         <text>乐队之家</text>
       </view>
       <view catchtap="goPerformance">
-        <image src="http://cdn.eigene.cn/square/performance.png"></image>
+        <image src="http://cdn.eigene.cn/square/performance1.png"></image>
         <text>演出资讯</text>
       </view>
       <view catchtap="goDeal">
-        <image src="http://cdn.eigene.cn/square/deal.png"></image>
+        <image src="http://cdn.eigene.cn/square/deal1.png"></image>
         <text>二手交易</text>
       </view>
-    </view>
+    </view> -->
     <view class="community">
       <view class="cardWrap">
         <view class="signInBackground">
@@ -42,12 +42,14 @@
             </view>
           </view>
           <text class="dayText">天</text>
-          <image catchtap="singIn" class="signIn" src="http://cdn.eigene.cn/square/signIn.png"></image>
+          <image catchtap="singIn" class="signIn" src="http://cdn.eigene.cn/square/signIn1.png"></image>
         </view>
         <view class="recommendBackground" id="recommendBackground">
-          <marquee  id="marquee" text="{{song.songName}}-{{song.author}}"></marquee>
-          <image catchtap="playSong" data-songurl="{{song.songUrl}}" class="played" src="http://cdn.eigene.cn/square/play{{play?'ed':''}}.png"></image>
-          <image catchtap="toStoreSong" class="store" src="http://cdn.eigene.cn/square/store{{song.isStore?'d':''}}.png"></image>
+
+
+          <!-- <marquee  id="marquee" text="{{song.songName}}-{{song.author}}"></marquee> -->
+          <!-- <image catchtap="playSong" data-songurl="{{song.songUrl}}" class="played" src="http://cdn.eigene.cn/square/play{{play?'ed':''}}.png"></image>
+          <image catchtap="toStoreSong" class="store" src="http://cdn.eigene.cn/square/store{{song.isStore?'d':''}}.png"></image> -->
         </view>
       </view>
       <swiper class="topicWrap">

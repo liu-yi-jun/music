@@ -54,28 +54,28 @@ Page({
     this.getSquaredynamics()
     this.getTopic()
     this.getDate()
-    this.getRandomSong()
+    // this.getRandomSong()
     this.setData({
       signInSums
     })
 
 
-    wx.onBackgroundAudioStop(() => {
-      this.marquee.pauseScroll()
-      this.setData({
-        play: false
-      })
-    })
+    // wx.onBackgroundAudioStop(() => {
+    //   this.marquee.pauseScroll()
+    //   this.setData({
+    //     play: false
+    //   })
+    // })
   },
-  getRandomSong() {
-    app.get(app.Api.getRandomSong, {
-      userId: app.userInfo.id
-    }).then(res => {
-      this.setData({
-        song: res[0]
-      })
-    })
-  },
+  // getRandomSong() {
+  //   app.get(app.Api.getRandomSong, {
+  //     userId: app.userInfo.id
+  //   }).then(res => {
+  //     this.setData({
+  //       song: res[0]
+  //     })
+  //   })
+  // },
   getTopic(e) {
     app.get(app.Api.allTopic).then(res => {
       this.setData({
@@ -94,19 +94,19 @@ Page({
           isNotData: true
         })
       }
-      console.log('app.globalData.guide.square', app.globalData.guide.square)
-      if (app.globalData.guide.square) {
-        this.getTabBar().setData({
-          show: false,
-        })
-        this.setData({
-          tabBarBtnShow: true,
-        }, () => {
-          this.setData({
-            squareGuide: app.globalData.guide.square,
-          })
-        })
-      }
+      // console.log('app.globalData.guide.square', app.globalData.guide.square)
+      // if (app.globalData.guide.square) {
+      //   this.getTabBar().setData({
+      //     show: false,
+      //   })
+      //   this.setData({
+      //     tabBarBtnShow: true,
+      //   }, () => {
+      //     this.setData({
+      //       squareGuide: app.globalData.guide.square,
+      //     })
+      //   })
+      // }
       this.setData({
         dynamics: this.data.dynamics.concat(res),
         'squaredynamicsPaging.pageIndex': squaredynamicsPaging.pageIndex + 1

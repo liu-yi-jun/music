@@ -1,51 +1,58 @@
 /* pages/square/square.wxss */
 
+
+
+
 .cardWrap {
   display: flex;
   justify-content: center;
-  margin: 40rpx 0;
+  margin: 10rpx 0;
+  overflow: hidden;
 }
 
 .signInBackground {
-  background-image: url('http://cdn.eigene.cn/square/signInBackground.png');
-  width: 510rpx;
-  height: 330rpx;
+  background-image: url('http://cdn.eigene.cn/square/signInBackground1.png');
+  width: 630rpx;
+  height: 414rpx;
   background-size: 100% 100%;
   position: relative;
+  margin-left: -10rpx;
 }
 
 .recommendBackground {
   position: relative;
-  margin-left: 17rpx;
-  background-image: url('http://cdn.eigene.cn/square/recommendBackground.png');
-  width: 190rpx;
-  height: 330rpx;
+  background-image: url('http://cdn.eigene.cn/square/recommendBackground1.png');
+  width: 204rpx;
+  height: 414rpx;
   background-size: 100% 100%;
   overflow: hidden;
+  margin-left: -40rpx;
+  margin-right: -10rpx;
 }
 
 .everyday {
   position: absolute;
-  top: 30rpx;
-  left: 35rpx;
+  top: 57rpx;
+  left: 68rpx;
   font-size: 33rpx;
   color: white;
 }
 
 .date {
   position: absolute;
-  right: 20rpx;
-  top: 24rpx;
+  right: 64rpx;
+  top: 54rpx;
   width: 150rpx;
   align-items: flex-end;
   display: flex;
   flex-direction: column;
   color: white;
 }
+
 .signInSumsWrap {
   position: absolute;
-  left: 28rpx;
-  bottom: 50rpx;
+  left: 55rpx;
+  bottom: 65rpx;
   width: 237rpx;
   display: flex;
   font-size: 65rpx;
@@ -54,12 +61,14 @@
   justify-content: space-between;
   align-items: center;
 }
+
 .signInPart {
   width: 47%;
   display: flex;
   justify-content: space-around;
   align-items: center;
 }
+
 .date .yearMonth {
   font-size: 20rpx;
   /* margin-right: 10rpx; */
@@ -74,8 +83,8 @@
   width: 155rpx;
   height: 155rpx;
   position: absolute;
-  bottom: 15rpx;
-  right: 0rpx;
+  bottom: 45rpx;
+  right: 39rpx;
 }
 
 .played {
@@ -102,14 +111,20 @@
   background-repeat: no-repeat;
   background-size: 100% 100%;
   box-sizing: border-box;
-  padding: 15rpx 25rpx;
+  padding: 8rpx 25rpx;
   font-size: 23rpx;
-  display: inline-block;
+  /* display: inline-block;
+   */
+   display:flex;
+   align-items: center;
+   justify-content: center;
 }
+
 .topicWrap {
   margin-bottom: 25rpx;
   height: 70rpx;
 }
+
 swiper-item {
   height: 70rpx;
   display: flex;
@@ -226,8 +241,8 @@ swiper-item {
 
 .dayText {
   position: absolute;
-  left: 300rpx;
-  bottom: 40rpx;
+  left: 320rpx;
+  bottom: 52rpx;
   display: block;
 }
 
@@ -273,6 +288,7 @@ swiper-item {
   top: 22%;
   color: white;
 }
+
 .cross {
   transition: 2s all;
   background: rgba(0, 0, 0, 1);
