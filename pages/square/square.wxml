@@ -45,8 +45,11 @@
           <image catchtap="singIn" class="signIn" src="http://cdn.eigene.cn/square/signIn1.png"></image>
         </view>
         <view class="recommendBackground" id="recommendBackground">
-
-
+          <view class="recommendBackgroundItem">
+          <view catchtap="goBand"></view>
+          <view catchtap="goPerformance"></view>
+          <view catchtap="goDeal"></view>
+        </view>
           <!-- <marquee  id="marquee" text="{{song.songName}}-{{song.author}}"></marquee> -->
           <!-- <image catchtap="playSong" data-songurl="{{song.songUrl}}" class="played" src="http://cdn.eigene.cn/square/play{{play?'ed':''}}.png"></image>
           <image catchtap="toStoreSong" class="store" src="http://cdn.eigene.cn/square/store{{song.isStore?'d':''}}.png"></image> -->

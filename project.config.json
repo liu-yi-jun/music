@@ -1882,6 +1882,18 @@
         {
           "name": "pages/tool/analysis/analysis",
           "pathName": "pages/tool/analysis/analysis",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/square/square",
+          "pathName": "pages/square/square",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/square/square",
+          "pathName": "pages/square/square",
           "scene": null
         }
       ]
