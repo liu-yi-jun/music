@@ -119,7 +119,7 @@
   </view>
   <!-- src="http://cdn.eigene.cn/tabBarBtn.png" -->
 
-  <image mark:district="issue" class="issue-background {{switchIssue?'showIssue':''}}"
+  <image mark:district="issue" class="issue-background {{switchIssue?'showIssue':'hideIssue'}}"
     src="http://cdn.eigene.cn/issue-background.png">
     <image class="uploadVoice" src="http://cdn.eigene.cn/uploadVoice.png" catchtap="goUploadVoice"></image>
     <image class="uploadVideo" src="http://cdn.eigene.cn/uploadVideo.png" class="uploadVideo" catchtap="goUploadVideo">
@@ -127,7 +127,7 @@
     <image class="issueImg" src="http://cdn.eigene.cn/issueImg.png" catchtap="goIssueImg"></image>
     <image class="issueBtn" src="http://cdn.eigene.cn/issueBtn.png" catchtap="putIssueBtn"></image>
   </image>
-  <image class="expandIssue {{!switchIssue?'showExpandIssue':''}}" catchtap="switchIssue"
+  <image class="expandIssue {{!switchIssue?'showExpandIssue':'hideExpandIssue'}}" catchtap="switchIssue"
     src="http://cdn.eigene.cn/expandIssue.png"></image>
   <showTabBar tabBarBtnShow="{{tabBarBtnShow}}">
   </showTabBar>

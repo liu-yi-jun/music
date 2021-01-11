@@ -249,16 +249,23 @@ page::before {
   position: absolute;
   left: 30rpx;
   bottom: 20.61%;
-  transition: 0.4s all;
+  transition: 0.5s all;
+  height: 0;
+  width:0;
   height: 87rpx;
   width: 124rpx;
   transform: scale(0);
   opacity: 0;
 }
-
+.hideExpandIssue  {
+  /* transform: translate(15px, -24px); */
+  /* bottom: 23.61%;
+  left: 50rpx; */
+}
 .showExpandIssue {
   transform: scale(1);
   opacity: 1;
+
 }
 
 .socialManagement {
@@ -697,6 +704,10 @@ page {
   width: 82rpx;
   height: 82rpx;
   position: relative;
+}
+.hideIssue {
+  transform: translate(60rpx,-75rpx);
+  /* transform: translate(60rpx,-50rpx); */
 }
 
 @media screen and (max-aspect-ratio: 1/2) {
