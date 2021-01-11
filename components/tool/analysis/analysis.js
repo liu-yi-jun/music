@@ -13,8 +13,8 @@ Component({
    * 组件的初始数据
    */
   data: {
-    v0: 3,
-    a: 0.5,
+    v0: 0.025,
+    a: 0.3,
     oldCent: -50,
     analysis: {},
     line: 440,
@@ -23,13 +23,13 @@ Component({
     spots: [],
     // 圆位于哪里上下波动 width/1.5 
     // 越大距离左边越近
-    seat: 1.5,
+    seat: 1.55,
     // 小球半径
     radius: 5,
     // 轨迹点的密集程度（值越大越稀疏）
-    dense: 5,
+    dense: 4,
     // 轨迹点最多的数量
-    pointCount: 40,
+    pointCount: 100,
     // 整体颜色
     color: '#FF5791',
     letter: 'D#',
@@ -75,6 +75,7 @@ Component({
       this.canPonit = true
       this.initrecorderManager()
       this.initSocket()
+      this.initCentBox()
       this.start()
 
     },
@@ -102,6 +103,22 @@ Component({
    * 组件的方法列表
    */
   methods: {
+    initCentBox() {
+      // canvas绘制网络图片需保存至本地
+      wx.getImageInfo({
+        src: 'http://cdn.eigene.cn/analysis/dialogRed.png', //服务器返回的图片地址，需加入downloadFile白名单
+        success: res => {
+          console.log('initCentBox', res)
+          this.redCentBoxPath = res.path
+        },
+      });
+      wx.getImageInfo({
+        src: 'http://cdn.eigene.cn/analysis/dialogGreen.png', //服务器返回的图片地址，需加入downloadFile白名单
+        success: res => {
+          this.GreenCentBoxPath = res.path
+        },
+      });
+    },
     initStringWidt() {
       let query = wx.createSelectorQuery().in(this)
       let standard = this.data.standard
@@ -112,7 +129,6 @@ Component({
       }).exec();
     },
     initCanvas(res) {
-      console.log(res, 1111111111)
       const width = res[0].width
       const height = res[0].height
       const canvas = res[0].node
@@ -130,6 +146,37 @@ Component({
 
       // })
       // this.test()
+    },
+    drawCentBox(oldCent) {
+      return new Promise((resolve, reject) => {
+        let width = this.width
+        let height = this.height
+        let ctx = this.ctx
+        let {
+          seat,
+          radius,
+          centRange
+        } = this.data
+        let y = ((oldCent + centRange / 2) * (height - 2 * radius)) / centRange
+        let circleCenterX = width / seat
+        let circleCenterY = height - radius - y
+        let redCentBox = this.canvas.createImage()
+        redCentBox.src = '../../../images/dialogRed.png'
+        redCentBox.onload = () => {
+          ctx.drawImage(redCentBox, circleCenterX - 18, circleCenterY - 40, 36, 30)
+          resolve()
+        }
+
+        // img.onload = () => {
+        //   resolve(img);
+        //   console.log('加载完成')
+        //  };
+        //  img.onerror = () => {
+        //   console.log('加载失败')
+        //   uni.hideLoading();
+        //   reject('');
+        //  }
+      })
     },
     drawLine() {
       let width = this.width
@@ -260,8 +307,10 @@ Component({
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       this.drawLine()
       this.drawBall(oldCent)
-      // setTimeout(()=>{
+      // this.drawCentBox(oldCent)
       this.drawTrajectory(oldCent, newCent)
+      // setTimeout(()=>{
+
       // },200)
     },
     initSocket() {
@@ -269,6 +318,8 @@ Component({
         if (this.can) {
           this.can = false
           this.v0 = this.data.v0
+          // 拐点渲染次数
+          this.inflection = 1
           console.log(data)
           if (data.cent > 50) {
             data.cent = 50
@@ -288,30 +339,17 @@ Component({
         }
       })
     },
-    test() {
-      // while (oldCent < 50) {
+    // test() {
+    //   oldCent++
+    //   console.log(oldCent)
+    //   this.motionBall(oldCent)
 
-      //   this.motionBall(oldCent)
-      //   oldCent++
-      // }
-      oldCent++
-      console.log(oldCent)
-      this.motionBall(oldCent)
+    //   this.point = this.canvas.requestAnimationFrame(this.test.bind(this))
 
-      this.point = this.canvas.requestAnimationFrame(this.test.bind(this))
-
-      if (oldCent >= 100) {
-        // clearInterval(this.point)
-        this.canvas.cancelAnimationFrame(this.point)
-      }
-      // this.point = setInterval(() => {
-      //   if(oldCent >=100) {
-      //     clearInterval( this.point)
-      //   }
-      //   this.motionBall(oldCent)
-      //   oldCent++
-      // }, 50)
-    },
+    //   if (oldCent >= 100) {
+    //     this.canvas.cancelAnimationFrame(this.point)
+    //   }
+    // },
     realizationPainting(data) {
       console.log('realizationPainting')
       let color;
@@ -324,6 +362,7 @@ Component({
       analysis.pitchTwo = data.pitch ? data.pitch.charAt(1) : ''
       if (this.direction == 'up') {
         this.data.oldCent = (this.data.oldCent + this.v0 >= data.cent) ? data.cent : (this.data.oldCent + this.v0)
+
       } else {
         this.data.oldCent = (this.data.oldCent - this.v0 <= data.cent) ? data.cent : (this.data.oldCent - this.v0)
       }
@@ -348,21 +387,40 @@ Component({
       this.calibration(data.frequency)
       if (this.direction == 'up') {
         if (data.cent <= this.data.oldCent) {
-          this.canvas.cancelAnimationFrame(this.point)
-          this.can = true
-          return
+          if (this.inflection && this.data.oldCent === data.cent) {
+            // 是拐点让它继续咨询inflection次
+            this.inflection--
+          } else {
+            this.canvas.cancelAnimationFrame(this.point)
+            this.can = true
+            return
+          }
+
         }
       } else {
         if (data.cent >= this.data.oldCent) {
-          this.canvas.cancelAnimationFrame(this.point)
-          this.can = true
-          return
+          if (this.inflection && this.data.oldCent === data.cent) {
+            // 是拐点让它继续咨询inflection次
+            this.inflection--
+          } else {
+            this.canvas.cancelAnimationFrame(this.point)
+            this.can = true
+            return
+          }
         }
       }
-      if(((this.data.oldCent + 50) - (this.baseCent+50)) >= ((data.cent+50) - (this.baseCent+50))/2 ) {
-        this.v0 = this.v0 - this.data.a
-      }else {
-        this.v0 = this.v0 + this.data.a
+      if (this.data.oldCent - this.baseCent >= (data.cent - this.baseCent) / 2) {
+        if (this.direction == 'up') {
+          this.v0 = (this.v0 - this.data.a <= 2) ? 2 : this.v0 - this.data.a
+        } else {
+          this.v0 = this.v0 + this.data.a
+        }
+      } else {
+        if (this.direction == 'up') {
+          this.v0 = this.v0 + this.data.a
+        } else {
+          this.v0 = (this.v0 - this.data.a <= 2) ? 2 : this.v0 - this.data.a
+        }
       }
       this.point = this.canvas.requestAnimationFrame(this.realizationPainting.bind(this, data))
     },

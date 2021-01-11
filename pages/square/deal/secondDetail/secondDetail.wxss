@@ -1,0 +1,120 @@
+/* pages/square/deal/secondDetail/secondDetail.wxss */
+
+
+.head {
+  display: flex;
+  align-items: center;
+  height: 120rpx;
+  margin-top: 10rpx;
+}
+
+.avatar {
+  width: 90rpx;
+  height: 90rpx;
+  border-radius: 50%;
+  margin-left: 20rpx;
+}
+
+.userName {
+  margin-left: 20rpx;
+}
+
+swiper {
+  width: 100%;
+  height: 452rpx;
+}
+.video {
+  width: 100%;
+  height: 452rpx;
+}
+
+swiper-item, .dynamicImg {
+  width: 100%;
+  height: 100%;
+}
+
+.icon-time {
+  box-sizing: border-box;
+  padding: 20rpx 20rpx 0 10rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.iconWrap {
+  display: flex;
+}
+
+.time {
+  font-size: 24rpx;
+  color: #b7b8b8;
+}
+
+.icon {
+  display: flex;
+  align-items: center;
+}
+
+.icon image {
+  width: 40rpx;
+  height: 40rpx;
+  margin-left: 20rpx;
+}
+
+.icon text {
+  color: white;
+  font-size: 26rpx;
+  margin-left: 10rpx;
+}
+
+.content {
+  font-size: 28rpx;
+  color: white;
+  padding: 30rpx 40rpx;
+  box-sizing: border-box;
+  width: 98%;
+  margin: auto;
+  border-bottom: 1rpx solid #cacbcb;
+}
+
+.wx-swiper-dots {
+  position: relative;
+  left: unset !important;
+  right: 0rpx;
+}
+
+.wx-swiper-dots.wx-swiper-dots-horizontal {
+  /* margin-bottom: -5rpx; */
+}
+
+.footerComment {
+  background: linear-gradient(to bottom, rgba(226, 145, 227, 0.5), rgba(0, 69, 207, 0.5));
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  z-index: 999;
+}
+
+.commentWrap {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 40rpx 20rpx 0;
+}
+
+.commentWrap image {
+  width: 60rpx;
+  height: 60rpx;
+}
+
+.commentWrap text {
+  color: white;
+  font-size: 30rpx;
+  margin-left: 10rpx;
+}
+
+.recordWrap {
+  width: 350rpx;
+  height: 350rpx;
+  margin: 20rpx auto;
+}

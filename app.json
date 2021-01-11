@@ -51,7 +51,9 @@
     "components/common/menu/menu",
     "pages/square/deal/storeDeal/storeDeal",
     "pages/tool/tapPractice/tapPractice",
-    "pages/tool/analysis/analysis"
+    "pages/tool/analysis/analysis",
+    "pages/square/deal/secondDetail/secondDetail",
+    "pages/square/deal/ticketDetail/ticketDetail"
   ],
   "permission": {
     "scope.userLocation": {
