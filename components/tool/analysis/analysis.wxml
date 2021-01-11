@@ -1,10 +1,5 @@
-<!--pages/tool/analysis/analysis.wxml-->
+<!--components/tool/analysis/analysis.wxml-->
 <view>
-  <navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' iconTheme='white'></navBar>
-  <view class="header">
-    <view>调音器</view>
-    <view>Tuner</view>
-  </view>
   <view class="middle">
     <view class="left">标准</view>
     <view class="right">
@@ -12,11 +7,11 @@
       <switch checked="{{isAuto}}" bindchange="changeAuto"></switch>
     </view>
   </view>
-  <canvas type="2d" id="canvas" style="width: 100%; height: 18vh;">
+  <canvas type="2d" id="canvas" style="width: 100%; height: 15vh;">
     <!-- <cover-view class="cover-view"style="left:{{circleCenterX}}px;top:{{circleCenterY}}px;">{{analysis.cent}}</cover-view> -->
-    <cover-view wx:if="{{circleCenterX !== 0}}" class="cover-wrap"  style="left:{{circleCenterX-18}}px;top:{{circleCenterY-40}}px;">
-      <cover-image src="http://cdn.eigene.cn/analysis/dialog{{color=='#FF5791'?'Red':'Green'}}.png" class="cover-image"
-       >
+    <cover-view wx:if="{{circleCenterX !== 0}}" class="cover-wrap"
+      style="left:{{circleCenterX-18}}px;top:{{circleCenterY-40}}px;">
+      <cover-image src="http://cdn.eigene.cn/analysis/dialog{{color=='#FF5791'?'Red':'Green'}}.png" class="cover-image">
       </cover-image>
       <cover-view class="cover-text">{{analysis.cent}}</cover-view>
     </cover-view>
@@ -46,4 +41,5 @@
       <image class="line" src="http://cdn.eigene.cn/analysis/column.png"></image>
     </view>
   </view>
+
 </view>

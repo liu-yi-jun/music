@@ -1,0 +1,24 @@
+<!--components/tool/musicScore/musicScore.wxml-->
+<view class="musicScore">
+  <view class="wrap">
+    <view class="logo-search">
+      <image class="logo" src="http://use.eigene.cn/picture.png" catchtap="toAnalysis" ></image>
+      <view class="searchWrap">
+        <input class="search" value="{{value}}" bindconfirm="confirm">
+        </input>
+        <image class="searchLog" src="http://cdn.eigene.cn/search.png"></image>
+      </view>
+    </view>
+  </view>
+  <scroll-view enable-back-to-top="{{true}}" bindscrolltolower="scrolltolower" scroll-with-animation   scroll-y style="height: calc({{excludeHeight}}px - 192rpx);"   class="scroll">
+  <!--  -->
+    <view data-index="{{index}}" class="circular" wx:for="{{circulars}}" style="{{item.style}}" catchtap="goTapPractice"
+      data-src="{{item.src}}">
+      <view class="top top{{index + 1}}" style="{{item.TextStyle}}">
+        <!-- <text class="number">{{index + 1}}</text> -->
+        <text class="name">{{item.tapTitle}}</text>
+        <text class="author">{{item.author}}</text>
+      </view>
+    </view>
+  </scroll-view>
+</view>

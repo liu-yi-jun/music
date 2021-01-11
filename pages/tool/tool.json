@@ -1,7 +1,9 @@
 {
   "usingComponents": {
     "showTabBar": "/components/common/showTabBar/showTabBar",
-    "navBar": "/components/navBar/navBar"
+    "navBar": "/components/navBar/navBar",
+    "musicScore": "/components/tool/musicScore/musicScore",
+    "analysis": "/components/tool/analysis/analysis"
   },
   "disableScroll": true
 }

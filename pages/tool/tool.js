@@ -8,6 +8,8 @@ Page({
    * 页面的初始数据
    */
   data: {
+    switchBtn: 'musicScore',
+    // analysis
     // 去除上面导航栏，剩余的高度
     excludeHeight: 0,
     // 控制右下角三角show
@@ -21,6 +23,7 @@ Page({
       pageIndex: 1,
       isNotData: false
     },
+    pageShow:true
   },
 
   /**
@@ -29,6 +32,20 @@ Page({
   toScrollTop() {
     this.setData({
       scrollTop: 0
+    })
+  },
+  //切换btn 
+  switchBtn(e) {
+    const switchBtn = e.currentTarget.dataset.switchbtn
+    if (switchBtn === this.switchBtn) return
+    this.setData({
+      switchBtn
+    })
+  },
+  onHide: function (){
+    console.log('onHide')
+    this.setData({
+      pageShow:false
     })
   },
   onLoad: function (options) {
@@ -120,20 +137,22 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    console.log('onshow')
     if (typeof this.getTabBar === 'function' && this.getTabBar()) {
       this.getTabBar().setData({
         selected: 1
       })
       // app.getNotice(this, app.userInfo.id)
     }
+    this.setData({
+      pageShow:true
+    })
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function () {
 
-  },
 
   /**
    * 生命周期函数--监听页面卸载
