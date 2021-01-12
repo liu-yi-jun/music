@@ -373,14 +373,10 @@ Component({
       }
       if (color !== this.data.color) {
         this.setData({
-          color,
-          analysis
+          color
         })
         this.motionBall(this.data.oldCent, data.cent)
       } else {
-        this.setData({
-          analysis
-        })
         this.motionBall(this.data.oldCent, data.cent)
       }
       // 校准哪一个 + logo位置
@@ -391,6 +387,9 @@ Component({
             // 是拐点让它继续咨询inflection次
             this.inflection--
           } else {
+            this.setData({
+              analysis
+            })
             this.canvas.cancelAnimationFrame(this.point)
             this.can = true
             return
@@ -403,6 +402,9 @@ Component({
             // 是拐点让它继续咨询inflection次
             this.inflection--
           } else {
+            this.setData({
+              analysis
+            })
             this.canvas.cancelAnimationFrame(this.point)
             this.can = true
             return
@@ -422,6 +424,7 @@ Component({
           this.v0 = (this.v0 - this.data.a <= 2) ? 2 : this.v0 - this.data.a
         }
       }
+   
       this.point = this.canvas.requestAnimationFrame(this.realizationPainting.bind(this, data))
     },
     calibration(frequency) {
