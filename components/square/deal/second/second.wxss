@@ -109,6 +109,7 @@ swiper {
   height: 62rpx;
   border-radius: 50%;
   display: block;
+  flex-shrink: 0;
 }
 
 .avatar-username {

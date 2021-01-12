@@ -37,11 +37,14 @@
     </view>
     <view class="info">
       <view class="brand-newOld-contact">
-        <block wx:if="{{detail.brand}}">
-          <text>品牌信息：{{detail.brand}}</text>
+        <block wx:if="{{detail.activityTime}}">
+          <text>时间：{{detail.activityTime}}</text>
         </block>
-        <block wx:if="{{detail.newOld}}">
-          <text>新旧程度：{{detail.newOld}}</text>
+        <block wx:if="{{detail.activityLocation}}">
+          <text>地点：{{detail.activityLocation}}</text>
+        </block>
+        <block wx:if="{{detail.number}}">
+          <text>数量：{{detail.number}}</text>
         </block>
         <block wx:if="{{detail.contact}}">
           <text>联系方式：{{detail.contact}}</text>
