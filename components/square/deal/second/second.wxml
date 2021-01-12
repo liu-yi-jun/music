@@ -1,7 +1,7 @@
 <!--components/square/deal/second/second.wxml-->
 <view class="second">
   <view class="column" wx:for="{{seconds}}" wx:for-index="i" wx:for-item="second" wx:key="*this">
-    <view class="card" wx:for="{{second}}" wx:for-index="j" wx:key="*this">
+    <view class="card" wx:for="{{second}}" wx:for-index="j" wx:key="*this" catchtap="toSecondDetail" data-id="{{item.id}}" data-i="{{i}}"  data-j="{{j}}">
       <image class="secondStore" data-i="{{i}}" data-j="{{j}}" catchtap="switchSecondStore"
         src="http://cdn.eigene.cn/deal/secondStore{{item.isStore?'d':''}}.png"></image>
       <video object-fit="cover" class="img img{{item.id % 4}} video" wx:if="{{item.videoUrl}}" src="{{item.videoUrl}}"></video>

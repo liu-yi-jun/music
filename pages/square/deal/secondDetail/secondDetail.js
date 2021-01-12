@@ -1,6 +1,6 @@
 // pages/square/deal/secondDetail/secondDetail.js
 const app = getApp()
-const tool = require('../../../../pages/tool/tool.js')
+const tool = require('../../../../assets/tool/tool')
 Page({
 
   /**
@@ -42,6 +42,7 @@ Page({
       type,
       userId: app.userInfo.id
     }).then(res => {
+      console.log(res,'111111111111')
       if (res.commentArr.length < commentPaging.pageSize) {
         this.setData({
           IsNoData: true
@@ -53,7 +54,8 @@ Page({
           detail: res.detail,
           commenetBarData: {
             otherId: res.detail.userId,
-            themeTitle: res.detail.title,
+            // themeTitle: res.detail.title,
+            themeTitle: res.detail.brand,
             likes: res.detail.likes,
             share: res.detail.share,
             store: res.detail.store,
@@ -175,6 +177,7 @@ Page({
       detail,
       commenetBarData
     })
+    
   },
   completeStore(e) {
     let commenetBarData = e.detail.commenetBarData
@@ -185,6 +188,9 @@ Page({
       detail,
       commenetBarData
     })
+    let pages = getCurrentPages();
+    let beforePage = pages[pages.length - 2];
+    beforePage.completeSecondStore(commenetBarData)
   },
   toComment(e) {
     // console.log(e.detail.showTextara)

@@ -118,3 +118,26 @@ swiper-item, .dynamicImg {
   height: 350rpx;
   margin: 20rpx auto;
 }
+
+.info {
+  display: flex;
+  flex-direction: column;
+  color: white;
+  font-size: 28rpx;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 40rpx 20rpx 0;
+}
+
+.brand-newOld-contact {
+
+  display: flex;
+  flex-direction: column;
+}
+.brand-newOld-contact > text {
+  display: block;
+  margin-top: 20rpx;
+}
+.additional {
+  margin-top: 20rpx;
+}

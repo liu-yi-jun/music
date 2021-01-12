@@ -61,11 +61,27 @@ Component({
    * 组件的方法列表
    */
   methods: {
+    toSecondDetail(e) {
+      let id = e.currentTarget.dataset.id
+      this.i = e.currentTarget.dataset.i
+      this.j = e.currentTarget.dataset.j
+      wx.navigateTo({
+        url: `/pages/square/deal/secondDetail/secondDetail?id=${id}`,
+      })
+    },
+    completeStore(commenetBarData) {
+      let seconds = this.properties.seconds
+      seconds[this.i][this.j].isStore = commenetBarData.isStore
+      this.setData({
+        seconds
+      })
+    },
     goSecondIssue() {
       wx.navigateTo({
         url: '/pages/square/deal/secondIssue/secondIssue',
       })
     },
+
     switchSecondStore(e) {
       let {
         i,

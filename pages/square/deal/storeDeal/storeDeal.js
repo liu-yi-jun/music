@@ -34,6 +34,14 @@ Page({
     this.getMySeconds()
     this.getMyTickets()
   },
+  completeSecondStore(commenetBarData) {
+    const dynamicList = this.selectComponent('#second');
+    dynamicList.completeStore(commenetBarData)
+  },
+  completeTicketStore(commenetBarData) {
+    const dynamicList = this.selectComponent('#ticket');
+    dynamicList.completeStore(commenetBarData)
+  },
   getMySeconds() {
     let secondPaging = this.data.secondPaging
     app.get(app.Api.myStoreSecond, {

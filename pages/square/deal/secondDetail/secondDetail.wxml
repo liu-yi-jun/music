@@ -7,15 +7,17 @@
     <text class="userName">{{detail.nickName}}</text>
   </view>
   <scroll-view style="height: calc({{excludeHeight}}px - 130rpx);" scroll-y bindscrolltolower="scrolltolower">
-    <swiper wx:if="{{detail.mold === 0}}" class="swiper" indicator-dots duration="400">
+    <!-- wx:if="{{detail.mold === 0}}"  -->
+    <video class="video" object-fit="cover" wx:if="{{detail.videoUrl}}" src="{{detail.videoUrl}}"></video>
+    <swiper class="swiper" indicator-dots duration="400" wx:else>
       <swiper-item wx:for="{{detail.pictureUrls}}" wx:key="*this">
         <image class="dynamicImg" mode="aspectFill" src="{{item}}" catchtap="preview" data-src="{{item}}"></image>
       </swiper-item>
     </swiper>
-    <video class="video" object-fit="cover" wx:if="{{detail.mold === 1}}" src="{{detail.videoUrl}}"></video>
-    <view class="recordWrap" wx:if="{{detail.mold === 2}}">
+
+    <!-- <view class="recordWrap" wx:if="{{detail.mold === 2}}">
       <playRecord voiceUrl="{{detail.voiceUrl}}"></playRecord>
-    </view>
+    </view> -->
     <view class="icon-time">
       <view class="iconWrap">
         <view class="icon">
@@ -33,8 +35,22 @@
       </view>
       <text class="time">{{detail.releaseTime}}</text>
     </view>
-    <view class="content">
-      <text space="ensp"> {{detail.introduce}}</text>
+    <view class="info">
+      <view class="brand-newOld-contact">
+        <block wx:if="{{detail.brand}}">
+          <text>品牌信息：{{detail.brand}}</text>
+        </block>
+        <block wx:if="{{detail.newOld}}">
+          <text>新旧程度：{{detail.newOld}}</text>
+        </block>
+        <block wx:if="{{detail.contact}}">
+          <text>联系方式：{{detail.contact}}</text>
+        </block>
+        <view wx:if="{{detail.additional}}" class="additional">
+          <text>附加信息：{{detail.additional}}</text>
+        </view>
+      </view>
+
     </view>
     <view class="commentWrap">
       <image src="http://cdn.eigene.cn/dynamicDetail/comment.png"></image>

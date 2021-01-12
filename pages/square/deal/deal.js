@@ -102,6 +102,14 @@ Page({
      
     }
   },
+  completeSecondStore(commenetBarData) {
+    const dynamicList = this.selectComponent('#second');
+    dynamicList.completeStore(commenetBarData)
+  },
+  completeTicketStore(commenetBarData) {
+    const dynamicList = this.selectComponent('#ticket');
+    dynamicList.completeStore(commenetBarData)
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

@@ -22,10 +22,10 @@
   </view>
   <scroll-view scroll-y  style="height: calc({{excludeHeight}}px - 166rpx);" bindscrolltolower="scrolltolower">
     <view hidden="{{switchBtn !== 'second'}}">
-      <second seconds="{{seconds}}"></second>
+      <second id="second" seconds="{{seconds}}"></second>
     </view>
     <view hidden="{{switchBtn !== 'ticket'}}">
-      <ticket tickets="{{tickets}}"></ticket>
+      <ticket id="ticket" tickets="{{tickets}}"></ticket>
     </view>
   </scroll-view>
 </view>

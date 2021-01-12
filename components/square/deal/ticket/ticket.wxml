@@ -1,6 +1,6 @@
 <!--components/square/deal/ticket/ticket.wxml-->
 <view class="ticket">
-  <view class="card" wx:for="{{tickets}}" wx:key="id">
+  <view class="card" wx:for="{{tickets}}" wx:key="id" catchtap="toTicketDetail" data-id="{{item.id}}" data-index="{{index}}" >
     <image class="ticketStore" data-index="{{index}}" catchtap="switchTicketStore"
       src="http://cdn.eigene.cn/deal/ticketStore{{item.isStore?'d':''}}.png"></image>
     <view class="top">

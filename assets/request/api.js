@@ -99,5 +99,11 @@ module.exports = {
   issueTapRecord: "/api/tap/issueTapRecord",
   getTaps: "/api/tap/getTaps",
   searchTap: "/api/tap/searchTap",
-  modifyInform: "/api/inform/modifyInform"
+  modifyInform: "/api/inform/modifyInform",
+  secondDetailAndCommont: "/api/second/secondDetailAndCommont",
+  secondLike: "/api/second/secondLike",
+  secondStore: "/api/second/secondStore",
+  ticketDetailAndCommont: "/api/ticket/ticketDetailAndCommont",
+  ticketLike: "/api/ticket/ticketLike",
+  ticketStore: "/api/ticket/ticketStore",
 }

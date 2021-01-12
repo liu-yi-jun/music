@@ -27,6 +27,21 @@ Component({
    * 组件的方法列表
    */
   methods: {
+    toTicketDetail(e) {
+      let id = e.currentTarget.dataset.id
+      let index = e.currentTarget.dataset.index
+      this.index = index
+      wx.navigateTo({
+        url: `/pages/square/deal/ticketDetail/ticketDetail?id=${id}`,
+      })
+    },
+    completeStore(commenetBarData) {
+      let tickets = this.properties.tickets
+      tickets[this.index].isStore = commenetBarData.isStore
+      this.setData({
+        tickets
+      })
+    },
     goTicketIssue() {
       wx.navigateTo({
         url: '/pages/square/deal/ticketIssue/ticketIssue',
