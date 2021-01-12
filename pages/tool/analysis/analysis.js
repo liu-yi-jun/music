@@ -168,10 +168,10 @@ Page({
     ctx.strokeStyle = "white"
     ctx.fill();
     ctx.stroke();
-    this.setData({
-      circleCenterX: width / seat,
-      circleCenterY: height - radius - y
-    })
+    // this.setData({
+    //   circleCenterX: width / seat,
+    //   circleCenterY: height - radius - y
+    // })
   },
   drawTrajectory(frequency) {
     let ctx = this.ctx
@@ -258,9 +258,7 @@ Page({
           let analysis = data
           analysis.pitchFirst = data.pitch.charAt(0)
           analysis.pitchTwo = data.pitch.charAt(1)
-          this.setData({
-            analysis
-          })
+ 
 
           // 校准哪一个 + logo位置
           this.calibration(data.frequency)
