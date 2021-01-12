@@ -311,8 +311,50 @@ Page({
     setTimeout(() => {
       this.socket.emit("getmessage");
     }, 8000)
+    wx.createSelectorQuery().in(this)
+      .select('#canvas')
+      .fields({
+        node: true,
+        size: true,
+      })
+      .exec(this.initCanvas.bind(this))
   },
+  initCanvas(res) {
+    let groupLogo = this.data.groupInfo.groupLogo
+    const width = res[0].width
+    const height = res[0].height
+    const canvas = res[0].node
+    const ctx = canvas.getContext('2d')
+    const dpr = wx.getSystemInfoSync().pixelRatio
+    canvas.width = width * dpr
+    canvas.height = height * dpr
+    ctx.scale(dpr, dpr)
 
+    // 画大圆
+    ctx.beginPath();
+    ctx.arc(width / 2, height / 2, width / 2, -Math.PI / 6, 5 * Math.PI / 3)
+    // ctx.stroke();
+    // A点
+    let radius = width / 2
+    let Ax = radius + radius * Math.sin(Math.PI / 6)
+    let Ay = radius - radius * Math.cos(Math.PI / 6)
+    let Bx = radius + radius * Math.cos(Math.PI / 6)
+    let By = radius - radius * Math.sin(Math.PI / 6)
+    let Cx = (Bx - Ax) / 2 + Ax
+    let Cy = (By - Ay) / 2 + Ay
+    let Cradius = Math.sqrt((Bx - Ax) ** 2 + (By - Ay) ** 2) / 2
+    let horn = Math.asin((By - Cy) / Cradius)
+    ctx.lineTo(Ax,Ay)
+    ctx.arc(Cx, Cy, Cradius, horn + Math.PI, horn, true)
+    ctx.closePath()
+    // ctx.stroke();
+    let logo = canvas.createImage()
+    logo.src = groupLogo
+    logo.onload = () => {
+      ctx.clip()
+      ctx.drawImage(logo, 0, 0, width, height)
+    }
+  },
   /**
    * 生命周期函数--监听页面显示
    */
