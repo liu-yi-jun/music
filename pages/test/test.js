@@ -1,7 +1,9 @@
 import {
   html,
   renderSVG
-} from '../../components/cax/cax'
+} from '../../components/cax/cax';
+// import htm from 'https://unpkg.com/htm?module'
+// const html = htm.bind(React.createElement);
 // pages/test/test.js
 Page({
 
@@ -17,6 +19,7 @@ Page({
    */
   onLoad: function (options) {
     let str = this.init()
+    console.log(str, 2222222222)
     // renderSVG(html `
     // <svg width="300" height="220">
     //   <rect bindtap="tapHandler"
@@ -25,95 +28,22 @@ Page({
     //   transform="translate(100 50) rotate(45 50 50)">
     //   </rect>
     // </svg>`, 'svg-c', this)
+    console.log(`${str}`)
+    // setTimeout(()=> {
+    renderSVG(html`<svg
+      width='100%'
+      idth="300" height="220"
+      xmlns='http://www.w3.org/2000/svg'
+      preserveAspectRatio='xMinYMin meet'
+      viewBox='0 0 80 70'><g
+      transform='translate(13, 13)'>
+      ${str}
+      </g>
+      </svg>`, 'svg-c', this)
+    // },1000)
+    // h('svg', xxx, xxx)
 
-    //     <path stroke="#444" stroke-width="0.25" stroke-linecap="square" stroke-linejoin="square"
-    //     d="M 0 0 H 50 M 0 12 H 50 M 0 24 H 50 M 0 36 H 50 M 0 48 H 50M 0 0 V 48 M 10 0 V 48 M 20 0 V 48 M 30 0 V 48 M 40 0 V 48 M 50 0 V 48">
-    // </path>
-    // <path stroke="#444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M 0 0 H 50">
-    // </path>
-    {
-      /* <svg width="100%" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMinYMin meet" viewBox="0 0 80 70">
-              <g transform="translate(13, 13)">
-                  <g>
-                      <path stroke="#444" stroke-width="0.25" stroke-linecap="square" stroke-linejoin="square"
-                          d="M 0 0 H 50 M 0 12 H 50 M 0 24 H 50 M 0 36 H 50 M 0 48 H 50M 0 0 V 48 M 10 0 V 48 M 20 0 V 48 M 30 0 V 48 M 40 0 V 48 M 50 0 V 48">
-                      </path>
-                      <path stroke="#444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M 0 0 H 50">
-                      </path>
-                      <g><text font-size="0.3rem" fill="#444" font-family="Verdana" text-anchor="middle" x="0"
-                              y="53">E</text><text font-size="0.3rem" fill="#444" font-family="Verdana" text-anchor="middle"
-                              x="10" y="53">A</text><text font-size="0.3rem" fill="#444" font-family="Verdana"
-                              text-anchor="middle" x="20" y="53">D</text><text font-size="0.3rem" fill="#444"
-                              font-family="Verdana" text-anchor="middle" x="30" y="53">G</text><text font-size="0.3rem"
-                              fill="#444" font-family="Verdana" text-anchor="middle" x="40" y="53">B</text><text
-                              font-size="0.3rem" fill="#444" font-family="Verdana" text-anchor="middle" x="50" y="53">E</text>
-                      </g>
-                  </g>
-                  <g>
-                      <circle stroke-width="0.25" stroke="#444" fill="#444" cx="0" cy="6.5" r="4"></circle>
-                      <circle stroke-width="0.25" stroke="#444" fill="#444" cx="40" cy="6.5" r="4"></circle>
-                      <circle stroke-width="0.25" stroke="#444" fill="#444" cx="50" cy="6.5" r="4"></circle>
-                      <rect fill="#444" x="0" y="2.35" width="50" height="8.25"></rect><text font-size="3pt"
-                          font-family="Verdana" text-anchor="middle" fill="white" x="0" y="8">1</text><text font-size="3pt"
-                          font-family="Verdana" text-anchor="middle" fill="white" x="40" y="8">1</text><text font-size="3pt"
-                          font-family="Verdana" text-anchor="middle" fill="white" x="50" y="8">1</text>
-                  </g>
-                  <g>
-                      <circle stroke-width="0.25" stroke="#444" fill="#444" cx="10" cy="30" r="4"></circle><text
-                          font-size="3pt" font-family="Verdana" text-anchor="middle" fill="white" x="10" y="31.5">3</text>
-                  </g>
-                  <g>
-                      <circle stroke-width="0.25" stroke="#444" fill="#444" cx="20" cy="30" r="4"></circle><text
-                          font-size="3pt" font-family="Verdana" text-anchor="middle" fill="white" x="20" y="31.5">4</text>
-                  </g>
-                  <g>
-                      <circle stroke-width="0.25" stroke="#444" fill="#444" cx="30" cy="18" r="4"></circle><text
-                          font-size="3pt" font-family="Verdana" text-anchor="middle" fill="white" x="30" y="19.5">2</text>
-                  </g>
-              </g>
-          </svg> */
-    }
 
-    renderSVG(html `<svg width="300" height="220" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMinYMin meet" viewBox="0 0 80 70">
-    <g transform="translate(13, 13)">
-        <g>
-            <path stroke="#444" stroke-width="0.25" stroke-linecap="square" stroke-linejoin="square"
-                d="M 0 0 H 50 M 0 12 H 50 M 0 24 H 50 M 0 36 H 50 M 0 48 H 50M 0 0 V 48 M 10 0 V 48 M 20 0 V 48 M 30 0 V 48 M 40 0 V 48 M 50 0 V 48">
-            </path>
-            <path stroke="#444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M 0 0 H 50">
-            </path>
-            <g><text font-size="0.3rem" fill="#444" font-family="Verdana" text-anchor="middle" x="0"
-                    y="53">E</text><text font-size="0.3rem" fill="#444" font-family="Verdana" text-anchor="middle"
-                    x="10" y="53">A</text><text font-size="0.3rem" fill="#444" font-family="Verdana"
-                    text-anchor="middle" x="20" y="53">D</text><text font-size="0.3rem" fill="#444"
-                    font-family="Verdana" text-anchor="middle" x="30" y="53">G</text><text font-size="0.3rem"
-                    fill="#444" font-family="Verdana" text-anchor="middle" x="40" y="53">B</text><text
-                    font-size="0.3rem" fill="#444" font-family="Verdana" text-anchor="middle" x="50" y="53">E</text>
-            </g>
-        </g>
-        <g>
-            <circle stroke-width="0.25" stroke="#444" fill="#444" cx="0" cy="6.5" r="4"></circle>
-            <circle stroke-width="0.25" stroke="#444" fill="#444" cx="40" cy="6.5" r="4"></circle>
-            <circle stroke-width="0.25" stroke="#444" fill="#444" cx="50" cy="6.5" r="4"></circle>
-            <rect fill="#444" x="0" y="2.35" width="50" height="8.25"></rect><text font-size="3pt"
-                font-family="Verdana" text-anchor="middle" fill="white" x="0" y="8">1</text><text font-size="3pt"
-                font-family="Verdana" text-anchor="middle" fill="white" x="40" y="8">1</text><text font-size="3pt"
-                font-family="Verdana" text-anchor="middle" fill="white" x="50" y="8">1</text>
-        </g>
-        <g>
-            <circle stroke-width="0.25" stroke="#444" fill="#444" cx="10" cy="30" r="4"></circle><text
-                font-size="3pt" font-family="Verdana" text-anchor="middle" fill="white" x="10" y="31.5">3</text>
-        </g>
-        <g>
-            <circle stroke-width="0.25" stroke="#444" fill="#444" cx="20" cy="30" r="4"></circle><text
-                font-size="3pt" font-family="Verdana" text-anchor="middle" fill="white" x="20" y="31.5">4</text>
-        </g>
-        <g>
-            <circle stroke-width="0.25" stroke="#444" fill="#444" cx="30" cy="18" r="4"></circle><text
-                font-size="3pt" font-family="Verdana" text-anchor="middle" fill="white" x="30" y="19.5">2</text>
-        </g>
-    </g>
-</svg>`, 'svg-c', this)
 
 
   },
@@ -123,6 +53,7 @@ Page({
       fingers: [1, 3, 4, 2, 1, 1],
       barres: [1],
       capo: false,
+      baseFret: 1
     }
     const instrument = {
       strings: 6,
@@ -134,7 +65,6 @@ Page({
       }
     }
     const lite = false // defaults to false if omitted
-    console.log(this.chord(chord, instrument, lite))
     return this.chord(chord, instrument, lite)
 
   },
@@ -172,31 +102,31 @@ Page({
     let str
     if (fret === -1) {
       str = `<text
-      fontSize='0.7rem'
+      font-size='0.7rem'
       fill='#444'
       font-family='Verdana'
-      textAnchor='middle'
-      x=${getStringPosition(string, strings)}
+      text-anchor='middle'
+      x='${getStringPosition(string, strings)}'
       y='-2'
       >x</text>`
     } else {
       str = `<g>
       <circle
-        strokeWidth='0.25'
+        stroke-width='0.25'
         stroke='#444'
         fill=${fret === 0 ? 'transparent' : '#444'}
-        cx=${getStringPosition(string, strings)}
-        cy=${positions.fret[fret]}
-        r=${fret === 0 ? radius['open'] : radius['fret']}
+        cx='${getStringPosition(string, strings)}'
+        cy='${positions.fret[fret]}'
+        r='${fret === 0 ? radius['open'] : radius['fret']}'
       />
       ${ !lite && finger > 0 &&
         `<text
-          fontSize='3pt'
+          font-size='3pt'
           font-family='Verdana'
-          textAnchor='middle'
+          text-anchor='middle'
           fill='white'
-          x=${getStringPosition(string, strings)}
-          y=${positions.finger[fret]}
+          x='${getStringPosition(string, strings)}'
+          y='${positions.finger[fret]}'
         >${ finger }</text>`}
     </g>`
     }
@@ -254,14 +184,14 @@ Page({
       stroke-width='2'
       stroke-linecap='round'
       stroke-linejoin='round'
-      d=${`M ${offsets[strings].x} 0 H ${offsets[strings].length}`}
+      d='${`M ${offsets[strings].x} 0 H ${offsets[strings].length}`}'
     />`
     } else {
       str1 = ` <text
-      fontSize='0.25rem'
+      font-size='0.25rem'
       fill='#444'
       font-family='Verdana'
-      x=${getBarreOffset(strings, frets, baseFret, capo)}
+      x='${getBarreOffset(strings, frets, baseFret, capo)}'
       y='8'
     >${baseFret}fr</text> `
     }
@@ -269,11 +199,11 @@ Page({
     ${ tuning.slice().map((note, index) =>
       `<text
         key=${index}
-        fontSize='0.3rem'
+        font-size='0.3rem'
         fill='#444'
         font-family='Verdana'
-        textAnchor='middle'
-        x=${offsets[strings].x + index * 10}
+        text-anchor='middle'
+        x='${offsets[strings].x + index * 10}'
         y='53'
       >${note}</text>`
     )}
@@ -327,68 +257,70 @@ Page({
     const string2 = barreFrets[barreFrets.length - 1].position
     const width = (string2 - string1) * 10
     const y = fretYPosition[barre - 1]
-
-
-    let str1 = capo && `<g>
-    <g
-      transform=${`translate(${getStringPosition(strings, strings)}, ${positions.fret[barreFrets[0].value]})`}
-      >
-      <path d=${`
-        M 0, 0
-        m -4, 0
-        a 4,4 0 1,1 8,0
-      `}
+    let str1 = ''
+    if (capo) {
+      str1 = `<g>
+      <g
+        transform=${`translate(${getStringPosition(strings, strings)}, ${positions.fret[barreFrets[0].value]})`}
+        >
+        <path d=${`
+          M 0, 0
+          m -4, 0
+          a 4,4 0 1,1 8,0
+        `}
+          fill='#555'
+          fillOpacity='${0.2}'
+          transform='rotate(-90)'
+        />
+      </g>
+      <rect
         fill='#555'
-        fillOpacity=${0.2}
-        transform='rotate(-90)'
+        x='${fretXPosition[strings][0]}'
+        y='${fretYPosition[barre - 1]}'
+        width='${(strings - 1) * 10}'
+        fillOpacity='${0.2}'
+        height='${8.25}'
       />
-    </g>
-    <rect
-      fill='#555'
-      x=${fretXPosition[strings][0]}
-      y=${fretYPosition[barre - 1]}
-      width=${(strings - 1) * 10}
-      fillOpacity=${0.2}
-      height=${8.25}
-    />
-    <g
-      transform=${`translate(${getStringPosition(1, strings)}, ${positions.fret[barreFrets[0].value]})`}
-      >
-      <path d=${`
-        M 0, 0
-        m -4, 0
-        a 4,4 0 1,1 8,0
-      `}
-        fill='#555'
-        fillOpacity=${0.2}
-        transform='rotate(90)'
-      />
-    </g>
-  </g>`
+      <g
+        transform=${`translate(${getStringPosition(1, strings)}, ${positions.fret[barreFrets[0].value]})`}
+        >
+        <path d=${`
+          M 0, 0
+          m -4, 0
+          a 4,4 0 1,1 8,0
+        `}
+          fill='#555'
+          fillOpacity='${0.2}'
+          transform='rotate(90)'
+        />
+      </g>
+    </g>`
+    }
+
     let str2 = barreFrets.map(fret => `<circle
   key=${fret.position}
-  strokeWidth='0.25'
+  stroke-width='0.25'
   stroke='#444'
   fill='#444'
-  cx=${getStringPosition(strings - fret.position, strings)}
-  cy=${positions.fret[fret.value]}
-  r=${4}
+  cx='${getStringPosition(strings - fret.position, strings)}'
+  cy='${positions.fret[fret.value]}'
+  r='${4}'
 />`)
     let str3 = `<rect
     fill='#444'
-    x=${fretXPosition[strings][string1]}
-    y=${y}
-    width=${width}
-    height=${8.25}
+    x='${fretXPosition[strings][string1]}'
+    y='${y}'
+    width='${width}'
+    height='${8.25}'
   />`
     let str4 = !lite && finger && barreFrets.map(fret => `<text
     key=${fret.position}
-    fontSize='3pt'
+    font-size='3pt'
     font-family='Verdana'
-    textAnchor='middle'
+    text-anchor='middle'
     fill='white'
-    x=${getStringPosition(strings - fret.position, strings)}
-    y=${positions.finger[fret.value]}
+    x='${getStringPosition(strings - fret.position, strings)}'
+    y='${positions.finger[fret.value]}'
   >${ finger }</text>`)
 
     return `<g> ${str1}${str2}${str3}${str4}</g>`
@@ -460,13 +392,19 @@ Page({
       //   finger={chord.fingers && chord.fingers[fret.position]}
       //   lite={lite}
       // />
-      return `<svg
-      width='100%'
-      xmlns='http://www.w3.org/2000/svg'
-      preserveAspectRatio='xMinYMin meet'
-      viewBox='0 0 80 70'><g
-      transform='translate(13, 13)'>${str1}${str2}${str3}</g>
-      </svg>`
+
+
+
+      // <svg
+      // width='100%'
+      // idth="300" height="220"
+      // xmlns='http://www.w3.org/2000/svg'
+      // preserveAspectRatio='xMinYMin meet'
+      // viewBox='0 0 80 70'><g
+      // transform='translate(13, 13)'>
+      // </g>
+      // </svg>
+      return `${str1}${str2}${str3}`
 
     } else {
       return null

@@ -2,3 +2,4 @@
 <view class="container">
   <cax-element id="svg-c"></cax-element>
 </view>
+<image src="../../images/1.svg"></image>

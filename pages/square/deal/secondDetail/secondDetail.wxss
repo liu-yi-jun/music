@@ -124,7 +124,7 @@ swiper-item, .dynamicImg {
   flex-direction: column;
   color: white;
   font-size: 28rpx;
-  align-items: center;
+  /* align-items: center; */
   box-sizing: border-box;
   padding: 40rpx 20rpx 0;
 }
