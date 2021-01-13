@@ -21,8 +21,9 @@
     "checkSiteMap": true,
     "uploadWithSourceMap": true,
     "compileHotReLoad": false,
-    "useMultiFrameRuntime": false,
+    "useMultiFrameRuntime": true,
     "useApiHook": true,
+    "useApiHostProcess": true,
     "babelSetting": {
       "ignore": [],
       "disablePlugins": [],
@@ -33,6 +34,7 @@
     "useIsolateContext": true,
     "useCompilerModule": true,
     "userConfirmedUseCompilerModuleSwitch": false,
+    "userConfirmedBundleSwitch": false,
     "packNpmManually": false,
     "packNpmRelationList": [],
     "minifyWXSS": true
@@ -1895,6 +1897,12 @@
         {
           "name": "pages/square/square",
           "pathName": "pages/square/square",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/init/groupSettlement/groupSettlement",
+          "pathName": "pages/init/groupSettlement/groupSettlement",
           "scene": null
         }
       ]

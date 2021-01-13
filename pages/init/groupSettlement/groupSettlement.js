@@ -24,7 +24,18 @@ Page({
    */
   onLoad: function (options) {
     this.initValidate()
-
+    setTimeout(()=> {
+      console.log('1111111')
+    wx.createSelectorQuery()
+    .select('#yy')
+    .fields({
+      node: true,
+      size: true,
+    })
+    .exec(res=> {
+      console.log(res)
+    })
+    },1000)
   },
   //验证规则函数
   initValidate() {
@@ -48,7 +59,16 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-
+   
+    // wx.createSelectorQuery()
+    // .select('#yy')
+    // .fields({
+    //   node: true,
+    //   size: true,
+    // })
+    // .exec(res=> {
+    //   console.log(res)
+    // })
   },
 
   /**
@@ -94,11 +114,76 @@ Page({
 
   // 选择图片
   chooseGroupLogo() {
+    // console.log(wx.createSelectorQuery().select('#yy'),'3333333333333')
     common.chooseImage(1).then(res => {
-      this.setData({
-        tempFilePaths: res.tempFilePaths
-      })
+      // 处理
+      // console.log('222222',  wx.createSelectorQuery().select('#yy'))
+      // wx.createSelectorQuery()
+      //   .select('#yy')
+      //   .fields({
+      //     node: true,
+      //     size: true,
+      //   })
+      //   .exec(res=> {
+      //     console.log(res)
+      //   })
+        // this.canvasLogo.bind(this)
+      //   this.tempFilePaths = res.tempFilePaths
+      // this.setData({
+      //   tempFilePaths: res.tempFilePaths
+      // })
+    }).catch(err=>{
+      console.log(err)
     })
+  },
+  canvasLogo(res) {
+    console.log(res,'11111111111111111111')
+    const width = res[0].width
+    const height = res[0].height
+    const canvas = res[0].node
+    const ctx = canvas.getContext('2d')
+    const dpr = wx.getSystemInfoSync().pixelRatio
+    canvas.width = width * dpr
+    canvas.height = height * dpr
+    ctx.scale(dpr, dpr)
+
+    // 画大圆
+    ctx.beginPath();
+    ctx.arc(width / 2, height / 2, width / 2, -Math.PI / 6, 5 * Math.PI / 3)
+    // ctx.stroke();
+    // A点
+    let radius = width / 2
+    let Ax = radius + radius * Math.sin(Math.PI / 6)
+    let Ay = radius - radius * Math.cos(Math.PI / 6)
+    let Bx = radius + radius * Math.cos(Math.PI / 6)
+    let By = radius - radius * Math.sin(Math.PI / 6)
+    let Cx = (Bx - Ax) / 2 + Ax
+    let Cy = (By - Ay) / 2 + Ay
+    let Cradius = Math.sqrt((Bx - Ax) ** 2 + (By - Ay) ** 2) / 2
+    let horn = Math.asin((By - Cy) / Cradius)
+    ctx.lineTo(Ax, Ay)
+    ctx.arc(Cx, Cy, Cradius, horn + Math.PI, horn, true)
+    ctx.closePath()
+    // ctx.stroke();
+    let logo = canvas.createImage()
+    logo.src = this.tempFilePaths[0]
+    logo.onload = () => {
+      ctx.clip()
+      ctx.drawImage(logo, 0, 0, width, height)
+      wx.canvasToTempFilePath({
+        canvas,
+        width,
+        height,
+        destWidth: width,
+        destHeight: height,
+        success: res => {
+          console.log(res.tempFilePath)
+          this.setData({
+            tempFilePaths: [res.tempFilePath]
+          })
+        }
+      }, that)
+    }
   },
   // 预览图片
   previewImage() {

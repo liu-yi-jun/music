@@ -107,8 +107,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
-
     let {
       groupId: myGroupId,
       groupDuty
@@ -317,7 +315,9 @@ Page({
         node: true,
         size: true,
       })
-      .exec(this.initCanvas.bind(this))
+      .exec(res => {
+        this.initCanvas.bind(this)
+      })
   },
   initCanvas(res) {
     let groupLogo = this.data.groupInfo.groupLogo
@@ -344,7 +344,7 @@ Page({
     let Cy = (By - Ay) / 2 + Ay
     let Cradius = Math.sqrt((Bx - Ax) ** 2 + (By - Ay) ** 2) / 2
     let horn = Math.asin((By - Cy) / Cradius)
-    ctx.lineTo(Ax,Ay)
+    ctx.lineTo(Ax, Ay)
     ctx.arc(Cx, Cy, Cradius, horn + Math.PI, horn, true)
     ctx.closePath()
     // ctx.stroke();

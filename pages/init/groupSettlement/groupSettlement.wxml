@@ -1,6 +1,8 @@
 <!--pages/init/groupSettlement/groupSettlement.wxml-->
 <view class="groupSettlement">
-  <canvas canvas-id='canvas' class='canvas'></canvas>
+  <canvas canvas-id='canvas'  type="2d" class='canvasLogo'></canvas>
+  <!-- <canvas canvas-id='canvas' class='canvas'></canvas> -->
+
   <navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' back="{{true}}" iconTheme='white'
     bindback="handlerGobackClick"></navBar>
   <!-- <scroll-view scroll-y style="height:{{height}}px"> -->

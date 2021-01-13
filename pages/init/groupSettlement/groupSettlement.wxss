@@ -15,7 +15,7 @@
   align-items: center;
 }
 
-.img{
+.img {
   width: 280rpx;
   height: 280rpx;
 }
@@ -71,7 +71,7 @@
 
 .typeTile {
   color: white;
-  margin-top:40rpx;
+  margin-top: 40rpx;
   display: block;
 }
 
@@ -108,13 +108,13 @@
 
 .create {
   text-align: center;
-  line-height: 60rpx!important;
-  width: 170rpx!important;
+  line-height: 60rpx !important;
+  width: 170rpx !important;
   color: white;
-  height: 60rpx!important;
-  font-size: medium!important;
+  height: 60rpx !important;
+  font-size: medium !important;
   border-radius: 999rem;
-  font-size: 32rpx!important;
+  font-size: 32rpx !important;
   background: #B37AE5;
   box-shadow: 0rpx 0rpx 10rpx 2rpx rgba(0, 0, 255, .1)
 }
@@ -124,11 +124,13 @@
   display: flex;
   justify-content: center;
 }
+
 .logo {
   width: 200rpx;
   height: 200rpx;
   border-radius: 50%;
 }
+
 /* .pageBackground {
   position: fixed;
   left: 0;
@@ -138,3 +140,11 @@
 } */
 
 
+.canvasLogo {
+  /* position: absolute;
+  top: 0rpx;
+  left: 0rpx; */
+  border: 1rpx solid black;
+  width: 285rpx;
+  height: 285rpx;
+}
