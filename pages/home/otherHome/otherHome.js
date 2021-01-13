@@ -177,7 +177,7 @@ Page({
     }
     if (member.length - 5 <= this.data.MB_Index) {
       // 但倒数第一个出现时开启循环
-      if (!this.data.isLoop) {
+      if (!this.data.isLoop && !this.data.lessMember) {
         wx.showToast({
           title: '为您开启循环模式',
           icon: 'none',
@@ -473,7 +473,7 @@ Page({
       }
       style[i] = temp
       if (member.length - 5 <= this.data.MB_Index) {
-        if (!this.data.isLoop) {
+        if (!this.data.isLoop && !this.data.lessMember) {
           wx.showToast({
             title: '为您开启循环模式',
             icon: 'none',

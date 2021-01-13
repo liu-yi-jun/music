@@ -246,7 +246,7 @@ Page({
     }
     if (member.length - 5 <= this.data.MB_Index) {
       // 但倒数第一个出现时开启循环
-      if (!this.data.isLoop) {
+      if (!this.data.isLoop && !this.data.lessMember) {
         wx.showToast({
           title: '为您开启循环模式',
           icon: 'none',
@@ -306,20 +306,33 @@ Page({
    */
   onReady: function () {
     // this.getmoveDistance()
+    console.log('1111111111111',wx.createSelectorQuery().in(this)
+    .select('#canvasLogo'))
     setTimeout(() => {
       this.socket.emit("getmessage");
     }, 8000)
-    wx.createSelectorQuery().in(this)
-      .select('#canvas')
-      .fields({
-        node: true,
-        size: true,
-      })
-      .exec(res => {
-        this.initCanvas.bind(this)
-      })
+
+    // wx.createSelectorQuery().in(this)
+    //   .select('#canvasLogo')
+    //   .fields({
+    //     node: true,
+    //     size: true,
+    //   })
+    //   .exec(this.initCanvas.bind(this))
+
+    // wx.createSelectorQuery().in(this)
+    //   .select('#canvas')
+    //   .fields({
+    //     node: true,
+    //     size: true,
+    //   })
+    //   .exec(res => {
+    //     this.initCanvas.bind(this)
+    //   })
+
   },
   initCanvas(res) {
+    console.log(res)
     let groupLogo = this.data.groupInfo.groupLogo
     const width = res[0].width
     const height = res[0].height
@@ -638,7 +651,7 @@ Page({
       }
       style[i] = temp
       if (member.length - 5 <= this.data.MB_Index) {
-        if (!this.data.isLoop) {
+        if (!this.data.isLoop && !this.data.lessMember) {
           wx.showToast({
             title: '为您开启循环模式',
             icon: 'none',

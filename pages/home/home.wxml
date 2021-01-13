@@ -17,15 +17,15 @@
   </view>
 
   <view class="logoWrap">
-    <canvas type="2d" id="canvas" style="width: 100%; height: 100%;"></canvas>
-    <!-- <image mode="aspectFill" class="logo" catchtap="switchFunctionBar" src="{{groupInfo.groupLogo}}">
+    <!-- <canvas type="2d" id="canvasLogo" style="width: 100%; height: 100%;"></canvas> -->
+    <image mode="aspectFill" class="logo" catchtap="switchFunctionBar" src="{{groupInfo.groupLogo}}">
       <view class="logoName">
         <text class="organizationName">{{groupNameTop}}</text>
         <text class="organization">{{groupNamebuttom}}</text>
       </view>
     </image>
     <image class="follow" src="http://cdn.eigene.cn/home/follow{{groupInfo.isFollow?'ed':''}}.png" catchtap="follow">
-    </image> -->
+    </image>
     <view mark:district="functionBar" class="functionBar {{functionBarShow? 'functionBarShow':''}}">
       <view catchtap="goPuchCard" class="puchCard {{functionBarShow? 'puchCardShow':''}}">
         <image src="http://cdn.eigene.cn/home/puchCard.png"></image>
