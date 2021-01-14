@@ -21,8 +21,9 @@
     "checkSiteMap": true,
     "uploadWithSourceMap": true,
     "compileHotReLoad": false,
-    "useMultiFrameRuntime": false,
+    "useMultiFrameRuntime": true,
     "useApiHook": true,
+    "useApiHostProcess": true,
     "babelSetting": {
       "ignore": [],
       "disablePlugins": [],
@@ -33,6 +34,7 @@
     "useIsolateContext": true,
     "useCompilerModule": true,
     "userConfirmedUseCompilerModuleSwitch": false,
+    "userConfirmedBundleSwitch": false,
     "packNpmManually": false,
     "packNpmRelationList": [],
     "minifyWXSS": true
@@ -1895,6 +1897,36 @@
         {
           "name": "pages/square/square",
           "pathName": "pages/square/square",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/home/home",
+          "pathName": "pages/home/home",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/init/groupSettlement/groupSettlement",
+          "pathName": "pages/init/groupSettlement/groupSettlement",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/init/groupSettlement/test/test",
+          "pathName": "pages/init/groupSettlement/test/test",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/init/groupSettlement/test/test",
+          "pathName": "pages/init/groupSettlement/test/test",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/test/test",
+          "pathName": "pages/test/test",
           "scene": null
         }
       ]

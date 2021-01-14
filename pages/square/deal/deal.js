@@ -20,8 +20,11 @@ Page({
       pageIndex: 1,
       isNotData: false
     },
-    seconds: [],
     tickets: [],
+    doubleSeconds: [
+      [],
+      []
+    ],
     // 品牌，型号
     // 二手商品搜索关键词
     brand: '',
@@ -50,16 +53,27 @@ Page({
           'secondPaging.isNotData': true
         })
       }
-      let seconds = this.data.seconds
-      if(seconds.length === 1) {
-        seconds = [...seconds[0]]
-      } else if(seconds.length === 2) {
-        seconds = [...seconds[0], ...seconds[1]]
-      }
-      seconds = seconds.concat(res)
-      seconds = tool.arraySplit(seconds, 0, 2)
+      // let seconds = this.data.seconds
+      // if(seconds.length === 1) {
+      //   seconds = [...seconds[0]]
+      // } else if(seconds.length === 2) {
+      //   seconds = [...seconds[0], ...seconds[1]]
+      // }
+      // seconds = seconds.concat(res)
+      // seconds = tool.arraySplit(seconds, 0, 2)
+
+      let doubleSeconds = this.data.doubleSeconds
+
+      res.forEach(item => {
+        if (doubleSeconds[0].length > doubleSeconds[1].length) {
+          doubleSeconds[1].push(item)
+        } else {
+          doubleSeconds[0].push(item)
+        }
+      })
+
       this.setData({
-        seconds,
+        doubleSeconds,
         'secondPaging.pageIndex': secondPaging.pageIndex + 1
       })
     })
@@ -87,7 +101,7 @@ Page({
     let switchBtn = this.data.switchBtn
     if (switchBtn === 'second') {
       this.setData({
-        seconds: [],
+        doubleSeconds: [[],[]],
         brand: value,
         'secondPaging.isNotData': false,
         'secondPaging.pageIndex': 1
@@ -98,8 +112,8 @@ Page({
         title: value,
         'ticketPaging.isNotData': false,
         'ticketPaging.pageIndex': 1
-      }, () =>  this.searchTickets(this.data.title))
-     
+      }, () => this.searchTickets(this.data.title))
+
     }
   },
   completeSecondStore(commenetBarData) {
@@ -124,7 +138,7 @@ Page({
     if (app.secondIssueBack) {
       app.secondIssueBack = false
       this.setData({
-        seconds: [],
+        doubleSeconds: [[],[]],
         brand: '',
         'secondPaging.isNotData': false,
         'secondPaging.pageIndex': 1

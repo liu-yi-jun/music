@@ -138,3 +138,11 @@
 } */
 
 
+.canvasLogo {
+  /* width: 400rpx;
+  height: 400rpx; */
+  width: 100vw;
+  height: 100vw;
+  position: absolute;
+  top: -1000px;
+}
