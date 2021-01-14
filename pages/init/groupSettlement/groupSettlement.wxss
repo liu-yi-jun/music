@@ -141,19 +141,16 @@
 
 
 .canvasLogo {
-<<<<<<< HEAD
   /* width: 400rpx;
   height: 400rpx; */
-  width: 100vw;
-  height: 100vw;
   position: absolute;
   top: -1000px;
-=======
+
   /* position: absolute;
   top: 0rpx;
   left: 0rpx; */
   border: 1rpx solid black;
   width: 285rpx;
   height: 285rpx;
->>>>>>> e26f44e17049977a0b5c41e8c0e0eddf4cab19ab
+
 }

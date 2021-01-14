@@ -1,14 +1,10 @@
 <!--pages/init/groupSettlement/groupSettlement.wxml-->
 <view class="groupSettlement">
-<<<<<<< HEAD
   
   <canvas canvas-id='canvas' class='canvas'></canvas>
   <canvas type="2d" id="canvasLogo"  class='canvasLogo' ></canvas>
-=======
-  <canvas canvas-id='canvas'  type="2d" class='canvasLogo'></canvas>
   <!-- <canvas canvas-id='canvas' class='canvas'></canvas> -->
 
->>>>>>> e26f44e17049977a0b5c41e8c0e0eddf4cab19ab
   <navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' back="{{true}}" iconTheme='white'
     bindback="handlerGobackClick"></navBar>
   <!-- <scroll-view scroll-y style="height:{{height}}px"> -->

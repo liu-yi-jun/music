@@ -311,7 +311,7 @@ Page({
     setTimeout(() => {
       this.socket.emit("getmessage");
     }, 8000)
-<<<<<<< HEAD
+
     // wx.createSelectorQuery().in(this)
     //   .select('#canvasLogo')
     //   .fields({
@@ -319,17 +319,17 @@ Page({
     //     size: true,
     //   })
     //   .exec(this.initCanvas.bind(this))
-=======
-    wx.createSelectorQuery().in(this)
-      .select('#canvas')
-      .fields({
-        node: true,
-        size: true,
-      })
-      .exec(res => {
-        this.initCanvas.bind(this)
-      })
->>>>>>> e26f44e17049977a0b5c41e8c0e0eddf4cab19ab
+
+    // wx.createSelectorQuery().in(this)
+    //   .select('#canvas')
+    //   .fields({
+    //     node: true,
+    //     size: true,
+    //   })
+    //   .exec(res => {
+    //     this.initCanvas.bind(this)
+    //   })
+
   },
   initCanvas(res) {
     console.log(res)
