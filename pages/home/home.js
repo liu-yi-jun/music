@@ -107,8 +107,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
-
     let {
       groupId: myGroupId,
       groupDuty
@@ -313,6 +311,7 @@ Page({
     setTimeout(() => {
       this.socket.emit("getmessage");
     }, 8000)
+<<<<<<< HEAD
     // wx.createSelectorQuery().in(this)
     //   .select('#canvasLogo')
     //   .fields({
@@ -320,6 +319,17 @@ Page({
     //     size: true,
     //   })
     //   .exec(this.initCanvas.bind(this))
+=======
+    wx.createSelectorQuery().in(this)
+      .select('#canvas')
+      .fields({
+        node: true,
+        size: true,
+      })
+      .exec(res => {
+        this.initCanvas.bind(this)
+      })
+>>>>>>> e26f44e17049977a0b5c41e8c0e0eddf4cab19ab
   },
   initCanvas(res) {
     console.log(res)
@@ -347,7 +357,7 @@ Page({
     let Cy = (By - Ay) / 2 + Ay
     let Cradius = Math.sqrt((Bx - Ax) ** 2 + (By - Ay) ** 2) / 2
     let horn = Math.asin((By - Cy) / Cradius)
-    ctx.lineTo(Ax,Ay)
+    ctx.lineTo(Ax, Ay)
     ctx.arc(Cx, Cy, Cradius, horn + Math.PI, horn, true)
     ctx.closePath()
     // ctx.stroke();

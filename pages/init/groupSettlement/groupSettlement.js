@@ -25,7 +25,18 @@ Page({
    */
   onLoad: function (options) {
     this.initValidate()
-
+    setTimeout(()=> {
+      console.log('1111111')
+    wx.createSelectorQuery()
+    .select('#yy')
+    .fields({
+      node: true,
+      size: true,
+    })
+    .exec(res=> {
+      console.log(res)
+    })
+    },1000)
   },
   //验证规则函数
   initValidate() {
@@ -49,8 +60,21 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
+<<<<<<< HEAD
 
 
+=======
+   
+    // wx.createSelectorQuery()
+    // .select('#yy')
+    // .fields({
+    //   node: true,
+    //   size: true,
+    // })
+    // .exec(res=> {
+    //   console.log(res)
+    // })
+>>>>>>> e26f44e17049977a0b5c41e8c0e0eddf4cab19ab
   },
 
   /**
@@ -96,6 +120,7 @@ Page({
 
   // 选择图片
   chooseGroupLogo() {
+<<<<<<< HEAD
     // {isCompress:false}
     common.chooseImage(1).then(res => {
 
@@ -114,6 +139,32 @@ Page({
     })
   },
   canvasLogo(res) {
+=======
+    // console.log(wx.createSelectorQuery().select('#yy'),'3333333333333')
+    common.chooseImage(1).then(res => {
+      // 处理
+      // console.log('222222',  wx.createSelectorQuery().select('#yy'))
+      // wx.createSelectorQuery()
+      //   .select('#yy')
+      //   .fields({
+      //     node: true,
+      //     size: true,
+      //   })
+      //   .exec(res=> {
+      //     console.log(res)
+      //   })
+        // this.canvasLogo.bind(this)
+      //   this.tempFilePaths = res.tempFilePaths
+      // this.setData({
+      //   tempFilePaths: res.tempFilePaths
+      // })
+    }).catch(err=>{
+      console.log(err)
+    })
+  },
+  canvasLogo(res) {
+    console.log(res,'11111111111111111111')
+>>>>>>> e26f44e17049977a0b5c41e8c0e0eddf4cab19ab
     const width = res[0].width
     const height = res[0].height
     const canvas = res[0].node
@@ -143,6 +194,7 @@ Page({
     // ctx.stroke();
     let logo = canvas.createImage()
     logo.src = this.tempFilePaths[0]
+<<<<<<< HEAD
     logo.onload = (res) => {
       wx.getImageInfo({
         src: this.tempFilePaths[0],
@@ -205,6 +257,27 @@ Page({
     }
   },
   // 预览图片 
+=======
+    logo.onload = () => {
+      ctx.clip()
+      ctx.drawImage(logo, 0, 0, width, height)
+      wx.canvasToTempFilePath({
+        canvas,
+        width,
+        height,
+        destWidth: width,
+        destHeight: height,
+        success: res => {
+          console.log(res.tempFilePath)
+          this.setData({
+            tempFilePaths: [res.tempFilePath]
+          })
+        }
+      }, that)
+    }
+  },
+  // 预览图片
+>>>>>>> e26f44e17049977a0b5c41e8c0e0eddf4cab19ab
   previewImage() {
     common.previewImage(this.data.tempUrls)
   },
