@@ -303,7 +303,7 @@ Page({
 
   /**
    * 生命周期函数--监听页面初次渲染完成
-   */
+ 0  */
   onReady: function () {
     // this.getmoveDistance()
     console.log('1111111111111',wx.createSelectorQuery().in(this)

@@ -3,3 +3,9 @@
 .container {
   margin-top: 100rpx;
 }
+
+.svg {
+  background:white;
+  width: 400rpx;
+  height: 400rpx;
+}

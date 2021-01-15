@@ -2,6 +2,7 @@ import {
   html,
   renderSVG
 } from '../../components/cax/cax';
+let app = getApp()
 // import htm from 'https://unpkg.com/htm?module'
 // const html = htm.bind(React.createElement);
 // pages/test/test.js
@@ -18,8 +19,8 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let str = this.init()
-    console.log(str, 2222222222)
+    // let str = this.init()
+    // console.log(str, 2222222222)
     // renderSVG(html `
     // <svg width="300" height="220">
     //   <rect bindtap="tapHandler"
@@ -27,25 +28,30 @@ Page({
     //   style="stroke:#ff0000; fill: #ccccff"
     //   transform="translate(100 50) rotate(45 50 50)">
     //   </rect>
-    // </svg>`, 'svg-c', this)
-    console.log(`${str}`)
+    // // </svg>`, 'svg-c', this)
+    // console.log(`${str}`)
     // setTimeout(()=> {
-    renderSVG(html`<svg
-      width='100%'
-      idth="300" height="220"
-      xmlns='http://www.w3.org/2000/svg'
-      preserveAspectRatio='xMinYMin meet'
-      viewBox='0 0 80 70'><g
-      transform='translate(13, 13)'>
-      ${str}
-      </g>
-      </svg>`, 'svg-c', this)
+    // renderSVG(html`<svg
+    //   width='100%'
+    //   idth="300" height="220"
+    //   xmlns='http://www.w3.org/2000/svg'
+    //   preserveAspectRatio='xMinYMin meet'
+    //   viewBox='0 0 80 70'><g
+    //   transform='translate(13, 13)'>
+    //   ${str}
+    //   </g>
+    //   </svg>`, 'svg-c', this)
     // },1000)
     // h('svg', xxx, xxx)
 
 
-
-
+    this.getData()
+  },
+  getData(){
+    console.log(2222222)
+    app.get(app.Api.getGuitar).then(res=> {
+      console.log(res)
+    })
   },
   init() {
     const chord = {
