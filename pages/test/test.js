@@ -12,7 +12,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    url: ''
   },
 
   /**
@@ -45,12 +45,30 @@ Page({
     // h('svg', xxx, xxx)
 
 
-    this.getData()
+    // this.getData()
   },
-  getData(){
+  getData() {
     console.log(2222222)
-    app.get(app.Api.getGuitar).then(res=> {
-      console.log(res)
+    app.get(app.Api.getGuitar).then(res => {
+      // console.log(res)
+      console.log(res, '3333333')
+      this.setData({
+        url: res
+      })
+    })
+  },
+  formSubmit(e) {
+    let {
+      key,
+      suffix
+    } = e.detail.value
+    app.get(app.Api.getGuitar, {
+      key,
+      suffix
+    }).then(res => {
+      this.setData({
+        url: `${res.url}?time=${new Date().getTime()}`
+      })
     })
   },
   init() {

@@ -5,7 +5,37 @@
 }
 
 .svg {
-  background:white;
-  width: 400rpx;
+  background: white;
+  width: 380rpx;
   height: 400rpx;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+  margin: auto;
+}
+input {
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 999rem;
+  margin-top: 20rpx;
+  padding: 10rpx 20rpx;
+}
+.wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 70rpx;
+}
+button {
+  padding: 10rpx !important;
+  box-sizing: border-box;
+  margin-top: 20rpx !important;
+  width: 60% !important;
+  position: absolute;
+  left: 50%;
+  bottom: 18%;
+  transform: translateX(-50%);
+
 }
