@@ -397,8 +397,13 @@ Component({
       // },200)
     },
     initSocket() {
-      app.socket.on('completeAnalysis', (data) => {
+      // app.socket.on('completeAnalysis', (data) => {
+      // })
+    },
+    initSocket() {
+      app.socket.on('completeAnalysis2', (data) => {
         if (this.can) {
+          console.log(data)
           this.can = false
           this.v0 = this.data.v0
           // 拐点渲染次数
@@ -598,7 +603,7 @@ Component({
     },
 
     analysis(endArry) {
-      app.socket.emit('analysis', endArry);
+      app.socket.emit('analysis2', endArry);
     },
     concatenate(resultConstructor, ...arrays) {
       let totalLength = 0;
