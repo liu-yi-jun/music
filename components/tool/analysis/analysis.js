@@ -67,7 +67,16 @@ Component({
     stringWidt: 0,
     logoTranslateX: 0,
     circleCenterX: 0,
-    circleCenterY: 0
+    circleCenterY: 0,
+    box: {
+      // 矩形
+      rectW: 31,
+      rectH: 21,
+      rectR: 3,
+      // 三角形
+      tH: 8,
+      tD: 3
+    }
   },
   lifetimes: {
     created: function () {
@@ -148,35 +157,109 @@ Component({
       // this.test()
     },
     drawCentBox(oldCent) {
-      return new Promise((resolve, reject) => {
-        let width = this.width
-        let height = this.height
-        let ctx = this.ctx
-        let {
-          seat,
-          radius,
-          centRange
-        } = this.data
-        let y = ((oldCent + centRange / 2) * (height - 2 * radius)) / centRange
-        let circleCenterX = width / seat
-        let circleCenterY = height - radius - y
-        let redCentBox = this.canvas.createImage()
-        redCentBox.src = '../../../images/dialogRed.png'
-        redCentBox.onload = () => {
-          ctx.drawImage(redCentBox, circleCenterX - 18, circleCenterY - 40, 36, 30)
-          resolve()
-        }
+      let width = this.width
+      let height = this.height
+      let ctx = this.ctx
+      let {
+        seat,
+        radius,
+        centRange,
+        box,
+        color,
+        analysis
+      } = this.data
+      let y = ((oldCent + centRange / 2) * (height - 2 * radius)) / centRange
+      let circleCenterX = width / seat
+      let circleCenterY = height - radius - y
 
-        // img.onload = () => {
-        //   resolve(img);
-        //   console.log('加载完成')
-        //  };
-        //  img.onerror = () => {
-        //   console.log('加载失败')
-        //   uni.hideLoading();
-        //   reject('');
-        //  }
-      })
+      let A = {
+        x: circleCenterX,
+        y: circleCenterY - (radius * 2)
+      }
+      let B = {
+        x: A.x - box.tD,
+        y: A.y - box.tH
+      }
+      let C = {
+        x: A.x + box.tD,
+        y: A.y - box.tH
+      }
+
+      let E1 = {
+        x: A.x - box.rectW / 2,
+        y: A.y - box.tH
+      }
+      let p1 = {
+        x: A.x - box.rectW / 2 + box.rectR,
+        y: A.y - box.tH
+      }
+      let p2 = {
+        x: A.x - box.rectW / 2,
+        y: A.y - box.tH - box.rectR
+      }
+      let E2 = {
+        x: A.x - box.rectW / 2,
+        y: A.y - box.tH - box.rectH
+      }
+      let p3 = {
+        x: A.x - box.rectW / 2,
+        y: A.y - box.tH - box.rectH + box.rectR
+      }
+      let p4 = {
+        x: A.x - box.rectW / 2 + box.rectR,
+        y: A.y - box.tH - box.rectH
+      }
+      let E3 = {
+        x: A.x + box.rectW / 2,
+        y: A.y - box.tH - box.rectH
+      }
+      let p5 = {
+        x: A.x + box.rectW / 2 - box.rectR,
+        y: A.y - box.tH - box.rectH
+      }
+      let p6 = {
+        x: A.x + box.rectW / 2,
+        y: A.y - box.tH - box.rectH + box.rectR
+      }
+      let E4 = {
+        x: A.x + box.rectW / 2,
+        y: A.y - box.tH
+      }
+      let p7 = {
+        x: A.x + box.rectW / 2,
+        y: A.y - box.tH - box.rectR
+      }
+      let p8 = {
+        x: A.x + box.rectW / 2 - box.rectR,
+        y: A.y - box.tH
+      }
+      ctx.beginPath();
+      ctx.lineWidth = 1;
+      ctx.strokeStyle = color;
+      ctx.fillStyle = color
+      ctx.moveTo(A.x, A.y);
+      ctx.lineTo(B.x, B.y);
+      ctx.lineTo(p1.x, p1.y);
+      ctx.arcTo(E1.x, E1.y, p2.x, p2.y, box.rectR)
+      ctx.lineTo(p3.x, p3.y);
+      ctx.arcTo(E2.x, E2.y, p4.x, p4.y, box.rectR)
+      ctx.lineTo(p5.x, p5.y);
+      ctx.arcTo(E3.x, E3.y, p6.x, p6.y, box.rectR)
+      ctx.lineTo(p7.x, p7.y);
+      ctx.arcTo(E4.x, E4.y, p8.x, p8.y, box.rectR)
+      ctx.lineTo(C.x, C.y);
+      ctx.closePath();
+      ctx.fill()
+      ctx.stroke();
+      if (analysis.cent) {
+        // 画字体
+        ctx.font = "12px";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillStyle = "white"
+        ctx.fillText(analysis.cent, A.x, A.y - box.tH - box.rectH / 2);
+      }
+
     },
     drawLine() {
       let width = this.width
@@ -208,10 +291,10 @@ Component({
       ctx.strokeStyle = "white"
       ctx.fill();
       ctx.stroke();
-      this.setData({
-        circleCenterX: width / seat,
-        circleCenterY: height - radius - y
-      })
+      // this.setData({
+      //   circleCenterX: width / seat,
+      //   circleCenterY: height - radius - y
+      // })
     },
     drawTrajectory(oldCent, newCent) {
       let ctx = this.ctx
@@ -307,7 +390,7 @@ Component({
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       this.drawLine()
       this.drawBall(oldCent)
-      // this.drawCentBox(oldCent)
+      this.drawCentBox(oldCent)
       this.drawTrajectory(oldCent, newCent)
       // setTimeout(()=>{
 
@@ -424,7 +507,7 @@ Component({
           this.v0 = (this.v0 - this.data.a <= 2) ? 2 : this.v0 - this.data.a
         }
       }
-   
+
       this.point = this.canvas.requestAnimationFrame(this.realizationPainting.bind(this, data))
     },
     calibration(frequency) {
