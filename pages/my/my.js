@@ -126,6 +126,11 @@ Page({
       url: '/pages/my/song/song',
     })
   },
+  totest() {
+    wx.navigateTo({
+      url: '/pages/test/test2/test2',
+    })
+  },
   previewImage() {
     common.previewImage([app.userInfo.avatarUrl])
   },

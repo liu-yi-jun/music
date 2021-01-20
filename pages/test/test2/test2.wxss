@@ -1,1 +1,13 @@
 /* pages/test/test2/test2.wxss */
+.test {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 40rpx;
+  color: white;
+}
+
+.play {
+  margin-top: 100rpx;
+}

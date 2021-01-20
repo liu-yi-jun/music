@@ -66,6 +66,10 @@ Component({
       piece: ['G4', 'C4', 'E4', 'A4']
     }, {
       id: 5,
+      name: 'Tenor Violin',
+      piece: ['G2', 'D3', 'A3', 'E4']
+    }, {
+      id: 5,
       name: 'Calico(Vlolin)',
       piece: ['A3', 'E4', 'A4', 'C#5']
     }, ],
@@ -199,7 +203,11 @@ Component({
         })
       })
       this.setData({
-        standard
+        standard,
+        standardCurrent: 0,
+        line: this.data.standard[0].frequency,
+      }, () => {
+        this.initStringWidt()
       })
     },
     split(str) {

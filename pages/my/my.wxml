@@ -41,7 +41,7 @@
   </view>
   <image class="song" catchtap="goSong" src="http://cdn.eigene.cn/my/song.png"></image>
   <image class="feedback" src="http://cdn.eigene.cn/my/feedback.png"></image>
-  <image class="aboutUs" src="http://cdn.eigene.cn/my/aboutUs.png"></image>
+  <image class="aboutUs" src="http://cdn.eigene.cn/my/aboutUs.png" catchtap="totest"></image>
   <showTabBar tabBarBtnShow="{{tabBarBtnShow}}">
   </showTabBar>
 </view>

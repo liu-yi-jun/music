@@ -1941,6 +1941,11 @@
           "pathName": "pages/tool/tool",
           "query": "",
           "scene": null
+        },
+        {
+          "name": "pages/test/test",
+          "pathName": "pages/test/test",
+          "scene": null
         }
       ]
     }

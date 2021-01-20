@@ -12,13 +12,15 @@ Page({
    * 页面的初始数据
    */
   data: {
-    url: ''
+    url: '',
+    tempFilePath: ''
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+
     // let str = this.init()
     // console.log(str, 2222222222)
     // renderSVG(html `
@@ -47,8 +49,8 @@ Page({
 
     // this.getData()
   },
+
   getData() {
-    console.log(2222222)
     app.get(app.Api.getGuitar).then(res => {
       // console.log(res)
       console.log(res, '3333333')

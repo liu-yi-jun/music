@@ -1,12 +1,1 @@
 <!--pages/test/test.wxml-->
-<view class="container">
-  <cax-element id="svg-c"></cax-element>
-</view>
-<form bindsubmit="formSubmit" class="form">
-  <view class="wrap">
-    <input type="text" name="key" placeholder="key"></input>
-    <input type="text" name="suffix" placeholder="suffix"></input>
-    <button form-type="submit">查询</button>
-  </view>
-</form>
-<image src="{{url}}" class="svg"></image>
