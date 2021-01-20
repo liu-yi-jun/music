@@ -55,7 +55,8 @@
     "pages/square/deal/secondDetail/secondDetail",
     "pages/square/deal/ticketDetail/ticketDetail",
     "pages/test/test",
-    "pages/test/test2/test2"
+    "pages/test/test2/test2",
+    "components/tool/select/select"
   ],
   "permission": {
     "scope.userLocation": {

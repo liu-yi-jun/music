@@ -1,6 +1,37 @@
 // components/tool/analysis/analysis.js
+// 1	2	3	4	5	6	7	8	9	10	11	12	
+// C	C#	D	Eb	E	F	F#	G	Ab	A	Bb	B	
 let oldCent = -50
 let app = getApp()
+
+
+// 0	16.332	17.324	18.354	19.445	20.602	21.827	23.125	24.5	25.957	27.501	29.136	30.868	
+// 1	32.704	34.649	36.709	38.892	41.204	43.655	46.25	49.001	51.914	55.001	58.272	61.737	
+// 2	65.406	69.296	73.416	77.782	82.407	87.307	92.499	97.999	103.83	110.003	116.544	123.47	
+// 3	130.81	138.595	146.836	155.567	164.818	174.618	185.002	196.002	207.657	220.005	233.087	246.947	
+// 4	261.632	277.189	293.662	311.135	329.636	349.237	370.003	392.005	415.315	440.01	466.175	493.895	
+// 5	523.263	554.379	587.344	622.269	659.271	698.473	740.007	784.01	830.629	880.02	932.35	987.79	
+// 6	1046.528	1108.758	1174.688	1244.538	1318.542	1396.947	1480.013	1568.019	1661.258	1760.042	1864.699	1975.58	
+// 7	2093.056	2217.515	2349.376	2489.076	2637.084	2793.893	960.027	3136.039	3322.517	3520.517	3729.398	3951.16	
+// 8	4186.112	4435.031	1698.751	4978.153	5274.169	5587.787	5920.063	6272.07	6645.034	7040.168	7458.797	7902.319	
+// 9	8372.224	8870.062	9397.502	9956.305	10548.337	11175.573	11840.106	12544.155	13290.068	1400.355	14917.594	15804.639	
+
+let pitchs = [
+  [16.332, 17.324, 18.354, 19.445, 20.602, 21.827, 23.125, 24.5, 25.957, 27.501, 29.136, 30.868],
+  [32.704, 34.649, 36.709, 38.892, 41.204, 43.655, 46.25, 49.001, 51.914, 55.001, 58.272, 61.737],
+  [65.406, 69.296, 73.416, 77.782, 82.407, 87.307, 92.499, 97.999, 103.83, 110.003, 116.544, 123.47],
+  [130.81, 138.595, 146.836, 155.567, 164.818, 174.618, 185.002, 196.002, 207.657, 220.005, 233.087, 246.947],
+  [261.632, 277.189, 293.662, 311.135, 329.636, 349.237, 370.003, 392.005, 415.315, 440.01, 466.175, 493.895],
+  [523.263, 554.379, 587.344, 622.269, 659.271, 698.473, 740.007, 784.01, 830.629, 880.02, 932.35, 987.79],
+  [1046.528, 1108.758, 1174.688, 1244.538, 1318.542, 1396.947, 1480.013, 1568.019, 1661.258, 1760.042, 1864.699, 1975.58],
+  [2093.056, 2217.515, 2349.376, 2489.076, 2637.084, 2793.893, 960.027, 3136.039, 3322.517, 3520.517, 3729.398, 3951.16],
+  [186.112, 4435.031, 1698.751, 4978.153, 5274.169, 5587.787, 5920.063, 6272.07, 6645.034, 7040.168, 7458.797, 7902.319],
+  [8372.224, 8870.062, 9397.502, 9956.305, 10548.337, 11175.573, 11840.106, 12544.155, 13290.068, 1400.355, 14917.594, 15804.639],
+]
+
+let tone = ['C', 'C#', 'D', 'Eb', 'E', 'F', 'F#', 'G', 'Ab', 'A', 'Bb', 'B'];
+
+// let 
 Component({
   /**
    * 组件的属性列表
@@ -13,6 +44,32 @@ Component({
    * 组件的初始数据
    */
   data: {
+    options: [{
+      id: 0,
+      name: 'Standard',
+      piece: ['E2', 'A2', 'D3', 'G3', 'B3', 'E4']
+    }, {
+      id: 1,
+      name: 'New Standard',
+      piece: ['C2', 'G2', 'D3', 'A3', 'E3', 'G4']
+    }, {
+      id: 2,
+      name: 'D tuning',
+      piece: ['D2', 'G2', 'C3', 'F3', 'A3', 'D4']
+    }, {
+      id: 3,
+      name: 'Drop F# Tuning',
+      piece: ['F#1', 'C#2', 'F#2', 'B2', 'Eb3', 'Ab3']
+    }, {
+      id: 4,
+      name: 'C Tuning',
+      piece: ['G4', 'C4', 'E4', 'A4']
+    }, {
+      id: 5,
+      name: 'Calico(Vlolin)',
+      piece: ['A3', 'E4', 'A4', 'C#5']
+    }, ],
+    current: {},
     v0: 0.025,
     a: 0.3,
     oldCent: -50,
@@ -89,6 +146,7 @@ Component({
 
     },
     ready: function () {
+      this.initSelect()
       this.initStringWidt()
       wx.createSelectorQuery().in(this)
         .select('#canvas')
@@ -112,6 +170,53 @@ Component({
    * 组件的方法列表
    */
   methods: {
+    initSelect() {
+      let current = this.data.options[0]
+      this.setData({
+        current
+      })
+    },
+    optionTap(e) {
+      let index = e.target.dataset.index
+      let current = this.data.options[index]
+      this.writeStandard(current.piece)
+      this.setData({
+        current,
+        isShow: false
+      });
+    },
+    openClose() {
+      this.setData({
+        isShow: !this.data.isShow
+      })
+    },
+    writeStandard(piece) {
+      let standard = []
+      piece.forEach((item, index) => {
+        standard.push({
+          name: item,
+          frequency: this.split(item)
+        })
+      })
+      this.setData({
+        standard
+      })
+    },
+    split(str) {
+      let letter = str.slice(0, str.length - 1)
+      let group = str.slice(str.length - 1)
+      let letterIndex
+      tone.forEach((item, index) => {
+        if (letter === item) {
+          letterIndex = index
+          return
+        }
+      })
+      if (letterIndex == undefined) {
+        return undefined
+      }
+      return pitchs[group][letterIndex]
+    },
     initCentBox() {
       // canvas绘制网络图片需保存至本地
       wx.getImageInfo({
@@ -523,28 +628,48 @@ Component({
         stringWidt
       } = this.data
       let logoTranslateX = 0
-      if (frequency >= standard[standard.length - 1].frequency) {
-        standardCurrent = standard.length - 1
-        logoTranslateX = stringWidt * (standard.length - 1) + 8
-      } else if (frequency >= standard[4].frequency) {
-        standardCurrent = ((frequency - standard[4].frequency) - (standard[standard.length - 1].frequency - frequency) > 0) ? standard.length - 1 : 4
-        logoTranslateX = (stringWidt * 4) + stringWidt * (frequency - standard[4].frequency) / (standard[standard.length - 1].frequency - standard[4].frequency)
-      } else if (frequency >= standard[3].frequency) {
-        standardCurrent = ((frequency - standard[3].frequency) - (standard[4].frequency - frequency) > 0) ? 4 : 3
-        logoTranslateX = (stringWidt * 3) + stringWidt * (frequency - standard[3].frequency) / (standard[4].frequency - standard[3].frequency)
-      } else if (frequency >= standard[2].frequency) {
-        standardCurrent = ((frequency - standard[2].frequency) - (standard[3].frequency - frequency) > 0) ? 3 : 2
-        logoTranslateX = (stringWidt * 2) + stringWidt * (frequency - standard[2].frequency) / (standard[3].frequency - standard[2].frequency)
-      } else if (frequency >= standard[1].frequency) {
-        standardCurrent = ((frequency - standard[1].frequency) - (standard[2].frequency - frequency) > 0) ? 2 : 1
-        logoTranslateX = (stringWidt * 1) + stringWidt * (frequency - standard[1].frequency) / (standard[2].frequency - standard[1].frequency)
-      } else if (frequency >= standard[0].frequency) {
-        standardCurrent = ((frequency - standard[0].frequency) - (standard[1].frequency - frequency) > 0) ? 1 : 0
-        logoTranslateX = (stringWidt * 0) + stringWidt * (frequency - standard[0].frequency) / (standard[1].frequency - standard[0].frequency)
-      } else {
-        standardCurrent = 0
-        logoTranslateX = -8
+      if (standard.length === 6) {
+        if (frequency >= standard[standard.length - 1].frequency) {
+          standardCurrent = standard.length - 1
+          logoTranslateX = stringWidt * (standard.length - 1) + 8
+        } else if (frequency >= standard[4].frequency) {
+          standardCurrent = ((frequency - standard[4].frequency) - (standard[standard.length - 1].frequency - frequency) > 0) ? standard.length - 1 : 4
+          logoTranslateX = (stringWidt * 4) + stringWidt * (frequency - standard[4].frequency) / (standard[standard.length - 1].frequency - standard[4].frequency)
+        } else if (frequency >= standard[3].frequency) {
+          standardCurrent = ((frequency - standard[3].frequency) - (standard[4].frequency - frequency) > 0) ? 4 : 3
+          logoTranslateX = (stringWidt * 3) + stringWidt * (frequency - standard[3].frequency) / (standard[4].frequency - standard[3].frequency)
+        } else if (frequency >= standard[2].frequency) {
+          standardCurrent = ((frequency - standard[2].frequency) - (standard[3].frequency - frequency) > 0) ? 3 : 2
+          logoTranslateX = (stringWidt * 2) + stringWidt * (frequency - standard[2].frequency) / (standard[3].frequency - standard[2].frequency)
+        } else if (frequency >= standard[1].frequency) {
+          standardCurrent = ((frequency - standard[1].frequency) - (standard[2].frequency - frequency) > 0) ? 2 : 1
+          logoTranslateX = (stringWidt * 1) + stringWidt * (frequency - standard[1].frequency) / (standard[2].frequency - standard[1].frequency)
+        } else if (frequency >= standard[0].frequency) {
+          standardCurrent = ((frequency - standard[0].frequency) - (standard[1].frequency - frequency) > 0) ? 1 : 0
+          logoTranslateX = (stringWidt * 0) + stringWidt * (frequency - standard[0].frequency) / (standard[1].frequency - standard[0].frequency)
+        } else {
+          standardCurrent = 0
+          logoTranslateX = -8
+        }
+      } else if (standard.length === 4) {
+        if (frequency >= standard[standard.length - 1].frequency) {
+          standardCurrent = standard.length - 1
+          logoTranslateX = stringWidt * (standard.length - 1) + 8
+        } else if (frequency >= standard[2].frequency) {
+          standardCurrent = ((frequency - standard[2].frequency) - (standard[3].frequency - frequency) > 0) ? 3 : 2
+          logoTranslateX = (stringWidt * 2) + stringWidt * (frequency - standard[2].frequency) / (standard[3].frequency - standard[2].frequency)
+        } else if (frequency >= standard[1].frequency) {
+          standardCurrent = ((frequency - standard[1].frequency) - (standard[2].frequency - frequency) > 0) ? 2 : 1
+          logoTranslateX = (stringWidt * 1) + stringWidt * (frequency - standard[1].frequency) / (standard[2].frequency - standard[1].frequency)
+        } else if (frequency >= standard[0].frequency) {
+          standardCurrent = ((frequency - standard[0].frequency) - (standard[1].frequency - frequency) > 0) ? 1 : 0
+          logoTranslateX = (stringWidt * 0) + stringWidt * (frequency - standard[0].frequency) / (standard[1].frequency - standard[0].frequency)
+        } else {
+          standardCurrent = 0
+          logoTranslateX = -8
+        }
       }
+
       if (isAuto) {
         this.setData({
           standardCurrent,

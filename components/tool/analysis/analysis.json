@@ -1,5 +1,7 @@
 {
   "component": true,
-  "usingComponents": {},
+  "usingComponents": {
+    "select": "/components/tool/select/select"
+  },
   "styleIsolation": "apply-shared"
 }

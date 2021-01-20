@@ -1,7 +1,20 @@
 <!--components/tool/analysis/analysis.wxml-->
 <view>
   <view class="middle">
-    <view class="left">标准</view>
+    <!-- <view class="left" catchtap="switchPiece">标准</view> -->
+    <view class="container" bindtap="close">
+      <view class="select-wrap">
+        <view class="select-box">
+          <view class="select-current" catchtap="openClose">
+            <text class="current-name">{{current.name}}</text>
+            <!-- <text class="current-name">喜欢</text> -->
+          </view>
+          <view class="option-list" wx:if="{{isShow}}" catchtap="optionTap">
+            <text class="option" wx:for="{{options}}" wx:key="{{item.id}}" data-index="{{index}}">{{item.name}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
     <view class="right">
       <text>自动</text>
       <switch checked="{{isAuto}}" bindchange="changeAuto"></switch>
