@@ -52,7 +52,7 @@ Page({
 
   initAudio() {
     this.innerAudioContext = wx.createInnerAudioContext()
-   
+
     this.innerAudioContext.onPlay(() => {
       console.log('start')
     })
@@ -68,8 +68,8 @@ Page({
     this.innerAudioContext.play()
   },
   start() {
-    this.innerAudioContext.src = 'http://m10.music.126.net/20210120202747/5fa041a2a7cdc85d3303e0bfa9202104/ymusic/a9c1/47f7/e72a/eeca0e403e1aa21dc60ca590be3db3f0.mp3'
-    this.innerAudioContext.play()
+    // this.innerAudioContext.src = 'http://m10.music.126.net/20210120202747/5fa041a2a7cdc85d3303e0bfa9202104/ymusic/a9c1/47f7/e72a/eeca0e403e1aa21dc60ca590be3db3f0.mp3'
+    // this.innerAudioContext.play()
     const options = {
       duration: 30000,
       sampleRate: 44100,
@@ -80,6 +80,15 @@ Page({
     }
 
     this.recorderManager.start(options)
+  },
+  manyPlay() {
+    let innerAudioContext1 = wx.createInnerAudioContext()
+    innerAudioContext1.src = this.data.tempFilePath
+    let innerAudioContext2 = wx.createInnerAudioContext()
+    innerAudioContext2.src = 'http://www.0dutv.com/plug/down/up2.php/4830150.mp3'
+
+    innerAudioContext1.play()
+    innerAudioContext2.play()
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

@@ -636,47 +636,98 @@ Component({
         stringWidt
       } = this.data
       let logoTranslateX = 0
-      if (standard.length === 6) {
-        if (frequency >= standard[standard.length - 1].frequency) {
-          standardCurrent = standard.length - 1
-          logoTranslateX = stringWidt * (standard.length - 1) + 8
-        } else if (frequency >= standard[4].frequency) {
-          standardCurrent = ((frequency - standard[4].frequency) - (standard[standard.length - 1].frequency - frequency) > 0) ? standard.length - 1 : 4
-          logoTranslateX = (stringWidt * 4) + stringWidt * (frequency - standard[4].frequency) / (standard[standard.length - 1].frequency - standard[4].frequency)
-        } else if (frequency >= standard[3].frequency) {
-          standardCurrent = ((frequency - standard[3].frequency) - (standard[4].frequency - frequency) > 0) ? 4 : 3
-          logoTranslateX = (stringWidt * 3) + stringWidt * (frequency - standard[3].frequency) / (standard[4].frequency - standard[3].frequency)
-        } else if (frequency >= standard[2].frequency) {
-          standardCurrent = ((frequency - standard[2].frequency) - (standard[3].frequency - frequency) > 0) ? 3 : 2
-          logoTranslateX = (stringWidt * 2) + stringWidt * (frequency - standard[2].frequency) / (standard[3].frequency - standard[2].frequency)
-        } else if (frequency >= standard[1].frequency) {
-          standardCurrent = ((frequency - standard[1].frequency) - (standard[2].frequency - frequency) > 0) ? 2 : 1
-          logoTranslateX = (stringWidt * 1) + stringWidt * (frequency - standard[1].frequency) / (standard[2].frequency - standard[1].frequency)
-        } else if (frequency >= standard[0].frequency) {
-          standardCurrent = ((frequency - standard[0].frequency) - (standard[1].frequency - frequency) > 0) ? 1 : 0
-          logoTranslateX = (stringWidt * 0) + stringWidt * (frequency - standard[0].frequency) / (standard[1].frequency - standard[0].frequency)
-        } else {
-          standardCurrent = 0
-          logoTranslateX = -8
-        }
-      } else if (standard.length === 4) {
-        if (frequency >= standard[standard.length - 1].frequency) {
-          standardCurrent = standard.length - 1
-          logoTranslateX = stringWidt * (standard.length - 1) + 8
-        } else if (frequency >= standard[2].frequency) {
-          standardCurrent = ((frequency - standard[2].frequency) - (standard[3].frequency - frequency) > 0) ? 3 : 2
-          logoTranslateX = (stringWidt * 2) + stringWidt * (frequency - standard[2].frequency) / (standard[3].frequency - standard[2].frequency)
-        } else if (frequency >= standard[1].frequency) {
-          standardCurrent = ((frequency - standard[1].frequency) - (standard[2].frequency - frequency) > 0) ? 2 : 1
-          logoTranslateX = (stringWidt * 1) + stringWidt * (frequency - standard[1].frequency) / (standard[2].frequency - standard[1].frequency)
-        } else if (frequency >= standard[0].frequency) {
-          standardCurrent = ((frequency - standard[0].frequency) - (standard[1].frequency - frequency) > 0) ? 1 : 0
-          logoTranslateX = (stringWidt * 0) + stringWidt * (frequency - standard[0].frequency) / (standard[1].frequency - standard[0].frequency)
-        } else {
-          standardCurrent = 0
-          logoTranslateX = -8
+
+
+      // if (standard.length === 6) {
+      //   if (frequency >= standard[standard.length - 1].frequency) {
+      //     standardCurrent = standard.length - 1
+      //     logoTranslateX = stringWidt * (standard.length - 1) + 8
+      //   } else if (frequency >= standard[4].frequency) {
+      //     standardCurrent = ((frequency - standard[4].frequency) - (standard[standard.length - 1].frequency - frequency) > 0) ? standard.length - 1 : 4
+      //     logoTranslateX = (stringWidt * 4) + stringWidt * (frequency - standard[4].frequency) / (standard[standard.length - 1].frequency - standard[4].frequency)
+      //   } else if (frequency >= standard[3].frequency) {
+      //     standardCurrent = ((frequency - standard[3].frequency) - (standard[4].frequency - frequency) > 0) ? 4 : 3
+      //     logoTranslateX = (stringWidt * 3) + stringWidt * (frequency - standard[3].frequency) / (standard[4].frequency - standard[3].frequency)
+      //   } else if (frequency >= standard[2].frequency) {
+      //     standardCurrent = ((frequency - standard[2].frequency) - (standard[3].frequency - frequency) > 0) ? 3 : 2
+      //     logoTranslateX = (stringWidt * 2) + stringWidt * (frequency - standard[2].frequency) / (standard[3].frequency - standard[2].frequency)
+      //   } else if (frequency >= standard[1].frequency) {
+      //     standardCurrent = ((frequency - standard[1].frequency) - (standard[2].frequency - frequency) > 0) ? 2 : 1
+      //     logoTranslateX = (stringWidt * 1) + stringWidt * (frequency - standard[1].frequency) / (standard[2].frequency - standard[1].frequency)
+      //   } else if (frequency >= standard[0].frequency) {
+      //     standardCurrent = ((frequency - standard[0].frequency) - (standard[1].frequency - frequency) > 0) ? 1 : 0
+      //     logoTranslateX = (stringWidt * 0) + stringWidt * (frequency - standard[0].frequency) / (standard[1].frequency - standard[0].frequency)
+      //   } else {
+      //     standardCurrent = 0
+      //     logoTranslateX = -8
+      //   }
+      // } else if (standard.length === 4) {
+      //   if (frequency >= standard[standard.length - 1].frequency) {
+      //     standardCurrent = standard.length - 1
+      //     logoTranslateX = stringWidt * (standard.length - 1) + 8
+      //   } else if (frequency >= standard[2].frequency) {
+      //     standardCurrent = ((frequency - standard[2].frequency) - (standard[3].frequency - frequency) > 0) ? 3 : 2
+      //     logoTranslateX = (stringWidt * 2) + stringWidt * (frequency - standard[2].frequency) / (standard[3].frequency - standard[2].frequency)
+      //   } else if (frequency >= standard[1].frequency) {
+      //     standardCurrent = ((frequency - standard[1].frequency) - (standard[2].frequency - frequency) > 0) ? 2 : 1
+      //     logoTranslateX = (stringWidt * 1) + stringWidt * (frequency - standard[1].frequency) / (standard[2].frequency - standard[1].frequency)
+      //   } else if (frequency >= standard[0].frequency) {
+      //     standardCurrent = ((frequency - standard[0].frequency) - (standard[1].frequency - frequency) > 0) ? 1 : 0
+      //     logoTranslateX = (stringWidt * 0) + stringWidt * (frequency - standard[0].frequency) / (standard[1].frequency - standard[0].frequency)
+      //   } else {
+      //     standardCurrent = 0
+      //     logoTranslateX = -8
+      //   }
+      // }
+
+
+      // 
+      let minIndex = 0
+
+      for (let i = 1; i < standard.length; i++) {
+        if (Math.abs(frequency - standard[i].frequency) < Math.abs(frequency - standard[minIndex].frequency)) {
+          minIndex = i
         }
       }
+      if (frequency - standard[minIndex].frequency > 0) {
+        if (minIndex === standard.length - 1) {
+          logoTranslateX = stringWidt * minIndex + 8
+        } else {
+          let tempIndex = 0, isMaximum = true
+          standard.forEach((item, index) => {
+            if ((item.frequency > standard[minIndex].frequency) && (Math.abs(standard[minIndex].frequency - standard[index].frequency) < Math.abs(standard[minIndex].frequency - standard[tempIndex].frequency))) {
+              tempIndex = index,
+              isMaximum = false
+            }
+          })
+          if(isMaximum) {
+            logoTranslateX = (stringWidt * minIndex) + 8
+          } else {
+            logoTranslateX = (stringWidt * minIndex) + stringWidt * (frequency - standard[minIndex].frequency) / (standard[tempIndex].frequency - standard[minIndex].frequency)
+          }
+        }
+      } else if (frequency - standard[minIndex] < 0) {
+        if (minIndex === 0) {
+          logoTranslateX =  minIndex - 8
+        } else {
+          let tempIndex = 0, isMinimum = true
+          standard.forEach((item, index) => {
+            if ((item.frequency < standard[minIndex].frequency) && (Math.abs(standard[minIndex].frequency - standard[index].frequency) < Math.abs(standard[minIndex].frequency - standard[tempIndex].frequency))) {
+              tempIndex = index,
+              isMinimum = false
+            }
+          })
+          if(isMinimum) {
+            logoTranslateX = (stringWidt * minIndex) - 8
+          } else {
+            logoTranslateX = (stringWidt * minIndex) - stringWidt * (standard[minIndex].frequency - frequency) / ( standard[minIndex].frequency - standard[tempIndex].frequency)
+          }
+        }
+      } else {
+        logoTranslateX = stringWidt * minIndex
+      }
+      standardCurrent = minIndex
+
 
       if (isAuto) {
         this.setData({
