@@ -68,7 +68,7 @@ Page({
     this.innerAudioContext.play()
   },
   start() {
-    this.innerAudioContext.src = 'http://m10.music.126.net/20210120202747/5fa041a2a7cdc85d3303e0bfa9202104/ymusic/a9c1/47f7/e72a/eeca0e403e1aa21dc60ca590be3db3f0.mp3'
+    this.innerAudioContext.src = 'http://m10.music.126.net/20210120230403/9ce5dc1c7fe42ed3de1e7cc837f53daa/ymusic/a9c1/47f7/e72a/eeca0e403e1aa21dc60ca590be3db3f0.mp3'
     this.innerAudioContext.play()
     const options = {
       duration: 30000,
@@ -87,7 +87,17 @@ Page({
   onReady: function () {
 
   },
-
+  choose(){
+    wx.chooseMessageFile({
+      count:1,
+      type:'file',
+      extension: ['mp3','wav'],
+      success (res) {
+        const tempFilePaths = res.tempFiles
+        console.log('tempFilePaths',tempFilePaths)
+      }
+    })
+  },
   /**
    * 生命周期函数--监听页面显示
    */

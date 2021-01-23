@@ -2,4 +2,6 @@
 <view class="test">
 <view catchtap="start">start</view>
 <view catchtap="play" class="play">play</view>
+<view class="play" catchtap="choose">选择音频</view>
 </view>
+
