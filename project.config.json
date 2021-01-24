@@ -1943,6 +1943,12 @@
         {
           "name": "pages/test/test",
           "pathName": "pages/test/test",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "components/tool/chord/chord",
+          "pathName": "components/tool/chord/chord",
           "scene": null
         }
       ]

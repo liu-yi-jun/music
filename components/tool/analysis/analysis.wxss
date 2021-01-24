@@ -155,10 +155,10 @@ canvas {
 
 .stringWrap {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   margin-top: 6.5vh;
-  padding: 0rpx 40rpx;
+  padding: 0rpx 66rpx;
   box-sizing: border-box;
   position: relative;
 }
@@ -244,7 +244,7 @@ canvas {
   height: 40rpx;
   position: absolute;
   top: 50%;
-  left: -20rpx;
+  left: -18rpx;
   transition: all 0.1s;
 }
 

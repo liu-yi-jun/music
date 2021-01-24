@@ -1,7 +1,9 @@
 <!--pages/test/test2/test2.wxml-->
 <view class="test">
 <view catchtap="start">start</view>
-<view catchtap="play" class="play">play</view>
-<view class="play" catchtap="choose">选择音频</view>
+<!-- <view catchtap="play" class="play">play</view> -->
+<!-- <view class="play" catchtap="choose">选择音频</view> -->
+<!-- <view catchtap="play" class="play">play</view> -->
+<view catchtap="manyPlay" class="play">manyPlay</view>
 </view>
 

@@ -1,0 +1,38 @@
+<!--components/tool/chord/chord.wxml-->
+<view class="chord">
+  <view class="bar">
+    <view class="guitar {{switchbtn=='guitar'?'active':''}}" catchtap="switchbtn" data-switchbtn="guitar">吉他</view>
+    <view class="yukri {{switchbtn=='ukelele'?'active':''}}" catchtap="switchbtn" data-switchbtn="ukelele">尤克里里</view>
+  </view>
+  <view class="chordChart">
+    <image wx:for="{{chordUrls}}" src="{{item}}" wx:key="index"></image>
+  </view>
+  <view class="keys-suffixes">
+    <view class="keysWrap">
+      <view class="key">Keys</view>
+      <view class="keyText" catchtouchstart="touchstart" catchtouchmove="touchmove" catchtouchend="touchend">
+        <view class="ul" style=" transform: translateX({{translateX}}px); transition:{{transition}};">
+          <view class="li" wx:for="{{keys}}" wx:key="index">{{item}}</view>
+        </view>
+        <view class="G-bg">
+          <view class="G-left"></view>
+          <view class="G-mid"></view>
+          <view class="G-rigth"></view>
+        </view>
+        <!-- <view catchtap="choosekey" data-key="Eb">Eb</view>
+        <view catchtap="choosekey" data-key="E">E</view>
+        <view catchtap="choosekey" data-key="F">F</view>
+        <view catchtap="choosekey" data-key="F#">F#</view>
+        <view catchtap="choosekey" data-key="G">G</view> -->
+      </view>
+    </view>
+    <view class="suffixesWrap">
+      <view class="suffixe">Suffixes</view>
+      <view class="suffixeText">
+        <view catchtap="choosesuffixe" data-suffixe="aug9">aug9</view>
+        <view catchtap="choosesuffixe" data-suffixe="7b9">7b9</view>
+        <view catchtap="choosesuffixe" data-suffixe="7#9">7#9</view>
+      </view>
+    </view>
+  </view>
+</view>
