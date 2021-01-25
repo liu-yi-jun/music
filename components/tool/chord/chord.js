@@ -124,9 +124,18 @@ Component({
     chordUrls: [],
     keys: guitarK,
     suffixs: guitarS,
-    translateX: 0,
-    transition: 'none',
-    moveCx: 0
+    // translateX: 0,
+    // transition: 'none',
+    keyObj: {
+      translateX: 0,
+      transition: 'none',
+      moveCx:0
+    },
+    suffixObj: {
+      translateX: 0,
+      transition: 'none',
+      moveCx: 0
+    }
   },
 
   /**
@@ -176,78 +185,112 @@ Component({
       })
     },
     touchstart(e) {
-      this.sY = e.changedTouches[0].clientY
-      this.sX = e.changedTouches[0].clientX
-      this.nX = this.data.translateX
-      this.sTime = new Date().getTime()
-      this.lastX = this.sX
-      this.canStart = false
-      this.canMove = false;
-      this.stopInertiaMove = true;
-    },
-    touchmove(e) {
-      this.mTime = new Date().getTime();
-      this.mY = e.changedTouches[0].clientY
-      this.mX = e.changedTouches[0].clientX
-      let drt = this.GetSlideDirection(this.sX, this.sY, this.mX, this.mY);
+      let obj, objName = e.currentTarget.dataset.objname
+      console.log('objName',objName)
+      if (objName === 'keyObj') {
+        obj = this.data.keyObj
+      } else if (objName === 'suffixObj') {
+        obj = this.data.suffixObj
+      }
+      obj.sY = e.changedTouches[0].clientY
+      obj.sX = e.changedTouches[0].clientX
+      console.log('9999999999999999999',this.data[objName].translateX)
+      obj.nX = this.data[objName].translateX
+      console.log('touchstart',objName)
+      obj.sTime = new Date().getTime()
+      obj.lastX = obj.sX
+      obj.canStart = false
+      obj.canMove = false;
+      obj.stopInertiaMove = true;
 
+    },    
+    touchmove(e) {
+      let obj, objName = e.currentTarget.dataset.objname
+      console.log('touchmove',objName)
+      if (objName === 'keyObj') {
+        obj = this.data.keyObj
+      } else if (objName === 'suffixObj') {
+        obj = this.data.suffixObj
+      }
+      obj.mTime = new Date().getTime();
+      obj.mY = e.changedTouches[0].clientY
+      obj.mX = e.changedTouches[0].clientX
+      let drt = this.GetSlideDirection(obj.sX, obj.sY, obj.mX, obj.mY);
       if (drt == 3 || drt == 4) {
         //console.log("条件允许移动")
-        this.canMove = true;
-        this.canEnd = true
-        this.stopInertiaMove = true;
+        obj.canMove = true;
+        obj.canEnd = true
+        obj.stopInertiaMove = true;
       }
-      if (this.canMove) {
+      if (obj.canMove) {
+        let translateX = `${objName}.translateX`
+        let transition = `${objName}.transition`
         this.setData({
-          translateX: this.nX - (this.sX - this.mX),
-          transition: 'none'
+          [translateX]: obj.nX - (obj.sX - obj.mX),
+          [transition]: 'none'
         })
       }
-      if (this.mTime - this.sTime > 300) {
+      if (obj.mTime - obj.sTime > 300) {
         console.log("移动后加速")
-        this.sTime = this.mTime;
-        this.lastX = this.mX;
+        obj.sTime = obj.mTime;
+        obj.lastX = obj.mX;
       }
     },
     touchend(e) {
-      this.eY = e.changedTouches[0].clientY
-      this.eX = e.changedTouches[0].clientX
-      this.maxX = (112 / 2) * 2;
-      this.minX = -(this.data.keys.length - 3) * (112 / 2);
-      if (this.canEnd) {
-        this.canMove = false;
-        this.canEnd = false;
-        this.canStart = true;
-        this.nX = this.nX - (this.sX - this.mX);
-        this.nowX = this.eX;
-        if (this.nX > this.maxX) {
+      let obj, objName = e.currentTarget.dataset.objname
+      console.log('touchend',objName)
+      if (objName === 'keyObj') {
+        obj = this.data.keyObj
+      } else if (objName === 'suffixObj') {
+        obj = this.data.suffixObj
+      }
+      obj.eY = e.changedTouches[0].clientY
+      obj.eX = e.changedTouches[0].clientX
+      obj.maxX = (112 / 2) * 2;
+      obj.minX = -(this.data.keys.length - 3) * (112 / 2);
+      if (obj.canEnd) {
+        obj.canMove = false;
+        obj.canEnd = false;
+        obj.canStart = true;
+        obj.nX = obj.nX - (obj.sX - obj.mX);
+        obj.nowX = obj.eX;
+        let translateX = `${objName}.translateX`
+        let transition = `${objName}.transition`
+        if (obj.nX > obj.maxX) {
           this.setData({
-            transition: 'all .5s',
-            translateX: this.maxX
+            [translateX]: obj.maxX,
+            [transition]: 'all .5s'
           })
-        } else if (this.nX < this.minX) {
+        } else if (obj.nX < obj.minX) {
           this.setData({
-            transition: 'all .5s',
-            translateX: this.minX
+            [translateX]: obj.minX,
+            [transition]: 'all .5s'
           })
         } else {
-          this.eTime = new Date().getTime();
-          var speed = ((this.nowX - this.lastX) / (this.eTime - this.sTime))
-          this.stopInertiaMove = false;
+          obj.eTime = new Date().getTime();
+          var speed = ((obj.nowX - obj.lastX) / (obj.eTime - obj.sTime))
+          obj.stopInertiaMove = false;
           //惯性滚动函数
-          this.test(speed, this.eTime, this.nX)
+          console.log('222222222',speed,obj.eTime,obj.nX, objName)
+          this.test(speed, obj.eTime, obj.nX, objName)
         }
       }
     },
-    test(v, startTime, contentX) {
+    test(v, startTime, contentX, objName) {
+      let obj
+      if (objName === 'keyObj') {
+        obj = this.data.keyObj
+      } else if (objName === 'suffixObj') {
+        obj = this.data.suffixObj
+      }
       var dir = v > 0 ? -1 : 1;
       //加速度方向
-      var deceleration = dir * 0.001; //0.001 为减速时间
+      var deceleration = dir * 0.003; //0.001 为减速时间
       console.log("移动方向", dir);
       console.log("减速率", deceleration);
 
       function inertiaMove() {
-        if (this.stopInertiaMove)
+        if (obj.stopInertiaMove)
           return;
         var nowTime = new Date().getTime();
         var t = nowTime - startTime;
@@ -260,18 +303,20 @@ Component({
           //	console.log("移动结束，总距离",moveCy)
           //	console.log("移动结束，总距离除以高度",(moveCy/sjObj.opt.height))
           //	console.log("移动结束，总距离%高度",moveCy%sjObj.opt.height)
-          if (this.data.moveCx > this.maxX) {
+          let translateX = `${objName}.translateX`
+          let transition = `${objName}.transition`
+          if (obj.moveCx > obj.maxX) {
             this.setData({
-              transition: 'all .5s',
-              translateX: this.maxX
+              [transition]: 'all .5s',
+              [translateX]: obj.maxX
             })
-          } else if (this.data.moveCx < this.minX) {
+          } else if (obj.moveCx < obj.minX) {
             this.setData({
-              transition: 'all .5s',
-              translateX: this.minX
+              [transition]: 'all .5s',
+              [translateX]: obj.minX
             })
           } else {
-            var MC = Math.round(this.data.moveCx / (112 / 2))
+            var MC = Math.round(obj.moveCx / (112 / 2))
             //		console.log(MC)
             if (MC > 2) {
               //			console.log("大于长度")
@@ -281,29 +326,28 @@ Component({
               MC = -(this.data.keys.length - 1) + 2
             }
             this.setData({
-              transition: 'all .4s',
-              translateX: (112 / 2) * MC
+              [transition]: 'all .4s',
+              [translateX]: (112 / 2) * MC
             })
           }
           return
         }
-        console.log(this.data, this)
-        this.data.moveCx = (contentX + moveX)
-        if (this.data.moveCx > (this.maxX + ((112 / 2) * 2))) {
+        obj.moveCx = (contentX + moveX)
+        if (obj.moveCx > (obj.maxX + ((112 / 2) * 2))) {
           this.setData({
-            transition: 'all .5s',
-            translateX: this.maxX
+            [transition]: 'all .5s',
+            [translateX]: obj.maxX
           })
           return
-        } else if (this.data.moveCx < (this.minX - ((112 / 2) * 2))) {
+        } else if (obj.moveCx < (obj.minX - ((112 / 2) * 2))) {
           this.setData({
-            transition: 'all .5s',
-            translateX: this.minX
+            [transition]: 'all .5s',
+            [translateX]: obj.minX
           })
           return
         }
         this.setData({
-          translateX: this.data.moveCx
+          translateX: obj.moveCx
         })
         var timers = setTimeout(inertiaMove.bind(this), 10);
       }

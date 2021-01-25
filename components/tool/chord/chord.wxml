@@ -10,8 +10,8 @@
   <view class="keys-suffixes">
     <view class="keysWrap">
       <view class="key">Keys</view>
-      <view class="keyText" catchtouchstart="touchstart" catchtouchmove="touchmove" catchtouchend="touchend">
-        <view class="ul" style=" transform: translateX({{translateX}}px); transition:{{transition}};">
+      <view class="keyText" catchtouchstart="touchstart" catchtouchmove="touchmove" catchtouchend="touchend" data-objname="keyObj">
+        <view class="ul" style=" transform: translateX({{keyObj.translateX}}px); transition:{{keyObj.transition}};">
           <view class="li" wx:for="{{keys}}" wx:key="index">{{item}}</view>
         </view>
         <view class="G-bg">
@@ -28,11 +28,17 @@
     </view>
     <view class="suffixesWrap">
       <view class="suffixe">Suffixes</view>
-      <view class="suffixeText">
-        <view catchtap="choosesuffixe" data-suffixe="aug9">aug9</view>
-        <view catchtap="choosesuffixe" data-suffixe="7b9">7b9</view>
-        <view catchtap="choosesuffixe" data-suffixe="7#9">7#9</view>
-      </view>
+      <!-- catchtouchstart="touchstart" catchtouchmove="touchmove" catchtouchend="touchend" data-objname="suffixObj" -->
+      <!-- <view class="suffixeText" >
+        <view class="ul" style="transform: translateX({{suffixObj.translateX}}px); transition:{{suffixObj.transition}};">
+          <view class="li" wx:for="{{suffixs}}" wx:key="index">{{item}}</view>
+        </view>
+        <view class="G-bg">
+          <view class="G-left"></view>
+          <view class="G-mid"></view>
+          <view class="G-rigth"></view>
+        </view>
+      </view> -->
     </view>
   </view>
 </view>
