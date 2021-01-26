@@ -1949,6 +1949,12 @@
         {
           "name": "components/tool/chord/chord",
           "pathName": "components/tool/chord/chord",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/home/alliance/alliance",
+          "pathName": "pages/home/alliance/alliance",
           "scene": null
         }
       ]
