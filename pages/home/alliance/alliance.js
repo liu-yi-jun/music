@@ -37,9 +37,9 @@ Page({
     app.get(app.Api.pagingGetGroup, {
       groupName,
       ...groupPaging
-    },{
+    }, {
       loading: false
-    }).then((res)=> {
+    }).then((res) => {
       if (res.length < groupPaging.pageSize) {
         this.setData({
           'groupPaging.isNotData': true
@@ -55,8 +55,8 @@ Page({
     this.setData({
       groups: [],
       groupName: event.detail.value,
-      'pagingGetGroup.isNotData': false,
-      'pagingGetGroup.pageIndex': 1
+      'groupPaging.isNotData': false,
+      'groupPaging.pageIndex': 1
     }, () => this.pagingGetGroup(this.data.groupName))
   },
 

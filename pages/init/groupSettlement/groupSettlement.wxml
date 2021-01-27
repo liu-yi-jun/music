@@ -9,7 +9,7 @@
     bindback="handlerGobackClick"></navBar>
   <!-- <scroll-view scroll-y style="height:{{height}}px"> -->
   
-  <form bindsubmit="formSubmit">
+  <form bindsubmit="create">
     <view class="title">小组入驻</view>
     <view class="imgWarp">
      
@@ -21,9 +21,9 @@
     <view class="inputWarp">
       <input placeholder="小组名称："name="groupName" value="{{form.groupName}}" class="input" placeholder-class="placeholder"></input>
     </view>
-    <!-- <view class="textareaWarp">
+    <view class="textareaWarp">
       <textarea maxlength="-1"  class="textarea" placeholder="小组描述：" placeholder-class="placeholder" name="introduce" value='{{form.introduce}}' ></textarea>
-    </view> -->
+    </view>
 
     <view class="typeWrap">
       <view class="type">
@@ -46,3 +46,5 @@
   </form>
   <!-- </scroll-view> -->
 </view>
+
+<authorization id="authorization" dialogShow="{{dialogShow}}" bind:handleGetUserInfo ="handleGetUserInfo"></authorization>

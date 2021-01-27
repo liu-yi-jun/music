@@ -11,13 +11,14 @@ Page({
   data: {
     height: 0,
     tempFilePaths: [],
-    tempUrls:[],
+    tempUrls: [],
     form: {
       groupName: '',
       introduce: '',
       privates: false,
       examine: true
-    }
+    },
+    dialogShow: false
   },
 
   /**
@@ -25,18 +26,18 @@ Page({
    */
   onLoad: function (options) {
     this.initValidate()
-    setTimeout(()=> {
+    setTimeout(() => {
       console.log('1111111')
-    wx.createSelectorQuery()
-    .select('#yy')
-    .fields({
-      node: true,
-      size: true,
-    })
-    .exec(res=> {
-      console.log(res)
-    })
-    },1000)
+      wx.createSelectorQuery()
+        .select('#yy')
+        .fields({
+          node: true,
+          size: true,
+        })
+        .exec(res => {
+          console.log(res)
+        })
+    }, 1000)
   },
   //验证规则函数
   initValidate() {
@@ -61,7 +62,7 @@ Page({
    */
   onReady: function () {
 
-   
+
     // wx.createSelectorQuery()
     // .select('#yy')
     // .fields({
@@ -136,7 +137,7 @@ Page({
   },
 
   canvasLogo(res) {
-  
+
     const width = res[0].width
     const height = res[0].height
     const canvas = res[0].node
@@ -229,23 +230,23 @@ Page({
   },
   // 预览图片 
 
-    // logo.onload = () => {
-    //   ctx.clip()
-    //   ctx.drawImage(logo, 0, 0, width, height)
-    //   wx.canvasToTempFilePath({
-    //     canvas,
-    //     width,
-    //     height,
-    //     destWidth: width,
-    //     destHeight: height,
-    //     success: res => {
-    //       console.log(res.tempFilePath)
-    //       this.setData({
-    //         tempFilePaths: [res.tempFilePath]
-    //       })
-    //     }
-    //   }, that)
-    // }
+  // logo.onload = () => {
+  //   ctx.clip()
+  //   ctx.drawImage(logo, 0, 0, width, height)
+  //   wx.canvasToTempFilePath({
+  //     canvas,
+  //     width,
+  //     height,
+  //     destWidth: width,
+  //     destHeight: height,
+  //     success: res => {
+  //       console.log(res.tempFilePath)
+  //       this.setData({
+  //         tempFilePaths: [res.tempFilePath]
+  //       })
+  //     }
+  //   }, that)
+  // }
   // },
   // 预览图片
 
@@ -307,6 +308,11 @@ Page({
       url: "/pages/home/home"
     })
   },
+  create() {
+    this.setData({
+      dialogShow: true
+    })
+  },
   // 提交表单
   async formSubmit(e) {
     console.log('form发生了submit事件，携带的数据为：', e.detail.value)
@@ -330,5 +336,10 @@ Page({
       wx.hideLoading()
     }
   },
+  handleGetUserInfo(data) {
+    console.log(data,111111111)
+    if (data.detail.rawData) {
 
+    }
+  }
 })

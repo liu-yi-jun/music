@@ -176,9 +176,21 @@ Page({
           })
         } else {
           // 没有信息等待选择
+          this.getTabBar().setData({
+            show: false
+          })
+          this.setData({
+            tabBarBtnShow: true
+          })
         }
       } else {
         // 没有用户信息等待用户授权
+        this.getTabBar().setData({
+          show: false
+        })
+        this.setData({
+          tabBarBtnShow: true
+        })
       }
 
     })

@@ -54,10 +54,11 @@
   width: 313rpx;
   height: 60rpx;
   box-sizing: border-box;
-  color: black!important;
+  color: black !important;
   padding: 0 30rpx 0 30rpx;
   border-radius: 999rem;
   border: 1rpx solid white;
+  color: white !important;
 }
 
 
@@ -103,12 +104,20 @@
 
 .top {
   color: white;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
 }
 
 .bottom {
   color: #cacbcb;
   font-size: 24rpx;
   width: 278rpx;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
 }
 
 .communityName {
@@ -142,6 +151,7 @@
   font-size: 24rpx;
   color: #B4B4B5;
 }
+
 .searchText {
   width: 120rpx;
   height: 60rpx;
@@ -155,7 +165,8 @@
   border-radius: 999rem;
   box-shadow: 6rpx 8rpx 6rpx 4rpx rgba(0, 0, 0, .1);
 }
-.join{
+
+.join {
   position: absolute;
   width: 183rpx;
   height: 185rpx;

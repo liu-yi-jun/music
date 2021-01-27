@@ -3,15 +3,15 @@
   <navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' back="{{true}}" iconTheme='white'
     bindback="handlerGobackClick"></navBar>
   <view class="head">
-    <view class="logo-search">
-      <image class="logo" src="http://cdn.eigene.cn/home/searchLogo.png"></image>
-      <view class="searchWrap">
-        <input placeholder="输入小组..." placeholder-class="searchPlaceholder" class="search" value="{{groupName}}" focus
-          bindconfirm="confirm">
-        </input>
+      <view class="logo-search">
+        <image class="logo" src="http://cdn.eigene.cn/home/searchLogo.png"></image>
+        <view class="searchWrap">
+          <input placeholder="输入小组..." placeholder-class="searchPlaceholder" class="search" value="{{groupName}}" focus
+            bindconfirm="confirm">
+          </input>
+        </view>
+        <view class="searchText" catchtap="confirm">搜索</view>
       </view>
-      <view class="searchText">搜索</view>
-    </view>
   </view>
   <scroll-view bindscrolltolower="scrolltolower" style="height: calc({{excludeHeight}}px - 130rpx);" scroll-y>
     <view class="list">
@@ -27,7 +27,7 @@
                 <text>{{item.postNumber}}帖子</text>
               </view>
             </view>
-            <view class="bottom">
+            <view class="bottom" wx:if="{{item.introduce}}">
               <text>{{item.introduce}}</text>
             </view>
           </view>

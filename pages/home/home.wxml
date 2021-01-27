@@ -132,8 +132,7 @@
   </image>
   <image class="expandIssue {{!switchIssue?'showExpandIssue':'hideExpandIssue'}}" catchtap="switchIssue"
     src="http://cdn.eigene.cn/expandIssue.png"></image>
-  <showTabBar tabBarBtnShow="{{tabBarBtnShow}}">
-  </showTabBar>
+ 
   <view class="shade {{dialogShow? 'shadeShow':''}}" mark:district="shade">
     <view class="dialog">
       <text>是否确定加入该小组？</text>
@@ -192,3 +191,5 @@
     </view>
   </view>
 </block>
+<showTabBar tabBarBtnShow="{{tabBarBtnShow}}">
+  </showTabBar>
