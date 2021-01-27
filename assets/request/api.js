@@ -106,5 +106,6 @@ module.exports = {
   ticketDetailAndCommont: "/api/ticket/ticketDetailAndCommont",
   ticketLike: "/api/ticket/ticketLike",
   ticketStore: "/api/ticket/ticketStore",
-  getGuitar: "/api/svg/getGuitar"
+  getGuitar: "/api/svg/getGuitar",
+  pagingGetGroup: "/api/group/pagingGetGroup"
 }

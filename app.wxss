@@ -6,6 +6,8 @@ page {
    /* background:#0044D2 */
    /* background-image: url("http://cdn.eigene.cn/pageBackground.png");
    background-size: 100% 100%;   */
+   /* background: url("http://cdn.eigene.cn/pageBackground.png") no-repeat;
+  background-size: 100% 100%; */
 }
 button {
   padding: 0!important;

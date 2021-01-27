@@ -1,0 +1,23 @@
+/* pages/home/myGroup/myGroup.wxss */
+
+
+.head {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 40rpx 14rpx 30rpx 40rpx;
+  display: flex;
+  /* justify-content: space-between; */
+  align-items: center;
+}
+.myTab {
+  color: #FFFFFF;
+}
+.followTab {
+  color: #FFFFFF;
+  margin-left: 40rpx;
+}
+.active {
+  font-weight: bold;
+  border-bottom: 4rpx solid #C46CEE;
+}
+

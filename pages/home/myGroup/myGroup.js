@@ -1,4 +1,4 @@
-// pages/home/alliance/alliance.js
+// pages/home/myGroup/myGroup.js
 const app = getApp()
 const tool = require('../../../assets/tool/tool.js')
 Page({
@@ -11,16 +11,12 @@ Page({
     excludeHeight: 0,
     groups: [],
     groupName: '',
-    // followGroupPaging: {
-    //   pageSize: 20,
-    //   pageIndex: 1,
-    //   isNotData: false,
-    // },
-    groupPaging: {
+    followGroupPaging: {
       pageSize: 20,
       pageIndex: 1,
       isNotData: false,
     },
+    swithchtab: 'myTab'
   },
 
   /**
@@ -29,44 +25,23 @@ Page({
   onLoad: function (options) {
     // 获取去除上面导航栏，剩余的高度
     tool.navExcludeHeight(this)
-    // this.pagingGetFollowGroup(this.data.groupName)
-    this.pagingGetGroup(this.data.groupName)
-  },
-  pagingGetGroup(groupName) {
-    let groupPaging = this.data.groupPaging
-    app.get(app.Api.pagingGetGroup, {
-      groupName,
-      ...groupPaging
-    },{
-      loading: false
-    }).then((res)=> {
-      if (res.length < groupPaging.pageSize) {
-        this.setData({
-          'groupPaging.isNotData': true
-        })
-      }
-      this.setData({
-        groups: this.data.groups.concat(res),
-        'groupPaging.pageIndex': groupPaging.pageIndex + 1
-      })
-    })
+    this.pagingGetFollowGroup(this.data.groupName)
   },
   confirm(event) {
     this.setData({
       groups: [],
       groupName: event.detail.value,
-      'pagingGetGroup.isNotData': false,
-      'pagingGetGroup.pageIndex': 1
-    }, () => this.pagingGetGroup(this.data.groupName))
+      'followGroupPaging.isNotData': false,
+      'followGroupPaging.pageIndex': 1
+    }, () => this.pagingGetFollowGroup(this.data.groupName))
   },
-
-
-
+  // 获取所有关注的小组
   pagingGetFollowGroup(groupName) {
     let followGroupPaging = this.data.followGroupPaging
     app.get(app.Api.pagingGetFollowGroup, {
       groupName,
-      userId: app.userInfo.id,
+      // userId: app.userInfo.id,
+      userId: 20,
       ...followGroupPaging
     }, {
       loading: false
@@ -83,9 +58,18 @@ Page({
     })
   },
   scrolltolower() {
-    if (!this.data.groupPaging.isNotData) {
-      this.pagingGetGroup(this.data.groupName)
+    if (!this.data.followGroupPaging.isNotData) {
+      this.pagingGetFollowGroup(this.data.groupName)
     }
+  },
+  swithchTab(e) {
+    let swithchtab = e.currentTarget.dataset.swithchtab
+    if (this.data.swithchtab === swithchtab) {
+      return
+    }
+    this.setData({
+      swithchtab
+    })
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

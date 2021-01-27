@@ -1,7 +1,7 @@
 {
   "pages": [
-    "pages/init/index/index",
     "pages/home/home",
+    "pages/init/index/index",
     "pages/tool/tool",
     "pages/home/alliance/alliance",
     "pages/home/showInformation/showInformation",
@@ -57,7 +57,8 @@
     "pages/test/test",
     "pages/test/test2/test2",
     "components/tool/select/select",
-    "components/tool/chord/chord"
+    "components/tool/chord/chord",
+    "pages/home/myGroup/myGroup"
   ],
   "permission": {
     "scope.userLocation": {

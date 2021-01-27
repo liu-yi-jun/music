@@ -1,0 +1,13 @@
+<!--components/common/authorization/authorization.wxml-->
+<view class="shade {{dialogShow? 'shadeShow':''}}" mark:district="shade">
+    <view class="dialog">
+      <view class="miniLogo-musicmonster">
+        <image class="miniLogo" src="http://cdn.eigene.cn/index/miniLogo.png"></image>
+        <image class="musicmonster" src="http://cdn.eigene.cn/index/musicmonster.png"></image>
+      </view>
+      <view class="buttonWrap">
+        <button class="btn cancel" catchtap="cancel">取消</button>
+        <button class="btn confirm" open-type="getUserInfo" bindgetuserinfo="handleGetUserInfo">微信授权</button>
+      </view>
+    </view>
+  </view>

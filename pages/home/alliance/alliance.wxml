@@ -13,27 +13,27 @@
       <view class="searchText">搜索</view>
     </view>
   </view>
-  <view class="list">
-    <!-- wx:for="{{groups}}" wx:key="index" -->
-    <view class="card">
-      <view class="block" catchtap="goOtherHome" data-id="{{item.id}}">
-        <image src="{{item.groupLogo}}" class="communityLogo" mode="aspectFill"></image>
-        <view class="introduce">
-          <view class="top">
-            <text class="communityName">{{item.groupName}}</text>
-            <view class="member-invitation">
-              <text>{{item.member}}成员</text>
-              <view class="point"></view>
-              <text>{{item.postNumber}}帖子</text>
+  <scroll-view bindscrolltolower="scrolltolower" style="height: calc({{excludeHeight}}px - 130rpx);" scroll-y>
+    <view class="list">
+      <view class="card" wx:for="{{groups}}" wx:key="index">
+        <view class="block" catchtap="goOtherHome" data-id="{{item.id}}">
+          <image src="{{item.groupLogo}}" class="communityLogo" mode="aspectFill"></image>
+          <view class="introduce">
+            <view class="top">
+              <text class="communityName">{{item.groupName}}</text>
+              <view class="member-invitation">
+                <text>{{item.member}}成员</text>
+                <view class="point"></view>
+                <text>{{item.postNumber}}帖子</text>
+              </view>
+            </view>
+            <view class="bottom">
+              <text>{{item.introduce}}</text>
             </view>
           </view>
-          <view class="bottom">
-            <text>{{item.introduce}}</text>
-          </view>
+          <image class="join" src="http://cdn.eigene.cn/home/join.png"></image>
         </view>
-        <image class="join" src="http://cdn.eigene.cn/home/join.png"></image>
       </view>
     </view>
-  </view>
-
+  </scroll-view>
 </view>

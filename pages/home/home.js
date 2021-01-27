@@ -99,7 +99,8 @@ Page({
     cross: false,
     showFakeTab: false,
     isLoop: false,
-    lessMember: false
+    lessMember: false,
+    isShowGroup: false
   },
 
 
@@ -107,24 +108,82 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let {
-      groupId: myGroupId,
-      groupDuty
-    } = app.userInfo
-    this.setData({
-      myId: app.userInfo.id
-    })
-    this.initSocketEvent()
-    this.getGroupInfo(myGroupId)
-    this.groupPagingGetGroupdynamics(myGroupId).then(() => {
-      this.urlPush()
+    // let {
+    //   groupId: myGroupId,
+    //   groupDuty
+    // } = app.userInfo
+    // this.setData({
+    //   myId: app.userInfo.id
+    // })
+    // this.initSocketEvent()
+    // this.getGroupInfo(myGroupId)
+    // this.groupPagingGetGroupdynamics(myGroupId).then(() => {
+    //   this.urlPush()
 
-    })
-    if (groupDuty === -1) {
-      let tip = '请求1小时后自动失效，可重新选择小组'
-      common.Tip(tip, '等待审批')
+    // })
+    // if (groupDuty === -1) {
+    //   let tip = '请求1小时后自动失效，可重新选择小组'
+    //   common.Tip(tip, '等待审批')
+    // }
+
+
+    this.initLogin()
+  },
+  // 
+  initLogin() {
+    let token = wx.getStorageSync('wx-token')
+    if (token) {
+      wx.checkSession({
+        success: () => {
+          this.getServerUserInfo()
+        },
+        fail: () => {
+          this.login()
+        }
+      })
+    } else {
+      this.login()
     }
   },
+  login() {
+    return new Promise((resolve, reject) => {
+      wx.login({
+        success: res => {
+          App.getToken(res.code).then(() => {
+            this.getServerUserInfo()
+            resolve()
+          })
+        },
+        fail: err => reject(err)
+      })
+    })
+  },
+  getServerUserInfo() {
+    app.get(app.Api.getServerUserInfo).then(res => {
+      if (res.userInfo) {
+        // 有用户信息，存入app
+        app.userInfo = res.userInfo
+        let groupId = app.userInfo.groupId
+        if (groupId) {
+          // 获取信息
+          this.getGroupInfo(groupId).then(() => {
+            this.setData({
+              isShowGroup: true
+            })
+          })
+          this.groupPagingGetGroupdynamics(groupId).then(() => {
+            this.urlPush()
+          })
+        } else {
+          // 没有信息等待选择
+        }
+      } else {
+        // 没有用户信息等待用户授权
+      }
+
+    })
+  },
+
   // 初始化通讯
   initSocketEvent() {
     const socket = (app.socket = io(app.socketUrls.baseUrl))
@@ -208,28 +267,30 @@ Page({
   },
   // 获取小组详情
   getGroupInfo(groupId) {
-    console.log(groupId)
-    app.get(app.Api.getGroupInfo, {
-      groupId,
-      userId: app.userInfo.id
-    }, {
-      loading: false
-    }).then((res) => {
-      console.log(res)
-      let groupNameTop, groupNamebuttom
-      if (res.groupName.length > 7) {
-        groupNameTop = res.groupName.substr(0, 7)
-        groupNamebuttom = res.groupName.substr(7)
-      } else {
-        groupNameTop = res.groupName
-      }
-      this.setData({
-        groupInfo: res,
-        groupNameTop,
-        groupNamebuttom
-      })
-      app.groupInfo = res
-    }).catch(err => err)
+    return new Promise((resolve, reject) => {
+      app.get(app.Api.getGroupInfo, {
+        groupId,
+        userId: app.userInfo.id
+      }, {
+        loading: false
+      }).then((res) => {
+        console.log(res)
+        let groupNameTop, groupNamebuttom
+        if (res.groupName.length > 7) {
+          groupNameTop = res.groupName.substr(0, 7)
+          groupNamebuttom = res.groupName.substr(7)
+        } else {
+          groupNameTop = res.groupName
+        }
+        resolve(res)
+        this.setData({
+          groupInfo: res,
+          groupNameTop,
+          groupNamebuttom
+        })
+        app.groupInfo = res
+      }).catch(err => reject(err))
+    })
   },
   // 提取member到showMember
   urlPush() {
@@ -306,11 +367,11 @@ Page({
  0  */
   onReady: function () {
     // this.getmoveDistance()
-    console.log('1111111111111',wx.createSelectorQuery().in(this)
-    .select('#canvasLogo'))
-    setTimeout(() => {
-      this.socket.emit("getmessage");
-    }, 8000)
+    // console.log('1111111111111', wx.createSelectorQuery().in(this)
+    //   .select('#canvasLogo'))
+    // setTimeout(() => {
+    //   this.socket.emit("getmessage");
+    // }, 8000)
 
     // wx.createSelectorQuery().in(this)
     //   .select('#canvasLogo')
@@ -1029,4 +1090,20 @@ Page({
       }
     }
   },
+
+  toUnion() {
+    wx.navigateTo({
+      url: '/pages/home/alliance/alliance',
+    })
+  },
+  toGroupSettlement() {
+    wx.navigateTo({
+      url: '/pages/init/groupSettlement/groupSettlement',
+    })
+  },
+  toMyGroup() {
+    wx.navigateTo({
+      url: '/pages/home/myGroup/myGroup',
+    })
+  }
 })

@@ -1,0 +1,18 @@
+<!--pages/home/myGroup/myGroup.wxml-->
+<view class="joinClub">
+  <navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' back="{{true}}" iconTheme='white'
+    bindback="handlerGobackClick"></navBar>
+  <view class="head">
+    <view class="myTab {{swithchtab=='myTab'?'active': ''}}" catchtap="swithchTab" data-swithchtab="myTab">我的小组</view>
+    <view class="followTab  {{swithchtab=='followTab'?'active': ''}}" catchtap="swithchTab" data-swithchtab="followTab">
+      关注的小组</view>
+  </view>
+  <scroll-view bindscrolltolower="scrolltolower" style="height: calc({{excludeHeight}}px - 130rpx);" scroll-y>
+    <view hidden="{{swithchtab !=='myTab'}}">
+      <groupList groups="{{groups}}"></groupList>
+    </view>
+    <view hidden="{{swithchtab !=='followTab'}}">
+      <groupList groups="{{groups}}"></groupList>
+    </view>
+  </scroll-view>
+</view>

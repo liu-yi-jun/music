@@ -10,7 +10,7 @@
       </image>
       <view class="listWrap {{listIsShow?'listShow':''}}">
         <scroll-view class="scroll" scroll-y enhanced show-scrollbar="{{false}}">
-          <view wx:for="{{groups}}" class="listItme" catchtap="goOther" data-id="{{item.id}}"  wx:key="id">
+          <view wx:for="{{groups}}" class="listItme" catchtap="goOther" data-id="{{item.id}}" wx:key="id">
             {{item.groupName}}</view>
         </scroll-view>
       </view>
@@ -19,6 +19,7 @@
   <view class="Settlement">
     <view class="SettlementText" catchtap="goGroupSettlement">入驻</view>
   </view>
+
   <view class="shade {{dialogShow? 'shadeShow':''}}" mark:district="shade">
     <view class="dialog">
       <view class="miniLogo-musicmonster">
@@ -31,11 +32,12 @@
       </view>
     </view>
   </view>
+
   <view class="guideMask {{initGuide?'showGuide': 'hideGuide'}} " catchtap="stopBubbling">
-  <block wx:if="{{leftGuide}}">
-    <image class="leftGuide" src="http://cdn.eigene.cn/guide/left.png" catchtap="click" data-click="leftGuide">
-    </image>
-    <view class="leftGuideText">点击发现小组</view>
-  </block>
-</view>
+    <block wx:if="{{leftGuide}}">
+      <image class="leftGuide" src="http://cdn.eigene.cn/guide/left.png" catchtap="click" data-click="leftGuide">
+      </image>
+      <view class="leftGuideText">点击发现小组</view>
+    </block>
+  </view>
 </image>
