@@ -47,4 +47,4 @@
   <!-- </scroll-view> -->
 </view>
 
-<authorization id="authorization" dialogShow="{{dialogShow}}" bind:handleGetUserInfo ="handleGetUserInfo"></authorization>
+<authorization dialogShow="{{dialogShow}}" ></authorization>

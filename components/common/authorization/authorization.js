@@ -1,4 +1,5 @@
 // components/common/authorization/authorization.js
+let app = getApp()
 Component({
   /**
    * 组件的属性列表
@@ -28,8 +29,22 @@ Component({
     },
     //获取用户点击的是允许还是拒绝
     handleGetUserInfo(data) {
-      console.log(data)
-      this.triggerEvent('handleGetUserInfo', data)
+      if (data.detail.rawData) {
+        if (!app.userInfo) {
+          app.post(app.Api.register, {
+            userInfo: data.detail.userInfo
+          },{
+            loading: false
+          }).then(res => {
+            app.userInfo = res.userInfo
+            this.setData({
+              dialogShow: false
+            })
+            this.triggerEvent('handleGetUserInfo', data)
+          })
+        }
+      }
+     
     },
   }
 })

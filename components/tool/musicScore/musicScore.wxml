@@ -22,3 +22,4 @@
     </view>
   </scroll-view>
 </view>
+<authorization dialogShow="{{dialogShow}}"></authorization>

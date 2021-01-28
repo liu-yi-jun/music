@@ -1,6 +1,7 @@
 // pages/init/groupSettlement/groupSettlement.js
 const common = require('../../../assets/tool/common.js')
 const upload = require('../../../assets/request/upload.js')
+const authorize = require('../../../assets/tool/authorize')
 import WxValidate from '../../../assets/tool/WxValidate'
 const app = getApp()
 Page({
@@ -308,10 +309,14 @@ Page({
       url: "/pages/home/home"
     })
   },
-  create() {
-    this.setData({
-      dialogShow: true
-    })
+  create(e) {
+    if (authorize.isAuthorUserInfo()) {
+      this.formSubmit(e)
+    } else {
+      this.setData({
+        dialogShow: true
+      })
+    }
   },
   // 提交表单
   async formSubmit(e) {
@@ -336,10 +341,4 @@ Page({
       wx.hideLoading()
     }
   },
-  handleGetUserInfo(data) {
-    console.log(data,111111111)
-    if (data.detail.rawData) {
-
-    }
-  }
 })

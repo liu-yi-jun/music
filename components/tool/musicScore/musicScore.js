@@ -7,9 +7,9 @@ Component({
    * 组件的属性列表
    */
   properties: {
-    excludeHeight:{
-      type:Number,
-      value:0
+    excludeHeight: {
+      type: Number,
+      value: 0
     }
   },
 
@@ -30,6 +30,7 @@ Component({
       pageIndex: 1,
       isNotData: false
     },
+    dialogShow: false
   },
   lifetimes: {
     created: function () {
@@ -116,12 +117,18 @@ Component({
         })
     },
     goTapPractice(e) {
-      let circulars = this.data.circulars
-      let index = e.currentTarget.dataset.index
-      let id = circulars[index].id
-      wx.navigateTo({
-        url: `/pages/tool/tapPractice/tapPractice?id=${id}`,
-      })
+      if (authorize.isAuthorUserInfo()) {
+        let circulars = this.data.circulars
+        let index = e.currentTarget.dataset.index
+        let id = circulars[index].id
+        wx.navigateTo({
+          url: `/pages/tool/tapPractice/tapPractice?id=${id}`,
+        })
+      } else {
+        this.setData({
+          dialogShow: true
+        })
+      }
     },
     confirm(event) {
       this.setData({

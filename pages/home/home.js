@@ -3,6 +3,7 @@ let app = getApp()
 let common = require('../../assets/tool/common')
 let tool = require('../../assets/tool/tool')
 let core = require('../../assets/tool/core')
+let authorize = require('../../assets/tool/authorize')
 let io = require('../../assets/tool/weapp.socket.io')
 let Style = [{
     index: 0,
@@ -125,8 +126,7 @@ Page({
     //   let tip = '请求1小时后自动失效，可重新选择小组'
     //   common.Tip(tip, '等待审批')
     // }
-
-
+   
     this.initLogin()
   },
   // 

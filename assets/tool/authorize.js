@@ -51,19 +51,25 @@ function wxGetLocation(callback) {
   })
 }
 // 获取用户信息
-// function isAuthorUserInfo() {
+async function isAuthorUserInfo() {
+  return await new Promise((resolve, reject) => {
+    wx.getSetting({
+      success(res) {
+        if (res.authSetting['scope.userInfo']) {
+          console.log('已授权')
+          return resolve(true)
+        } else {
+          console.log('未授权')
+          return resolve(false)
+        }
+      }
+    })
+  })
+}
 
-//   wx.getSetting({
-//     success(res) {
-//       if (res.authSetting['scope.userInfo']) {
 
-//       } else {
-//       }
-//     }
-//   })
-// }
 
 module.exports = {
   getLocation: getLocation,
-  // getUserInfo: getUserInfo
+  isAuthorUserInfo: isAuthorUserInfo
 }

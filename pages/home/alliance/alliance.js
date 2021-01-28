@@ -21,6 +21,7 @@ Page({
       pageIndex: 1,
       isNotData: false,
     },
+    dialogShow: false
   },
 
   /**
@@ -136,5 +137,25 @@ Page({
 
   },
   handlerGobackClick: app.handlerGobackClick,
-
+  goOtherHome(event) {
+    if (authorize.isAuthorUserInfo()) {
+      let id = event.target.dataset.id
+      wx.navigateTo({
+        url: `/pages/home/otherHome/otherHome?showGroupId=${id}`,
+      })
+    } else {
+      this.setData({
+        dialogShow: true
+      })
+    }
+  },
+  join() {
+    if (authorize.isAuthorUserInfo()) {
+      // 加入
+    } else {
+      this.setData({
+        dialogShow: true
+      })
+    }
+  }
 })
