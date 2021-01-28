@@ -2,7 +2,7 @@
 
 .home {
   width: 100vw;
-  height: 100vw;
+  height: 100vh;
   /* position: relative; */
   /* content: ' '; */
   /* z-index: -999; */

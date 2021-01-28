@@ -138,8 +138,9 @@ Page({
   },
   handlerGobackClick: app.handlerGobackClick,
   goOtherHome(event) {
-    if (authorize.isAuthorUserInfo()) {
-      let id = event.target.dataset.id
+    console.log('eventevent',event)
+    if (app.userInfo) {
+      let id = event.currentTarget.dataset.id
       wx.navigateTo({
         url: `/pages/home/otherHome/otherHome?showGroupId=${id}`,
       })
@@ -150,7 +151,7 @@ Page({
     }
   },
   join() {
-    if (authorize.isAuthorUserInfo()) {
+    if (app.userInfo) {
       // 加入
     } else {
       this.setData({

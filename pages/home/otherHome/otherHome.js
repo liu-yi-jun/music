@@ -562,6 +562,7 @@ Page({
       examine
     }).then(res => {
       app.userInfo = res
+      app.switchData.isSwitchGroup = true
       wx.switchTab({
         url: '/pages/home/home',
       })

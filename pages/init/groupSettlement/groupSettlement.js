@@ -305,12 +305,13 @@ Page({
   },
   // 去首页
   goHome() {
+    app.switchData.isSwitchGroup = true
     wx.switchTab({
       url: "/pages/home/home"
     })
   },
   create(e) {
-    if (authorize.isAuthorUserInfo()) {
+    if (app.userInfo) {
       this.formSubmit(e)
     } else {
       this.setData({

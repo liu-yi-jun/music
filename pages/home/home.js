@@ -126,7 +126,7 @@ Page({
     //   let tip = '请求1小时后自动失效，可重新选择小组'
     //   common.Tip(tip, '等待审批')
     // }
-   
+
     this.initLogin()
   },
   // 
@@ -445,7 +445,10 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    if (app.switchData.isSwitchGroup) {
+      app.switchData.isSwitchGroup = false
+      this.initLogin()
+    }
     if (typeof this.getTabBar === 'function' &&
       this.getTabBar()) {
       this.getTabBar().setData({
