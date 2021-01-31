@@ -23,7 +23,8 @@ Page({
       pageIndex: 1,
       isNotData: false
     },
-    pageShow:true
+    pageShow: true,
+    dialogShow: false
   },
 
   /**
@@ -36,16 +37,23 @@ Page({
   },
   //切换btn 
   switchBtn(e) {
-    const switchBtn = e.currentTarget.dataset.switchbtn
-    if (switchBtn === this.switchBtn) return
-    this.setData({
-      switchBtn
-    })
+    if (app.userInfo) {
+      const switchBtn = e.currentTarget.dataset.switchbtn
+      if (switchBtn === this.switchBtn) return
+      this.setData({
+        switchBtn
+      })
+    } else {
+      this.setData({
+        dialogShow: true
+      })
+    }
+
   },
-  onHide: function (){
+  onHide: function () {
     console.log('onHide')
     this.setData({
-      pageShow:false
+      pageShow: false
     })
   },
   onLoad: function (options) {
@@ -145,7 +153,7 @@ Page({
       // app.getNotice(this, app.userInfo.id)
     }
     this.setData({
-      pageShow:true
+      pageShow: true
     })
   },
 

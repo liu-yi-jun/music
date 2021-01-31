@@ -158,39 +158,42 @@ Page({
 
   },
   toDissolution() {
-    common.Tip('是否解散该小组','提示', '确定', true).then(res => {
+    common.Tip('是否解散该小组', '提示', '确定', true).then(res => {
       if (res.confirm) {
         app.post(app.Api.dissolutionGroup, {
-          groupId: app.userInfo.groupId
+          groupId: app.userInfo.groupId,
+          userId: app.userInfo.id
         }).then(res => {
-          if (res.affectedRows) {
-            common.Tip('小组已解散，请选择要加入的小组或重建小组').then(res => {
+          if (res.result.affectedRows) {
+            // common.Tip('小组已解散，请选择要加入的小组或重建小组').then(res => {
               this.goIndex()
-            })
+            // })
           }
-        }).catch(err => common.Toast(err))
+        }).catch(err => console.log(err))
       }
     })
   },
   toSignOut() {
-    common.Tip('是否退出该小组','提示', '确定', true).then(res => {
+    common.Tip('是否退出该小组', '提示', '确定', true).then(res => {
       if (res.confirm) {
         app.post(app.Api.signOutGroup, {
-          groupId: app.userInfo.groupId,
-          userId:app.userInfo.id
+          groupId: app.groupInfo.id,
+          userId: app.userInfo.id
         }).then(res => {
-          if (res.changedRows) {
-            common.Tip('已退出小组，请选择要加入的小组或重建小组').then(res => {
-              this.goIndex()
-            })
+          if (res.result.changedRows) {
+            app.groupInfo.myGrouList = res.myGrouList
+            // common.Tip('已退出小组，请选择要加入的小组或重建小组').then(res => {
+            this.goIndex()
+            // })
           }
         }).catch(err => common.Toast(err))
       }
     })
   },
   goIndex() {
-    wx.reLaunch({
-      url: '/pages/init/index/index',
+    app.switchData.isSwitchGroup = true
+    wx.navigateBack({
+      delta: 1,
     })
   }
 })

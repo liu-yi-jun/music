@@ -6,7 +6,7 @@
     <textarea maxlength="-1" class="textarea" name="describe" placeholder="请输入描述……" placeholder-class="placeholder"></textarea>
   </view>
   <view class="videoWrap">
-    <video catchlongpress="deletevideo" src="{{tempFilePath}}" object-fit="fill" wx:if="{{tempFilePath}}"></video>
+    <video catchlongpress="deletevideo" src="{{tempFilePath}}" object-fit="cover" wx:if="{{tempFilePath}}"></video>
     <image wx:else class="add" src="http://cdn.eigene.cn/issueImg/addImg.png" catchtap="chooseVideo" ></image>
   </view>
   <view class="locationWrap">

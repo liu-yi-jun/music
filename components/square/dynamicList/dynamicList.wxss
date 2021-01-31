@@ -1,7 +1,7 @@
 /* components/square/dynamicList/dynamicList.wxss */
 
 .list {
-  padding: 0 20rpx 400rpx;
+  padding: 0 32rpx 200rpx;
   position: relative;
 }
 
@@ -112,8 +112,8 @@
 
 
 .item>.avatar {
-  width: 80rpx;
-  height: 80rpx;
+  width: 75rpx;
+  height: 75rpx;
   border-radius: 50%;
   flex-shrink: 0
 }

@@ -37,3 +37,4 @@
   <showTabBar tabBarBtnShow="{{tabBarBtnShow}}">
   </showTabBar>
 </view>
+<authorization dialogShow="{{dialogShow}}" bind:handleGetUserInfo="handleGetUserInfo"></authorization>

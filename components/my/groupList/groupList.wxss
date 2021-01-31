@@ -41,6 +41,9 @@
   color: #cacbcb;
   font-size: 24rpx;
   width: 278rpx;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
 }
 
 .communityName {

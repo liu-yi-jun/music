@@ -14,7 +14,32 @@
   /* background: url("http://cdn.eigene.cn/aaa/background.png") no-repeat; */
   /* background-size: 100% 100%; */
 }
+/* page:before{
+  background: none;
+} */
 
+.bg {
+  content: ' ';
+  position: fixed;
+  z-index: -999;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-size: 100% 100%;
+}
+.pageBackground{
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  width: 100vw;
+  transition: all .3s;
+  background: url("http://cdn.eigene.cn/pageBackground.png") no-repeat;
+  background-size: 100% 100%;
+  /* z-index: 99999; */
+  z-index: 100;
+}
 .home::before {
   content: ' ';
   position: fixed;
@@ -25,6 +50,7 @@
   bottom: 0;
   background: url("http://cdn.eigene.cn/home/background.png") no-repeat;
   background-size: 100% 100%;
+
 }
 
 .header>view:first-child {
@@ -359,9 +385,9 @@
   transition: 0.4s all;
   position: absolute;
   overflow: hidden;
-  left: 52rpx;
+  left: 0rpx;
   z-index: 100;
-  width: 652rpx;
+  width: 750rpx;
   bottom: 4%;
   background-image: url('http://cdn.eigene.cn/dynamicShowBackground.png');
   background-size: 100%;
@@ -381,35 +407,36 @@
 
 .showDynamic {
   transform: scale(1);
-  height: 971rpx;
+  height: 1118rpx;
   visibility: visible;
   opacity: 1;
 }
 
 .swiper {
   position: absolute;
-  top: 198rpx;
-  left: 117rpx;
-  width: 418rpx;
-  height: 455rpx;
+  top: 224rpx;
+  left: 132rpx;
+  width: 481rpx;
+  height: 535rpx;
   border-radius: 10rpx;
   overflow: hidden;
 }
 
 .video {
   position: absolute;
-  top: 210rpx;
+  top: 244rpx;
   left: 0;
   right: 0;
   margin: auto;
-  width: 480rpx;
-  height: 350rpx;
+  width: 509rpx;
+  height: 404rpx;
   transition: all .4s;
+  border-radius: 10rpx;
 }
 
 .videoLoad {
   left: 50%;
-  top: 30%;
+  top: 39%;
   transform: translate(-50%, -50%);
   position: absolute;
 }
@@ -429,13 +456,13 @@
 
 .dynamicImg {
   width: 100%;
-  height: 405rpx;
+  height: 481rpx;
 }
 
 .like-comment {
   position: absolute;
   left: 0;
-  top: 700rpx;
+  top: 828rpx;
   right: 0;
   margin: auto;
   width: 50%;
@@ -446,12 +473,12 @@
 }
 
 .like-comment image {
-  width: 65rpx;
-  height: 59rpx;
+  width: 74rpx;
+  height: 68rpx;
 }
 
 .like-comment text {
-  font-size: 30rpx;
+  font-size: 34rpx;
   color: white;
   margin-left: 20rpx;
 }
@@ -468,7 +495,7 @@
 
 .userName {
   position: absolute;
-  font-size: 33rpx;
+  font-size: 34rpx;
   color: white;
   width: 60%;
   left: 0;
@@ -480,11 +507,12 @@
 
 .title-time {
   position: absolute;
-  width: 418rpx;
-  left: 117rpx;
+  width: 482rpx;
+  left: 128rpx;
   top: 142rpx;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   box-sizing: border-box;
   padding: 0 5rpx;
   white-space: nowrap;
@@ -494,13 +522,13 @@
 }
 
 .title-time .title {
-  font-size: 26rpx;
+  font-size: 28rpx;
   color: white;
 
 }
 
 .title-time .time {
-  font-size: 24rpx;
+  font-size: 26rpx;
   color: #b5b6b6;
 }
 
@@ -558,9 +586,9 @@
   position: absolute;
   left: 0;
   right: 0;
-  top: 264rpx;
-  width: 332rpx;
-  height: 332rpx;
+  top: 245rpx;
+  width: 420rpx;
+  height: 420rpx;
   margin: auto;
 }
 
@@ -626,7 +654,7 @@ page {}
 .leftGuide {
   position: absolute;
   left: 48%;
-  top: 16%;
+  top: 26%;
   width: 175rpx;
   height: 135rpx;
 }
@@ -640,10 +668,10 @@ page {}
 
 .issueGuide {
   position: absolute;
-  left: 9%;
-  top: 75%;
-  width: 175rpx;
-  height: 135rpx;
+  left: 14%;
+  top: 62%;
+  width: 134rpx;
+  height: 175rpx;
 }
 
 .issueGuideText {
@@ -720,6 +748,28 @@ page {}
   transform: translate(60rpx, -75rpx);
   /* transform: translate(60rpx,-50rpx); */
 }
+.pullPage {
+  position: absolute;
+  right:20rpx;
+  top: 12%;
+  width: 80rpx;
+  height: 80rpx;
+  z-index: 10;
+  background-image: url('http://cdn.eigene.cn/socialManagement.png');
+  background-size: 38rpx 38rpx;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 99999999;
+}
+.line {
+  width: 5rpx;
+  height: 13.6%;
+  background: white;
+  position: absolute;
+  z-index: 9999999;
+  right: 58rpx;
+  top: 0;
+}
 
 @media screen and (max-aspect-ratio: 1/2) {
   .scrollArea {
@@ -745,21 +795,16 @@ page {}
 
 /* 首页部分 */
 
+
 .indexLogo {
   position: absolute;
-  width: 436rpx;
-  height: 290rpx;
+  width: 463rpx;
+  height: 308rpx;
   left: 183rpx;
-  top: 220rpx;
+  top: 257rpx;
 }
 
-.pageBackground {
-  position: relative;
-  left: 0;
-  top: 0;
-  height: 100%;
-  width: 100%;
-}
+
 
 .fold {
   width: 100%;

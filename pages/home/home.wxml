@@ -1,11 +1,16 @@
 <!-- pages/home/home.wxml -->
 <wxs module="homeWxs" src="./home.wxs"></wxs>
-<block wx:if="{{isShowGroup}}">
-  <!-- style="background: url(http://cdn.eigene.cn/{{isShowGroup?'home/background':'pageBackground'}}.png) no-repeat;" -->
+<!-- <block wx:if="{{isPage}}"> -->
+
+<!-- </block> -->
+
+
+<!-- <block wx:if="{{isShowGroup}}"> -->
 <view class="home" catchtap="tap">
   <canvas canvas-id='canvas' class='canvas'></canvas>
-  <!-- <view class="{{play ? 'prompt show' : 'prompt'}}">当前播放</view> -->
   <image class="socialManagement" catchtap="goMassManagement"></image>
+  <view class="line" wx:if="{{isShowPull}}"></view>
+  <image class="pullPage" catchtap="pullPage" wx:if="{{isShowPull}}"></image>
   <view class="memberWrap">
     <text class="memberNumber">{{groupInfo.member}}</text>
     <text class="member">成员</text>
@@ -13,13 +18,11 @@
   <view class="fanWrap">
     <text class="fanNumber">
       <text>{{groupInfo.fansNumber}}</text>
-      <!-- <text class="unit">W</text> -->
     </text>
     <text class="fan">粉丝</text>
   </view>
 
   <view class="logoWrap">
-    <!-- <canvas type="2d" id="canvasLogo" style="width: 100%; height: 100%;"></canvas> -->
     <image mode="aspectFill" class="logo" catchtap="switchFunctionBar" src="{{groupInfo.groupLogo}}">
       <view class="logoName">
         <text class="organizationName">{{groupNameTop}}</text>
@@ -39,7 +42,6 @@
       </view>
     </view>
   </view>
-  <!-- mark:area不行 -->
   <view mark:district="dynamic" class="dynamicShowBackground {{dynamicIsShow?'showDynamic':'hideDynamic'}}"
     bindtouchstart="dynamicTouchstart" bindtouchend="dynamicTouchend">
     <text class="userName">{{showContent.nickName}}</text>
@@ -120,8 +122,6 @@
       </view>
     </view>
   </view>
-  <!-- src="http://cdn.eigene.cn/tabBarBtn.png" -->
-
   <image mark:district="issue" class="issue-background {{switchIssue?'showIssue':'hideIssue'}}"
     src="http://cdn.eigene.cn/issue-background.png">
     <image class="uploadVoice" src="http://cdn.eigene.cn/uploadVoice.png" catchtap="goUploadVoice"></image>
@@ -132,7 +132,7 @@
   </image>
   <image class="expandIssue {{!switchIssue?'showExpandIssue':'hideExpandIssue'}}" catchtap="switchIssue"
     src="http://cdn.eigene.cn/expandIssue.png"></image>
- 
+
   <view class="shade {{dialogShow? 'shadeShow':''}}" mark:district="shade">
     <view class="dialog">
       <text>是否确定加入该小组？</text>
@@ -147,17 +147,17 @@
   <block wx:if="{{leftGuide}}">
     <image class="leftGuide" src="http://cdn.eigene.cn/guide/left.png" catchtap="click" data-click="leftGuide">
     </image>
-    <view class="leftGuideText">点击发现隐藏版块</view>
+    <!-- <view class="leftGuideText">点击发现隐藏版块</view> -->
   </block>
   <block wx:if="{{issueGuide}}">
-    <image class="issueGuide" src="http://cdn.eigene.cn/guide/left.png" catchtap="click" data-click="issueGuide">
+    <image class="issueGuide" src="http://cdn.eigene.cn/guide/leftbottom.png" catchtap="click" data-click="issueGuide">
     </image>
-    <view class="issueGuideText">点击发布动态</view>
+    <!-- <view class="issueGuideText">点击发布动态</view> -->
   </block>
   <block wx:if="{{bottomGuide}}">
     <image class="bottomGuide" src="http://cdn.eigene.cn/guide/bottom.png" catchtap="click" data-click="bottomGuide">
     </image>
-    <view class="bottomGuideText">点击展开下栏</view>
+    <!-- <view class="bottomGuideText">点击展开下栏</view> -->
   </block>
 
   <block>
@@ -179,17 +179,15 @@
     <image src="../../images/my.png"></image>
   </view>
 </view>
-
-</block>
-<block wx:else>
-  <view class="pageBackground">
-    <image class="indexLogo" src="http://cdn.eigene.cn/index-logo.png"></image>
-    <view class="fold" style="background-image: url(http://cdn.eigene.cn/home/fold.png);">
-      <image class="unionText" src="http://cdn.eigene.cn/home/unionText.png" catchtap="toUnion"></image>
-      <image class="settle" src="http://cdn.eigene.cn/home/settle.png" catchtap="toGroupSettlement"></image>
-      <image class="my" src="http://cdn.eigene.cn/home/my.png" catchtap="toMyGroup"></image>
-    </view>
-  </view>
-</block>
 <showTabBar tabBarBtnShow="{{tabBarBtnShow}}">
-  </showTabBar>
+</showTabBar>
+<!-- </block> -->
+
+<view class="pageBackground" catchtap="cancelTabbar" style="transform: translateY({{isShowGroup?'-100':'0'}}%);">
+  <image class="indexLogo" src="http://cdn.eigene.cn/index-logo.png"></image>
+  <view class="fold" style="background-image: url(http://cdn.eigene.cn/home/fold.png);">
+    <image class="unionText" src="http://cdn.eigene.cn/home/unionText.png" catchtap="toUnion"></image>
+    <image class="settle" src="http://cdn.eigene.cn/home/settle.png" catchtap="toGroupSettlement"></image>
+    <image class="my" src="http://cdn.eigene.cn/home/my.png" catchtap="toMyGroup"></image>
+  </view>
+</view>

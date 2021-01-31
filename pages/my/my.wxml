@@ -1,25 +1,27 @@
 <!--pages/my/my.wxml-->
 <view class="my" catchtap="tap">
   <canvas canvas-id='canvas' class='canvas'></canvas>
-<navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' iconTheme='white'></navBar>
+
   <view class="information">
     <image mode="aspectFill" catchtap="changeImg" class="backgroundImg" src="{{userInfo.bgWall}}">
+      <view class="fans">粉丝 {{userInfo.fans}}</view>
       <image class="editData" src="http://cdn.eigene.cn/my/edit.png" catchtap="goEditData"></image>
       <!-- <view class="backgroundWarp">
        
       </view> -->
       <view class="avatarName" mark:Mymark="avatarName">
-          <image catchtap="previewImage"  src="{{userInfo.avatarUrl}}" class="avatar" mode="aspectFill"></image>
-          <text class="name">{{userInfo.nickName}}</text>
-          <view class="nameBotoom" >
-            <text wx:if="{{userInfo.gender=== 1}}">♂</text>
-            <text wx:if="{{userInfo.gender=== 2}}">♀</text>
-            <text class="constellation" wx:if="{{userInfo.constellation}}">{{userInfo.constellation}}</text>
-            <text wx:if="{{userInfo.age}}">{{userInfo.age}}岁</text>
-          </view>
+        <image catchtap="previewImage" src="{{userInfo.avatarUrl}}" class="avatar" mode="aspectFill"></image>
+        <text class="name">{{userInfo.nickName}}</text>
+        <view class="nameBotoom">
+          <text wx:if="{{userInfo.gender=== 1}}">♂</text>
+          <text wx:if="{{userInfo.gender=== 2}}">♀</text>
+          <text class="constellation" wx:if="{{userInfo.constellation}}">{{userInfo.constellation}}</text>
+          <text wx:if="{{userInfo.age}}">{{userInfo.age}}岁</text>
         </view>
+      </view>
     </image>
-    <view class="organization" wx:if="{{userInfo.groupName}}">{{userInfo.groupName}} {{userInfo.groupDuty===0?'组长':(userInfo.groupDuty===1?'管理员':(userInfo.groupDuty===2?'组员':'申请中'))}}</view>
+    <view class="organization" wx:if="{{userInfo.groupName}}">{{userInfo.groupName}}
+      {{userInfo.groupDuty===0?'组长':(userInfo.groupDuty===1?'管理员':(userInfo.groupDuty===2?'组员':'申请中'))}}</view>
   </view>
   <view class="menu">
     <view class="iconWrap" catchtap="goInvitation">
@@ -39,9 +41,24 @@
       <text class="iconCharacter">消息</text>
     </view>
   </view>
-  <image class="song" catchtap="goSong" src="http://cdn.eigene.cn/my/song.png"></image>
-  <image class="feedback" src="http://cdn.eigene.cn/my/feedback.png"></image>
-  <image class="aboutUs" src="http://cdn.eigene.cn/my/aboutUs.png" catchtap="totest"></image>
+  <view class="bar">
+    <view class="letter" catchtap="goPrivateLetter" wx:if="{{userId!==otherId}}">私信Ta</view>
+    <view class="portion {{switchBtn === 'dynamic' ? 'active' : ''}}" catchtap="switchBtn" data-switchBtn="dynamic">
+      动态
+    </view>
+    <view class="issue portion {{switchBtn === 'issue' ? 'active' : ''}}" catchtap="switchBtn" data-switchBtn="issue">
+      发布
+    </view>
+  </view>
+  <view class="list">
+    <view hidden="{{switchBtn !== 'dynamic'}}">
+      <dynamicList id="dynamicList" dynamics="{{dynamics}}" isInvitation="{{true}}"></dynamicList>
+    </view>
+    <view hidden="{{switchBtn !== 'issue'}}">
+      <allianceList alliances="{{alliances}}"></allianceList>
+    </view>
+  </view>
   <showTabBar tabBarBtnShow="{{tabBarBtnShow}}">
   </showTabBar>
 </view>
+<authorization dialogShow="{{dialogShow}}" bind:handleGetUserInfo="handleGetUserInfo"></authorization>

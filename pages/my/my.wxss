@@ -7,7 +7,7 @@
 
 .information {
   position: relative;
-  height: 400rpx;
+  height: 563rpx;
   width: 100%;
 }
 
@@ -24,15 +24,16 @@
 
 .backgroundImg {
   width: 100%;
-  height: 400rpx;
-  border-top-left-radius: 35% 55%;
+  height: 563rpx;
+  border-bottom-left-radius: 110rpx;
+  border-bottom-right-radius: 110rpx;
   position: relative;
 
 }
 
 .avatar {
-  width: 135rpx;
-  height: 135rpx;
+  width: 157rpx;
+  height: 157rpx;
   border-radius: 50%;
 }
 
@@ -72,7 +73,7 @@
   justify-content: center;
   align-items: center;
   position: absolute;
-  top: 135rpx;
+  top: 270rpx;
   left: 0;
   right: 0;
   margin: 0 auto;
@@ -86,8 +87,8 @@
   position: absolute;
   width: 65rpx;
   height: 65rpx;
-  right: 32rpx;
-  bottom: 32rpx;
+  right: 67rpx;
+  bottom: 46rpx;
 }
 
 .menu {
@@ -133,4 +134,70 @@
   height: 398rpx;
   top: 989rpx;
   right: 446rpx;
+}
+.fans {
+  background-color: #A87EDD;
+  padding: 8rpx 22rpx;
+  border-radius: 999rem;
+  position: absolute;
+  top: 197rpx;
+  right: 48rpx;
+  color: white;
+}
+
+.bar {
+  position: relative;
+  /* height: 85rpx; */
+  display: flex;
+  box-sizing: border-box;
+  /* align-items: center; */
+  width: 100%;
+  padding: 0 30rpx;
+  margin-top: 36rpx;
+}
+
+.active {
+  border-bottom: 6rpx solid #aa7edf;
+  font-weight: bold;
+}
+.issue {
+  margin-left: 40rpx;
+}
+
+.letter {
+  position: absolute;
+  right: 28rpx;
+  color: white;
+  top: -25rpx;
+  font-size: 26rpx;
+  border-radius: 15rpx;
+  height: 50rpx;
+  line-height: 50rpx;
+  box-shadow: 0rpx 0rpx 6rpx 6rpx rgba(0, 0, 0, 0.1);
+  background-color: #aa7edf;
+  width: 120rpx;
+  text-align: center;
+}
+.portion {
+  padding: 0px 6rpx 4rpx;
+  color: white;
+}
+.square {
+  width: 15rpx;
+  height: 15rpx;
+  margin-left: 40rpx;
+  background-color: #aa7edf;
+}
+.btn {
+  /* transition: all 0.3s; */
+  margin-left: 17rpx;
+  box-sizing: border-box;
+  color: white;
+  font-size: 28rpx;
+  height: 50rpx;
+  line-height: 50rpx;
+}
+.list{
+  box-sizing: border-box;
+  /* padding-top: 60rpx; */
 }

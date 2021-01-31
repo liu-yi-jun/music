@@ -18,8 +18,8 @@
 }
 
 .dialog {
-  width: 480rpx;
-  height: 390rpx;
+  width: 559rpx;
+  height: 463rpx;
   box-sizing: border-box;
   padding: 50rpx;
   display: flex;
@@ -41,12 +41,12 @@
   align-items: center;
 }
 .miniLogo {
-  width: 100rpx;
-  height: 100rpx;
+  width: 120rpx;
+  height: 122rpx;
 }
 .musicmonster {
-  width: 255rpx;
-  height: 22rpx;
+  width: 324rpx;
+  height: 25rpx;
   margin-top: 40rpx;
 }
 
@@ -57,9 +57,9 @@
 }
 
 .btn {
-  width: 164rpx!important;
-  height: 64rpx!important;
-  border-radius: 999rem;
+  width: 205rpx!important;
+  height: 75rpx!important;
+  border-radius: 28rpx;
   font-size: 28rpx!important;
   line-height: normal!important;
   display: flex;

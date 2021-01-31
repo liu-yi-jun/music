@@ -117,7 +117,7 @@ Component({
         })
     },
     goTapPractice(e) {
-      if (authorize.isAuthorUserInfo()) {
+      if (app.userInfo) {
         let circulars = this.data.circulars
         let index = e.currentTarget.dataset.index
         let id = circulars[index].id

@@ -1,7 +1,7 @@
 <!--components/my/groupList/groupList.wxml-->
 <view class="list">
       <view class="card" wx:for="{{groups}}" wx:key="index">
-        <view class="block" catchtap="goOtherHome" data-id="{{item.id}}">
+        <view class="block" catchtap="goOtherHome" data-id="{{item.id}}" data-index="{{index}}">
           <image src="{{item.groupLogo}}" class="communityLogo" mode="aspectFill"></image>
           <view class="introduce">
             <view class="top">
@@ -12,7 +12,7 @@
                 <text>{{item.postNumber}}帖子</text>
               </view>
             </view>
-            <view class="bottom">
+            <view class="bottom" wx:if="{{item.introduce}}">
               <text>{{item.introduce}}</text>
             </view>
           </view>

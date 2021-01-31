@@ -9,6 +9,10 @@ Component({
     groups: {
       type: Array,
       value: []
+    },
+    isMyGroup: {
+      type: Boolean,
+      value: false
     }
   },
 
@@ -41,9 +45,24 @@ Component({
     },
     goOtherHome(e) {
       let id = e.currentTarget.dataset.id
-      wx.navigateTo({
-        url: `/pages/home/otherHome/otherHome?showGroupId=${id}`,
-      })
+      if (this.data.isMyGroup) {
+        app.switchData.isSwitchGroup = true
+        let group = this.data.groups[e.currentTarget.dataset.index]
+        app.post(app.Api.switchGroup, {
+          groupId: group.id,
+          groupName: group.groupName,
+          groupDuty: group.groupDuty,
+          userId: app.userInfo.id
+        }).then((res) => {
+          wx.navigateBack({
+            delta: 2,
+          })
+        })
+      } else {
+        wx.navigateTo({
+          url: `/pages/home/otherHome/otherHome?showGroupId=${id}`,
+        })
+      }
     },
   }
 })

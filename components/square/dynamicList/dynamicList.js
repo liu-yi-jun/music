@@ -29,9 +29,12 @@ Component({
    */
   lifetimes: {
     attached: function () {
-      this.setData({
-        myId: app.userInfo.id
-      })
+      if (app.userInfo) {
+        this.setData({
+          myId: app.userInfo.id
+        })
+      }
+
     },
     detached: function () {
       this.innerSoundContext && this.innerSoundContext.destroy()

@@ -9,14 +9,15 @@ Page({
   data: {
     // 去除上面导航栏，剩余的高度
     excludeHeight: 0,
-    groups: [],
-    groupName: '',
+    followGroups: [],
     followGroupPaging: {
       pageSize: 20,
       pageIndex: 1,
       isNotData: false,
     },
-    swithchtab: 'myTab'
+    swithchtab: 'myTab',
+    myGroups: [],
+    groupName: ''
   },
 
   /**
@@ -25,23 +26,29 @@ Page({
   onLoad: function (options) {
     // 获取去除上面导航栏，剩余的高度
     tool.navExcludeHeight(this)
-    this.pagingGetFollowGroup(this.data.groupName)
+    if(app.userInfo) {
+      this.pagingGetFollowGroup(this.data.groupName)
+      this.getMyGroup()
+    }
+
   },
-  confirm(event) {
-    this.setData({
-      groups: [],
-      groupName: event.detail.value,
-      'followGroupPaging.isNotData': false,
-      'followGroupPaging.pageIndex': 1
-    }, () => this.pagingGetFollowGroup(this.data.groupName))
+  getMyGroup(){
+    console.log('getMyGroup')
+    app.get(app.Api.myGroup,{
+      userId:app.userInfo.id
+    }).then(res=> {
+      console.log(res)
+      this.setData({
+        myGroups: res
+      })
+    })
   },
   // 获取所有关注的小组
   pagingGetFollowGroup(groupName) {
     let followGroupPaging = this.data.followGroupPaging
     app.get(app.Api.pagingGetFollowGroup, {
       groupName,
-      // userId: app.userInfo.id,
-      userId: 20,
+      userId: app.userInfo.id,
       ...followGroupPaging
     }, {
       loading: false
@@ -52,13 +59,13 @@ Page({
         })
       }
       this.setData({
-        groups: this.data.groups.concat(res),
+        followGroups: this.data.followGroups.concat(res),
         'followGroupPaging.pageIndex': followGroupPaging.pageIndex + 1
       })
     })
   },
   scrolltolower() {
-    if (!this.data.followGroupPaging.isNotData) {
+    if (!this.data.followGroupPaging.isNotData && this.data.swithchtab === 'followTab') {
       this.pagingGetFollowGroup(this.data.groupName)
     }
   },

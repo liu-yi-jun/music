@@ -4,7 +4,7 @@ let common = require('../../assets/tool/common')
 let tool = require('../../assets/tool/tool')
 let core = require('../../assets/tool/core')
 let authorize = require('../../assets/tool/authorize')
-let io = require('../../assets/tool/weapp.socket.io')
+
 let Style = [{
     index: 0,
     bottom: 85,
@@ -101,7 +101,8 @@ Page({
     showFakeTab: false,
     isLoop: false,
     lessMember: false,
-    isShowGroup: false
+    isShowGroup: false,
+    isShowPull: false
   },
 
 
@@ -159,7 +160,11 @@ Page({
     })
   },
   getServerUserInfo() {
-    app.get(app.Api.getServerUserInfo).then(res => {
+    app.get(app.Api.getServerUserInfo, {
+
+    }, {
+      loading: false
+    }).then(res => {
       if (res.userInfo) {
         // 有用户信息，存入app
         app.userInfo = res.userInfo
@@ -180,71 +185,25 @@ Page({
             show: false
           })
           this.setData({
-            tabBarBtnShow: true
+            tabBarBtnShow: true,
+            isShowGroup: false,
+            isShowPull: false
           })
         }
       } else {
         // 没有用户信息等待用户授权
-        this.getTabBar().setData({
-          show: false
-        })
-        this.setData({
-          tabBarBtnShow: true
-        })
+        // this.getTabBar().setData({
+        //   show: false
+        // })
+        // this.setData({
+        //   tabBarBtnShow: true
+        // })
       }
 
     })
   },
 
-  // 初始化通讯
-  initSocketEvent() {
-    const socket = (app.socket = io(app.socketUrls.baseUrl))
-    this.socket = socket
-    socket.on('connect', () => {
-      console.log('连接成功')
-      let user = {
-        userId: app.userInfo.id,
-      }
-      socket.emit("login", user);
-      socket.emit("getmessage");
-    })
-    socket.on("message", (from, to, message) => {
-      console.log('okok')
-      for (let key in app.cbObj) {
-        app.cbObj[key] && app.cbObj[key](from, to, message)
-      }
-    })
-    app.onMessage('messageMain', (from, to, message) => {
-      let threas = wx.getStorageSync('threas')
-      console.log('收到', threas)
-      if (!threas) {
-        threas = {}
-      }
-      if (!threas[from.userId]) {
-        threas[from.userId] = {
-          userId: from.userId,
-          avatarUrl: from.avatarUrl,
-          nickName: from.nickName,
-          newNum: 0,
-          lastMessage: '',
-          messages: []
-        }
-      }
-      threas[from.userId].newNum++
-      threas[from.userId].lastMessage = message
-      threas[from.userId].messages.push({
-        fromId: from.userId,
-        toId: to.userId,
-        message
-      })
-      wx.setStorage({
-        data: threas,
-        key: 'threas',
-      })
-    })
 
-
-  },
   // 获取分页动态
   groupPagingGetGroupdynamics(groupId) {
     let {
@@ -259,6 +218,8 @@ Page({
         pageIndex,
         groupId,
         userId: app.userInfo.id
+      }, {
+        loading: false
       }).then(res => {
         console.log('res.length', res.length)
         if (res.length < pageSize) {
@@ -298,9 +259,14 @@ Page({
         this.setData({
           groupInfo: res,
           groupNameTop,
-          groupNamebuttom
+          groupNamebuttom,
+          isShowPull: res.myGrouList.length ? true : false
         })
         app.groupInfo = res
+        if (app.userInfo.groupDuty === -1) {
+          let tip = '请联系管理员或组长通过审核'
+          common.Tip(tip, '等待审核中')
+        }
       }).catch(err => reject(err))
     })
   },
@@ -320,10 +286,10 @@ Page({
     if (member.length - 5 <= this.data.MB_Index) {
       // 但倒数第一个出现时开启循环
       if (!this.data.isLoop && !this.data.lessMember) {
-        wx.showToast({
-          title: '为您开启循环模式',
-          icon: 'none',
-        })
+        // wx.showToast({
+        //   title: '为您开启循环模式',
+        //   icon: 'none',
+        // })
         this.data.isLoop = true
       }
     }
@@ -445,9 +411,35 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    if(!this.data.isShowGroup) {
+      this.getTabBar().setData({
+        show: false
+      })
+      this.setData({
+        tabBarBtnShow: true
+      })
+    }
     if (app.switchData.isSwitchGroup) {
       app.switchData.isSwitchGroup = false
-      this.initLogin()
+      this.setData({
+        dynamicIsShow: false,
+        showMember: [],
+        pageIndex: 1,
+        ableIndex: 1,
+        SM_UpPointer: 0,
+        SM_DownPointer: 0,
+        MB_UpPointer: 0,
+        MB_DownPointer: 0,
+        member: [],
+        style: JSON.parse(JSON.stringify(Style)),
+        isNotData: false,
+        showVideo: false,
+        lessMember: false,
+        isLoop: false,
+        MB_Index: 0,
+      }, () => {
+        this.getServerUserInfo()
+      })
     }
     if (typeof this.getTabBar === 'function' &&
       this.getTabBar()) {
@@ -456,7 +448,6 @@ Page({
       })
       // app.getNotice(this, app.userInfo.id)
     }
-    console.log('app.switchData.refresh', app.switchData.refresh)
     if (app.switchData.refresh) {
       this.setData({
         dynamicIsShow: false,
@@ -1112,13 +1103,41 @@ Page({
     })
   },
   toGroupSettlement() {
-    wx.navigateTo({
-      url: '/pages/init/groupSettlement/groupSettlement',
-    })
+    if (app.userInfo) {
+      if (app.userInfo.isSettle) {
+        wx.showModal({
+          title: '提示',
+          showCancel: false,
+          content: '最多入驻一个小组哦~'
+        })
+      } else {
+        wx.navigateTo({
+          url: '/pages/init/groupSettlement/groupSettlement',
+        })
+      }
+    } else {
+      wx.navigateTo({
+        url: '/pages/init/groupSettlement/groupSettlement',
+      })
+    }
+
   },
   toMyGroup() {
     wx.navigateTo({
       url: '/pages/home/myGroup/myGroup',
+    })
+  },
+  cancelTabbar() {
+    this.getTabBar().setData({
+      show: false
+    })
+    this.setData({
+      tabBarBtnShow: true
+    })
+  },
+  pullPage() {
+    this.setData({
+      isShowGroup: !this.data.isShowGroup
     })
   }
 })

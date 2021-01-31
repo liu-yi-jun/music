@@ -107,5 +107,8 @@ module.exports = {
   ticketLike: "/api/ticket/ticketLike",
   ticketStore: "/api/ticket/ticketStore",
   getGuitar: "/api/svg/getGuitar",
-  pagingGetGroup: "/api/group/pagingGetGroup"
+  pagingGetGroup: "/api/group/pagingGetGroup",
+  myGroup: "/api/group/myGroup",
+  switchGroup: "/api/group/switchGroup",
+  applyJoin: "/api/group/applyJoin"
 }

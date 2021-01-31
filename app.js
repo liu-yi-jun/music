@@ -42,6 +42,7 @@ App({
   },
 
   userInfo: null,
+  groupInfo:null,
   globalData: {
     guide: {}
   },

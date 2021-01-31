@@ -94,20 +94,11 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log(app.userInfo)
     let showGroupId = options.showGroupId
-    let {
-      groupId: myGroupId,
-    } = app.userInfo
     this.getGroupInfo(showGroupId)
     this.groupPagingGetGroupdynamics(showGroupId).then(() => {
       this.urlPush()
     })
-    if (!myGroupId) {
-      this.setData({
-        dialogShow: true
-      })
-    }
   },
   groupPagingGetGroupdynamics(groupId) {
     return new Promise((resolve, reject) => {
@@ -158,7 +149,7 @@ Page({
         groupNameTop,
         groupNamebuttom
       })
-      app.groupInfo = res
+      // app.groupInfo = res
     }).catch(err => err)
   },
 
@@ -178,10 +169,10 @@ Page({
     if (member.length - 5 <= this.data.MB_Index) {
       // 但倒数第一个出现时开启循环
       if (!this.data.isLoop && !this.data.lessMember) {
-        wx.showToast({
-          title: '为您开启循环模式',
-          icon: 'none',
-        })
+        // wx.showToast({
+        //   title: '为您开启循环模式',
+        //   icon: 'none',
+        // })
         this.data.isLoop = true
       }
     }
@@ -541,47 +532,6 @@ Page({
     })
   },
 
-  noJoin() {
-    this.setData({
-      dialogShow: false
-    })
-  },
-  joinGroup() {
-    let {
-      groupName,
-      id: groupId,
-      examine,
-      introduce
-    } = this.data.groupInfo
-    let userId = app.userInfo.id
-    console.log(groupId)
-    app.post(app.Api.joinGroup, {
-      groupId,
-      groupName,
-      userId,
-      examine
-    }).then(res => {
-      app.userInfo = res
-      app.switchData.isSwitchGroup = true
-      wx.switchTab({
-        url: '/pages/home/home',
-      })
-      // if (examine === 1) {
-      //   let tip = '请求1小时后自动失效，可重新选择小组'
-      //   common.Tip(tip, '等待审核中')
-      if (examine == 0) {
-        let tip = '欢迎您，加入这个大家庭'
-        common.Tip(tip, '加入成功')
-      }
-
-    }).catch(err => err)
-  },
-  yesJoin() {
-    this.joinGroup()
-    this.setData({
-      dialogShow: false
-    })
-  },
   completeLike(commenetBarData) {
     let showContent = this.data.showContent
     showContent.isLike = commenetBarData.isLike

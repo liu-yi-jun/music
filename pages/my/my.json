@@ -1,7 +1,9 @@
 {
   "usingComponents": {
     "showTabBar": "/components/common/showTabBar/showTabBar",
-    "navBar": "/components/navBar/navBar"
-  },
-  "disableScroll": true
+    "navBar": "/components/navBar/navBar",
+    "authorization":"/components/common/authorization/authorization",
+    "dynamicList":"/components/square/dynamicList/dynamicList",
+    "allianceList": "/components/square/performance/allianceList/allianceList"
+  }
 }

@@ -75,3 +75,4 @@
     <view wx:if="{{leftGuide}}" class="leftGuideText">点击发现隐藏版块</view>
   </view>
 </view>
+<authorization dialogShow="{{dialogShow}}" bind:handleGetUserInfo="handleGetUserInfo"></authorization>

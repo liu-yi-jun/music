@@ -10,14 +10,74 @@ Page({
   data: {
     // 控制右下角三角show
     tabBarBtnShow: false,
-    userInfo: {}
+    userInfo: {},
+    switchBtn: 'dynamic',
+    dynamicsPaging: {
+      pageSize: 20,
+      pageIndex: 1,
+      isNotData: false
+    },
+    alliancePagin: {
+      pageSize: 20,
+      pageIndex: 1,
+      isNotData: false
+    },
+    dynamics: [],
+    alliances: [],
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    
+    this.getDynamics(app.userInfo.id)
+    this.getPersonalAlliance(app.userInfo.id)
+  },
+  getPersonalAlliance(id) {
+    let alliancePagin = this.data.alliancePagin
+    app.get(app.Api.personalAlliance, {
+      ...alliancePagin,
+      userId: id
+    }).then(res => {
+      if (res.length < alliancePagin.pageSize) {
+        this.setData({
+          'alliancePagin.isNotData': true
+        })
+      }
+      this.setData({
+        alliances: this.data.alliances.concat(res),
+        'alliancePagin.pageIndex': alliancePagin.pageIndex + 1
+      })
+    })
+  },
+  getDynamics(id) {
+    let dynamicsPaging = this.data.dynamicsPaging
+    app.get(app.Api.getDynamics, {
+      ...dynamicsPaging,
+      userId: id
+    }).then(res => {
+      if (res.length < dynamicsPaging.pageSize) {
+        this.setData({
+          'dynamicsPaging.isNotData': true
+        })
+      }
+      this.setData({
+        dynamics: this.data.dynamics.concat(res),
+        'dynamicsPaging.pageIndex': dynamicsPaging.pageIndex + 1
+      })
+    })
+  },
+  onReachBottom() {
+    let {
+      dynamicsPaging,
+      alliancePagin,
+      switchBtn
+    } = this.data
+    if (switchBtn === 'dynamic' && !dynamicsPaging.isNotData) {
+      this.getDynamics()
+    } else if (switchBtn === 'issue' && !alliancePagin.isNotData) {
+      this.getPersonalAlliance()
+    }
   },
   // 设置用户信息
   setUserInfo() {
@@ -44,9 +104,17 @@ Page({
       })
       // app.getNotice(this, app.userInfo.id)
     }
+    if (app.userInfo) {
+      this.setUserInfo()
+    } else {
+      this.setData({
+        dialogShow: true
+      })
+    }
+  },
+  handleGetUserInfo() {
     this.setUserInfo()
   },
-
   /**
    * 生命周期函数--监听页面隐藏
    */
@@ -90,11 +158,7 @@ Page({
       show: false
     })
   },
-  goSong() {
-    wx.navigateTo({
-      url: '/pages/my/song/song',
-    })
-  },
+
   goEditData() {
     wx.navigateTo({
       url: '/pages/my/editData/editData',
@@ -121,22 +185,14 @@ Page({
       url: '/pages/my/information/information',
     })
   },
-  goSong() {
-    wx.navigateTo({
-      url: '/pages/my/song/song',
-    })
-  },
-  totest() {
-    wx.navigateTo({
-      url: '/pages/test/test2/test2',
-    })
-  },
+
+
   previewImage() {
     common.previewImage([app.userInfo.avatarUrl])
   },
   async changeImg(e) {
-     let Mymark = e.mark.Mymark
-     if(Mymark) return
+    let Mymark = e.mark.Mymark
+    if (Mymark) return
     try {
       let {
         tempFilePaths
@@ -179,5 +235,13 @@ Page({
         loading: false
       }).then(res => resolve(res)).catch(err => reject(err))
     })
-  }
+  },
+    //切换btn 
+    switchBtn(e) {
+      const switchBtn = e.currentTarget.dataset.switchbtn
+      if (switchBtn === this.switchBtn) return
+      this.setData({
+        switchBtn
+      })
+    },
 })

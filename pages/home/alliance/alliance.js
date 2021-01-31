@@ -1,5 +1,6 @@
 // pages/home/alliance/alliance.js
 const app = getApp()
+const common = require('../../../assets/tool/common.js')
 const tool = require('../../../assets/tool/tool.js')
 Page({
 
@@ -11,17 +12,16 @@ Page({
     excludeHeight: 0,
     groups: [],
     groupName: '',
-    // followGroupPaging: {
-    //   pageSize: 20,
-    //   pageIndex: 1,
-    //   isNotData: false,
-    // },
     groupPaging: {
       pageSize: 20,
       pageIndex: 1,
       isNotData: false,
     },
-    dialogShow: false
+    dialogShow: false,
+    // 控制弹出框
+    joinShow: false,
+    applyShow: false,
+    applyContent: ''
   },
 
   /**
@@ -38,8 +38,6 @@ Page({
     app.get(app.Api.pagingGetGroup, {
       groupName,
       ...groupPaging
-    }, {
-      loading: false
     }).then((res) => {
       if (res.length < groupPaging.pageSize) {
         this.setData({
@@ -47,7 +45,7 @@ Page({
         })
       }
       this.setData({
-        groups: this.data.groups.concat(res),
+        groups: this.data.groups.concat(this.isJoinGroup(res)),
         'groupPaging.pageIndex': groupPaging.pageIndex + 1
       })
     })
@@ -60,28 +58,21 @@ Page({
       'groupPaging.pageIndex': 1
     }, () => this.pagingGetGroup(this.data.groupName))
   },
+  isJoinGroup(groups) {
+    if (groups.length === 0) {
+      return groups
+    }
+    app.groupInfo.myGrouList.forEach((item, index) => {
+      groups.forEach(group => {
+        console.log(group.id, item.groupId);
 
-
-
-  pagingGetFollowGroup(groupName) {
-    let followGroupPaging = this.data.followGroupPaging
-    app.get(app.Api.pagingGetFollowGroup, {
-      groupName,
-      userId: app.userInfo.id,
-      ...followGroupPaging
-    }, {
-      loading: false
-    }).then(res => {
-      if (res.length < followGroupPaging.pageSize) {
-        this.setData({
-          'followGroupPaging.isNotData': true
-        })
-      }
-      this.setData({
-        groups: this.data.groups.concat(res),
-        'followGroupPaging.pageIndex': followGroupPaging.pageIndex + 1
+        if (group.id == item.groupId) {
+          group.isJoin = true
+          return
+        }
       })
     })
+    return groups
   },
   scrolltolower() {
     if (!this.data.groupPaging.isNotData) {
@@ -138,7 +129,7 @@ Page({
   },
   handlerGobackClick: app.handlerGobackClick,
   goOtherHome(event) {
-    console.log('eventevent',event)
+    console.log('eventevent', event)
     if (app.userInfo) {
       let id = event.currentTarget.dataset.id
       wx.navigateTo({
@@ -150,13 +141,100 @@ Page({
       })
     }
   },
-  join() {
+  joinGroup(groupInfo) {
+    // 加入
+    app.post(app.Api.joinGroup, {
+      groupId: groupInfo.id,
+      groupName: groupInfo.groupName,
+      userId: app.userInfo.id,
+      examine: groupInfo.examine
+    }).then(res => {
+      app.userInfo = res.userInfo
+      if (app.groupInfo) {
+        app.groupInfo.myGrouList = res.myGrouList
+      } else {
+        app.groupInfo = {}
+        app.groupInfo.myGrouList = res.myGrouList
+      }
+      groupInfo.isJoin = true
+      this.setData({
+        groups: this.data.groups
+      })
+    }).catch(err => err)
+  },
+  showJoin(e) {
+    let index = e.currentTarget.dataset.index
+    let groupInfo = this.data.groups[index]
+    this.groupInfo = groupInfo
     if (app.userInfo) {
-      // 加入
+      if (app.groupInfo) {
+        if (app.groupInfo.myGrouList.length >= 5) {
+          wx.showModal({
+            title: '提示',
+            content: '最多只允许加入5个小组哦~',
+            showCancel: false
+          })
+        } else {
+          this.setData({
+            joinShow: true
+          })
+        }
+      } else {
+        app.switchData.isSwitchGroup = true
+        this.joinGroup(groupInfo)
+      }
     } else {
       this.setData({
         dialogShow: true
       })
     }
+  },
+  yesJoin() {
+    let groupInfo = this.groupInfo
+    if (groupInfo.examine) {
+      this.setData({
+        applyShow: true,
+        joinShow: false
+      })
+    } else {
+      this.setData({
+        joinShow: false
+      })
+      app.switchData.isSwitchGroup = true
+      this.joinGroup(groupInfo)
+    }
+  },
+  noJoin() {
+    this.setData({
+      joinShow: false
+    })
+  },
+  cancelApply() {
+    this.setData({
+      applyShow: false
+    })
+  },
+  inputApply(e) {
+    let applyContent = e.detail.value
+    this.setData({
+      applyContent
+    })
+  },
+  apply() {
+    let applyContent = this.data.applyContent
+    let groupInfo = this.groupInfo
+    if(!applyContent) {
+      common.Tip('请输入内容')
+      return
+    }
+    app.post(app.Api.applyJoin,{
+      applyContent,
+      userId: app.userInfo.id,
+      groupId: groupInfo.id
+    },{
+      loading: ['申请中...']
+    }).then(res=> {
+      
+    })
   }
 })

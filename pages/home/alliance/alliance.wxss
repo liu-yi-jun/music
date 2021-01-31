@@ -174,3 +174,100 @@
   top: 50%;
   transform: translateY(-50%);
 }
+
+
+.shade {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 9999;
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.4s all;
+}
+
+.shadeShow {
+  opacity: 1;
+  visibility: visible;
+}
+
+.dialog,
+.applyDialog {
+  width: 549rpx;
+  height: 481rpx;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  background: linear-gradient(to bottom, rgba(226, 145, 227, 0.7), rgba(0, 69, 207, 0.7));
+  border-radius: 40rpx;
+  box-sizing: border-box;
+  color: white;
+  font-size: 38rpx;
+  display: flex;
+}
+
+.dialog {
+  padding: 100rpx 38rpx 30rpx;
+  justify-content: space-between;
+  flex-flow: column;
+  text-align: center;
+}
+
+.applyDialog {
+  padding: 56rpx 50rpx 30rpx;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.applyContent {
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.2);
+  padding: 10rpx 15rpx;
+  /* margin-top: 35rpx; */
+  border-radius: 20rpx;
+  box-sizing: border-box;
+  height: 220rpx;
+  font-size: 26rpx;
+  color: white;
+}
+
+
+
+.yesOrNo {
+  display: flex;
+  justify-content: space-between;
+}
+
+.yesOrNo image {
+  width: 220rpx;
+  height: 222rpx;
+}
+
+.choose {
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+  box-sizing: border-box;
+  padding: 0 62rpx;
+
+}
+
+.choose>image:first-child {
+  width: 54rpx;
+  height: 54rpx;
+}
+
+.choose>image:last-child {
+  width: 72rpx;
+  height: 56rpx;
+}
+.applyPlaceholder {
+  font-size: 26rpx;
+  color: white;
+}

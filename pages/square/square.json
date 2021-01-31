@@ -4,6 +4,7 @@
     "navBar": "/components/navBar/navBar",
     "marquee": "/components/square/marquee/marquee",
     "dynamicList":"/components/square/dynamicList/dynamicList",
-    "menu":"/components/common/menu/menu"
+    "menu":"/components/common/menu/menu",
+    "authorization":"/components/common/authorization/authorization"
   }
 }

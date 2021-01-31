@@ -306,9 +306,12 @@ Page({
   // 去首页
   goHome() {
     app.switchData.isSwitchGroup = true
-    wx.switchTab({
-      url: "/pages/home/home"
+    wx.navigateBack({
+      delta: 2,
     })
+    // wx.switchTab({
+    //   url: "/pages/home/home"
+    // })
   },
   create(e) {
     if (app.userInfo) {

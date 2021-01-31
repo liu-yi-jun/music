@@ -73,15 +73,7 @@
   align-items: center;
 }
 
-.btn {
-  /* transition: all 0.3s; */
-  margin-left: 17rpx;
-  box-sizing: border-box;
-  color: white;
-  font-size: 28rpx;
-  height: 50rpx;
-  line-height: 50rpx;
-}
+
 
 .letter {
   position: absolute;

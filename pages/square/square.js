@@ -34,7 +34,8 @@ Page({
     squareGuide: false,
     scrollTop: 0,
     cross: false,
-    leftGuide: true
+    leftGuide: true,
+    dialogShow: false
   },
 
   /**
@@ -46,36 +47,28 @@ Page({
   //   })
   // },
   onLoad: function (options) {
-    console.log('squareGuidesquareGuidesquareGuide', app.globalData.guide.square)
-    console.log(app.globalData.guide)
     // 获取去除上面导航栏，剩余的高度
     tool.navExcludeHeight(this)
+    if (app.userInfo) {
+      this.initSquare()
+    } else {
+      this.setData({
+        dialogShow: true
+      })
+    }
+  },
+  handleGetUserInfo() {
+    this.initSquare()
+  },
+  initSquare() {
     let signInSums = this.handleSignInSum(app.userInfo.signInSum)
     this.getSquaredynamics()
     this.getTopic()
     this.getDate()
-    // this.getRandomSong()
     this.setData({
       signInSums
     })
-
-
-    // wx.onBackgroundAudioStop(() => {
-    //   this.marquee.pauseScroll()
-    //   this.setData({
-    //     play: false
-    //   })
-    // })
   },
-  // getRandomSong() {
-  //   app.get(app.Api.getRandomSong, {
-  //     userId: app.userInfo.id
-  //   }).then(res => {
-  //     this.setData({
-  //       song: res[0]
-  //     })
-  //   })
-  // },
   getTopic(e) {
     app.get(app.Api.allTopic).then(res => {
       this.setData({
@@ -138,19 +131,26 @@ Page({
 
   },
   singIn() {
-    app.post(app.Api.sendSingIn, {
-      userId: app.userInfo.id
-    }).then(res => {
-      let isSignIn = res.isSignIn
-      if (!isSignIn) {
-        common.Toast('签到成功', 1500, 'success')
-        this.setData({
-          signInSums: this.handleSignInSum(app.userInfo.signInSum + 1)
-        })
-      } else {
-        common.Toast('每天只需签到一次哦~')
-      }
-    })
+    if (app.userInfo) {
+      app.post(app.Api.sendSingIn, {
+        userId: app.userInfo.id
+      }).then(res => {
+        let isSignIn = res.isSignIn
+        if (!isSignIn) {
+          common.Toast('签到成功', 1500, 'success')
+          this.setData({
+            signInSums: this.handleSignInSum(app.userInfo.signInSum + 1)
+          })
+        } else {
+          common.Toast('每天只需签到一次哦~')
+        }
+      })
+    } else {
+      this.setData({
+        dialogShow: true
+      })
+    }
+
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -287,19 +287,39 @@ Page({
     })
   },
   goDeal() {
-    wx.navigateTo({
-      url: '/pages/square/deal/deal',
-    })
+    if (app.userInfo) {
+      wx.navigateTo({
+        url: '/pages/square/deal/deal',
+      })
+    } else {
+      this.setData({
+        dialogShow: true
+      })
+    }
+
   },
   goSquarePost() {
-    wx.navigateTo({
-      url: '/pages/square/squarePost/squarePost',
-    })
+    if (app.userInfo) {
+      wx.navigateTo({
+        url: '/pages/square/squarePost/squarePost',
+      })
+    } else {
+      this.setData({
+        dialogShow: true
+      })
+    }
   },
   goPerformance() {
-    wx.navigateTo({
-      url: '/pages/square/performance/performance',
-    })
+    if (app.userInfo) {
+      wx.navigateTo({
+        url: '/pages/square/performance/performance',
+      })
+    } else {
+      this.setData({
+        dialogShow: true
+      })
+    }
+
   },
   goUnion() {
     wx.navigateTo({
@@ -307,9 +327,16 @@ Page({
     })
   },
   goBand() {
-    wx.navigateTo({
-      url: '/pages/square/band/band',
-    })
+    if (app.userInfo) {
+      wx.navigateTo({
+        url: '/pages/square/band/band',
+      })
+    } else {
+      this.setData({
+        dialogShow: true
+      })
+    }
+
   },
   toStoreSong() {
     this.setData({
@@ -379,8 +406,8 @@ Page({
   },
   move(e) {
     this.scrollTop = e.detail.scrollTop
-    console.log(this.scrollTop,33333333333)
-    console.log(this.tempScrollTop ,'22222222')
+    console.log(this.scrollTop, 33333333333)
+    console.log(this.tempScrollTop, '22222222')
     if (this.data.hideBarShow) {
       this.setData({
         hideBarShow: false
@@ -391,13 +418,13 @@ Page({
     let fullScreen = e.detail.fullScreen //值true为进入全屏，false为退出全屏
     if (!fullScreen) { //退出全屏
       console.log('退出全屏', this.tempScrollTop)
-      console.log('111',this.tempScrollTop ? this.tempScrollTop : this.data.scrollTop)
-      setTimeout(()=> {
+      console.log('111', this.tempScrollTop ? this.tempScrollTop : this.data.scrollTop)
+      setTimeout(() => {
         this.setData({
           scrollTop: this.tempScrollTop ? this.tempScrollTop : this.data.scrollTop
         })
-      },100)
-  
+      }, 100)
+
       if (this.show) {
         this.getTabBar().setData({
           show: true

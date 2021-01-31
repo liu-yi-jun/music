@@ -9,10 +9,10 @@
   </view>
   <scroll-view bindscrolltolower="scrolltolower" style="height: calc({{excludeHeight}}px - 130rpx);" scroll-y>
     <view hidden="{{swithchtab !=='myTab'}}">
-      <groupList groups="{{groups}}"></groupList>
+      <groupList groups="{{myGroups}}" isMyGroup="{{true}}"></groupList>
     </view>
     <view hidden="{{swithchtab !=='followTab'}}">
-      <groupList groups="{{groups}}"></groupList>
+      <groupList groups="{{followGroups}}"></groupList>
     </view>
   </scroll-view>
 </view>
