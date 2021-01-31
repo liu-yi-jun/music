@@ -6,9 +6,7 @@
     <image mode="aspectFill" catchtap="changeImg" class="backgroundImg" src="{{userInfo.bgWall}}">
       <view class="fans">粉丝 {{userInfo.fans}}</view>
       <image class="editData" src="http://cdn.eigene.cn/my/edit.png" catchtap="goEditData"></image>
-      <!-- <view class="backgroundWarp">
-       
-      </view> -->
+      <view class="hideBar" catchtap="hideBar"></view>
       <view class="avatarName" mark:Mymark="avatarName">
         <image catchtap="previewImage" src="{{userInfo.avatarUrl}}" class="avatar" mode="aspectFill"></image>
         <text class="name">{{userInfo.nickName}}</text>

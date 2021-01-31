@@ -79,7 +79,7 @@ Page({
       })
     })
   },
-  scrolltolower() {
+  onReachBottom() {
     let {
       dynamicsPaging,
       alliancePagin,

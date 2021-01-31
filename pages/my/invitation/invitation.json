@@ -3,6 +3,5 @@
     "dynamicList":"/components/square/dynamicList/dynamicList",
     "navBar": "/components/navBar/navBar",
     "allianceList": "/components/square/performance/allianceList/allianceList"
-  },
-  "disableScroll": true
+  }
 }

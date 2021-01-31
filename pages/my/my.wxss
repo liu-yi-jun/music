@@ -79,6 +79,7 @@
   margin: 0 auto;
   z-index: 99;
 }
+
 .backgroundWarp {
   z-index: 99;
 }
@@ -91,6 +92,16 @@
   bottom: 46rpx;
 }
 
+.hideBar {
+  position: absolute;
+  background-image: url('http://cdn.eigene.cn/square/hideBar.png');
+  background-size: 100%;
+  bottom: 26rpx;
+  left: 44rpx;
+  width: 100rpx;
+  height: 100rpx;
+  z-index: 999999;
+}
 .menu {
   display: flex;
   align-items: center;
@@ -111,7 +122,9 @@
   font-size: 27rpx;
 }
 
-.song, .feedback, .aboutUs {
+.song,
+.feedback,
+.aboutUs {
   position: absolute;
 }
 
@@ -135,6 +148,7 @@
   top: 989rpx;
   right: 446rpx;
 }
+
 .fans {
   background-color: #A87EDD;
   padding: 8rpx 22rpx;
@@ -160,6 +174,7 @@
   border-bottom: 6rpx solid #aa7edf;
   font-weight: bold;
 }
+
 .issue {
   margin-left: 40rpx;
 }
@@ -178,16 +193,19 @@
   width: 120rpx;
   text-align: center;
 }
+
 .portion {
   padding: 0px 6rpx 4rpx;
   color: white;
 }
+
 .square {
   width: 15rpx;
   height: 15rpx;
   margin-left: 40rpx;
   background-color: #aa7edf;
 }
+
 .btn {
   /* transition: all 0.3s; */
   margin-left: 17rpx;
@@ -197,7 +215,8 @@
   height: 50rpx;
   line-height: 50rpx;
 }
-.list{
+
+.list {
   box-sizing: border-box;
   /* padding-top: 60rpx; */
 }

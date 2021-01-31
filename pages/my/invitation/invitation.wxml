@@ -1,11 +1,11 @@
 <!--pages/my/invitation/invitation.wxml-->
 <view class="invitation">
   <navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' back="{{true}}" iconTheme='white'
-    bindback="handlerGobackClick"></navBar>
-    <scroll-view bindscrolltolower="scrolltolower"  style="height: {{excludeHeight}}px;" scroll-y>
+    bindback="handlerGobackClick" class="navBar"></navBar>
     <view class="information">
       <image class="backgroundImg" src="{{personal.bgWall}}" mode="aspectFill">
-        <image wx:if="{{userId!==otherId}}" class="follow" catchtap="followUser" src="http://cdn.eigene.cn/invitation/follow{{personal.isFollow?'ed':''}}.png" ></image>
+        <image wx:if="{{userId!==otherId}}" class="follow" catchtap="followUser"
+          src="http://cdn.eigene.cn/invitation/follow{{personal.isFollow?'ed':''}}.png"></image>
         <view class="backgroundWarp">
           <view class="avatarName">
             <image src="{{personal.avatarUrl}}" class="avatar" mode="aspectFill"></image>
@@ -19,7 +19,8 @@
           </view>
         </view>
       </image>
-      <view catchtap="goOtherHome" data-id="{{personal.groupId}}" class="organization" wx:if="{{personal.groupName}}">{{personal.groupName}}
+      <view catchtap="goOtherHome" data-id="{{personal.groupId}}" class="organization" wx:if="{{personal.groupName}}">
+        {{personal.groupName}}
         {{personal.groupDuty===0?'组长':(personal.groupDuty===1?'管理员':(personal.groupDuty===2?'组员':'申请中'))}}</view>
     </view>
     <view class="statistics">
@@ -37,14 +38,12 @@
       </view>
     </view>
     <view class="bar">
-      <view class="letter" catchtap="goPrivateLetter" wx:if="{{userId!==otherId}}">私信Ta</view>
-      <view class="portion" catchtap="switchBtn" data-switchBtn="dynamic">
-        <view class="square"></view>
-        <view class="btn {{switchBtn === 'dynamic' ? 'active' : ''}}">动态</view>
+      <!-- <view class="letter" catchtap="goPrivateLetter" wx:if="{{userId!==otherId}}">私信Ta</view> -->
+      <view class="portion {{switchBtn === 'dynamic' ? 'active' : ''}}" catchtap="switchBtn" data-switchBtn="dynamic">
+        动态
       </view>
-      <view class="portion" catchtap="switchBtn" data-switchBtn="issue">
-        <view class="square"></view>
-        <view class="btn {{switchBtn === 'issue' ? 'active' : ''}}">发布</view>
+      <view class="issue portion {{switchBtn === 'issue' ? 'active' : ''}}" catchtap="switchBtn" data-switchBtn="issue">
+        发布
       </view>
     </view>
     <view class="list">
@@ -55,5 +54,4 @@
         <allianceList alliances="{{alliances}}"></allianceList>
       </view>
     </view>
-  </scroll-view>
 </view>
