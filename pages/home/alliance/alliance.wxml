@@ -31,8 +31,10 @@
               <text>{{item.introduce}}</text>
             </view>
           </view>
-          <image wx:if="{{item.isJoin}}" class="join" src="http://cdn.eigene.cn/home/joined.png"
+          <image wx:if="{{item.isJoin === 1}}" class="success" src="http://cdn.eigene.cn/home/success.png"
             data-index="{{index}}"></image>
+          <image wx:elif="{{item.isJoin === undefine}}" class="join" src="http://cdn.eigene.cn/home/join.png" data-index="{{index}}"  catchtap="showJoin">
+          </image>
           <image wx:else class="join" src="http://cdn.eigene.cn/home/join.png" data-index="{{index}}"  catchtap="showJoin">
           </image>
         </view>
@@ -43,7 +45,7 @@
 
 <view class="shade {{joinShow? 'shadeShow':''}}" mark:district="shade">
   <view class="dialog">
-    <text>是否确定加入该社团？</text>
+    <text>是否确定加入该小组？</text>
     <view class="yesOrNo">
       <image catchtap="noJoin" src="http://cdn.eigene.cn/home/no.png"></image>
       <image catchtap="yesJoin" src="http://cdn.eigene.cn/home/yes.png"></image>

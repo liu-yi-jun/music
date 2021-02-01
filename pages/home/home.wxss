@@ -207,8 +207,8 @@
   transition: 0.4s all;
   height: 0rpx;
   top: 288rpx;
-  width: 394rpx;
-  left: -55rpx;
+  width: 554rpx;
+  left: -134rpx;
   z-index: 10;
   background-image: url('http://cdn.eigene.cn/home/massBackground.png');
   background-size: 100% 100%;
@@ -221,39 +221,46 @@
 .functionBarShow {
   opacity: 1;
   transform: scale(1);
-  height: 227rpx;
+  height: 233rpx;
 }
 
 .puchCard image,
-.course image {
-  width: 100rpx;
-  height: 100rpx;
-  margin-bottom: 10rpx;
+.course image,
+.setUp image {
+  width: 116rpx;
+  height: 116rpx;
+  /* margin-bottom: 10rpx; */
 }
 
 .puchCard,
-.course {
+.course,.setUp {
   position: absolute;
   transition: 0.3s all;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  left: 147rpx;
+  left: 225rpx;
   top: -20rpx;
   visibility: hidden;
   opacity: 0;
 }
 
 .puchCardShow {
-  transform: translateX(-90rpx);
+  transform: translateX(-170rpx);
+  visibility: visible;
+  top: 69rpx;
+  opacity: 1;
+}
+.setUpShow {
+  transform: translateX(170rpx);
   visibility: visible;
   top: 69rpx;
   opacity: 1;
 }
 
 .courseShow {
-  transform: translateX(90rpx);
+  transform: translateX(0rpx);
   visibility: visible;
   top: 69rpx;
   opacity: 1;
@@ -308,15 +315,16 @@
 
 .socialManagement {
   position: absolute;
-  left: 20rpx;
-  top: 80rpx;
-  width: 80rpx;
-  height: 80rpx;
+  left: 10rpx;
+  top: 100rpx;
+  width: 100rpx;
+  height: 60rpx;
   z-index: 10;
-  background-image: url('http://cdn.eigene.cn/socialManagement.png');
-  background-size: 38rpx 38rpx;
+  background-image: url('http://cdn.eigene.cn/switchGroup.png');
+  background-size: 43rpx 37rpx;
   background-position: center;
   background-repeat: no-repeat;
+  z-index: 99999;
 }
 
 .fanWrap,

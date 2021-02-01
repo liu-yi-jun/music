@@ -174,6 +174,14 @@
   top: 50%;
   transform: translateY(-50%);
 }
+.success {
+  position: absolute;
+  width: 72rpx;
+  height: 56rpx;
+  right: 48rpx;
+  top: 50%;
+  transform: translateY(-50%);
+}
 
 
 .shade {

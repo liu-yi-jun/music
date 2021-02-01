@@ -28,7 +28,7 @@
             placeholder-class="placeholder"></textarea>
         </view>
         <view class="media">
-          <view class="audioWrap">
+          <!-- <view class="audioWrap">
             <image class="deleteData" src="http://cdn.eigene.cn/addCourse/deleteData.png" data-type="1"
               catchtap="deleteData" wx:if="{{tempRecordPath}}"></image>
             <text>音频示范:</text>
@@ -41,7 +41,7 @@
                 </view>
               </view>
             </view>
-          </view>
+          </view> -->
           <view class="videoWrap">
             <image wx:if="{{tempVideoPath}}" class="deleteData" src="http://cdn.eigene.cn/addCourse/deleteData.png"
               data-type="2" catchtap="deleteData"></image>

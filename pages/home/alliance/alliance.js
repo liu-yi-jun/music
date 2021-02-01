@@ -65,9 +65,13 @@ Page({
     app.groupInfo.myGrouList.forEach((item, index) => {
       groups.forEach(group => {
         console.log(group.id, item.groupId);
-
         if (group.id == item.groupId) {
-          group.isJoin = true
+          if(item.groupDuty === -1){
+            group.isJoin = -1 
+          }else {
+            group.isJoin = 1
+          }
+        
           return
         }
       })
@@ -156,7 +160,7 @@ Page({
         app.groupInfo = {}
         app.groupInfo.myGrouList = res.myGrouList
       }
-      groupInfo.isJoin = true
+      groupInfo.isJoin = 1
       this.setData({
         groups: this.data.groups
       })
