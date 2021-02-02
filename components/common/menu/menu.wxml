@@ -1,6 +1,9 @@
 <!--components/common/menu/menu.wxml-->
-<view class="btnWrap">
-  <button class="reportBtn" catchtap="reportBtn">举报</button>
-  <button class="shareBtn" catchtap="shareBtn">分享</button>
-  <button class="cancel" catchtap="cancel">取消</button>
+<view catchtap="cancel" class="maskMenu {{showMenu?'showMaskMenu': 'hideMaskMenu'}}">
+  <view catchtap="stopBubbling" class="menuWrap {{showMenu?'showMenu': ''}}">
+    <block wx:for="{{list}}">
+      <button class="topline" open-type="{{item.open_type}}" catchtap="handle" data-functionname="{{item.functionName}}">{{item.name}}</button>
+    </block>
+    <button class="topline inset-bottom" catchtap="cancel">取消</button>
+  </view>
 </view>

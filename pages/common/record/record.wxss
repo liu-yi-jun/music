@@ -1,0 +1,2 @@
+/* pages/common/record/record.wxss */
+@import '../../home/uploadVoice/uploadVoice.wxss'

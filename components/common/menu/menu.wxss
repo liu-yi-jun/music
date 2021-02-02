@@ -1,28 +1,61 @@
 /* components/common/menu/menu.wxss */
 
-.btnWrap {
-  position: fixed;
+.maskMenu {
   bottom: 0;
+  right: 0;
   left: 0;
-  width: 100%;
-  z-index: 99999;
+  top: 0;
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 999999;
+  transition: all .3s;
 }
 
-.reportBtn,
-.shareBtn,
-.cancel {
+.showMaskMenu {
+  opacity: 1;
+  visibility: visible;
+}
+
+.hideMaskMenu {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.menuWrap {
+  border-top-left-radius: 20rpx;
+  border-top-right-radius: 20rpx;
+  background-color: #fff;
+  position: fixed;
+  bottom: 0rpx;
+  left: 0rpx;
+  width: 100%;
+  text-align: center;
+  box-sizing: border-box;
+  transform: translateY(calc(400rpx + env(safe-area-inset-bottom)));
+  transition: all .2s;
+  z-index: 999;
+}
+.showMenu {
+  transform: translateY(0rpx);
+}   
+
+.shareTitle {
+  font-size: 36rpx;
+  color: #FF9900;
+}
+.topline {
+  border-top: 1rpx solid #f6f5f8;
+
+}
+.inset-bottom {
+  padding-bottom: env(safe-area-inset-bottom) !important;
+  box-sizing: content-box !important;
+}
+
+.menuWrap>button {
+  height: 100rpx !important;
+  line-height: 100rpx !important;
   width: 100% !important;
+  font-weight: normal !important;
   background-color: white !important;
-  padding: 28rpx !important;
-  color: black;
-  border-radius: 0rpx !important;
-  padding-bottom: calc( 28rpx + env(safe-area-inset-bottom));
-}
-.cancel {
-  border-top: 10rpx solid #cacbcb !important;
-}
-.reportBtn {
-  border-top-left-radius: 20rpx !important;
-  border-top-right-radius: 20rpx !important;
-  border-bottom: 1rpx solid #cacbcb !important;
 }

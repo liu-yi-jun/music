@@ -175,13 +175,23 @@ Page({
     let soundWidth = duration * changeRange / recordTime + minWidth
     return (soundWidth)
   },
-  recordResult(e) {
+  // recordResult(e) {
+  //   this.setData({
+  //     tempImagePaths: [],
+  //     tempVideoPath: '',
+  //     tempRecordPath: e.detail.tempFilePath,
+  //     duration: e.detail.duration,
+  //     soundWidth: this.initSoundWidth(e.detail.duration),
+  //     isRecordLink: false
+  //   })
+  // },
+  recordResult(data) {
     this.setData({
       tempImagePaths: [],
       tempVideoPath: '',
-      tempRecordPath: e.detail.tempFilePath,
-      duration: e.detail.duration,
-      soundWidth: this.initSoundWidth(e.detail.duration),
+      tempRecordPath: data.tempFilePath,
+      duration: data.duration,
+      soundWidth: this.initSoundWidth(data.duration),
       isRecordLink: false
     })
   },
@@ -222,9 +232,14 @@ Page({
       }
     })
   },
+  // record() {
+  //   let record = this.selectComponent('#record')
+  //   record.startRecord()
+  // },
   record() {
-    let record = this.selectComponent('#record')
-    record.startRecord()
+    wx.navigateTo({
+      url: '/pages/common/record/record',
+    })
   },
   chooseImg() {
     common.chooseImage(9).then(res => {

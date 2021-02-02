@@ -58,7 +58,9 @@
     "pages/test/test2/test2",
     "components/tool/select/select",
     "components/tool/chord/chord",
-    "pages/home/myGroup/myGroup"
+    "pages/home/myGroup/myGroup",
+    "pages/common/record/record",
+    "pages/test/test3/test3"
   ],
   "permission": {
     "scope.userLocation": {

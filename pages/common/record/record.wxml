@@ -1,0 +1,21 @@
+<!--pages/common/record/record.wxml-->
+<view class="uploadVideo">
+  <navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' back="{{true}}" iconTheme='white'
+    bindback="handlerGobackClick"></navBar>
+  <view class="soundRecordWrap">
+    <image class="soundRecord" src="{{soundRecordSrc}}" catchtap="soundRecord">
+      <!-- -->
+      <view wx:if="{{current!==0}}"
+        class="clip {{clipAuto? 'auto': ''}} {{current===2 ||current===3 ? 'clipPlay': ''}}">
+        <view class="left {{current===2 || current===3 ? 'leftPlay': ''}}"
+          style="transform:rotate({{recordRotate}}deg)"></view>
+        <view class="right {{widthNone?' width-none': ''}} {{current===2 ||current===3 ? 'rightPlay': ''}}"></view>
+      </view>
+      <view wx:if="{{current===1}}" class="count">{{recordTime}}s</view>
+      <view wx:if="{{current===2 || current===3}}" class="remake" catchtap="remake"></view>
+    </image>
+  </view>
+  <view class="issueWrap">
+    <button class="issue" catchtap="confirm">确认</button>
+  </view>
+</view>
