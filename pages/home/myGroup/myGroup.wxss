@@ -1,23 +1,30 @@
 /* pages/home/myGroup/myGroup.wxss */
 
 
-.head {
+.bar {
   width: 100%;
   box-sizing: border-box;
-  padding: 40rpx 14rpx 30rpx 40rpx;
+  padding: 20rpx 14rpx 30rpx 40rpx;
   display: flex;
   /* justify-content: space-between; */
-  align-items: center;
+  align-items: flex-start;
 }
-.myTab {
+.barItem {
+  color: #FFFFFF;
+  padding: 6rpx 4rpx;
+}
+.margin-left {
+  margin-left: 60rpx
+}
+/* .myTab {
   color: #FFFFFF;
 }
 .followTab {
   color: #FFFFFF;
   margin-left: 40rpx;
-}
+} */
 .active {
   font-weight: bold;
-  border-bottom: 4rpx solid #C46CEE;
+  border-bottom: 6rpx solid #C46CEE;
 }
 

@@ -12,7 +12,8 @@ Page({
     pageSize: 10,
     pageIndex: 1,
     isNoData: false,
-    bands: []
+    bands: [],
+    swithchtab: 'myTab',
   },
 
   /**
@@ -124,5 +125,14 @@ Page({
     if (current == bands.length - 1 && !this.data.isNoData) {
       this.getBands()
     }
+  },
+  swithchTab(e) {
+    let swithchtab = e.currentTarget.dataset.swithchtab
+    if (this.data.swithchtab === swithchtab) {
+      return
+    }
+    this.setData({
+      swithchtab
+    })
   },
 })

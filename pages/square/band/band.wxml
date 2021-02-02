@@ -2,51 +2,11 @@
 <view>
   <navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' back="{{true}}" iconTheme='white'
     bindback="handlerGobackClick"></navBar>
-    <image class="issue" catchtap="goIssueTeam" src="http://cdn.eigene.cn/band/issue.png"></image>
-  <swiper class="swiper" bindchange="changeCard">
-    <swiper-item wx:for="{{bands}}" wx:key="inex">
-      <view class="bandBackgroundBoard">
-        <view class="organization">{{item.groupName}}</view>
-        <view class="logoWrap">
-          <view class="existWrap">
-            <view class="exist">
-              <view>现有</view>
-            </view>
-            <swiper class="existLogo" wx:if="{{item.existArr.length}}" >
-              <swiper-item wx:for="{{item.existArr}}" wx:key="index"
-              wx:for-item="exist" >
-                <view wx:for="{{exist}}" wx:key="index">
-                  <image src="{{item.instrumentsUrl}}"></image>
-                  <text>{{item.instrumentsName}}</text>
-                </view>
-              </swiper-item>
-            </swiper>
-          </view>
-          <view class="recruitWrap">
-            <view class="recruit">
-              <view>招募</view>
-            </view>
-            <swiper class="recruitLogo" wx:if="{{item.recruitArr.length}}">
-              <swiper-item wx:for="{{item.recruitArr}}" wx:key="index" wx:for-item="recruit">
-                <view wx:for="{{recruit}}" wx:key="index">
-                  <image src="{{item.instrumentsUrl}}"></image>
-                  <text>{{item.instrumentsName}}</text>
-                </view>
-              </swiper-item>
-            </swiper>
-          </view>
-        </view>
-        <view class="describe">
-          {{item.introduce}}
-          <!-- <view>详细信息： </view>
-          <view>目前有吉他和鼓，有原创歌曲，排练的地点在浙江大学边上。</view>
-          <view> 乐队的发展方向当然是做原创，初期是希望能找到人一起排练，打磨作品，也能干点活什么的。</view>
-          <view style="margin: 20rpx 0"> 如果有兴趣的小伙伴可以联系我们：）</view>
-          <view>联系方式：</view>
-          <view class="contactText"> playtogether(wechat)，加微信 请备注。</view> -->
-        </view>
-        <image data-recruits="{{item.recruitArr}}" class="join" catchtap="goApplication" data-userid="{{item.userId}}" data-bandid='{{item.id}}' src="http://cdn.eigene.cn/band/join.png"></image>
-      </view>
-    </swiper-item>
-  </swiper>
+  <view class="bar">
+    <view class="barItem {{swithchtab=='myTab'?'active': ''}}" catchtap="swithchTab" data-swithchtab="myTab">一起组乐队</view>
+    <view class="barItem margin-left {{swithchtab=='followTab'?'active': ''}}" catchtap="swithchTab"
+      data-swithchtab="followTab">
+      乐队瞬间</view>
+  </view>
+  <composeBand></composeBand>
 </view>

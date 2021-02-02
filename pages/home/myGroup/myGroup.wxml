@@ -2,12 +2,12 @@
 <view class="joinClub">
   <navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' back="{{true}}" iconTheme='white'
     bindback="handlerGobackClick"></navBar>
-  <view class="head">
-    <view class="myTab {{swithchtab=='myTab'?'active': ''}}" catchtap="swithchTab" data-swithchtab="myTab">我的小组</view>
-    <view class="followTab  {{swithchtab=='followTab'?'active': ''}}" catchtap="swithchTab" data-swithchtab="followTab">
+  <view class="bar">
+    <view class="barItem {{swithchtab=='myTab'?'active': ''}}" catchtap="swithchTab" data-swithchtab="myTab">我的小组</view>
+    <view class="barItem margin-left {{swithchtab=='followTab'?'active': ''}}" catchtap="swithchTab" data-swithchtab="followTab">
       关注的小组</view>
   </view>
-  <scroll-view bindscrolltolower="scrolltolower" style="height: calc({{excludeHeight}}px - 130rpx);" scroll-y>
+  <scroll-view bindscrolltolower="scrolltolower" style="height: calc({{excludeHeight}}px - 110rpx);" scroll-y>
     <view hidden="{{swithchtab !=='myTab'}}">
       <groupList groups="{{myGroups}}" isMyGroup="{{true}}"></groupList>
     </view>
