@@ -66,12 +66,12 @@ Page({
       groups.forEach(group => {
         console.log(group.id, item.groupId);
         if (group.id == item.groupId) {
-          if(item.groupDuty === -1){
-            group.isJoin = -1 
-          }else {
+          if (item.groupDuty === -1) {
+            group.isJoin = -1
+          } else {
             group.isJoin = 1
           }
-        
+
           return
         }
       })
@@ -227,18 +227,79 @@ Page({
   apply() {
     let applyContent = this.data.applyContent
     let groupInfo = this.groupInfo
-    if(!applyContent) {
+    if (!applyContent) {
       common.Tip('请输入内容')
       return
     }
-    app.post(app.Api.applyJoin,{
-      applyContent,
-      userId: app.userInfo.id,
-      groupId: groupInfo.id
-    },{
-      loading: ['申请中...']
-    }).then(res=> {
-      
-    })
+    let from = {
+        userId: app.userInfo.id,
+        nickName: app.userInfo.nickName
+      },
+      to = {
+        userId: groupInfo.createUserId
+      },
+      message = {
+        type: 1,
+        jsonDate: {
+          groupId: groupInfo.id,
+          groupName: groupInfo.groupName,
+          applyContent,
+          status: 0
+        }
+      }
+    app.socket.emit("applyJoin", from, to, message);
+
+    // app.post(app.Api.applyJoin,{
+    //   applyContent,
+    //   userId: app.userInfo.id,
+    //   groupId: groupInfo.id
+    // },{
+    //   loading: ['申请中...']
+    // }).then(res=> {
+
+    // })
+  },
+  messagePass : {
+    'systemMsg': []
+  },
+
+  leaveDate : {
+  },
+
+  send(){
+    socket.on('getLeaveDate', () => {
+      if (leaveDate[socket.user.userId]) {
+        for(key in messagePass) {
+          let p = Promise.resolve()
+          leaveDate[socket.user.userId][key].forEach(async element => {
+              p = p.then(() => time()).then(() => {
+                  io.to(socket.user.roomId).emit(key, element.from, element.to, element.message);
+                  return
+              }).catch(err => reject(err))
+          });
+          leaveDate[socket.user.userId][key] = []
+        }
+      }
+  })
+  },
+
+  text() {
+    socket.on('applyJoin', (from, to, message) => {
+      if (users[to.userId]) {
+        let user = users[to.userId]
+        socket.broadcast.to(user.roomId).emit('systemMsg', from, to, message);
+      } else {
+        if (!leaveDate[to.userId]) {
+          leaveDate[to.userId] = messagePass
+        }
+        leaveDate[to.userId]['systemMsg'].push({
+          from,
+          to,
+          message
+        })
+        console.log('leaveDate', leaveDate)
+        console.log('离线了')
+      }
+    });
   }
 })
