@@ -3,6 +3,7 @@
 .soundRecordWrap {
   height: 500rpx;
   position: relative;
+  margin-top: 213rpx;
 }
 
 .soundRecord {
@@ -71,7 +72,7 @@
 
 .issueWrap {
   box-sizing: border-box;
-  padding: 60rpx 0 100rpx;
+  padding: 300rpx 0 100rpx;
 }
 
 .issue {

@@ -1,0 +1,30 @@
+/* components/square/band/composeBand/composeBand.wxss */
+.components {
+  display: flex;
+  flex-wrap: wrap;
+}
+.part {
+  width: 314rpx;
+  height: 291rpx;
+  border-radius: 20rpx;
+  background-color: white;
+  box-sizing: border-box;
+  padding: 10rpx  20rpx ;
+  margin:10rpx 20rpx;
+
+}
+.partHead {
+  display: flex;
+  margin-top: 10rpx;
+}
+.existWrap {
+  border-radius: 6rpx;
+  border: 1px solid #AB85D9;
+  padding: 10rpx 20rpx;
+}
+.recruit {
+  border-radius: 6rpx;
+  border: 1px solid #AB85D9;
+  padding: 10rpx 20rpx;
+  background-color: #AB85D9;
+}

@@ -1,0 +1,10 @@
+<!--components/square/band/composeBand/composeBand.wxml-->
+<view class="components">
+  <view wx:for="{{list}}">
+    <view class="part">
+      <view class="partHead"></view>
+      <view class="existWrap"></view>
+      <view class="existWrap"></view>
+    </view>
+  </view>
+</view>

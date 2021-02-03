@@ -58,7 +58,7 @@
       <swiper class="topicWrap">
         <swiper-item wx:for="{{topics}}" wx:key="index" wx:for-item="topic">
           <view wx:for="{{topic}}" class="topic" catchtap="goTopic" data-topicid="{{item.id}}">
-            <text>{{item.topicName}}</text>
+         {{item.topicName}}
           </view>
         </swiper-item>
       </swiper>

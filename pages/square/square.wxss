@@ -120,7 +120,8 @@ height: 33.3%;
 
 .topic {
   position: relative;
-  background-image: url(http://cdn.eigene.cn/square/topic1.png);
+  /* background-image: url(http://cdn.eigene.cn/square/topic1.png); */
+  border: 1rpx solid #AAAEB5;
   background-repeat: no-repeat;
   background-size: 100% 100%;
   box-sizing: border-box;
@@ -128,6 +129,7 @@ height: 33.3%;
   font-size: 23rpx;
   /* display: inline-block;
    */
+   border-radius: 999rem;
    display:flex;
    align-items: center;
    justify-content: center;
@@ -135,7 +137,7 @@ height: 33.3%;
 
 .topicWrap {
   margin-bottom: 25rpx;
-  height: 70rpx;
+  height: 60rpx;
 }
 
 swiper-item {

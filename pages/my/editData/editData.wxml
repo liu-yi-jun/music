@@ -53,7 +53,7 @@
       <textarea maxlength="30" name="resume" class="textarea" value="{{userInfo.resume}}"></textarea>
     </view>
     <view class="summitWarp">
-      <button class="summit" form-type="submit">完成</button>
+      <button class="summit" form-type="submit">保存</button>
     </view>
   </form>
   <view class="blank"></view>

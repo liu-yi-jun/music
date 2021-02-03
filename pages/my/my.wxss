@@ -151,12 +151,13 @@
 
 .fans {
   background-color: #A87EDD;
-  padding: 8rpx 22rpx;
+  padding: 6rpx 20rpx;
   border-radius: 999rem;
   position: absolute;
   top: 197rpx;
   right: 48rpx;
   color: white;
+  font-size: 30rpx;
 }
 
 .bar {
