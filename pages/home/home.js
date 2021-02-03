@@ -4,6 +4,7 @@ let common = require('../../assets/tool/common')
 let tool = require('../../assets/tool/tool')
 let core = require('../../assets/tool/core')
 let authorize = require('../../assets/tool/authorize')
+let io = require('../../assets/tool/weapp.socket.io')
 
 let Style = [{
     index: 0,
@@ -117,7 +118,7 @@ Page({
     // this.setData({
     //   myId: app.userInfo.id
     // })
-    // this.initSocketEvent()
+ 
     // this.getGroupInfo(myGroupId)
     // this.groupPagingGetGroupdynamics(myGroupId).then(() => {
     //   this.urlPush()
@@ -130,6 +131,84 @@ Page({
 
     this.initLogin()
   },
+      initSocketEvent() {
+      const socket = (app.socket = io(app.socketUrls.baseUrl))
+      this.socket = socket
+      socket.on('connect', () => {
+        console.log('连接成功')
+        let user = {
+          userId: app.userInfo.id,
+        }
+        socket.emit("login", user);
+        socket.emit("getmessage");
+        socket.emit("getLeaveDate");
+      })
+      socket.on("message", (from, to, message) => {
+        console.log('okok')
+        for (let key in app.cbObj) {
+          app.cbObj[key] && app.cbObj[key](from, to, message)
+        }
+      })
+
+      socket.on("systemMsg", (from, to, message) => {
+        // 数据假设
+        // let message = {
+        //   申请
+        //   type: 1,
+        //   jsonDate: {
+        //     groupId: 0
+        //     groupName: 'sad',
+        //     applyContent: '',
+        //     status: 0,//1同意，2拒绝
+        //   }
+        // }
+        console.log('systemMsg','1111111111')
+        let systemMsg = wx.getStorageSync('systemMsg')
+        if (!systemMsg) {
+          systemMsg = []
+        }
+        systemMsg.push({
+          from,
+          to,
+          message
+        })
+        wx.setStorage({
+          data: systemMsg,
+          key: 'systemMsg',
+        })
+      })
+
+      app.onMessage('messageMain', (from, to, message) => {
+        let threas = wx.getStorageSync('threas')
+        console.log('收到', threas)
+        if (!threas) {
+          threas = {}
+        }
+        if (!threas[from.userId]) {
+          threas[from.userId] = {
+            userId: from.userId,
+            avatarUrl: from.avatarUrl,
+            nickName: from.nickName,
+            newNum: 0,
+            lastMessage: '',
+            messages: []
+          }
+        }
+        threas[from.userId].newNum++
+        threas[from.userId].lastMessage = message
+        threas[from.userId].messages.push({
+          fromId: from.userId,
+          toId: to.userId,
+          message
+        })
+        wx.setStorage({
+          data: threas,
+          key: 'threas',
+        })
+      })
+
+
+    },
   // 
   initLogin() {
     let token = wx.getStorageSync('wx-token')
@@ -169,6 +248,7 @@ Page({
         // 有用户信息，存入app
         app.userInfo = res.userInfo
         let groupId = app.userInfo.groupId
+        this.initSocketEvent()
         if (groupId) {
           // 获取信息
           this.getGroupInfo(groupId).then(() => {

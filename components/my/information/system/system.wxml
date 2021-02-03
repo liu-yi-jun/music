@@ -8,7 +8,7 @@
       <view class="number">1</view>
     </view>
   </view> -->
-  <view class="row" wx:for="{{systems}}" wx:key="id">
+  <!-- <view class="row" wx:for="{{systems}}" wx:key="id">
     <image class="avatar" src="http://cdn.eigene.cn/system/systemLogo.png"></image>
     <view class="contentWrap">
       <text class="title">有人申请和你一起组乐队！</text>
@@ -47,5 +47,27 @@
       </view>
       <view wx:if="{{item.isNew}}" class="number">1</view>
     </view>
+  </view> -->
+  <view class="row" wx:for="{{systemMsg}}" wx:key="id">
+    <image class="avatar" src="http://cdn.eigene.cn/system/systemLogo.png"></image>
+    <view class="contentWrap">
+      <text class="title">小组申请</text>
+      <view class="content">
+        <view class="applyJoin">
+          {{item.from.nickName}} 申请加入“{{item.message.jsonDate.groupName}}”小组
+        </view>
+        <view class="applyInfo">
+          <view>申请信息:</view>
+          <view>{{item.message.jsonDate.applyContent}}</view>
+        </view>
+        <view class="btnWrap">
+          <view>拒绝</view>
+          <view>同意</view>
+        </view>
+      </view>
+      <view class="number">1</view>
+    </view>
+
   </view>
+
 </view>

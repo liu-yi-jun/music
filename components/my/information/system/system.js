@@ -14,13 +14,23 @@ Component({
    * 组件的初始数据
    */
   data: {
-
+    systemMsg: []
   },
 
   /**
    * 组件的方法列表
    */
-  methods: {
+  lifetimes: {
+    attached: function () {
+      let systemMsg = wx.getStorageSync('systemMsg')
+      console.log(systemMsg);
+      this.setData({
+        systemMsg
+      })
+    },
+    methods: {
+
+    },
     goPersonal(e) {
       let userId = e.currentTarget.dataset.userid
       wx.navigateTo({

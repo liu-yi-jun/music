@@ -236,7 +236,7 @@ Page({
         nickName: app.userInfo.nickName
       },
       to = {
-        userId: groupInfo.createUserId
+        userId: groupInfo.userId
       },
       message = {
         type: 1,
@@ -247,17 +247,25 @@ Page({
           status: 0
         }
       }
-    app.socket.emit("applyJoin", from, to, message);
-
-    // app.post(app.Api.applyJoin,{
-    //   applyContent,
-    //   userId: app.userInfo.id,
-    //   groupId: groupInfo.id
-    // },{
-    //   loading: ['申请中...']
-    // }).then(res=> {
-
-    // })
+      app.post(app.Api.joinGroup, {
+        groupId: groupInfo.id,
+        groupName: groupInfo.groupName,
+        userId: app.userInfo.id,
+        examine: groupInfo.examine
+      }).then(res => {
+        app.userInfo = res.userInfo
+        if (app.groupInfo) {
+          app.groupInfo.myGrouList = res.myGrouList
+        } else {
+          app.groupInfo = {}
+          app.groupInfo.myGrouList = res.myGrouList
+        }
+        groupInfo.isJoin = -1
+        app.socket.emit("applyJoin", from, to, message);
+        this.setData({
+          groups: this.data.groups
+        })
+      }).catch(err => err)
   },
   messagePass : {
     'systemMsg': []

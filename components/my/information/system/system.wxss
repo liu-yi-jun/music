@@ -37,9 +37,8 @@
 
 
 .content {
-  color: #b6b7b7;
-  margin-top: 10rpx;
-  font-size: 28rpx;
+  color: #9E9E9F;
+  font-size: 32rpx;
 }
 
 .number {
@@ -120,5 +119,34 @@
 }
 
 .title {
+  font-size: 36rpx;
+  font-weight: bold;
+}
+.applyJoin {
+  margin-top: 25rpx;
+}
+.applyInfo {
+  margin-top: 30rpx;
+}
+
+.btnWrap {
+  box-sizing: border-box;
+  padding: 20rpx 60rpx 10rpx;
+  display: flex;
+  justify-content: space-between;
+}
+.btnWrap > view {
+  width: 120rpx;
+  height: 60rpx;
+  text-align: center;
+  line-height: 60rpx;
+  background-color: #AD7AE0;
+  border-radius: 999rem;
+  font-size: 26rpx;
+  color: white;
+  box-shadow: 4rpx 4rpx 6rpx 3rpx rgba(0, 0, 0, .2);
+}
+.applyInfo > view:first-child {
   font-size: 32rpx;
+  font-weight: bold;
 }

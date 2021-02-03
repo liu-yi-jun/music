@@ -9,7 +9,7 @@ Page({
   data: {
     // 去除上面导航栏，剩余的高度
     excludeHeight: 0,
-    switchBtn: 'privateLetter',
+    switchBtn: 'system',
     informPaging: {
       pageSize: 20,
       pageIndex: 1,
@@ -31,11 +31,11 @@ Page({
   onLoad: function (options) {
     // 获取去除上面导航栏，剩余的高度
     tool.navExcludeHeight(this)
-    this.getInform()
-    this.getSystem()
-    // 获取消息数据
-    this.getThreas()
-    this.WhachMessage()
+    // this.getInform()
+    // this.getSystem()
+    // // 获取消息数据
+    // this.getThreas()
+    // this.WhachMessage()
   },
   // 监听数据，更新视图
   WhachMessage() {
