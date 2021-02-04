@@ -35,7 +35,7 @@
             data-index="{{index}}"></image>
           <image wx:elif="{{item.isJoin === undefine}}" class="join" src="http://cdn.eigene.cn/home/join.png" data-index="{{index}}"  catchtap="showJoin">
           </image>
-          <image wx:else class="join" src="http://cdn.eigene.cn/home/join.png" data-index="{{index}}"  catchtap="showJoin">
+          <image wx:else class="join" src="http://cdn.eigene.cn/home/joined.png" data-index="{{index}}">
           </image>
         </view>
       </view>

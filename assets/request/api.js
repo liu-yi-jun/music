@@ -111,4 +111,5 @@ module.exports = {
   myGroup: "/api/group/myGroup",
   switchGroup: "/api/group/switchGroup",
   agreeApply: "/api/group/agreeApply",
+  refuseApply: "/api/group/refuseApply",
 }

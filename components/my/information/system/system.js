@@ -29,24 +29,44 @@ Component({
         systemMsg
       })
     },
-    methods: {
-      agreeApply(e) {
-        let index = e.currentTarget.dataset.index
-        let systemMsg = this.data.systemMsg
-        let section = systemMsg[index]
-        app.post(app.Api.agreeApply, {
-          userId: section.form.userId
-        }).then(() => {
-          section.message.jsonDate.status  = 1
+
+
+  },
+  methods: {
+    agreeApply(e) {
+      let index = e.currentTarget.dataset.index
+      let systemMsg = this.data.systemMsg
+      let section = systemMsg[index]
+      app.post(app.Api.agreeApply, {
+        userId: section.from.userId,
+        groupId: section.message.jsonDate.groupId
+      }).then((res) => {
+        if (res.affectedRows) {
+          section.message.jsonDate.status = 1
           this.setData({
             systemMsg
-          }) 
+          })
           wx.setStorageSync('systemMsg', systemMsg)
-        })
-      },
-      refuseApply(e) {
-        
-      }
+        }
+      })
+    },
+    refuseApply(e) {
+      let index = e.currentTarget.dataset.index
+      let systemMsg = this.data.systemMsg
+      let section = systemMsg[index]
+      app.post(app.Api.refuseApply, {
+        userId: section.from.userId,
+        groupId: section.message.jsonDate.groupId
+      }).then((res) => {
+        console.log(res);
+        if (res.affectedRows) {
+          section.message.jsonDate.status = 2
+          this.setData({
+            systemMsg
+          })
+          wx.setStorageSync('systemMsg', systemMsg)
+        }
+      })
     },
     goPersonal(e) {
       let userId = e.currentTarget.dataset.userid
@@ -54,5 +74,5 @@ Component({
         url: `/pages/my/invitation/invitation?userId=${userId}`,
       })
     },
-  }
+  },
 })

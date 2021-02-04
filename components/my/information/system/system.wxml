@@ -67,12 +67,12 @@
           </block>
           <block wx:else>
             <block wx:if="{{item.message.jsonDate.status == 1}}">
-              <view>拒绝</view>
-              <view>已同意</view>
+              <view class="grey">拒绝</view>
+              <view class="grey">已同意</view>
             </block>
             <block wx:if="{{item.message.jsonDate.status == 2}}">
-              <view>已拒绝</view>
-              <view> 同意</view>
+              <view class="grey">已拒绝</view>
+              <view class="grey"> 同意</view>
             </block>
           </block>
         </view>

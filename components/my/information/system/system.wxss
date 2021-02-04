@@ -150,3 +150,6 @@
   font-size: 32rpx;
   font-weight: bold;
 }
+.grey {
+  background-color: #B4B4B5 !important;
+}

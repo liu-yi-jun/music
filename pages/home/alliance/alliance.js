@@ -184,8 +184,11 @@ Page({
           })
         }
       } else {
-        app.switchData.isSwitchGroup = true
-        this.joinGroup(groupInfo)
+        // app.switchData.isSwitchGroup = true
+        // this.joinGroup(groupInfo)
+        this.setData({
+          joinShow: true
+        })
       }
     } else {
       this.setData({
@@ -195,6 +198,7 @@ Page({
   },
   yesJoin() {
     let groupInfo = this.groupInfo
+
     if (groupInfo.examine) {
       this.setData({
         applyShow: true,
@@ -253,7 +257,6 @@ Page({
         userId: app.userInfo.id,
         examine: groupInfo.examine
       }).then(res => {
-        app.userInfo = res.userInfo
         if (app.groupInfo) {
           app.groupInfo.myGrouList = res.myGrouList
         } else {
