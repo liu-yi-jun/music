@@ -110,4 +110,5 @@ module.exports = {
   pagingGetGroup: "/api/group/pagingGetGroup",
   myGroup: "/api/group/myGroup",
   switchGroup: "/api/group/switchGroup",
+  agreeApply: "/api/group/agreeApply",
 }

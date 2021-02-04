@@ -1,4 +1,5 @@
 // components/my/information/system/system.js
+let app = getApp()
 Component({
   /**
    * 组件的属性列表
@@ -29,7 +30,23 @@ Component({
       })
     },
     methods: {
-
+      agreeApply(e) {
+        let index = e.currentTarget.dataset.index
+        let systemMsg = this.data.systemMsg
+        let section = systemMsg[index]
+        app.post(app.Api.agreeApply, {
+          userId: section.form.userId
+        }).then(() => {
+          section.message.jsonDate.status  = 1
+          this.setData({
+            systemMsg
+          }) 
+          wx.setStorageSync('systemMsg', systemMsg)
+        })
+      },
+      refuseApply(e) {
+        
+      }
     },
     goPersonal(e) {
       let userId = e.currentTarget.dataset.userid

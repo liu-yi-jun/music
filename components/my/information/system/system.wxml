@@ -61,8 +61,20 @@
           <view>{{item.message.jsonDate.applyContent}}</view>
         </view>
         <view class="btnWrap">
-          <view>拒绝</view>
-          <view>同意</view>
+          <block wx:if="{{item.message.jsonDate.status == 0}}">
+            <view catchtap="refuseApply" data-index="{{index}}">拒绝</view>
+            <view catchtap="agreeApply" data-index="{{index}}">同意</view>
+          </block>
+          <block wx:else>
+            <block wx:if="{{item.message.jsonDate.status == 1}}">
+              <view>拒绝</view>
+              <view>已同意</view>
+            </block>
+            <block wx:if="{{item.message.jsonDate.status == 2}}">
+              <view>已拒绝</view>
+              <view> 同意</view>
+            </block>
+          </block>
         </view>
       </view>
       <view class="number">1</view>

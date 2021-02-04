@@ -80,7 +80,7 @@ Component({
         //     status: 0,//1同意，2拒绝
         //   }
         // }
-        console.log('systemMsg','1111111111')
+        console.log('systemMsg', '1111111111')
         let systemMsg = wx.getStorageSync('systemMsg')
         if (!systemMsg) {
           systemMsg = []
@@ -124,7 +124,23 @@ Component({
           key: 'threas',
         })
       })
-
+      router.get('/agreeApply', async (req, res, next) => {
+        let {
+          userId
+        } = req.body
+        try {
+          let modifys = {
+              groupDuty: 2,
+            },
+            conditions = {
+              id: userId
+            }
+          let updateResult = await db.update('users', modifys, conditions)
+          res.json(util.success(updateResult))
+        } catch (err) {
+          next(err)
+        }
+      })
 
     },
   }
