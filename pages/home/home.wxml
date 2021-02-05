@@ -67,8 +67,9 @@
     <view hidden="{{showContent.mold !== 2}}" mark:operation="No" class="soundWrap">
       <playRecord id="playRecord" voiceUrl="{{showContent.voiceUrl}}"></playRecord>
     </view>
-    <image wx:if="{{showContent.userId === myId}}" mark:operation="No" class="delete" catchtap="delete"
-      data-index="{{index}}" src="http://cdn.eigene.cn/delete.png"></image>
+    <view  mark:operation="No" class="delete" catchtap="showMenu"  data-index="{{index}}" >点击点击点击点击点击</view>
+    <!-- <image wx:if="delete{{showContent.userId === myId}}" mark:operation="No" class="delete" catchtap="delete"
+      data-index="{{index}}" src="http://cdn.eigene.cn/delete.png"></image> -->
     <view class="like-comment" mark:operation="No">
       <view class="like" catchtap="toLike">
         <image src="http://cdn.eigene.cn/dynamicLike{{showContent.isLike?'d':''}}.png"></image>
@@ -195,3 +196,5 @@
     <image class="my" src="http://cdn.eigene.cn/home/my.png" catchtap="toMyGroup"></image>
   </view>
 </view>
+
+<menu id="menu" list="{{list}}" bind:handleStore="handleStore" bind:handleReport="handleReport" bind:hadleDelete="hadleDelete" bind:cancelMenu="cancelMenu"></menu>

@@ -1,6 +1,7 @@
 // pages/home/dynamicDetail/dynamicDetail.js
 const app = getApp()
 const tool = require('../../../assets/tool/tool.js')
+const core = require('../../../assets/tool/core')
 Page({
 
   /**
@@ -21,6 +22,19 @@ Page({
     IsNoData: false,
     commentSum: 0,
     commenetBarData: {},
+    list: [{
+      name: '分享',
+      open_type: 'share',
+      functionName: ''
+    }, {
+      name: '收藏',
+      open_type: '',
+      functionName: 'handleStore'
+    }, {
+      name: '投诉',
+      open_type: '',
+      functionName: 'handleReport'
+    }]
   },
 
   /**
@@ -38,7 +52,7 @@ Page({
     this.table = param.table
     this.dynamicDetailAndCommont(param.id, this.table, 'detail', )
   },
-  dynamicDetailAndCommont(id,table,type) {
+  dynamicDetailAndCommont(id, table, type) {
     let commentPaging = this.data.commentPaging
     app.get(app.Api.dynamicDetailAndCommont, {
       id,
@@ -233,6 +247,57 @@ Page({
     })
   },
   scrolltolower() {
-    if (!this.data.IsNoData) this.dynamicDetailAndCommont(this.data.detail.id,this.table)
+    if (!this.data.IsNoData) this.dynamicDetailAndCommont(this.data.detail.id, this.table)
   },
+  showMenu(e) {
+    if (app.userInfo.id === this.data.detail.userId) {
+      let list = this.data.list
+      list[2] = {
+        name: '删除',
+        open_type: '',
+        functionName: 'hadleDelete'
+      }
+      this.setData({
+        list
+      }, () => {
+        this.selectComponent('#menu').show();
+      })
+    } else {
+      this.selectComponent('#menu').show();
+    }
+  },
+  handleStore() {
+    let detail = this.data.detail
+    core.operateStore(app.Api[this.table + 'Store'], {
+      operate: true,
+      relation: {
+        userId: app.userInfo.id,
+        themeId: detail.id
+      },
+    }).then(res => {
+      if (res.modify) {
+        common.Toast('收藏成功')
+      } else {
+        common.Toast('动态已存在')
+      }
+    })
+  },
+  handleReport() {
+    console.log('投诉');
+    common.showLoading('投诉中...')
+    setTimeout(() => {
+      wx.hideLoading()
+      common.Tip('投诉消息已发送至本平台，工作人员将进行审核')
+    }, 1200)
+  },
+  hadleDelete(e) {
+    common.Tip('是否删除该动态', '提示', '确认', true).then(res => {
+      if (res.confirm) {
+        console.log('用户点击确定')
+        this.deleteDynamic(e)
+      } else if (res.cancel) {
+        console.log('用户点击取消')
+      }
+    })
+  }
 })

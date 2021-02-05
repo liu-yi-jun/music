@@ -1,7 +1,8 @@
 {
   "usingComponents": {
     "showTabBar":"/components/common/showTabBar/showTabBar",
-    "playRecord":"/components/common/playRecord/playRecord"
+    "playRecord":"/components/common/playRecord/playRecord",
+    "menu": "/components/common/menu/menu"
   },
   "disableScroll": true,
   "navigationStyle": "custom"

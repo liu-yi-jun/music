@@ -5,6 +5,7 @@
   <view class="head">
     <image catchtap="goPersonal" class="avatar" src="{{detail.avatarUrl}}"></image>
     <text class="userName">{{detail.nickName}}</text>
+    <view catchtap="showMenu">。。。。。。。。。</view>
   </view>
   <scroll-view  style="height: calc({{excludeHeight}}px - 130rpx);" scroll-y bindscrolltolower="scrolltolower">
     <swiper wx:if="{{detail.mold === 0}}" class="swiper" indicator-dots duration="400">
@@ -49,3 +50,5 @@
     </commentBar>
   </scroll-view>
 </view>
+
+<menu id="menu" list="{{list}}" bind:handleStore="handleStore" bind:handleReport="handleReport" bind:hadleDelete="hadleDelete" bind:cancelMenu="cancelMenu"></menu>

@@ -103,7 +103,20 @@ Page({
     isLoop: false,
     lessMember: false,
     isShowGroup: false,
-    isShowPull: false
+    isShowPull: false,
+    list: [{
+      name: '分享',
+      open_type: 'share',
+      functionName: ''
+    }, {
+      name: '收藏',
+      open_type: '',
+      functionName: 'handleStore'
+    }, {
+      name: '投诉',
+      open_type: '',
+      functionName: 'handleReport'
+    }]
   },
 
 
@@ -118,7 +131,7 @@ Page({
     // this.setData({
     //   myId: app.userInfo.id
     // })
- 
+
     // this.getGroupInfo(myGroupId)
     // this.groupPagingGetGroupdynamics(myGroupId).then(() => {
     //   this.urlPush()
@@ -131,84 +144,84 @@ Page({
 
     this.initLogin()
   },
-      initSocketEvent() {
-      const socket = (app.socket = io(app.socketUrls.baseUrl))
-      this.socket = socket
-      socket.on('connect', () => {
-        console.log('连接成功')
-        let user = {
-          userId: app.userInfo.id,
-        }
-        socket.emit("login", user);
-        socket.emit("getmessage");
-        socket.emit("getLeaveDate");
-      })
-      socket.on("message", (from, to, message) => {
-        console.log('okok')
-        for (let key in app.cbObj) {
-          app.cbObj[key] && app.cbObj[key](from, to, message)
-        }
-      })
+  initSocketEvent() {
+    const socket = (app.socket = io(app.socketUrls.baseUrl))
+    this.socket = socket
+    socket.on('connect', () => {
+      console.log('连接成功')
+      let user = {
+        userId: app.userInfo.id,
+      }
+      socket.emit("login", user);
+      socket.emit("getmessage");
+      socket.emit("getLeaveDate");
+    })
+    socket.on("message", (from, to, message) => {
+      console.log('okok')
+      for (let key in app.cbObj) {
+        app.cbObj[key] && app.cbObj[key](from, to, message)
+      }
+    })
 
-      socket.on("systemMsg", (from, to, message) => {
-        // 数据假设
-        // let message = {
-        //   申请
-        //   type: 1,
-        //   jsonDate: {
-        //     groupId: 0
-        //     groupName: 'sad',
-        //     applyContent: '',
-        //     status: 0,//1同意，2拒绝
-        //   }
-        // }
-        console.log('systemMsg','1111111111')
-        let systemMsg = wx.getStorageSync('systemMsg')
-        if (!systemMsg) {
-          systemMsg = []
-        }
-        systemMsg.push({
-          from,
-          to,
-          message
-        })
-        wx.setStorage({
-          data: systemMsg,
-          key: 'systemMsg',
-        })
+    socket.on("systemMsg", (from, to, message) => {
+      // 数据假设
+      // let message = {
+      //   申请
+      //   type: 1,
+      //   jsonDate: {
+      //     groupId: 0
+      //     groupName: 'sad',
+      //     applyContent: '',
+      //     status: 0,//1同意，2拒绝
+      //   }
+      // }
+      console.log('systemMsg', '1111111111')
+      let systemMsg = wx.getStorageSync('systemMsg')
+      if (!systemMsg) {
+        systemMsg = []
+      }
+      systemMsg.push({
+        from,
+        to,
+        message
       })
-
-      app.onMessage('messageMain', (from, to, message) => {
-        let threas = wx.getStorageSync('threas')
-        console.log('收到', threas)
-        if (!threas) {
-          threas = {}
-        }
-        if (!threas[from.userId]) {
-          threas[from.userId] = {
-            userId: from.userId,
-            avatarUrl: from.avatarUrl,
-            nickName: from.nickName,
-            newNum: 0,
-            lastMessage: '',
-            messages: []
-          }
-        }
-        threas[from.userId].newNum++
-        threas[from.userId].lastMessage = message
-        threas[from.userId].messages.push({
-          fromId: from.userId,
-          toId: to.userId,
-          message
-        })
-        wx.setStorage({
-          data: threas,
-          key: 'threas',
-        })
+      wx.setStorage({
+        data: systemMsg,
+        key: 'systemMsg',
       })
+    })
+
+    app.onMessage('messageMain', (from, to, message) => {
+      let threas = wx.getStorageSync('threas')
+      console.log('收到', threas)
+      if (!threas) {
+        threas = {}
+      }
+      if (!threas[from.userId]) {
+        threas[from.userId] = {
+          userId: from.userId,
+          avatarUrl: from.avatarUrl,
+          nickName: from.nickName,
+          newNum: 0,
+          lastMessage: '',
+          messages: []
+        }
+      }
+      threas[from.userId].newNum++
+      threas[from.userId].lastMessage = message
+      threas[from.userId].messages.push({
+        fromId: from.userId,
+        toId: to.userId,
+        message
+      })
+      wx.setStorage({
+        data: threas,
+        key: 'threas',
+      })
+    })
 
 
-    },
+  },
   // 
   initLogin() {
     let token = wx.getStorageSync('wx-token')
@@ -491,7 +504,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    if(!this.data.isShowGroup) {
+    if (!this.data.isShowGroup) {
       this.getTabBar().setData({
         show: false
       })
@@ -1025,17 +1038,6 @@ Page({
       showContent
     })
   },
-  // 删除自己动态
-  delete(e) {
-    common.Tip('是否删除该动态', '提示', '确认', true).then(res => {
-      if (res.confirm) {
-        console.log('用户点击确定')
-        this.deleteDynamic(e)
-      } else if (res.cancel) {
-        console.log('用户点击取消')
-      }
-    })
-  },
   deleteDynamic(e) {
     console.log(Style, '1111111111111')
     common.showLoading('删除中')
@@ -1218,6 +1220,72 @@ Page({
   pullPage() {
     this.setData({
       isShowGroup: !this.data.isShowGroup
+    })
+  },
+  showMenu(e) {
+    this.getTabBarShow = this.getTabBar().data.show
+    if (app.userInfo.id === this.data.showContent.userId) {
+      let list = this.data.list
+      list[2] = {
+        name: '删除',
+        open_type: '',
+        functionName: 'hadleDelete'
+      }
+      this.getTabBar().setData({
+        show: false
+      }, () => this.setData({
+        list
+      }, () => {
+        this.selectComponent('#menu').show();
+      }))
+
+    } else {
+      this.getTabBar().setData({
+        show: false
+      }, () => {
+        this.selectComponent('#menu').show();
+      })
+    }
+  },
+  cancelMenu() {
+    if (this.getTabBarShow) {
+      this.getTabBar().setData({
+        show: true
+      })
+    }
+  },
+  handleStore() {
+    let showContent = this.data.showContent
+    core.operateStore(app.Api['groupdynamicsStore'], {
+      operate: true,
+      relation: {
+        userId: app.userInfo.id,
+        themeId: showContent.id
+      },
+    }).then(res => {
+      if(res.modify) {
+        common.Toast('收藏成功')
+      }else {
+        common.Toast('动态已存在')
+      }
+    })
+  },
+  handleReport() {
+    console.log('投诉');
+    common.showLoading('投诉中...')
+    setTimeout(() => {
+      wx.hideLoading()
+      common.Tip('投诉消息已发送至本平台，工作人员将进行审核')
+    }, 1200)
+  },
+  hadleDelete(e) {
+    common.Tip('是否删除该动态', '提示', '确认', true).then(res => {
+      if (res.confirm) {
+        console.log('用户点击确定')
+        this.deleteDynamic(e)
+      } else if (res.cancel) {
+        console.log('用户点击取消')
+      }
     })
   }
 })

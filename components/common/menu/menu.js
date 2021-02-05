@@ -7,13 +7,17 @@ Component({
     list: {
       type: Array,
       value: [{
-        name: '生成二维码',
-        open_type: '',
-        functionName: 'test'
-      }, {
         name: '分享',
         open_type: 'share',
         functionName: ''
+      }, {
+        name: '收藏',
+        open_type: '',
+        functionName: 'handleStore'
+      }, {
+        name: '投诉',
+        open_type: '',
+        functionName: 'handleReport'
       }]
     }
   },
@@ -38,10 +42,10 @@ Component({
       this.setData({
         showMenu: false
       })
+      this.triggerEvent('cancelMenu')
     },
     handle(e) {
       let functionName = e.currentTarget.dataset.functionname
-      console.log('1111111',functionName)
       this.triggerEvent(functionName)
     }
   }
