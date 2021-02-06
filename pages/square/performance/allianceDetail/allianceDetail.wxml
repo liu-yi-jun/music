@@ -5,6 +5,7 @@
   <view class="head">
     <view class="title">{{detail.title}}</view>
     <view class="time">{{detail.releaseTime}}</view>
+    <view catchtap="showMenu">...........</view>
   </view>
   <scroll-view  style="height: calc({{excludeHeight}}px - 140rpx);" scroll-y>
     <view class="Wrap">
@@ -60,3 +61,6 @@
     </commentBar>
   </scroll-view>
 </view>
+
+
+<menu id="menu" list="{{list}}" bind:handleStore="handleStore" bind:handleReport="handleReport" bind:hadleDelete="hadleDelete" bind:cancelMenu="cancelMenu"></menu>

@@ -4,7 +4,8 @@
     "commentBar": "/components/common/comment/commentBar/commentBar",
     "inputBox": "/components/common/comment/inputBox/inputBox",
     "commentList": "/components/common/commentList/commentList",
-    "courseDatum": "/components/home/course/courseDatum/courseDatum"
+    "courseDatum": "/components/home/course/courseDatum/courseDatum",
+    "menu": "/components/common/menu/menu"
   },
     "disableScroll": true
 }
