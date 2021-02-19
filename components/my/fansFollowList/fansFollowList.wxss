@@ -68,5 +68,19 @@
   width: 100%;
   box-sizing: border-box;
   padding: 0 10rpx 0 30rpx;
-  border-bottom: 1rpx #cacbcb solid;
+  /* border-bottom: 1rpx #cacbcb solid; */
+}
+
+.name {
+  font-size: 32rpx;
+  color: white;
+}
+
+.nameBotoom {
+  color: #b7b8b8;
+  font-size: 22rpx;
+}
+
+.nameBotoom > text {
+  margin-right: 10rpx;
 }

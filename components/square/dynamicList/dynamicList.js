@@ -22,7 +22,20 @@ Component({
    * 组件的初始数据
    */
   data: {
-    myId: 0
+    myId: 0,
+    list: [{
+      name: '分享',
+      open_type: 'share',
+      functionName: ''
+    }, {
+      name: '收藏',
+      open_type: '',
+      functionName: 'handleStore'
+    }, {
+      name: '投诉',
+      open_type: '',
+      functionName: 'handleReport'
+    }]
   },
   /**
    * 组件的方法列表
@@ -47,19 +60,84 @@ Component({
     },
   },
   methods: {
-    extend() {
-      wx.showActionSheet({
-        itemList: ['举报'],
-        success: res => {
-          console.log(res)
-          if (res.tapIndex === 1) {
-            // 分享
-          } // 举报
+    showMenu(e) {
+      let index = e.currentTarget.dataset.index
+      this.index = index
+      let detail = this.data.dynamics[index]
+      if (this.getTabBar()) {
+        this.tabBarShow = this.getTabBar().data.show
+        if (app.userInfo.id === detail.userId) {
+          let list = this.data.list
+          list[2] = {
+            name: '删除',
+            open_type: '',
+            functionName: 'hadleDelete'
+          }
+          this.getTabBar().setData({
+            show: false
+          }, () => this.setData({
+            list
+          }, () => {
+            this.selectComponent('#menu').show();
+          }))
 
+        } else {
+          this.getTabBar().setData({
+            show: false
+          }, () => {
+            this.selectComponent('#menu').show();
+          })
+        }
+      } else {
+        if (app.userInfo.id === detail.userId) {
+          list[2] = {
+            name: '删除',
+            open_type: '',
+            functionName: 'hadleDelete'
+          }
+          this.setData({
+            list
+          }, () => {
+            this.selectComponent('#menu').show();
+          })
+        } else {
+          this.selectComponent('#menu').show();
+        }
+      }
+
+    },
+    cancelMenu() {
+      if (this.tabBarShow) {
+        this.getTabBar().setData({
+          show: true
+        })
+      }
+    },
+    handleStore() {
+      let detail = this.data.dynamics[this.index]
+      core.operateStore(app.Api[detail.tableName + 'Store'], {
+        operate: true,
+        relation: {
+          userId: app.userInfo.id,
+          themeId: detail.id
+        },
+      }).then(res => {
+        if (res.modify) {
+          common.Toast('收藏成功')
+        } else {
+          common.Toast('动态已存在')
         }
       })
     },
-    delete(e) {
+    handleReport() {
+      console.log('投诉');
+      common.showLoading('投诉中...')
+      setTimeout(() => {
+        wx.hideLoading()
+        common.Tip('投诉消息已发送至本平台，工作人员将进行审核')
+      }, 1200)
+    },
+    hadleDelete(e) {
       common.Tip('是否删除该动态', '提示', '确认', true).then(res => {
         if (res.confirm) {
           console.log('用户点击确定')
@@ -71,13 +149,11 @@ Component({
     },
     deleteDynamic(e) {
       common.showLoading('删除中')
-      let index = e.currentTarget.dataset.index
       let dynamics = this.data.dynamics
       let {
         tableName,
         id
-      } = dynamics[index]
-      console.log(tableName, id)
+      } = dynamics[this.index]
       app.post(app.Api[tableName + 'Delete'], {
         tableName,
         id
@@ -86,11 +162,17 @@ Component({
       }).then(res => {
         console.log(res)
         if (res.affectedRows) {
-          dynamics.splice(index, 1)
+          dynamics.splice(this.index, 1)
           this.setData({
             dynamics
           })
           common.Toast('已删除')
+        } else {
+          dynamics.splice(this.index, 1)
+          this.setData({
+            dynamics
+          })
+          common.Toast('该动态已不存在')
         }
       })
     },

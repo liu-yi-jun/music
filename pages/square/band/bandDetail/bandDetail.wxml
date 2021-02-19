@@ -1,0 +1,80 @@
+<!--pages/square/band/detail/detail.wxml-->
+<view class="detail">
+  <navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' back="{{true}}" iconTheme='white'
+    bindback="handlerGobackClick"></navBar>
+  <view class="head">
+    <view>
+      <view class="titleName">{{detail.title}}</view>
+      <view class="iconWrap">
+        <view class="iconPart">
+          <image class="iconImg1" src="http://cdn.eigene.cn/dynamicDetail/comment.png"></image>
+          <view class="iconNumber">{{detail.comment}}</view>
+        </view>
+        <view class="iconPart">
+          <image class="iconImg2" src="http://use.eigene.cn/views.png"></image>
+          <view class="iconNumber">{{detail.views}}</view>
+        </view>
+      </view>
+    </view>
+    <view class="avatarWrap">
+      <image mode="aspectFill" class="avatar" src="{{detail.avatarUrl}}"></image>
+      <view class="left">
+        <text class="name">{{detail.nickName}}</text>
+        <view class="nameBotoom">
+          <text wx:if="{{detail.user.gender=== 1}}">♂</text>
+          <text wx:if="{{detail.user.gender=== 2}}">♀</text>
+          <text class="constellation" wx:if="{{detail.user.constellation}}">{{detail.user.constellation}}</text>
+          <text wx:if="{{detail.user.age}}">{{detail.user.age}}岁</text>
+          <!-- <text class="icon">♂</text>
+          <text>处女座</text>
+          <text>24岁</text> -->
+        </view>
+      </view>
+    </view>
+  </view>
+  <scroll-view style="height: calc({{excludeHeight}}px - 150rpx);" scroll-y bindscrolltolower="scrolltolower">
+    <view class="bandPart">
+      <view class="exist-recruit">
+        <view class="existWrap">
+          <view class="exist">现有</view>
+          <swiper class="recruitLogo">
+            <swiper-item wx:for="{{detail.existArr}}" wx:key="index" wx:for-item="exist">
+              <view wx:for="{{exist}}" wx:key="index">
+                <image src="{{item.instrumentsUrl}}"></image>
+                <text>{{item.instrumentsName}}</text>
+              </view>
+            </swiper-item>
+          </swiper>
+        </view>
+        <view class="recruitWrap">
+          <view class="recruit">招募</view>
+          <swiper class="recruitLogo">
+            <swiper-item wx:for="{{detail.recruitArr}}" wx:key="index" wx:for-item="recruit">
+              <view wx:for="{{recruit}}" wx:key="index">
+                <image src="{{item.instrumentsUrl}}"></image>
+                <text>{{item.instrumentsName}}</text>
+              </view>
+            </swiper-item>
+          </swiper>
+        </view>
+      </view>
+      <image class="join" src="http://cdn.eigene.cn/bandDetail/join.png">
+        <view class="joinInner" catchtap="toApplication"></view>
+      </image>
+    </view>
+    <view class="contentPart">
+      <text>{{detail.introduce}}</text>
+    </view>
+    <view class="commentWrap">
+      <image src="http://cdn.eigene.cn/dynamicDetail/comment.png"></image>
+      <text>评论</text>
+    </view>
+    <commentList bind:toReply="toReply" commentArr="{{commentArr}}">
+    </commentList>
+    <inputBox showTextara="{{showTextara}}" param="{{param}}" bind:completeCommentOrReply="completeCommentOrReply">
+    </inputBox>
+    <commentBar class="footerComment" bind:toComment="toComment" commenetBarData="{{commenetBarData}}"
+      bind:completeLike="completeLike" bind:completeStore="completeStore">
+    </commentBar>
+  </scroll-view>
+</view>

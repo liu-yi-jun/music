@@ -281,18 +281,23 @@ Page({
     }, 1000)
   },
   confirm() {
-    let {
-      tempFilePath,
-      duration
-    } = this.data
-    var pages = getCurrentPages();
-    var lastpage = pages[pages.length - 2]
-    lastpage.recordResult({
-      tempFilePath,
-      duration
-    })
-    wx.navigateBack({ 
-      delta: 1,
-    })
+    this.recorderManager.stop()
+    clearInterval(this.loop)
+    setTimeout(() => {
+      let {
+        tempFilePath,
+        duration
+      } = this.data
+      var pages = getCurrentPages();
+      var lastpage = pages[pages.length - 2]
+      lastpage.recordResult({
+        tempFilePath,
+        duration
+      })
+      wx.navigateBack({
+        delta: 1,
+      })
+    }, 1500)
+
   }
 })

@@ -10,21 +10,19 @@
   <view class="head">
     <image class="logo" src="http://cdn.eigene.cn/deal/logo.png"></image>
     <view class="searchWrap">
-      <input class="search" value="{{groupName}}"  bindconfirm="confirm">
+      <input class="search" value="{{groupName}}" bindconfirm="confirm">
       </input>
       <image class="searchLog" src="http://cdn.eigene.cn/search.png"></image>
     </view>
-    <view class="bar">
-      <text class="{{switchBtn === 'second' ? 'active' : ''}}" catchtap="switchBtn" data-switchBtn="second">二手器乐</text>
-      <view class="line"></view>
-      <text class="{{switchBtn === 'ticket' ? 'active' : ''}}" catchtap="switchBtn" data-switchBtn="ticket">票务转让</text>
+    <view class="barWrap">
+      <bar barList="{{barList}}" actIndex="{{actIndex}}" bind:switchBtn="switchBtn" gap="{{10}}" size="{{30}}" ></bar>
     </view>
   </view>
-  <scroll-view scroll-y  style="height: calc({{excludeHeight}}px - 166rpx);" bindscrolltolower="scrolltolower">
-    <view hidden="{{switchBtn !== 'second'}}">
+  <scroll-view scroll-y style="height: calc({{excludeHeight}}px - 162rpx);" bindscrolltolower="scrolltolower">
+    <view hidden="{{actIndex !== 0}}">
       <second id="second" seconds="{{doubleSeconds}}"></second>
     </view>
-    <view hidden="{{switchBtn !== 'ticket'}}">
+    <view hidden="{{actIndex !== 1}}">
       <ticket id="ticket" tickets="{{tickets}}"></ticket>
     </view>
   </scroll-view>

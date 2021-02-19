@@ -7,10 +7,12 @@
       <text class="title-bottom">Course</text>
     </view>
   </view>
-  <scroll-view bindscrolltolower="scrolltolower"   style="height: calc({{excludeHeight}}px - 134rpx);" scroll-y>
+  <scroll-view bindscrolltolower="scrolltolower"   style="height: calc({{excludeHeight}}px - 85rpx);" scroll-y>
   <courseList courses="{{courses}}">
   </courseList>
   </scroll-view>
- 
-  <image wx:if="{{isMyGroup && groupDuty!=-1}}" class="issueDynamic" src="http://cdn.eigene.cn/course/issueDynamic.png" catchtap="goAddCourse"></image>
+  <image  wx:if="{{isMyGroup && groupDuty!=-1}}" class="issueDynamic" src="http://cdn.eigene.cn/square/issueDynamic2.png">
+    <view class="issueDynamicInner" catchtap="goAddCourse"></view>
+  </image>
+
 </view>

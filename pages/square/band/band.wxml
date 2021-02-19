@@ -2,11 +2,8 @@
 <view>
   <navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' back="{{true}}" iconTheme='white'
     bindback="handlerGobackClick"></navBar>
-  <view class="bar">
-    <view class="barItem {{swithchtab=='myTab'?'active': ''}}" catchtap="swithchTab" data-swithchtab="myTab">一起组乐队</view>
-    <view class="barItem margin-left {{swithchtab=='followTab'?'active': ''}}" catchtap="swithchTab"
-      data-swithchtab="followTab">
-      乐队瞬间</view>
+  <view class="barWrap">
+    <bar barList="{{barList}}" actIndex="{{actIndex}}" bind:switchBtn="switchBtn"></bar>
   </view>
-  <composeBand></composeBand>
+  <composeBand bands="{{bands}}"></composeBand>
 </view>

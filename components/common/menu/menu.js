@@ -46,6 +46,9 @@ Component({
     },
     handle(e) {
       let functionName = e.currentTarget.dataset.functionname
+      this.setData({
+        showMenu: false
+      })
       this.triggerEvent(functionName)
     }
   }

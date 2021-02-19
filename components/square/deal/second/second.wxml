@@ -40,6 +40,7 @@
       </view>
     </view>
   </view>
-  <image wx:if="{{isShowAdd}}" class="issueDynamic" src="http://cdn.eigene.cn/deal/issueDynamic.png"
-    catchtap="goSecondIssue"></image>
+  <image wx:if="{{isShowAdd}}" class="issueDynamic" src="http://cdn.eigene.cn/square/issueDynamic2.png">
+    <view class="issueDynamicInner" catchtap="goSecondIssue"></view>
+  </image>
 </view>

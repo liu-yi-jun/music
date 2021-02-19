@@ -1,27 +1,9 @@
 /* pages/my/information/information.wxss */
 
-.bar {
-  display: flex;
-  width: 98%;
-  margin: auto;
-  align-items: center;
-  /* margin-top: 50rpx;
-  margin-bottom: 40rpx; */
+.barWrap {
+  padding-left: 40rpx;
+  padding-bottom: 30rpx;
   box-sizing: border-box;
-  padding: 50rpx 20rpx 40rpx;
+  width: 100%;
   border-bottom: 1rpx solid #C9CACA;
 }
-
-.bar text {
-  padding: 0 18rpx;
-  text-align: center;
-  box-sizing: border-box;
-  color: #b6b7b7;
-  font-size: 33rpx;
-}
-
-.active {
-  color: white !important;
-  transform: scale(1.1);
-}
-

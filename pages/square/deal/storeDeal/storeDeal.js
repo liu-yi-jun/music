@@ -26,6 +26,14 @@ Page({
     ],
     tickets: [],
     // 品牌，型号
+    barList: [{
+      name: '二手器乐',
+    },
+    {
+      name: '票务转让'
+    },
+  ],
+  actIndex: 0
   },
 
   /**
@@ -113,11 +121,11 @@ Page({
     let {
       secondPaging,
       ticketPaging,
-      switchBtn
+      actIndex
     } = this.data
-    if (switchBtn === 'second' && !secondPaging.isNotData) {
+    if (actIndex === 0 && !secondPaging.isNotData) {
       this.getMySeconds()
-    } else if (switchBtn === 'ticket' && !ticketPaging.isNotData) {
+    } else if (actIndex === 1 && !ticketPaging.isNotData) {
       this.getMyTickets()
     }
   },
@@ -158,10 +166,10 @@ Page({
   handlerGobackClick: app.handlerGobackClick,
   //切换btn 
   switchBtn(e) {
-    const switchBtn = e.currentTarget.dataset.switchbtn
-    if (switchBtn === this.switchBtn) return
+    let actIndex = e.detail.actIndex
+    if (actIndex === this.data.actIndex) return
     this.setData({
-      switchBtn
+      actIndex
     })
   }
 })

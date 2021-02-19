@@ -1,30 +1,8 @@
 /* pages/home/myGroup/myGroup.wxss */
 
 
-.bar {
-  width: 100%;
+.barWrap {
+  padding: 10rpx 0rpx 20rpx 40rpx;
   box-sizing: border-box;
-  padding: 20rpx 14rpx 30rpx 40rpx;
-  display: flex;
-  /* justify-content: space-between; */
-  align-items: flex-start;
+  width: 100%;
 }
-.barItem {
-  color: #FFFFFF;
-  padding: 6rpx 4rpx;
-}
-.margin-left {
-  margin-left: 60rpx
-}
-/* .myTab {
-  color: #FFFFFF;
-}
-.followTab {
-  color: #FFFFFF;
-  margin-left: 40rpx;
-} */
-.active {
-  font-weight: bold;
-  border-bottom: 6rpx solid #C46CEE;
-}
-

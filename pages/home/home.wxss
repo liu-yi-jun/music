@@ -614,11 +614,15 @@
 }
 
 .delete {
-  width: 30rpx;
-  height: 34rpx;
+  width: 70rpx;
+  height: 70rpx;
   position: absolute;
-  right: 140rpx;
-  bottom: 300rpx;
+  right: 130rpx;
+  bottom: 327rpx;
+  font-size: 36rpx;
+  color: white;
+  text-align: center;
+  line-height: 70rpx;
 }
 
 page {}
@@ -662,7 +666,7 @@ page {}
 .leftGuide {
   position: absolute;
   left: 48%;
-  top: 26%;
+  top: 346.84rpx;
   width: 175rpx;
   height: 135rpx;
 }
@@ -677,7 +681,7 @@ page {}
 .issueGuide {
   position: absolute;
   left: 14%;
-  top: 62%;
+  bottom: 25%;
   width: 134rpx;
   height: 175rpx;
 }
@@ -692,7 +696,7 @@ page {}
 .bottomGuide {
   position: absolute;
   right: 7%;
-  bottom: 5%;
+  bottom: calc(66rpx + env(safe-area-inset-bottom)) ;
   height: 175rpx;
   width: 135rpx;
 }

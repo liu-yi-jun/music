@@ -1,7 +1,9 @@
 {
   "usingComponents": {
     "navBar": "/components/navBar/navBar",
-    "groupList": "/components/my/groupList/groupList"
+    "groupList": "/components/my/groupList/groupList",
+    "mygroupList":"/components/home/group/groupList/groupList",
+    "bar":"/components/common/bar/bar"
   },
   "disableScroll": true
 }

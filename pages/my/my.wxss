@@ -160,64 +160,13 @@
   font-size: 30rpx;
 }
 
-.bar {
-  position: relative;
-  /* height: 85rpx; */
-  display: flex;
-  box-sizing: border-box;
-  /* align-items: center; */
-  width: 100%;
-  padding: 0 30rpx;
-  margin-top: 36rpx;
-}
-
-.active {
-  border-bottom: 6rpx solid #aa7edf;
-  font-weight: bold;
-}
-
-.issue {
-  margin-left: 40rpx;
-}
-
-.letter {
-  position: absolute;
-  right: 28rpx;
-  color: white;
-  top: -25rpx;
-  font-size: 26rpx;
-  border-radius: 15rpx;
-  height: 50rpx;
-  line-height: 50rpx;
-  box-shadow: 0rpx 0rpx 6rpx 6rpx rgba(0, 0, 0, 0.1);
-  background-color: #aa7edf;
-  width: 120rpx;
-  text-align: center;
-}
-
-.portion {
-  padding: 0px 6rpx 4rpx;
-  color: white;
-}
-
-.square {
-  width: 15rpx;
-  height: 15rpx;
-  margin-left: 40rpx;
-  background-color: #aa7edf;
-}
-
-.btn {
-  /* transition: all 0.3s; */
-  margin-left: 17rpx;
-  box-sizing: border-box;
-  color: white;
-  font-size: 28rpx;
-  height: 50rpx;
-  line-height: 50rpx;
-}
-
 .list {
   box-sizing: border-box;
   /* padding-top: 60rpx; */
+}
+
+.barWrap {
+  padding: 40rpx 0rpx 0rpx 40rpx;
+  box-sizing: border-box;
+  width: 100%;
 }

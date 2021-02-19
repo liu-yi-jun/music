@@ -9,7 +9,6 @@ Page({
   data: {
     // 去除上面导航栏，剩余的高度
     excludeHeight: 0,
-    switchBtn: 'system',
     informPaging: {
       pageSize: 20,
       pageIndex: 1,
@@ -22,7 +21,18 @@ Page({
     },
     informs: [],
     systems: [],
-    userMessage: {}
+    userMessage: {},
+    intoView: '',
+    triggered: false,
+    barList: [
+      {
+        name: '通知'
+      },
+      {
+        name: '系统'
+      }
+    ],
+    actIndex: 0
   },
 
   /**
@@ -31,7 +41,7 @@ Page({
   onLoad: function (options) {
     // 获取去除上面导航栏，剩余的高度
     tool.navExcludeHeight(this)
-    // this.getInform()
+    this.getInform()
     // this.getSystem()
     // // 获取消息数据
     // this.getThreas()
@@ -110,16 +120,37 @@ Page({
       console.log(res)
     })
   },
+  onRefresh() {
+    let actIndex = this.data.actIndex
+    if (this._freshing) return
+    this._freshing = true
+    setTimeout(() => {
+      if (actIndex === 1) {
+        let system = this.selectComponent('#system')
+        system.loadData().then(()=> {
+          this.setData({
+            triggered: false,
+          })
+          this._freshing = false
+        })
+      } else {
+        this.setData({
+          triggered: false,
+        })
+        this._freshing = false
+      }
+    }, 1000)
+  },
   scrolltolower() {
     let {
       informPaging,
       systemPaging,
-      switchBtn
+      actIndex
     } = this.data
-    if (switchBtn === 'inform' && !informPaging.isNotData) {
+    if (actIndex === 0 && !informPaging.isNotData) {
       this.getInform()
-    } else if (switchBtn === 'system' && !systemPaging.isNotData) {
-      this.getSystem()
+    } else if (actIndex === 1) {
+
     }
   },
   /**
@@ -173,12 +204,17 @@ Page({
   handlerGobackClick: app.handlerGobackClick,
   //切换btn 
   switchBtn(e) {
-    const switchBtn = e.currentTarget.dataset.switchbtn
-    if (switchBtn === this.switchBtn) return
+    let actIndex = e.detail.actIndex
+    if (actIndex === this.data.actIndex) return
     this.setData({
-      switchBtn
+      actIndex
+    }, () => {
+      if (actIndex === 1 && !this.noSystemIntoView) {
+        this.setData({
+          intoView: 'last'
+        })
+        this.noSystemIntoView = true
+      }
     })
   },
-  completeLike(commenetBarData) {},
-  completeStore(commenetBarData) {}
 })

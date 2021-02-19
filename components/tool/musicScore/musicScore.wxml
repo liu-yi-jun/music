@@ -10,7 +10,7 @@
       </view>
     </view>
   </view>
-  <scroll-view enable-back-to-top="{{true}}" bindscrolltolower="scrolltolower" scroll-with-animation   scroll-y style="height: calc({{excludeHeight}}px - 192rpx);"   class="scroll">
+  <scroll-view enable-back-to-top="{{true}}" bindscrolltolower="scrolltolower" scroll-with-animation   scroll-y style="height: calc({{excludeHeight}}px - 142rpx);"   class="scroll">
   <!--  -->
     <view data-index="{{index}}" class="circular" wx:for="{{circulars}}" style="{{item.style}}" catchtap="goTapPractice"
       data-src="{{item.src}}">

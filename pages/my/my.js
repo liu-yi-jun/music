@@ -11,7 +11,6 @@ Page({
     // 控制右下角三角show
     tabBarBtnShow: false,
     userInfo: {},
-    switchBtn: 'dynamic',
     dynamicsPaging: {
       pageSize: 20,
       pageIndex: 1,
@@ -24,6 +23,14 @@ Page({
     },
     dynamics: [],
     alliances: [],
+    barList: [{
+        name: '动态',
+      },
+      {
+        name: '发布'
+      },
+    ],
+    actIndex: 0
   },
 
   /**
@@ -71,11 +78,11 @@ Page({
     let {
       dynamicsPaging,
       alliancePagin,
-      switchBtn
+      actIndex
     } = this.data
-    if (switchBtn === 'dynamic' && !dynamicsPaging.isNotData) {
+    if (actIndex === 0 && !dynamicsPaging.isNotData) {
       this.getDynamics()
-    } else if (switchBtn === 'issue' && !alliancePagin.isNotData) {
+    } else if (actIndex === 1 && !alliancePagin.isNotData) {
       this.getPersonalAlliance()
     }
   },
@@ -185,7 +192,12 @@ Page({
       url: '/pages/my/information/information',
     })
   },
-
+  goFans(e) {
+    let otherId = app.userInfo.id
+    wx.navigateTo({
+      url: `/pages/my/fans/fans?otherId=${otherId}`,
+    })
+  },
 
   previewImage() {
     common.previewImage([app.userInfo.avatarUrl])
@@ -236,12 +248,12 @@ Page({
       }).then(res => resolve(res)).catch(err => reject(err))
     })
   },
-    //切换btn 
-    switchBtn(e) {
-      const switchBtn = e.currentTarget.dataset.switchbtn
-      if (switchBtn === this.switchBtn) return
-      this.setData({
-        switchBtn
-      })
-    },
+  //切换btn 
+  switchBtn(e) {
+    let actIndex = e.detail.actIndex
+    if (actIndex === this.data.actIndex) return
+    this.setData({
+      actIndex
+    })
+  },
 })

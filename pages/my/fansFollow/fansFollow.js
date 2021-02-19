@@ -7,7 +7,6 @@ Page({
    * 页面的初始数据
    */
   data: {
-    switchBtn: 'fans',
     // 去除上面导航栏，剩余的高度
     excludeHeight: 0,
     userFollowPaging: {
@@ -21,7 +20,15 @@ Page({
       isNotData: false
     },
     follows: [],
-    fans: []
+    fans: [],
+    barList: [{
+        name: 'TA的粉丝',
+      },
+      {
+        name: 'TA的关注',
+      }
+    ],
+    actIndex: 0
   },
 
   /**
@@ -31,7 +38,7 @@ Page({
     let otherId = parseInt(option.otherId)
     if (option.flag) {
       this.setData({
-        switchBtn: option.flag
+        actIndex: parseInt(option.flag) 
       })
     }
     this.setData({
@@ -82,11 +89,11 @@ Page({
     let {
       userFollowPaging,
       userFanPaging,
-      switchBtn
+      actIndex
     } = this.data
-    if (switchBtn === 'follow' && !userFollowPaging.isNotData) {
+    if (actIndex === 0 && !userFollowPaging.isNotData) {
       this.getUserFollow()
-    } else if (switchBtn === 'fans' && !userFanPaging.isNotData) {
+    } else if (actIndex === 1 && !userFanPaging.isNotData) {
       this.getUserFan()
     }
   },
@@ -141,10 +148,10 @@ Page({
   handlerGobackClick: app.handlerGobackClick,
   //切换btn 
   switchBtn(e) {
-    const switchBtn = e.currentTarget.dataset.switchbtn
-    if (switchBtn === this.switchBtn) return
+    let actIndex = e.detail.actIndex
+    if (actIndex === this.data.actIndex) return
     this.setData({
-      switchBtn
+      actIndex
     })
   }
 })

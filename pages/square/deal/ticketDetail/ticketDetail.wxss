@@ -6,6 +6,9 @@
   align-items: center;
   height: 120rpx;
   margin-top: 10rpx;
+  justify-content: space-between;
+  box-sizing: border-box;
+  padding: 0 20rpx;
 }
 
 .avatar {
@@ -103,14 +106,14 @@ swiper-item, .dynamicImg {
 }
 
 .commentWrap image {
-  width: 60rpx;
-  height: 60rpx;
+  width: 45rpx;
+  height: 45rpx;
 }
 
 .commentWrap text {
   color: white;
   font-size: 30rpx;
-  margin-left: 10rpx;
+  margin-left: 15rpx;
 }
 
 .recordWrap {
@@ -140,4 +143,18 @@ swiper-item, .dynamicImg {
 }
 .additional {
   margin-top: 20rpx;
+}
+
+
+.avatarWrap {
+  display: flex;
+  align-items: center;
+}
+.delete {
+  width: 70rpx;
+  height: 70rpx;
+  font-size: 36rpx;
+  color: white;
+  text-align: center;
+  line-height: 70rpx;
 }

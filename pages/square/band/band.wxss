@@ -1,20 +1,7 @@
 /* pages/square/band/band.wxss */
-.bar {
-  width: 100%;
+
+.barWrap {
+  padding: 0rpx 0rpx 30rpx 40rpx;
   box-sizing: border-box;
-  padding: 15rpx 14rpx 20rpx 40rpx;
-  display: flex;
-  /* justify-content: space-between; */
-  align-items: flex-start;
-}
-.barItem {
-  color: #FFFFFF;
-  padding: 6rpx 4rpx;
-}
-.margin-left {
-  margin-left: 50rpx
-}
-.active {
-  font-weight: bold;
-  border-bottom: 6rpx solid #C46CEE;
+  width: 100%;
 }

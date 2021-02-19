@@ -16,8 +16,8 @@ Page({
     form: {
       groupName: '',
       introduce: '',
-      privates: false,
-      examine: true
+      privates: 0,
+      examine: 1
     },
     dialogShow: false
   },
@@ -345,4 +345,14 @@ Page({
       wx.hideLoading()
     }
   },
+  changeExamine(event) {
+    this.setData({
+      "form.examine": Number(event.detail.value)
+    })
+  },
+  changePrivate(event) {
+    this.setData({
+      "form.privates": Number(event.detail.value)
+    })
+  }
 })

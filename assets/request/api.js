@@ -86,8 +86,12 @@ module.exports = {
   musicfestivalStore: "/api/performance/musicfestivalStore",
   musicfestivalLike: "/api/performance/musicfestivalLike",
   musicfestivalComment: "/api/performance/musicfestivalComment",
+  groupcourseDelete: "/api/groupcourse/groupcourseDelete",
   squaredynamicsDelete: "/api/squaredynamics/squaredynamicsDelete",
   groupdynamicsDelete: "/api/groupdynamics/groupdynamicsDelete",
+  allianceDelete: "/api/alliance/allianceDelete",
+  secondDelete: "/api/second/secondDelete",
+  ticketDelete: "/api/ticket/ticketDelete",
   livehouseStore: "/api/performance/livehouseStore",
   livehouseLike: "/api/performance/livehouseLike",
   livehouseComment: "/api/performance/livehouseComment",
@@ -112,4 +116,8 @@ module.exports = {
   switchGroup: "/api/group/switchGroup",
   agreeApply: "/api/group/agreeApply",
   refuseApply: "/api/group/refuseApply",
+  bandDetail: "/api/band/bandDetail",
+  bandDetailAndCommont: "/api/band/bandDetailAndCommont",
+  bandLike: "/api/band/bandLike",
+  bandStore: "/api/band/bandStore"
 }

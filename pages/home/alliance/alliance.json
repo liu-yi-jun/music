@@ -1,7 +1,6 @@
 {
   "usingComponents": {
     "navBar": "/components/navBar/navBar",
-    "groupList": "/components/my/groupList/groupList",
-    "authorization":"/components/common/authorization/authorization"
+    "groupList":"/components/home/group/groupList/groupList"
   }
 }

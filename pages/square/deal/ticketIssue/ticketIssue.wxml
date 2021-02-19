@@ -8,23 +8,28 @@
   <scroll-view  style="height: calc({{excludeHeight}}px - 160rpx);" scroll-y>
     <view class="wrap">
       <view class="importWrap first">
-        <input name="title" placeholder="标题" placeholder-class="placeholder"></input>
+        <text>标题</text>
+        <input name="title" placeholder-class="placeholder"></input>
       </view>
-
+      <view class="importWrap additionalWrap">
+        <text>附加信息</text>
+        <textarea name="additional" disable-default-padding placeholder-class="placeholder" maxlength="800"></textarea>
+      </view>
       <view class="importWrap">
-        <textarea name="additional" disable-default-padding placeholder="附加信息" placeholder-class="placeholder"></textarea>
+        <text>时间</text>
+        <input name="activityTime"  placeholder-class="placeholder"></input>
       </view>
-      <view class="importWrap min">
-        <input name="activityTime" placeholder="时间" placeholder-class="placeholder"></input>
+      <view class="importWrap">
+        <text>地点</text>
+        <input name="activityLocation" placeholder-class="placeholder"></input>
       </view>
-      <view class="importWrap min">
-        <input name="activityLocation" placeholder="地点" placeholder-class="placeholder"></input>
+      <view class="importWrap">
+        <text>数量</text>
+        <input name="number" type="number" placeholder-class="placeholder"></input>
       </view>
-      <view class="importWrap min">
-        <input name="number" type="number" placeholder="数量" placeholder-class="placeholder"></input>
-      </view>
-      <view class="importWrap min">
-        <input name="contact" placeholder="联系方式" placeholder-class="placeholder"></input>
+      <view class="importWrap">
+        <text>联系方式</text>
+        <input name="contact" placeholder-class="placeholder"></input>
       </view>
       <view class="moneyWrap" wx:if="{{money}}">
           <text>票价: ¥{{money}}</text>

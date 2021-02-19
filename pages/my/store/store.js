@@ -7,7 +7,6 @@ Page({
    * 页面的初始数据
    */
   data: {
-    switchBtn: 'storeDynamic',
     // 去除上面导航栏，剩余的高度
     excludeHeight: 0,
     courses: [],
@@ -27,7 +26,21 @@ Page({
       pageSize: 10,
       pageIndex: 1,
       isNotData: false
-    }
+    },
+    barList: [{
+        name: '动态',
+      },
+      {
+        name: '课程'
+      },
+      {
+        name: '联盟活动'
+      },
+      {
+        name: '演出咨讯'
+      }
+    ],
+    actIndex: 0
   },
 
   /**
@@ -38,24 +51,24 @@ Page({
     this.getmyStoreAlliance()
     this.getMyStoreDynamic()
   },
-    // 获取分页动态信息
-    getMyStoreDynamic() {
-      let dynamicPaging = this.data.dynamicPaging
-      app.get(app.Api.myStoreDynamic, {
-        userId: app.userInfo.id,
-        ...dynamicPaging
-      }).then(res => {
-        if (res.length < dynamicPaging.pageSize) {
-          this.setData({
-            'dynamicPaging.isNotData': true
-          })
-        }
+  // 获取分页动态信息
+  getMyStoreDynamic() {
+    let dynamicPaging = this.data.dynamicPaging
+    app.get(app.Api.myStoreDynamic, {
+      userId: app.userInfo.id,
+      ...dynamicPaging
+    }).then(res => {
+      if (res.length < dynamicPaging.pageSize) {
         this.setData({
-          dynamics: this.data.dynamics.concat(res),
-          'dynamicPaging.pageIndex': dynamicPaging.pageIndex + 1
+          'dynamicPaging.isNotData': true
         })
+      }
+      this.setData({
+        dynamics: this.data.dynamics.concat(res),
+        'dynamicPaging.pageIndex': dynamicPaging.pageIndex + 1
       })
-    },
+    })
+  },
   // 获取分页联盟信息
   getmyStoreAlliance() {
     let alliancePaging = this.data.alliancePaging
@@ -97,14 +110,14 @@ Page({
       coursePaging,
       alliancePaging,
       dynamicPaging,
-      switchBtn
+      actIndex
     } = this.data
-    if (switchBtn === 'storeCurriculum' && !coursePaging.isNotData) {
-      this.getMyStoreCourse()
-    } else if (switchBtn === 'storeAlliance' && !alliancePaging.isNotData) {
-      this.getmyStoreAlliance()
-    } else if (switchBtn === 'storeDynamic' && !dynamicPaging.isNotData) {
+    if (actIndex === 0 && !dynamicPaging.isNotData) {
       this.getMyStoreDynamic()
+    } else if (actIndex === 1 && !coursePaging.isNotData) {
+      this.getMyStoreCourse()
+    } else if (actIndex === 2 && !alliancePaging.isNotData) {
+      this.getmyStoreAlliance()
     }
   },
   /**
@@ -169,10 +182,10 @@ Page({
 
   //切换btn 
   switchBtn(e) {
-    const switchBtn = e.currentTarget.dataset.switchbtn
-    if (switchBtn === this.switchBtn) return
+    let actIndex = e.detail.actIndex
+    if (actIndex === this.data.actIndex) return
     this.setData({
-      switchBtn
+      actIndex
     })
   }
 })

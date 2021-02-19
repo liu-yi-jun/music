@@ -73,8 +73,10 @@
         <view class="videoText" wx:else catchtap="popupVideo">[video]</view>
       </view>
       <view class="okLogoWrap">
-        <button form-type="submit" class="okLogoBtn" plain='true'></button>
-        <image class="okLogo" src="http://cdn.eigene.cn/application/okLogo.png"></image>
+        
+        <image class="okLogo" src="http://cdn.eigene.cn/issuePuchCard/okLogo.png">
+          <button form-type="submit" class="okInner" plain='true'></button>
+        </image>
       </view>
     </view>
   </form>

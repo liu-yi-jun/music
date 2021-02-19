@@ -4,7 +4,7 @@
 .head {
   width: 100%;
   box-sizing: border-box;
-  padding: 40rpx 14rpx 30rpx 40rpx;
+  padding: 0rpx 14rpx 20rpx 40rpx;
   display: flex;
   align-items: center;
 }
@@ -38,10 +38,19 @@
   font-size: 19rpx;
 }
 
+.issueDynamicInner {
+  width: 70%;
+  height: 70%;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+}
+
 .issueDynamic {
-  width: 140rpx;
-  height: 140rpx;
-  position:fixed;
-  bottom: calc(69rpx + env(safe-area-inset-bottom));
-  right: 36rpx;
+  width: 233rpx;
+  height: 233rpx;
+  position: fixed;
+  bottom: calc(0rpx + env(safe-area-inset-bottom));
+  right: -16rpx;
 }

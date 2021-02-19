@@ -39,6 +39,26 @@
   border-bottom: 1rpx solid white;
   color: white;
   font-size: 28rpx;
+  display: flex;
+  align-items: center;
+}
+.textareaWrap {
+  color: white;
+  font-size: 28rpx;
+  padding: 30rpx 40rpx;
+  border-bottom: 1rpx solid white;
+}
+.textareaWrap > textarea {
+  margin-top: 10rpx;
+}
+
+.importWrap>view:first-child {
+  flex-shrink: 0;
+  margin-right: 20rpx;
+}
+
+.importWrap>input {
+  flex-grow: 1;
 }
 
 .placeholder {
@@ -54,9 +74,10 @@ textarea {
   padding: 25rpx 40rpx !important;
 }
 
+/* 
 .first {
   padding: 15rpx 40rpx 35rpx !important;
-}
+} */
 
 .locationWrap {
   margin-top: 30rpx;

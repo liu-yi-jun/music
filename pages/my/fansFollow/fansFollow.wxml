@@ -2,16 +2,19 @@
 <view class="fansFollow">
   <navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' back="{{true}}" iconTheme='white'
     bindback="handlerGobackClick"></navBar>
-  <view class="bar">
+    <view class="barWrap">
+    <bar barList="{{barList}}" actIndex="{{actIndex}}" bind:switchBtn="switchBtn"></bar>
+  </view>
+  <!-- <view class="bar">
     <text class="{{switchBtn === 'fans' ? 'active' : ''}}" catchtap="switchBtn" data-switchBtn="fans">{{isMy?'我': 'TA'}}的粉丝</text>
     <view class="line"></view>
     <text class="{{switchBtn === 'follow' ? 'active' : ''}}" catchtap="switchBtn" data-switchBtn="follow">{{isMy?'我': 'TA'}}的关注</text>
-  </view>
+  </view> -->
   <scroll-view bindscrolltolower="scrolltolower" scroll-y  style="height: calc({{excludeHeight}}px - 150rpx);">
-    <view hidden="{{switchBtn !== 'fans'}}">
+    <view hidden="{{actIndex !== 0}}">
       <fansFollowList list="{{fans}}"> </fansFollowList>
     </view>
-    <view hidden="{{switchBtn !== 'follow'}}">
+    <view hidden="{{actIndex !== 1}}">
       <fansFollowList list="{{follows}}"> </fansFollowList>
     </view>
   </scroll-view>

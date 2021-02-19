@@ -15,9 +15,14 @@
           <text>24岁</text> -->
         </view>
       </view>
-      <view class="right followed" wx:if="{{item.followType === 3}}" catchtap="cancelFollow" data-followtype="{{item.followType}}" data-index="{{index}}" data-otherid="{{item.id}}">互相关注</view>
-      <view class="right followed" wx:elif="{{item.followType === 2}}" catchtap="cancelFollow" data-followtype="{{item.followType}}" data-index="{{index}}" data-otherid="{{item.id}}">已关注</view>
-      <view class="right follow" wx:else catchtap="toFollow" data-followtype="{{item.followType}}" data-index="{{index}}" data-otherid="{{item.id}}">关注</view>
+      <block wx:if="{{myId !== item.id}}">
+        <view class="right followed" wx:if="{{item.followType === 3}}" catchtap="cancelFollow"
+          data-followtype="{{item.followType}}" data-index="{{index}}" data-otherid="{{item.id}}">互相关注</view>
+        <view class="right followed" wx:elif="{{item.followType === 2}}" catchtap="cancelFollow"
+          data-followtype="{{item.followType}}" data-index="{{index}}" data-otherid="{{item.id}}">已关注</view>
+        <view class="right follow" wx:else catchtap="toFollow" data-followtype="{{item.followType}}"
+          data-index="{{index}}" data-otherid="{{item.id}}">关注</view>
+      </block>
     </view>
   </view>
 

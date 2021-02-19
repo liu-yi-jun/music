@@ -221,16 +221,16 @@ Page({
     })
   },
   recordSheet() {
-    wx.showActionSheet({
-      itemList: ['添加网络链接', '在线录音'],
-      success: res => {
-        if (res.tapIndex === 1) {
+    // wx.showActionSheet({
+    //   itemList: ['添加网络链接', '在线录音'],
+    //   success: res => {
+        // if (res.tapIndex === 1) {
           this.record()
-        } else if (res.tapIndex === 0) {
-          this.showPopup(1)
-        }
-      }
-    })
+    //     } else if (res.tapIndex === 0) {
+    //       this.showPopup(1)
+    //     }
+    //   }
+    // })
   },
   // record() {
   //   let record = this.selectComponent('#record')

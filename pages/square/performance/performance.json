@@ -2,7 +2,8 @@
   "usingComponents": {
     "navBar": "/components/navBar/navBar",
     "liveHouse": "/components/square/performance/liveHouse/liveHouse",
-    "allianceList": "/components/square/performance/allianceList/allianceList"
+    "allianceList": "/components/square/performance/allianceList/allianceList",
+    "bar":"/components/common/bar/bar"
   },
   "disableScroll": true
 }

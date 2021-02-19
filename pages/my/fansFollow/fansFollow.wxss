@@ -25,3 +25,9 @@
   /* zoom: 1.1; */
   transform: scale(1.1);
 }
+
+.barWrap {
+  padding: 10rpx 0rpx 30rpx 30rpx;
+  box-sizing: border-box;
+  width: 100%;
+}

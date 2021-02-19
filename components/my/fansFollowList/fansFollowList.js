@@ -16,12 +16,20 @@ Component({
    * 组件的初始数据
    */
   data: {
-
+    myId:0
   },
 
   /**
    * 组件的方法列表
    */
+  lifetimes: {
+    attached: function() {
+      // 在组件实例进入页面节点树时执行
+      this.setData({
+        myId: app.userInfo.id
+      })
+    }
+  },
   methods: {
     toFollow(e) {
       let {

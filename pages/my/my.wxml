@@ -4,7 +4,7 @@
 
   <view class="information">
     <image mode="aspectFill" catchtap="changeImg" class="backgroundImg" src="{{userInfo.bgWall}}">
-      <view class="fans">粉丝 {{userInfo.fans}}</view>
+      <view class="fans" catchtap="goFans">粉丝 {{userInfo.fans}}</view>
       <image class="editData" src="http://cdn.eigene.cn/my/edit.png" catchtap="goEditData"></image>
       <view class="hideBar" catchtap="hideBar"></view>
       <view class="avatarName" mark:Mymark="avatarName">
@@ -22,10 +22,10 @@
       {{userInfo.groupDuty===0?'组长':(userInfo.groupDuty===1?'管理员':(userInfo.groupDuty===2?'组员':'申请中'))}}</view>
   </view>
   <view class="menu">
-    <view class="iconWrap" catchtap="goInvitation">
+    <!-- <view class="iconWrap" catchtap="goInvitation">
       <image class="iconImg" src="http://cdn.eigene.cn/my/invitation.png"></image>
       <text class="iconCharacter">帖子</text>
-    </view>
+    </view> -->
     <view class="iconWrap" catchtap="gofollowMass" data-flag="follow">
       <image class="iconImg" src="http://cdn.eigene.cn/my/follow.png"></image>
       <text class="iconCharacter">关注</text>
@@ -39,20 +39,14 @@
       <text class="iconCharacter">消息</text>
     </view>
   </view>
-  <view class="bar">
-    <view class="letter" catchtap="goPrivateLetter" wx:if="{{userId!==otherId}}">私信Ta</view>
-    <view class="portion {{switchBtn === 'dynamic' ? 'active' : ''}}" catchtap="switchBtn" data-switchBtn="dynamic">
-      动态
-    </view>
-    <view class="issue portion {{switchBtn === 'issue' ? 'active' : ''}}" catchtap="switchBtn" data-switchBtn="issue">
-      发布
-    </view>
+  <view class="barWrap">
+    <bar barList="{{barList}}" actIndex="{{actIndex}}" bind:switchBtn="switchBtn"></bar>
   </view>
   <view class="list">
-    <view hidden="{{switchBtn !== 'dynamic'}}">
+    <view hidden="{{actIndex !== 0}}">
       <dynamicList id="dynamicList" dynamics="{{dynamics}}" isInvitation="{{true}}"></dynamicList>
     </view>
-    <view hidden="{{switchBtn !== 'issue'}}">
+    <view hidden="{{actIndex !== 1}}">
       <allianceList alliances="{{alliances}}"></allianceList>
     </view>
   </view>

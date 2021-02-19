@@ -6,20 +6,23 @@
   <form bindsubmit="formSubmit">
     <issueHead avatarUrl="{{avatarUrl}}" nickName="{{nickName}}">
     </issueHead>
-    <scroll-view  style="height: calc({{excludeHeight}}px - 160rpx);" scroll-y>
+    <scroll-view style="height: calc({{excludeHeight}}px - 160rpx);" scroll-y>
       <view class="wrap">
         <view class="importWrap first">
-          <input name="brand" placeholder="品牌·型号" placeholder-class="placeholder"></input>
+          <view>品牌·型号</view>
+          <input name="brand" placeholder-class="placeholder"></input>
         </view>
         <view class="importWrap">
-          <input name="newOld" placeholder="新旧程度" placeholder-class="placeholder"></input>
+          <view>新旧程度</view>
+          <input name="newOld" placeholder-class="placeholder"></input>
         </view>
-        <view class="importWrap">
-          <textarea name="additional" disable-default-padding placeholder="附加信息"
-            placeholder-class="placeholder"></textarea>
+        <view class="textareaWrap">
+          <view>附加信息</view>
+          <textarea name="additional" disable-default-padding placeholder-class="placeholder"></textarea>
         </view>
         <view class="importWrap min">
-          <input name="contact" placeholder="联系方式" placeholder-class="placeholder"></input>
+          <view>联系方式</view>
+          <input name="contact" placeholder-class="placeholder"></input>
         </view>
         <view class="moneyWrap" wx:if="{{money}}">
           <text>定价: ¥{{money}}</text>

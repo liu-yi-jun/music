@@ -123,7 +123,7 @@ Page({
     tool.navExcludeHeight(this)
     this.initValidate()
     this.setUserInfo()
-   
+
   },
   //验证规则函数
   initValidate() {
@@ -193,9 +193,11 @@ Page({
             })
           }
         })
+        let uploadRecruits = recruits
         recruits = tool.arraySplit(recruits, 4)
         this.setData({
           recruits,
+          uploadRecruits
         })
       }
     })
@@ -207,7 +209,8 @@ Page({
     }, () => {
       if (!this.data.showExistPopup) {
         let instruments = this.data.instruments
-        let exists = [],recruits = []
+        let exists = [],
+          recruits = []
         instruments.forEach(item => {
           if (item.exist) {
             exists.push({
@@ -224,11 +227,16 @@ Page({
             })
           }
         })
+        let uploadExists = exists
+        let uploadRecruits = recruits
+        console.log('recruits', recruits);
         exists = tool.arraySplit(exists, 4)
         recruits = tool.arraySplit(recruits, 4)
         this.setData({
           exists,
           recruits,
+          uploadExists,
+          uploadRecruits
         })
       }
     })
@@ -273,7 +281,10 @@ Page({
   },
   // 进行校验
   validate(params) {
-    let {mks, recruits} = this.data
+    let {
+      mks,
+      recruits
+    } = this.data
     let location = ''
 
     let {
@@ -289,7 +300,7 @@ Page({
         const error = this.WxValidate.errorList[0].msg
         return reject(error)
       }
-      if(!recruits.length) reject('请选择要招募的乐器')
+      if (!recruits.length) reject('请选择要招募的乐器')
       return resolve({
         title,
         introduce,
@@ -299,12 +310,12 @@ Page({
         userId: app.userInfo.id,
         groupId: app.userInfo.groupId,
         groupName: app.userInfo.groupName,
-        existArr: this.data.exists,
-        recruitArr:this.data.recruits
+        existArr: this.data.uploadExists,
+        recruitArr: this.data.uploadRecruits
       })
     })
   },
-  
+
   issueTeam(data) {
     return new Promise((resolve, reject) => {
       app.post(app.Api.issueTeam, data, {
@@ -321,7 +332,7 @@ Page({
       console.log(params)
       common.showLoading('发布中')
       let result = await this.issueTeam(params)
-      if(result.affectedRows){
+      if (result.affectedRows) {
         common.Toast('已发布')
         this.goBand()
       }

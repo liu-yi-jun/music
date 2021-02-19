@@ -3,10 +3,13 @@
   <navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' back="{{true}}" iconTheme='white'
     bindback="handlerGobackClick"></navBar>
   <view class="head">
-    <view class="title">{{detail.title}}</view>
-    <view class="time">{{detail.releaseTime}}</view>
+    <view>
+      <view class="title">{{detail.title}}</view>
+      <view class="time">{{detail.releaseTime}}</view>
+    </view>
+    <view catchtap="showMenu" class="delete iconfont iconshenglve"></view>
   </view>
-  <scroll-view  style="height: calc({{excludeHeight}}px - 140rpx);" scroll-y>
+  <scroll-view style="height: calc({{excludeHeight}}px - 120rpx);" scroll-y>
     <view class="Wrap">
       <view class="info">
         <text>组织者：</text>
@@ -48,7 +51,7 @@
       </view>
     </view>
     <view class="commentWrap">
-      <image src="http://cdn.eigene.cn/dynamicDetail/comment.png"></image>
+      <image src="http://cdn.eigene.cn/dynamicComment.png"></image>
       <text>评论</text>
     </view>
     <commentList bind:toReply="toReply" commentArr="{{commentArr}}">
@@ -60,3 +63,6 @@
     </commentBar>
   </scroll-view>
 </view>
+
+<menu id="menu" list="{{list}}" bind:handleStore="handleStore" bind:handleReport="handleReport"
+  bind:hadleDelete="hadleDelete" bind:cancelMenu="cancelMenu"></menu>

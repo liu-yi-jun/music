@@ -12,8 +12,8 @@ Page({
   data: {
     // 去除上面导航栏，剩余的高度
     excludeHeight: 0,
-    date: '活动日期',
-    time: '活动时间',
+    date: '',
+    time: '',
     first: true,
     keyBoardHeight: '0px',
     id: '',

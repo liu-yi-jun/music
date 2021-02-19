@@ -13,7 +13,11 @@ Page({
     pageIndex: 1,
     isNoData: false,
     bands: [],
-    swithchtab: 'myTab',
+    barList: [{
+        name: '一起组乐队',
+      }
+    ],
+    actIndex: 0
   },
 
   /**
@@ -104,15 +108,7 @@ Page({
 
   },
   handlerGobackClick: app.handlerGobackClick,
-  goApplication(e) {
-    let recruits = e.currentTarget.dataset.recruits
-    let bandId = e.currentTarget.dataset.bandid
-    let userId = e.currentTarget.dataset.userid
-    recruits = JSON.stringify(recruits)
-    wx.navigateTo({
-      url: `/pages/square/band/application/application?recruits=${recruits}&bandId=${bandId}&userId=${userId}`,
-    })
-  },
+ 
   goIssueTeam() {
     wx.navigateTo({
       url: '/pages/square/band/issueTeam/issueTeam',
@@ -126,13 +122,13 @@ Page({
       this.getBands()
     }
   },
-  swithchTab(e) {
-    let swithchtab = e.currentTarget.dataset.swithchtab
-    if (this.data.swithchtab === swithchtab) {
+  switchBtn(e) {
+    let actIndex = e.detail.actIndex
+    if (this.data.actIndex === actIndex) {
       return
     }
     this.setData({
-      swithchtab
+      actIndex
     })
   },
 })

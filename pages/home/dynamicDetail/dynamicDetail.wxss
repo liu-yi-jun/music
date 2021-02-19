@@ -6,6 +6,11 @@
   align-items: center;
   height: 120rpx;
   margin-top: 10rpx;
+  justify-content: space-between;
+}
+.avatar-userName {
+  display: flex;
+  align-items: center;
 }
 
 .avatar {
@@ -56,8 +61,8 @@ swiper-item, .dynamicImg {
 }
 
 .icon image {
-  width: 40rpx;
-  height: 40rpx;
+  width: 46rpx;
+  height: 46rpx;
   margin-left: 20rpx;
 }
 
@@ -97,24 +102,34 @@ swiper-item, .dynamicImg {
 
 .commentWrap {
   display: flex;
-  align-items: center;
+  align-items:flex-end;
   box-sizing: border-box;
   padding: 40rpx 20rpx 0;
 }
 
 .commentWrap image {
-  width: 60rpx;
-  height: 60rpx;
+  width: 45rpx;
+  height: 45rpx;
 }
 
 .commentWrap text {
   color: white;
   font-size: 30rpx;
-  margin-left: 10rpx;
+  margin-left: 15rpx;
 }
 
 .recordWrap {
   width: 350rpx;
   height: 350rpx;
   margin: 20rpx auto;
+}
+
+.delete {
+  width: 70rpx;
+  height: 70rpx;
+  font-size: 36rpx;
+  color: white;
+  text-align: center;
+  line-height: 70rpx;
+  margin-right: 10rpx;
 }

@@ -7,7 +7,6 @@ Page({
    * 页面的初始数据
    */
   data: {
-    switchBtn: 'second',
     // 去除上面导航栏，剩余的高度
     excludeHeight: 0,
     secondPaging: {
@@ -29,7 +28,15 @@ Page({
     // 二手商品搜索关键词
     brand: '',
     // 票务搜索关键词
-    title: ''
+    title: '',
+    barList: [{
+        name: '二手器乐',
+      },
+      {
+        name: '票务转让'
+      },
+    ],
+    actIndex: 0
   },
 
   /**
@@ -98,15 +105,18 @@ Page({
   },
   confirm(event) {
     let value = event.detail.value
-    let switchBtn = this.data.switchBtn
-    if (switchBtn === 'second') {
+    let actIndex = this.data.actIndex
+    if (actIndex === 0) {
       this.setData({
-        doubleSeconds: [[],[]],
+        doubleSeconds: [
+          [],
+          []
+        ],
         brand: value,
         'secondPaging.isNotData': false,
         'secondPaging.pageIndex': 1
       }, () => this.searchSeconds(this.data.brand))
-    } else if (switchBtn === 'ticket') {
+    } else if (actIndex === 1) {
       this.setData({
         tickets: [],
         title: value,
@@ -138,7 +148,10 @@ Page({
     if (app.secondIssueBack) {
       app.secondIssueBack = false
       this.setData({
-        doubleSeconds: [[],[]],
+        doubleSeconds: [
+          [],
+          []
+        ],
         brand: '',
         'secondPaging.isNotData': false,
         'secondPaging.pageIndex': 1
@@ -162,11 +175,11 @@ Page({
     let {
       secondPaging,
       ticketPaging,
-      switchBtn
+      actIndex
     } = this.data
-    if (switchBtn === 'second' && !secondPaging.isNotData) {
+    if (actIndex === 0 && !secondPaging.isNotData) {
       this.searchSeconds(this.data.brand)
-    } else if (switchBtn === 'ticket' && !ticketPaging.isNotData) {
+    } else if (actIndex === 1 && !ticketPaging.isNotData) {
       this.searchTickets(this.data.title)
     }
   },
@@ -207,10 +220,10 @@ Page({
   handlerGobackClick: app.handlerGobackClick,
   //切换btn 
   switchBtn(e) {
-    const switchBtn = e.currentTarget.dataset.switchbtn
-    if (switchBtn === this.switchBtn) return
+    let actIndex = e.detail.actIndex
+    if (actIndex === this.data.actIndex) return
     this.setData({
-      switchBtn
+      actIndex
     })
   },
   storeDeal() {

@@ -8,7 +8,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    switchBtn: 'musicScore',
+    // switchBtn: 'musicScore',
     // analysis
     // 去除上面导航栏，剩余的高度
     excludeHeight: 0,
@@ -24,7 +24,18 @@ Page({
       isNotData: false
     },
     pageShow: true,
-    dialogShow: false
+    dialogShow: false,
+    barList: [{
+        name: '曲谱库',
+      },
+      {
+        name: '调音器'
+      },
+      {
+        name: '和弦库'
+      }
+    ],
+    actIndex: 2
   },
 
   /**
@@ -37,18 +48,17 @@ Page({
   },
   //切换btn 
   switchBtn(e) {
+    let actIndex = e.detail.actIndex
     if (app.userInfo) {
-      const switchBtn = e.currentTarget.dataset.switchbtn
-      if (switchBtn === this.switchBtn) return
+      if (actIndex === this.data.actIndex) return
       this.setData({
-        switchBtn
+        actIndex
       })
     } else {
       this.setData({
         dialogShow: true
       })
     }
-
   },
   onHide: function () {
     console.log('onHide')

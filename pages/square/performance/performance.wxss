@@ -26,9 +26,24 @@
 
 
 .issueDynamic {
-  width: 140rpx;
-  height: 140rpx;
+  width: 233rpx;
+  height: 233rpx;
   position: fixed;
-  bottom: calc(69rpx + env(safe-area-inset-bottom));
-  right: 37rpx;
+  bottom: calc(0rpx + env(safe-area-inset-bottom));
+  right: -16rpx;
+}
+.issueDynamicInner {
+  width: 70%;
+  height: 70%;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+}
+
+
+.barWrap {
+  padding: 10rpx 0rpx 20rpx 40rpx;
+  box-sizing: border-box;
+  width: 100%;
 }

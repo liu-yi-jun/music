@@ -15,9 +15,16 @@ Page({
       pageIndex: 1,
       isNotData: false,
     },
-    swithchtab: 'myTab',
     myGroups: [],
-    groupName: ''
+    groupName: '',
+    barList: [{
+        name: '我的小组',
+      },
+      {
+        name: '关注的小组'
+      },
+    ],
+    actIndex: 0
   },
 
   /**
@@ -26,22 +33,41 @@ Page({
   onLoad: function (options) {
     // 获取去除上面导航栏，剩余的高度
     tool.navExcludeHeight(this)
-    if(app.userInfo) {
+    if (app.userInfo) {
       this.pagingGetFollowGroup(this.data.groupName)
       this.getMyGroup()
     }
 
   },
-  getMyGroup(){
+  getMyGroup() {
     console.log('getMyGroup')
-    app.get(app.Api.myGroup,{
-      userId:app.userInfo.id
-    }).then(res=> {
+    app.get(app.Api.myGroup, {
+      userId: app.userInfo.id
+    }).then(res => {
       console.log(res)
       this.setData({
-        myGroups: res
+        myGroups: this.isJoinGroup(res)
       })
     })
+  },
+  isJoinGroup(groups) {
+    if (groups.length === 0 || !app.groupInfo) {
+      return groups
+    }
+    app.groupInfo.myGrouList.forEach((item, index) => {
+      groups.forEach(group => {
+        console.log(group.id, item.groupId);
+        if (group.id == item.groupId) {
+          if (item.groupDuty === -1) {
+            group.isJoin = -1
+          } else {
+            group.isJoin = 1
+          }
+          return
+        }
+      })
+    })
+    return groups
   },
   // 获取所有关注的小组
   pagingGetFollowGroup(groupName) {
@@ -65,17 +91,17 @@ Page({
     })
   },
   scrolltolower() {
-    if (!this.data.followGroupPaging.isNotData && this.data.swithchtab === 'followTab') {
+    if (!this.data.followGroupPaging.isNotData && this.data.actIndex === 2) {
       this.pagingGetFollowGroup(this.data.groupName)
     }
   },
-  swithchTab(e) {
-    let swithchtab = e.currentTarget.dataset.swithchtab
-    if (this.data.swithchtab === swithchtab) {
+  switchBtn(e) {
+    let actIndex = e.detail.actIndex
+    if (this.data.actIndex === actIndex) {
       return
     }
     this.setData({
-      swithchtab
+      actIndex
     })
   },
   /**

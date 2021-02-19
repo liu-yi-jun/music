@@ -1,7 +1,8 @@
 {
   "usingComponents": {
     "navBar": "/components/navBar/navBar",
-    "composeBand": "/components/square/band/composeBand/composeBand"
+    "composeBand": "/components/square/band/composeBand/composeBand",
+    "bar":"/components/common/bar/bar"
   },
   "disableScroll": true
 }

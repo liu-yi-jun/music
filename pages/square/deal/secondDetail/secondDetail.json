@@ -3,7 +3,8 @@
     "navBar": "/components/navBar/navBar",
     "commentList": "/components/common/commentList/commentList",
     "commentBar": "/components/common/comment/commentBar/commentBar",
-    "inputBox": "/components/common/comment/inputBox/inputBox"
+    "inputBox": "/components/common/comment/inputBox/inputBox",
+    "menu": "/components/common/menu/menu"
   },
   "disableScroll": true
 }

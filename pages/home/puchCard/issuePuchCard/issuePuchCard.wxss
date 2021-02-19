@@ -53,12 +53,12 @@
 } */
 
 .okLogo {
-  width: 160rpx;
-  height: 160rpx;
+  width: 272rpx;
+  height: 272rpx;
   border-radius: 50%;
   position: absolute;
-  right: 30rpx;
-  bottom: 50rpx;
+  right: -26rpx;
+  bottom: 0rpx;
 }
 
 .dataImg {
@@ -74,6 +74,15 @@
   margin: 20rpx auto 100rpx;
   border-radius: 10rpx;
 }
+.okInner {
+  width: 70%;
+  height: 70%;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+  position: absolute;
+}
+
 
 @media screen and (max-aspect-ratio: 1/2) { 
 
@@ -126,14 +135,7 @@
     margin-bottom: 200rpx;
   } */
   
-  .okLogo {
-    width: 160rpx;
-    height: 160rpx;
-    border-radius: 50%;
-    position: absolute;
-    right: 30rpx;
-    bottom: 55rpx;
-  }
+
   
   .dataImg {
     width: 500rpx;

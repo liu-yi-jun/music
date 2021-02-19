@@ -40,14 +40,15 @@ App({
     option.method = "post";
     return Req.fetch(url, data, option);
   },
-
+  isLogin: false,
   userInfo: null,
-  groupInfo:null,
+  groupInfo: null,
   globalData: {
     guide: {}
   },
   switchData: {},
   cbObj: {},
+  msgQueue: {},
   // 回退
   handlerGobackClick: function (delta) {
     const pages = getCurrentPages();
@@ -79,6 +80,19 @@ App({
         })
       }
     })
+  },
+  onMsg(msgName, cb) {
+    if (!this.msgQueue[msgName]) {
+      this.msgQueue[msgName] = []
+    }
+    this.msgQueue[msgName].push(cb)
+    return this.msgQueue[msgName].length - 1
+  },
+  offMsg(msgName, index) {
+    this.msgQueue[msgName].splice(index, 1)
+  },
+  clearMsg(msgName) {
+    this.msgQueue[msgName] = null
   },
   // 消息进栈出栈
   onMessage(key, cb) {

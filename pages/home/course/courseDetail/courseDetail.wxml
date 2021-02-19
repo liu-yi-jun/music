@@ -3,19 +3,21 @@
   <navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' back="{{true}}" iconTheme='white'
     bindback="handlerGobackClick"></navBar>
   <view class="head">
-    <text class="title">{{detail.courseName}}</text>
-    <view class="view-time">
-      <view class="viewWrap">
-        <image class="viewImg" src="http://use.eigene.cn/views.png"></image>
-        <text>{{detail.views}}</text>
-        <text class="date">{{detail.releaseTime}}</text>
-        <!-- <text class="time">19:00</text> -->
+    <view>
+      <text class="title">{{detail.courseName}}</text>
+      <view class="view-time">
+        <view class="viewWrap">
+          <image class="viewImg" src="http://use.eigene.cn/views.png"></image>
+          <text>{{detail.views}}</text>
+          <text class="date">{{detail.releaseTime}}</text>
+          <!-- <text class="time">19:00</text> -->
+        </view>
       </view>
     </view>
+    <view catchtap="showMenu" class="delete iconfont iconshenglve"></view>
   </view>
-  <scroll-view  style="height: calc({{excludeHeight}}px - 176rpx);" scroll-y>
-    <video class="video" src="{{detail.videoUrl}}"
-      enable-auto-rotation show-mute-btn object-fit="cover"> </video>
+  <scroll-view style="height: calc({{excludeHeight}}px - 152rpx);" scroll-y>
+    <video class="video" src="{{detail.videoUrl}}" enable-auto-rotation show-mute-btn object-fit="cover"> </video>
     <view class="fontWrap">
       <view class="img-number">
         <image class="img" src="http://cdn.eigene.cn/courseDetail/like.png"></image>
@@ -75,3 +77,5 @@
     bind:completeLike="completeLike" bind:completeStore="completeStore">
   </commentBar>
 </view>
+<menu id="menu" list="{{list}}" bind:handleStore="handleStore" bind:handleReport="handleReport"
+  bind:hadleDelete="hadleDelete" bind:cancelMenu="cancelMenu"></menu>

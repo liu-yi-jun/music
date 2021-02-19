@@ -53,15 +53,10 @@
             <text>{{item.share}}</text>
           </view>
         </view>
-        <image wx:if="{{item.userId === myId}}" class="delete" catchtap="delete" data-index="{{i}}"
-          src="http://cdn.eigene.cn/delete.png" lazy-load="{{true}}"></image>
-        <view wx:else catchtap="extend" class="extend">...</view>
+          <view catchtap="showMenu" class="delete ~iconfont ~iconshenglve" data-index="{{i}}"></view>
       </view>
     </view>
   </view>
-  <view class="mask">
-
-  </view>
-
 </view>
-<!-- mode="aspectFill" mode="widthFix" -->
+
+<menu id="menu" list="{{list}}" bind:handleStore="handleStore" bind:handleReport="handleReport" bind:hadleDelete="hadleDelete" bind:cancelMenu="cancelMenu"></menu>

@@ -1,17 +1,19 @@
 /* pages/square/performance/allianceDetail/allianceDetail.wxss */
 .head {
-  height: 120rpx;
-  padding: 40rpx 40rpx 0 40rpx;
+  padding: 30rpx 30rpx 0 40rpx;
   box-sizing: border-box;
   margin-bottom: 20rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.head>.title {
+.head .title {
   font-size: 30rpx;
   color: white;
 }
 
-.head>.time {
+.head .time {
   color: #B7B8B8;
   font-size: 21rpx;
 }
@@ -59,15 +61,16 @@
   padding: 20rpx 20rpx 0;
 }
 
+
 .commentWrap image {
-  width: 60rpx;
-  height: 60rpx;
+  width: 45rpx;
+  height: 45rpx;
 }
 
 .commentWrap text {
   color: white;
   font-size: 30rpx;
-  margin-left: 10rpx;
+  margin-left: 15rpx;
 }
 
 
@@ -94,4 +97,14 @@
   display: flex;
   align-items: center;
   margin-right: 20rpx;
+}
+
+
+.delete {
+  width: 70rpx;
+  height: 70rpx;
+  font-size: 36rpx;
+  color: white;
+  text-align: center;
+  line-height: 70rpx;
 }

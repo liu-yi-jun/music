@@ -63,7 +63,9 @@
         </swiper-item>
       </swiper>
       <dynamicList bind:fullscreenchange="fullscreenchange" id="dynamicList" dynamics="{{dynamics}}"></dynamicList>
-      <image class="issueDynamic" src="http://cdn.eigene.cn/square/issueDynamic.png" catchtap="goSquarePost"></image>
+      <image class="issueDynamic" src="http://cdn.eigene.cn/square/issueDynamic2.png" >
+      <view class="issueDynamicInner" catchtap="goSquarePost"></view>
+      </image>
 
     </view>
   <!-- </scroll-view> -->

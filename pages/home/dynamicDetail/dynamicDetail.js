@@ -2,6 +2,7 @@
 const app = getApp()
 const tool = require('../../../assets/tool/tool.js')
 const core = require('../../../assets/tool/core')
+const common = require('../../../assets/tool/common')
 Page({
 
   /**

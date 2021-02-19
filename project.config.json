@@ -23,7 +23,6 @@
     "compileHotReLoad": false,
     "useMultiFrameRuntime": true,
     "useApiHook": true,
-    "useApiHostProcess": true,
     "babelSetting": {
       "ignore": [],
       "disablePlugins": [],
@@ -37,7 +36,8 @@
     "userConfirmedBundleSwitch": false,
     "packNpmManually": false,
     "packNpmRelationList": [],
-    "minifyWXSS": true
+    "minifyWXSS": true,
+    "useApiHostProcess": true
   },
   "appid": "wxa158839a69c014d3",
   "projectname": "musicMonster",
@@ -65,6 +65,150 @@
         {
           "name": "pages/my/information/information",
           "pathName": "pages/my/information/information",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/square/band/band",
+          "pathName": "pages/square/band/band",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/square/band/bandDetail/bandDetail",
+          "pathName": "pages/square/band/bandDetail/bandDetail",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/square/band/bandDetail/bandDetail",
+          "pathName": "pages/square/band/bandDetail/bandDetail",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/square/band/bandDetail/bandDetail",
+          "pathName": "pages/square/band/bandDetail/bandDetail",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/square/deal/secondIssue/secondIssue",
+          "pathName": "pages/square/deal/secondIssue/secondIssue",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/square/performance/alliancePost/alliancePost",
+          "pathName": "pages/square/performance/alliancePost/alliancePost",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "components/common/bar/bar",
+          "pathName": "components/common/bar/bar",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/tool/tool",
+          "pathName": "pages/tool/tool",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/my/information/information",
+          "pathName": "pages/my/information/information",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/my/my",
+          "pathName": "pages/my/my",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/square/band/band",
+          "pathName": "pages/square/band/band",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/square/performance/performance",
+          "pathName": "pages/square/performance/performance",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/square/deal/deal",
+          "pathName": "pages/square/deal/deal",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/my/store/store",
+          "pathName": "pages/my/store/store",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/home/puchCard/issuePuchCard/issuePuchCard",
+          "pathName": "pages/home/puchCard/issuePuchCard/issuePuchCard",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/square/band/application/application",
+          "pathName": "pages/square/band/application/application",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/my/information/information",
+          "pathName": "pages/my/information/information",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/square/deal/ticketIssue/ticketIssue",
+          "pathName": "pages/square/deal/ticketIssue/ticketIssue",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/my/fans/fans",
+          "pathName": "pages/my/fans/fans",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/square/band/issueTeam/issueTeam",
+          "pathName": "pages/square/band/issueTeam/issueTeam",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/tool/tool",
+          "pathName": "pages/tool/tool",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/tool/tool",
+          "pathName": "components/tool/chord/myPicker/myPicker",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "components/tool/chord/myPicker/myPicker",
+          "pathName": "components/tool/chord/myPicker/myPicker",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/tool/tool",
+          "pathName": "pages/tool/tool",
           "scene": null
         }
       ]

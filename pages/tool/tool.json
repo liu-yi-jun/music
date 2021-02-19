@@ -4,7 +4,9 @@
     "navBar": "/components/navBar/navBar",
     "musicScore": "/components/tool/musicScore/musicScore",
     "analysis": "/components/tool/analysis/analysis",
-    "authorization":"/components/common/authorization/authorization"
+    "authorization":"/components/common/authorization/authorization",
+    "bar":"/components/common/bar/bar",
+    "chord":"/components/tool/chord/chord"
   },
   "disableScroll": true
 }

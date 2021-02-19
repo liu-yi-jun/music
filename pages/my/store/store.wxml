@@ -2,29 +2,20 @@
 <view class="store">
   <navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' iconTheme='white' back="{{true}}"
     bindback="handlerGobackClick"></navBar>
-  <view class="bar">
-    <text class="{{switchBtn === 'storeDynamic' ? 'active' : ''}}" catchtap="switchBtn" data-switchBtn="storeDynamic">动态</text>
-    <view class="line"></view>
-    <text class="{{switchBtn === 'storeCurriculum' ? 'active' : ''}}" catchtap="switchBtn"
-      data-switchBtn="storeCurriculum">课程</text>
-    <view class="line"></view>
-    <text class="{{switchBtn === 'storeAlliance' ? 'active' : ''}}" catchtap="switchBtn"
-      data-switchBtn="storeAlliance">联盟活动</text>
-    <view class="line"></view>
-    <text class="{{switchBtn === 'storePerformance' ? 'active' : ''}}" catchtap="switchBtn"
-      data-switchBtn="storePerformance">演出咨讯</text>
+  <view class="barWrap">
+    <bar barList="{{barList}}" actIndex="{{actIndex}}" bind:switchBtn="switchBtn"></bar>
   </view>
-  <scroll-view bindscrolltolower="scrolltolower" scroll-y  style="height: calc({{excludeHeight}}px - 130rpx);">
-    <view hidden="{{switchBtn !== 'storeDynamic'}}">
+  <scroll-view bindscrolltolower="scrolltolower" scroll-y style="height: calc({{excludeHeight}}px - 81rpx);">
+    <view hidden="{{actIndex !== 0}}">
       <dynamicList id="dynamicList" isInvitation="{{true}}" dynamics="{{dynamics}}"></dynamicList>
     </view>
-    <view hidden="{{switchBtn !== 'storeCurriculum'}}">
+    <view hidden="{{actIndex !== 1}}">
       <courseList courses="{{courses}}"></courseList>
     </view>
-    <view hidden="{{switchBtn !== 'storeAlliance'}}">
+    <view hidden="{{actIndex !== 2}}">
       <allianceList alliances="{{alliances}}"> </allianceList>
     </view>
-    <view hidden="{{switchBtn !== 'storePerformance'}}">
+    <view hidden="{{actIndex !== 3}}">
       <liveHouse> </liveHouse>
     </view>
   </scroll-view>

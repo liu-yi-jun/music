@@ -7,7 +7,6 @@ Page({
    * 页面的初始数据
    */
   data: {
-    switchBtn: 'LiveHouse',
     // 去除上面导航栏，剩余的高度
     excludeHeight: 0,
     alliances: [],
@@ -27,7 +26,19 @@ Page({
       pageSize: 10,
       pageIndex: 1,
       isNotData: false
-    }
+    },
+    barList: [{
+        name: 'LiveHouse',
+      },
+      {
+        name: '音乐节'
+      },
+      {
+        name: '联盟活动'
+      }
+    ],
+    actIndex: 0
+
 
   },
 
@@ -40,8 +51,8 @@ Page({
     this.getLiveHouse()
     this.getMusicFestival()
     this.getAlliance()
-  
-   
+
+
   },
   getLiveHouse() {
     let livehousePaging = this.data.livehousePaging
@@ -157,23 +168,23 @@ Page({
   handlerGobackClick: app.handlerGobackClick,
   //切换btn 
   switchBtn(e) {
-    const switchBtn = e.currentTarget.dataset.switchbtn
-    if (switchBtn === this.switchBtn) return
+    let actIndex = e.detail.actIndex
+    if (actIndex === this.data.actIndex) return
     this.setData({
-      switchBtn
+      actIndex
     })
   },
   scrolltolower() {
     let {
       alliancePaging,
       festivalPaging,
-      switchBtn
+      actIndex
     } = this.data
-    if (switchBtn === 'advance' && !alliancePaging.isNotData) {
+    if (actIndex === 2 && !alliancePaging.isNotData) {
       this.getAlliance()
-    } else if (switchBtn === 'mussic' && !festivalPaging.isNotData) {
+    } else if (actIndex === 1 && !festivalPaging.isNotData) {
       this.getMusicFestival()
-    } else if (switchBtn === 'LiveHouse') {
+    } else if (actIndex === 0) {
       this.getLiveHouse()
     }
   },
@@ -184,11 +195,11 @@ Page({
     })
   },
   completeLike(commenetBarData) {
-    let switchBtn = this.data.switchBtn
-    if (switchBtn === 'mussic') {
+    let actIndex = this.data.actIndex
+    if (actIndex === 1) {
       const mussicList = this.selectComponent('#mussicList');
       mussicList.completeLike(commenetBarData)
-    } else if (switchBtn === 'LiveHouse') {
+    } else if (actIndex === 0) {
 
 
     }
@@ -196,11 +207,11 @@ Page({
 
   },
   completeStore(commenetBarData) {
-    let switchBtn = this.data.switchBtn
-    if (switchBtn === 'mussic') {
+    let actIndex = this.data.actIndex
+    if (actIndex === 1) {
       const mussicList = this.selectComponent('#mussicList');
       mussicList.completeStore(commenetBarData)
-    } else if (switchBtn === 'LiveHouse') {
+    } else if (actIndex === 0) {
 
     }
   },

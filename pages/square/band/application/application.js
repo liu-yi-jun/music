@@ -24,8 +24,8 @@ Page({
    */
   onLoad: function (options) {
     let recruits = options.recruits
-    this.bandId = options.bandId
-    this.userId = options.userId
+    this.bandId = parseInt(options.bandId)
+    this.userId = parseInt(options.userId)
     recruits = tool.arraySplit(tool.reduction(JSON.parse(recruits)), 3)
     // 获取去除上面导航栏，剩余的高度
     tool.navExcludeHeight(this)
@@ -91,7 +91,7 @@ Page({
       })
     })
   },
-  // 创建小组
+  // 参加band
   joinBand(data) {
     return new Promise((resolve, reject) => {
       console.log(data)
@@ -129,6 +129,29 @@ Page({
       if (tempFilePath) params.videoUrl = await this.uploadVideo(tempFilePath)
       const result = await this.joinBand(params)
       console.log(result)
+      let from = {
+          userId: params.joinId,
+          nickName: params.nickName,
+          avatarUrl: params.avatarUrl,
+     
+        },
+        to = {
+          userIdList: [{userId:params.issueId}]
+        },
+        message = {
+          type: 3,
+          jsonDate: {
+            gender: params.gender,
+            userName: params.userName,
+            videoUrl: params.videoUrl,
+            bandId: params.bandId,
+            perform: params.perform,
+            contact: params.contact,
+            remark :params.remark,
+            isNew: 1
+          }
+        }
+      app.socket.emit("sendSystemMsg", from, to, message);
       wx.hideLoading()
       common.Tip('申请已发送，等待审核').then(() => {
         wx.navigateBack()

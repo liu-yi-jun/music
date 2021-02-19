@@ -17,14 +17,15 @@
       <view class="title">{{item.courseName}}
       </view>
       <view class="iconWrap">
-        <view class="views">
-          <image src="http://use.eigene.cn/views.png"></image>
-          <text>{{item.views}}</text>
-        </view>
         <view class="store">
           <image src="http://use.eigene.cn/collectionNumber.png"></image>
           <text>{{item.store}}</text>
         </view>
+        <view class="views">
+          <image src="http://use.eigene.cn/views.png"></image>
+          <text>{{item.views}}</text>
+        </view>
+ 
       </view>
     </view>
   </view>

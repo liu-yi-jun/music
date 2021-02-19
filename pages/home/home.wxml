@@ -33,11 +33,11 @@
     </image>
     <view mark:district="functionBar" class="functionBar {{functionBarShow? 'functionBarShow':''}}">
       <view catchtap="goPuchCard" class="puchCard {{functionBarShow? 'puchCardShow':''}}">
-        <image src="http://cdn.eigene.cn/home/puchCard.png"></image>
+        <image src="http://cdn.eigene.cn/home/puchCard2.png"></image>
         <text>打卡</text>
       </view>
       <view catchtap="goCourse" class="course {{functionBarShow? 'courseShow':''}}">
-        <image src="http://cdn.eigene.cn/home/course.png"></image>
+        <image src="http://cdn.eigene.cn/home/course2.png"></image>
         <text>课程</text>
       </view>
       <view catchtap="goMassManagement" class="setUp {{functionBarShow? 'setUpShow':''}}">
@@ -67,7 +67,7 @@
     <view hidden="{{showContent.mold !== 2}}" mark:operation="No" class="soundWrap">
       <playRecord id="playRecord" voiceUrl="{{showContent.voiceUrl}}"></playRecord>
     </view>
-    <view  mark:operation="No" class="delete" catchtap="showMenu"  data-index="{{index}}" >点击点击点击点击点击</view>
+    <view  mark:operation="No" class="delete iconfont iconshenglve" catchtap="showMenu"  data-index="{{index}}" ></view>
     <!-- <image wx:if="delete{{showContent.userId === myId}}" mark:operation="No" class="delete" catchtap="delete"
       data-index="{{index}}" src="http://cdn.eigene.cn/delete.png"></image> -->
     <view class="like-comment" mark:operation="No">

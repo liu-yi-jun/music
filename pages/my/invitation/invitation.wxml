@@ -24,11 +24,11 @@
         {{personal.groupDuty===0?'组长':(personal.groupDuty===1?'管理员':(personal.groupDuty===2?'组员':'申请中'))}}</view>
     </view>
     <view class="statistics">
-      <view catchtap="goFansFollow" data-flag="fans">
+      <view catchtap="goFansFollow" data-flag="0">
         <text class="text">粉丝</text>
         <text class="number">{{personal.fans}}</text>
       </view>
-      <view catchtap="goFansFollow" data-flag="follow">
+      <view catchtap="goFansFollow" data-flag="1">
         <text class="text">关注</text>
         <text class="number">{{personal.follows}}</text>
       </view>

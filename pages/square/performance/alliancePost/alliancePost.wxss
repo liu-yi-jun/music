@@ -4,8 +4,25 @@
   height: 100%;
 }
 
-.placeholder, .picker {
+.placeholder {
   color: #b6b7b7;
+}
+
+.date {
+  width: 100%;
+}
+
+.picker {
+  color: white;
+}
+
+.rowWrap>text {
+  flex-shrink: 0;
+}
+
+.rowWrap>input {
+  margin-left: 20rpx;
+  flex-grow: 1;
 }
 
 .wrap {
@@ -15,14 +32,23 @@
   padding: 0 50rpx 300rpx;
 }
 
-.wrap input, .date {
-  box-sizing: border-box;
-  border-bottom: 1rpx solid white;
+.rowWrap {
+  display: flex;
+  align-items: center;
+
+}
+
+.rowWrap {
   margin-top: 70rpx;
+  border-bottom: 1rpx solid white;
+  box-sizing: border-box;
   padding: 0rpx 20rpx;
   /* height: 60rpx; */
   color: white;
 }
+
+.wrap input,
+.date {}
 
 .warptextarea {
   /* height: calc(100vh - 220rpx); */
@@ -74,23 +100,28 @@
   position: relative;
   /* padding: 0 0 30rpx; */
 }
+
 .wrapVideo {
   height: 400rpx;
   width: 100%;
   padding: 0 8rpx;
   box-sizing: border-box;
 }
-.recordWrap{
+
+.recordWrap {
   padding: 0 8rpx;
   box-sizing: border-box;
 }
+
 .recordImg {
   width: 54rpx;
   height: 30rpx;
 }
+
 .recordTime {
   font-size: 25rpx;
 }
+
 .playRecord {
   width: 394rpx;
   height: 75rpx;
@@ -103,10 +134,12 @@
   justify-content: space-between;
   align-items: center;
 }
-.record{
+
+.record {
   position: fixed;
   z-index: 99999;
 }
+
 video {
   width: 100%;
   height: 100%;
@@ -139,12 +172,13 @@ video {
   transition: 0.4s all;
   background: rgba(0, 0, 0, 0.3);
 }
+
 .popup {
   background: linear-gradient(to bottom, rgba(226, 145, 227, 0.6), rgba(0, 69, 207, 0.6));
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%,-50%);
+  transform: translate(-50%, -50%);
 }
 
 .shadeShow {

@@ -1,0 +1,36 @@
+<!--components/tool/chord/myPicker/myPicker.wxml-->
+<view class="myPicker" catchtouchmove="" catchtouchend="">
+  <view class="df-item " style="height:159px;min-width:60px">
+  <view class="df-ul" data-class="h" style="transform: translate(0px, {{translateY}}px); transition:{{transition}};">
+    <view class="df-li df-show" data-val="00" style="line-height:32px;height:32px">00</view>
+    <view class="df-li df-show" data-val="01" style="line-height:32px;height:32px">01</view>
+    <view class="df-li df-show" data-val="02" style="line-height:32px;height:32px">02</view>
+    <view class="df-li df-show" data-val="03" style="line-height:32px;height:32px">03</view>
+    <view class="df-li df-show" data-val="04" style="line-height:32px;height:32px">04</view>
+    <view class="df-li df-show" data-val="05" style="line-height:32px;height:32px">05</view>
+    <view class="df-li df-show" data-val="06" style="line-height:32px;height:32px">06</view>
+    <view class="df-li df-show" data-val="07" style="line-height:32px;height:32px">07</view>
+    <view class="df-li df-show" data-val="08" style="line-height:32px;height:32px">08</view>
+    <view class="df-li df-show" data-val="09" style="line-height:32px;height:32px">09</view>
+    <view class="df-li df-show" data-val="10" style="line-height:32px;height:32px">10</view>
+    <view class="df-li df-show" data-val="11" style="line-height:32px;height:32px">11</view>
+    <view class="df-li df-show" data-val="12" style="line-height:32px;height:32px">12</view>
+    <view class="df-li df-show" data-val="13" style="line-height:32px;height:32px">13</view>
+    <view class="df-li df-show" data-val="14" style="line-height:32px;height:32px">14</view>
+    <view class="df-li df-show" data-val="15" style="line-height:32px;height:32px">15</view>
+    <view class="df-li df-show" data-val="16" style="line-height:32px;height:32px">16</view>
+    <view class="df-li df-show" data-val="17" style="line-height:32px;height:32px">17</view>
+    <view class="df-li df-show" data-val="18" style="line-height:32px;height:32px">18</view>
+    <view class="df-li df-show" data-val="19" style="line-height:32px;height:32px">19</view>
+    <view class="df-li df-show" data-val="20" style="line-height:32px;height:32px">20</view>
+    <view class="df-li df-show" data-val="21" style="line-height:32px;height:32px">21</view>
+    <view class="df-li df-show" data-val="22" style="line-height:32px;height:32px">22</view>
+    <view class="df-li df-show" data-val="23" style="line-height:32px;height:32px">23</view>
+  </view>
+  <view class="G-bg" catchtouchstart="moveStart" catchtouchmove="moveing" catchtouchend="moveEnd">
+    <view class="G-top" style="height:64px"></view>
+    <view class="G-mid" style="height:32px"></view>
+    <view class="G-btm" style="height:64px"></view>
+  </view>
+</view>
+</view>

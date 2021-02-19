@@ -1,6 +1,8 @@
 // pages/square/performance/allianceDetail/allianceDetail.js
 const app = getApp()
 const tool = require('../../../../assets/tool/tool')
+const core = require('../../../../assets/tool/core')
+const common = require('../../../../assets/tool/common')
 Page({
 
   /**
@@ -18,8 +20,21 @@ Page({
     indexObject: {},
     IsNoData: false,
     // 评论或回复的参数
-    param:{},
-    commenetBarData:{}
+    param: {},
+    commenetBarData: {},
+    list: [{
+      name: '分享',
+      open_type: 'share',
+      functionName: ''
+    }, {
+      name: '收藏',
+      open_type: '',
+      functionName: 'handleStore'
+    }, {
+      name: '投诉',
+      open_type: '',
+      functionName: 'handleReport'
+    }]
   },
 
   /**
@@ -31,9 +46,9 @@ Page({
     this.getAllianceDetail(id, this.table, 'detail')
     // 获取去除上面导航栏，剩余的高度
     tool.navExcludeHeight(this)
-    
+
   },
-  getAllianceDetail(id,table,type) {
+  getAllianceDetail(id, table, type) {
     let commentPaging = this.data.commentPaging
     app.get(app.Api.allianceDetailAndCommont, {
       id,
@@ -209,6 +224,73 @@ Page({
     })
   },
   scrolltolower() {
-    if (!this.data.IsNoData) this.getAllianceDetail(this.data.detail.id,this.table)
+    if (!this.data.IsNoData) this.getAllianceDetail(this.data.detail.id, this.table)
+  },
+  showMenu(e) {
+    if (app.userInfo.id === this.data.detail.userId) {
+      let list = this.data.list
+      list[2] = {
+        name: '删除',
+        open_type: '',
+        functionName: 'hadleDelete'
+      }
+      this.setData({
+        list
+      }, () => {
+        this.selectComponent('#menu').show();
+      })
+    } else {
+      this.selectComponent('#menu').show();
+    }
+  },
+  handleStore() {
+    let detail = this.data.detail
+    core.operateStore(app.Api[this.table + 'Store'], {
+      operate: true,
+      relation: {
+        userId: app.userInfo.id,
+        themeId: detail.id
+      },
+    }).then(res => {
+      if (res.modify) {
+        common.Toast('收藏成功')
+      } else {
+        common.Toast('动态已存在')
+      }
+    })
+  },
+  handleReport() {
+    console.log('投诉');
+    common.showLoading('投诉中...')
+    setTimeout(() => {
+      wx.hideLoading()
+      common.Tip('投诉消息已发送至本平台，工作人员将进行审核')
+    }, 1200)
+  },
+  hadleDelete(e) {
+    common.Tip('是否删除该动态', '提示', '确认', true).then(res => {
+      if (res.confirm) {
+        console.log('用户点击确定')
+        this.deleteDynamic(e)
+      } else if (res.cancel) {
+        console.log('用户点击取消')
+      }
+    })
+  },
+  deleteDynamic(e) {
+    common.showLoading('删除中')
+    let detail = this.data.detail
+    app.post(app.Api[this.table + 'Delete'], {
+      tableName: this.table,
+      id: detail.id
+    }, {
+      loading: false
+    }).then(res => {
+      if (res.affectedRows) {
+        common.Toast('已删除')
+      } else {
+        common.Toast('该详情已不存在')
+      }
+    })
   },
 })

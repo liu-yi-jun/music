@@ -34,11 +34,29 @@
 }
 
 .importWrap {
-  padding: 30rpx 40rpx;
+  padding: 25rpx 40rpx ;
   box-sizing: border-box;
   border-bottom: 1rpx solid white;
   color: white;
   font-size: 26rpx;
+  display: flex;
+  align-items: center;
+}
+.importWrap > text {
+  flex-shrink: 0;
+  margin-right: 20rpx;
+}
+.importWrap > input {
+  flex-grow: 1;
+}
+
+.additionalWrap {
+  align-items: flex-start;
+  flex-direction: column;
+}
+.importWrap > textarea {
+  box-sizing: border-box;
+  padding: 10rpx 0rpx 0rpx;
 }
 
 .placeholder {
@@ -50,9 +68,6 @@ textarea {
   height: 400rpx;
 }
 
-.min {
-  padding: 25rpx 40rpx !important;
-}
 .first {
   padding: 15rpx 40rpx 35rpx !important;
 }

@@ -64,8 +64,9 @@
 }
 
 .describe {
-  color: #b6b7b7;
-  font-size: 28rpx;
+  color: #9E9E9F;
+  font-size: 32rpx;
+  margin-top: 25rpx;
 }
 
 .describe > view {

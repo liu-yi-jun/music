@@ -9,43 +9,7 @@ Page({
   data: {
     // 去除上面导航栏，剩余的高度
     excludeHeight: 0,
-    admini: [{
-        id: 0,
-        avatarSrc: "http://cdn.eigene.cn/avatar14.png",
-        userName: 'Desperado',
-        sex: '♂',
-        constellation: '双鱼座',
-        age: 22,
-        position: '社长'
-      },
-      {
-        id: 1,
-        avatarSrc: "http://cdn.eigene.cn/avatar15.png",
-        userName: 'Raymond',
-        sex: '♂',
-        constellation: '双子座',
-        age: 24,
-        position: '管理员'
-      },
-      {
-        id: 2,
-        avatarSrc: "http://cdn.eigene.cn/avatar16.png",
-        userName: 'Potato',
-        sex: '♂',
-        constellation: '水瓶座',
-        age: 22,
-        position: '管理员'
-      },
-      {
-        id: 3,
-        avatarSrc: "http://cdn.eigene.cn/avatar17.png",
-        userName: 'LonerApaul',
-        sex: '♂',
-        constellation: '双鱼座',
-        age: 22,
-        position: '管理员'
-      }
-    ]
+    admini: []
   },
 
   /**

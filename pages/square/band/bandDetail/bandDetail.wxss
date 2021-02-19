@@ -1,0 +1,210 @@
+/* pages/square/band/bandDetail/bandDetail.wxss */
+.head {
+  display: flex;
+  border-bottom: 4rpx solid #b7b8b8;
+  height: 150rpx;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  padding-left: 40rpx;
+}
+
+.avatarWrap {
+  height: 80%;
+  display: flex;
+  align-items: center;
+  padding: 0 20rpx;
+  border-left: 1rpx solid #cacbcb;
+}
+
+.avatarWrap text {
+  display: block;
+  /* height: 65rpx; */
+  /* font-size: 26rpx; */
+  margin-left: 10rpx;
+}
+
+.avatar {
+  width: 65rpx;
+  height: 65rpx;
+  border-radius: 50%;
+}
+
+.titleName {
+  color: white;
+  font-size: 34rpx;
+}
+
+.iconWrap {
+  display: flex;
+  margin-top: 10rpx;
+}
+
+.iconPart {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 15rpx;
+}
+
+.iconImg1 {
+  width: 32rpx;
+  height: 32rpx;
+  margin-right: 8rpx;
+}
+
+.iconImg2 {
+  width: 32rpx;
+  height: 22rpx;
+  margin-right: 8rpx;
+}
+
+.iconNumber {
+  font-size: 23rpx;
+  color: white;
+}
+
+
+.exist,
+.recruit {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18rpx;
+  width: 52rpx;
+  height: 33rpx;
+  margin-top: 10rpx;
+  border-radius: 6rpx;
+  border: 1px solid #AB85D9;
+  background-color: #AB85D9;
+  color: #FFFFFF;
+}
+
+.bandPart {
+  box-sizing: border-box;
+  padding: 20rpx 40rpx;
+  border-bottom: 1rpx solid #b7b8b8;
+  position: relative;
+}
+
+.contentPart {
+  box-sizing: border-box;
+  padding: 20rpx 40rpx;
+  border-bottom: 1rpx solid #b7b8b8;
+  color: white;
+}
+.commentWrap {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 40rpx 20rpx 0;
+}
+
+.commentWrap image {
+  width: 60rpx;
+  height: 60rpx;
+}
+
+.commentWrap text {
+  color: white;
+  font-size: 30rpx;
+  margin-left: 10rpx;
+}
+
+.footerComment {
+  background: linear-gradient(to bottom, rgba(226, 145, 227, 0.5), rgba(0, 69, 207, 0.5));
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  z-index: 999;
+}
+
+.exist-recruit {
+  width: 98%;
+  margin: auto;
+  box-sizing: border-box;
+  padding: 40rpx 0;
+}
+
+
+.existLogo image, .recruitLogo image {
+  width: 85rpx;
+  height: 85rpx;
+}
+
+
+.existLogo, .recruitLogo {
+  display: flex;
+  margin-top: 20rpx;
+  height: 122rpx;
+  color: white;
+}
+
+
+
+.existLogo text, .recruitLogo text {
+  font-size: 28rpx;
+}
+.recruitWrap {
+  margin-top: 40rpx;
+  position: relative;
+}
+.existLogo image, .recruitLogo image {
+  width: 85rpx;
+  height: 85rpx;
+}
+
+
+.existLogo, .recruitLogo {
+  display: flex;
+  margin-top: 20rpx;
+  height: 122rpx;
+  color: white;
+  width: 78%;
+}
+
+
+
+.existLogo text, .recruitLogo text {
+  font-size: 22rpx;
+}
+
+swiper-item {
+  display: flex;
+
+}
+
+swiper-item > view{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-right: 30rpx;
+}
+
+.join {
+  width: 220rpx;
+  height: 220rpx;
+  position: absolute;
+  right: 0rpx;
+  bottom: 0rpx;
+}
+.joinInner{
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+  width: 70%;
+  height: 70%;
+}
+
+
+.left {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+.nameBotoom {
+  color: #b7b8b8;
+  font-size: 22rpx;
+}

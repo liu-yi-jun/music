@@ -2,7 +2,7 @@
 
 .learnGuitarList {
   box-sizing: border-box;
-  padding: 0 30rpx 100rpx;
+  padding: 30rpx 30rpx 100rpx;
 }
 
 .card {
@@ -111,16 +111,16 @@
   align-items: center;
 }
 .store image {
-  width: 30rpx;
-  height: 30rpx;
+  width: 32rpx;
+  height: 32rpx;
 }
 .store, .views  {
   display: flex;
   align-items: center;
 }
 .views image {
- width: 34rpx;
-  height: 24rpx;
+ width: 37rpx;
+  height: 27rpx;
 }
 
 .iconWrap text {

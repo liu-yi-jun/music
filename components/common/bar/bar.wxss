@@ -1,0 +1,23 @@
+/* components/common/bar/bar.wxss */
+.bar {
+  position: relative;
+  /* height: 85rpx; */
+  display: flex;
+  box-sizing: border-box;
+  align-items: flex-start;
+  width: 100%;
+  /* margin-top: 100rpx; */
+ 
+}
+
+.active {
+  border-bottom: 6rpx solid #aa7edf;
+  font-weight: bold;
+  
+}
+
+
+.portion {
+  padding: 0px 6rpx 4rpx;
+  color: white;
+}

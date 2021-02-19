@@ -7,11 +7,11 @@
   position: relative;
   margin-bottom: 20rpx;
   box-sizing: border-box;
-  width: 85%;
+  width: 91%;
   margin: auto;
 }
 
-.title::before {
+/* .title::before {
   content: "";
   display: block;
   position: absolute;
@@ -22,7 +22,7 @@
   top: 0;
   bottom:0;
   margin: auto 0; 
-}
+} */
 
 .title-top {
   color: #fff;
@@ -36,11 +36,11 @@
 
 .head {
   box-sizing: border-box;
-  padding: 0 20rpx;
+  padding: 0 30rpx;
   display: flex;
   /* justify-content: space-around; */
   align-items: center;
-  margin-top: 10rpx;
+  margin-top: 15rpx;
   margin-bottom: 20rpx;
 }
 
@@ -50,33 +50,6 @@
   border-radius: 50%;
 }
 
-
-.line {
-  height: 26rpx;
-  border-left: 1rpx solid #a3a3a4;
-  margin: 0 20rpx;
-}
-
-.bar {
-  height: 100%;
-  display: flex;
-  align-items: center;
-  box-sizing: border-box;
-  margin-left: 30rpx;
-  /* padding: 0 20rpx; */
-}
-
-.bar text {
-  text-align: center;
-  box-sizing: border-box;
-  color: #b6b7b7;
-  font-size: 30rpx;
-}
-
-.active {
-  color: white !important;
-  transform: scale(1.1);
-}
 
 .searchLog {
   width: 30rpx;
@@ -100,4 +73,9 @@
 
 .searchWrap {
   position: relative;
+}
+
+.barWrap {
+  box-sizing: border-box;
+  padding-left: 20rpx;
 }

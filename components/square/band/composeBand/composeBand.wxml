@@ -1,10 +1,29 @@
 <!--components/square/band/composeBand/composeBand.wxml-->
 <view class="components">
-  <view wx:for="{{list}}">
-    <view class="part">
-      <view class="partHead"></view>
-      <view class="existWrap"></view>
-      <view class="existWrap"></view>
+  <view wx:for="{{bands}}" wx:for-item="band" wx:key="index">
+    <view class="part" catchtap="toBandDetail" data-id="{{band.id}}">
+      <view class="partHead">
+        <view class="groupName">七和弦吉他小组</view>
+        <view class="line"></view>
+      </view>
+      <view class="existWrap">现有</view>
+      <view class="instrumentsRow">
+        <view class="instrumentsWrap" wx:for="{{band.existArr}}">
+          <image class="instruments" src="{{item.instrumentsUrl}}"></image>
+          <view class="instrumentsName">{{item.instrumentsName}}</view>
+        </view>
+      </view>
+      <view class="recruit">招募</view>
+      <view class="instrumentsRow">
+        <view class="instrumentsWrap" wx:for="{{band.recruitArr}}">
+          <image class="instruments" src="{{item.instrumentsUrl}}"></image>
+          <view class="instrumentsName">{{item.instrumentsName}}</view>
+        </view>
+      </view>
+      <view></view>
     </view>
   </view>
+  <image class="issueDynamic" src="http://cdn.eigene.cn/square/issueDynamic2.png">
+    <view class="issueDynamicInner" catchtap="toIssueTeam"></view>
+  </image>
 </view>

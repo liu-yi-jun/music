@@ -100,7 +100,7 @@
   margin-bottom: 20rpx;
   align-items: center;
   box-sizing: border-box;
-  padding-right: 20rpx;
+  /* padding-right: 20rpx; */
 }
 
 .like-comment {
@@ -265,14 +265,7 @@ video {
   margin-top: 15rpx;
 }
 
-.delete {
-  width: 25rpx;
-  height: 28rpx;
-}
 
-.extend {
-  color: white;
-}
 
 .contentText {
   color: white;
@@ -296,4 +289,13 @@ video {
   width: 40rpx;
   height: 40rpx;
   /* transform: scale(0.8); */
+}
+
+.delete {
+  width: 70rpx;
+  height: 70rpx;
+  font-size: 36rpx;
+  color: white;
+  text-align: center;
+  line-height: 70rpx;
 }

@@ -13,8 +13,8 @@ Page({
     tempFilePaths: [],
     groupInfo: [],
     describe: '',
-    privates: false,
-    examine: false,
+    privates: 0,
+    examine: 0,
     groupDuty: 0
   },
 
@@ -64,6 +64,7 @@ Page({
     const params = await this.validate()
     if (params) {
       let modifyResult = await this.modifyGroup(params)
+      modifyResult.myGrouList = app.groupInfo.myGrouList
       app.groupInfo = modifyResult
     }
   },

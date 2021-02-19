@@ -3,7 +3,8 @@
     "privateLetter": "/components/my/information/privateLetter/privateLetter",
     "inform": "/components/my/information/inform/inform",
     "system": "/components/my/information/system/system",
-    "navBar": "/components/navBar/navBar"
+    "navBar": "/components/navBar/navBar",
+    "bar":"/components/common/bar/bar"
   },
   "disableScroll": true
 }

@@ -30,11 +30,11 @@
         <text class="typeTile">小组类型</text>
         <view class="switchWarp">
           <view>
-            <switch name="private" checked="{{form.privates}}"></switch>
+            <switch name="privates" checked="{{form.privates}}" bindchange="changePrivate"></switch>
             <text>设为私密</text>
           </view>
           <view>   
-            <switch  name="examine" checked="{{form.examine}}"></switch>
+            <switch  name="examine" checked="{{form.examine}}" bindchange="changeExamine" ></switch>
             <text>入社审批</text>
           </view>
         </view>

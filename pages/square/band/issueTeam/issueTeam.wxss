@@ -39,13 +39,15 @@
   margin-left: 10rpx;
 }
 
-.existLogo image, .recruitLogo image {
+.existLogo image,
+.recruitLogo image {
   width: 85rpx;
   height: 85rpx;
 }
 
 
-.existLogo, .recruitLogo {
+.existLogo,
+.recruitLogo {
   display: flex;
   margin-top: 20rpx;
   height: 122rpx;
@@ -54,7 +56,8 @@
 
 
 
-.existLogo text, .recruitLogo text {
+.existLogo text,
+.recruitLogo text {
   font-size: 28rpx;
 }
 
@@ -68,7 +71,8 @@
   color: white;
 }
 
-.recruit, .exist {
+.recruit,
+.exist {
   display: inline-block;
   border-radius: 15rpx;
   font-size: 28rpx;
@@ -122,29 +126,32 @@
 }
 
 .issue {
-  width: 120rpx!important;
-  height: 50rpx!important;
-  background: white!important;
-  color: #9679cd!important;
-  border-radius: 999rem!important;
-  text-align: center!important;
-  line-height: 50rpx!important;
-  margin: auto!important;
-  box-shadow: 0rpx 0rpx 10rpx 2rpx rgba(0, 0, 255, 0.1)!important;
+  width: 120rpx !important;
+  height: 50rpx !important;
+  background: white !important;
+  color: #9679cd !important;
+  border-radius: 999rem !important;
+  text-align: center !important;
+  line-height: 50rpx !important;
+  margin: auto !important;
+  box-shadow: 0rpx 0rpx 10rpx 2rpx rgba(0, 0, 255, 0.1) !important;
 }
 
 .existWrap {
-  position: relative;
+  /* position: relative; */
 }
-.existPopup ,.recruitPopup{
+
+.existPopup,
+.recruitPopup {
   width: 623rpx;
   height: 602rpx;
   background: white;
   border-radius: 20rpx;
   position: absolute;
-  left: 40rpx;
-  top: 75rpx;
+  left: 50%;
+  top: 50%;
   z-index: 10;
+  transform: translate(-50%, -50%);
   display: flex;
   flex-wrap: wrap;
   box-sizing: border-box;
@@ -195,30 +202,68 @@ swiper-item {
   justify-content: space-around;
 }
 
-swiper-item > view{
+swiper-item>view {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
+
 .locationWrap {
   color: #B7B8B8;
   margin-left: 30rpx;
   font-size: 30rpx;
 }
+
 .location {
   display: inline-block;
 }
+
 .picker {
   color: white;
   margin-left: 34rpx;
 }
+
 .locationLogo {
   width: 26rpx;
   height: 36rpx;
   position: relative;
   top: 4rpx;
 }
+
 .locationText {
   margin-left: 8rpx;
+}
+
+.addRecruit,
+.addExist {
+  width: 152rpx;
+  height: 47rpx;
+}
+
+.addRecruitWrap,
+.addExistWrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200rpx;
+}
+.complete {
+  width: 130rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+  color:  white;
+  text-align: center;
+  background:#B37AE5;
+  border-radius: 999rem;
+  box-shadow: 0rpx 0rpx 14rpx 2rpx rgba(0, 0, 0, .2);
+  font-size: 30rpx;
+}
+.completeWrap {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20rpx;
+  margin-bottom: 12rpx;
 }

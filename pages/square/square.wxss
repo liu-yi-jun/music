@@ -21,7 +21,7 @@
 
 .recommendBackground {
   position: relative;
-  background-image: url('http://cdn.eigene.cn/square/recommendBackground2.png');
+  background-image: url('http://cdn.eigene.cn/square/recommendBackground3.png');
   width: 206rpx;
   height: 414rpx;
   background-size: 100% 100%;
@@ -185,11 +185,11 @@ swiper-item {
 
 
 .issueDynamic {
-  width: 140rpx;
-  height: 140rpx;
+  width: 233rpx;
+  height: 233rpx;
   position: fixed;
-  bottom: calc(140rpx + env(safe-area-inset-bottom));
-  right: 21rpx;
+  bottom: calc(120rpx + env(safe-area-inset-bottom));
+  right: -16rpx;
 }
 
 .hideBar {
@@ -307,4 +307,12 @@ swiper-item {
 .cross {
   transition: 2s all;
   background: rgba(0, 0, 0, 1);
+}
+.issueDynamicInner {
+  width: 70%;
+  height: 70%;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
 }
