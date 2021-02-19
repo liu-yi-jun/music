@@ -66,3 +66,4 @@
 
 <menu id="menu" list="{{list}}" bind:handleStore="handleStore" bind:handleReport="handleReport"
   bind:hadleDelete="hadleDelete" bind:cancelMenu="cancelMenu"></menu>
+
