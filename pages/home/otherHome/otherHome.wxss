@@ -186,9 +186,8 @@ page::before {
 }
 
 .puchCard image, .course image {
-  width: 100rpx;
-  height: 100rpx;
-  margin-bottom: 10rpx;
+  width: 116rpx;
+  height: 116rpx;
 }
 
 .puchCard, .course {
@@ -520,4 +519,16 @@ page::before {
   top: 39%;
   transform: translate(-50%, -50%);
   position: absolute;
+}
+
+.delete {
+  width: 70rpx;
+  height: 70rpx;
+  position: absolute;
+  right: 130rpx;
+  bottom: 327rpx;
+  font-size: 36rpx;
+  color: white;
+  text-align: center;
+  line-height: 70rpx;
 }

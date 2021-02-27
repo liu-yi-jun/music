@@ -108,20 +108,20 @@ Page({
 
   },
   handlerGobackClick: app.handlerGobackClick,
- 
+  scrolltolower() {
+    let {
+      isNoData,
+    } = this.data
+    if (!isNoData) {
+      this.getBands()
+    }
+  },
   goIssueTeam() {
     wx.navigateTo({
       url: '/pages/square/band/issueTeam/issueTeam',
     })
   },
-  // 切换卡
-  changeCard(e) {
-    let current = e.detail.current
-    let bands = this.data.bands
-    if (current == bands.length - 1 && !this.data.isNoData) {
-      this.getBands()
-    }
-  },
+
   switchBtn(e) {
     let actIndex = e.detail.actIndex
     if (this.data.actIndex === actIndex) {

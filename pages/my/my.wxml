@@ -26,7 +26,7 @@
       <image class="iconImg" src="http://cdn.eigene.cn/my/invitation.png"></image>
       <text class="iconCharacter">帖子</text>
     </view> -->
-    <view class="iconWrap" catchtap="gofollowMass" data-flag="follow">
+    <view class="iconWrap" catchtap="goFollow" data-flag="follow">
       <image class="iconImg" src="http://cdn.eigene.cn/my/follow.png"></image>
       <text class="iconCharacter">关注</text>
     </view>
@@ -35,7 +35,9 @@
       <text class="iconCharacter">收藏</text>
     </view>
     <view class="iconWrap">
-      <image class="iconImg" catchtap="goInformation" src="http://cdn.eigene.cn/my/information.png"></image>
+      <image class="iconImg" catchtap="goInformation" src="http://cdn.eigene.cn/my/information.png">
+        <view class="number" wx:if="{{noticeNumbe}}">{{noticeNumbe}}</view>
+      </image>
       <text class="iconCharacter">消息</text>
     </view>
   </view>

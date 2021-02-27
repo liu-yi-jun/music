@@ -24,7 +24,7 @@
           </view>
           <view>
             <switch checked="{{examine}}" bindchange="changeExamine"></switch>
-            <text>入社审批</text>
+            <text>小组审批</text>
           </view>
         </view>
       </view>
@@ -48,7 +48,7 @@
           <text class="numberText">总成员数</text>
         </view>
         <view>
-          <text class="number">13</text>
+          <text class="number">{{newNumber}}</text>
           <text class="numberText">新成员数</text>
         </view>
         <view>
@@ -58,9 +58,11 @@
       </view>
     </view>
     <view class="dissolutionWrap" wx:if="{{groupDuty===0}}">
+      <view class="save" catchtap="save">保存</view>
       <view class="dissolution" catchtap="toDissolution">解散小组</view>
     </view>
     <view class="dissolutionWrap" wx:if="{{groupDuty===1 || groupDuty===2 }}">
+      <view class="save"  catchtap="save">保存</view>
       <view class="dissolution" catchtap="toSignOut">退出小组</view>
     </view>
     <view class="dissolutionWrap" wx:if="{{groupDuty===-1}}">

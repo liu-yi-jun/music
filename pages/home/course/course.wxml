@@ -11,7 +11,7 @@
   <courseList courses="{{courses}}">
   </courseList>
   </scroll-view>
-  <image  wx:if="{{isMyGroup && groupDuty!=-1}}" class="issueDynamic" src="http://cdn.eigene.cn/square/issueDynamic2.png">
+  <image  wx:if="{{isMyGroup && (groupDuty === 0 || groupDuty === 1)}}" class="issueDynamic" src="http://cdn.eigene.cn/square/issueDynamic2.png">
     <view class="issueDynamicInner" catchtap="goAddCourse"></view>
   </image>
 

@@ -1,7 +1,0 @@
-{
-  "usingComponents": {
-    "navBar": "/components/navBar/navBar",
-    "groupList": "/components/my/groupList/groupList"
-  },
-  "disableScroll": true
-}

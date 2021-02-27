@@ -143,25 +143,36 @@ Page({
       })
     })
     this.innerSoundContext.onStop(() => {
+      console.log('onStop')
       this.setData({
         isPlay: false
       })
     })
     this.innerSoundContext.onPause(() => {
       console.log('onPause')
-      this.innerSoundContext.stop()
+      this.setData({
+        isPlay: false
+      })
     })
   },
   playRecord() {
-    if (this.data.isPlay) return
-    let tempRecordPath = this.data.tempRecordPath
-    this.innerSoundContext && this.innerSoundContext.destroy()
-    this.initSound()
-    this.innerSoundContext.src = tempRecordPath
-    this.innerSoundContext.play()
-    this.setData({
-      isPlay: true
-    })
+    if (!this.innerSoundContext) {
+      let tempRecordPath = this.data.tempRecordPath
+      this.initSound()
+      this.innerSoundContext.src = tempRecordPath
+    }
+    if (this.data.isPlay) {
+      this.innerSoundContext.pause()
+      this.setData({
+        isPlay: false
+      })
+    } else {
+      this.innerSoundContext.play()
+      this.setData({
+        isPlay: true
+      })
+    }
+
   },
 
   // 处理声音条的宽度
@@ -200,7 +211,7 @@ Page({
     //   itemList: ['添加网络链接', '从手机选择图片'],
     //   success: res => {
     //     if (res.tapIndex === 1) {
-          this.chooseImg()
+    this.chooseImg()
     //     } else if (res.tapIndex === 0) {
     //       this.showPopup(3)
     //     }
@@ -224,8 +235,8 @@ Page({
     // wx.showActionSheet({
     //   itemList: ['添加网络链接', '在线录音'],
     //   success: res => {
-        // if (res.tapIndex === 1) {
-          this.record()
+    // if (res.tapIndex === 1) {
+    this.record()
     //     } else if (res.tapIndex === 0) {
     //       this.showPopup(1)
     //     }
@@ -434,7 +445,7 @@ Page({
         loading: false
       }).then(res => resolve(res)).catch(err => reject(err))
     })
-  }, 
+  },
   // 取消弹窗
   cancelPopup() {
     this.setData({

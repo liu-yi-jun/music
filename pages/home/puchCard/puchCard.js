@@ -60,6 +60,8 @@ Page({
     this.getPagingGroupCard(showGroupId)
     this.initialization()
     this.getProgressBoxInfo()
+    this.initSound()
+
   },
   toLike(e) {
     let {
@@ -110,6 +112,7 @@ Page({
       })
     })
     this.innerSoundContext.onStop(() => {
+      console.log('onstop');
       let groupCards = this.data.groupCards
       groupCards[this.i].soundRowArr[this.j].isPlay = false
       this.setData({
@@ -118,7 +121,11 @@ Page({
     })
     this.innerSoundContext.onPause(() => {
       console.log('onPause')
-      this.innerSoundContext.stop()
+      let groupCards = this.data.groupCards
+      groupCards[this.i].soundRowArr[this.j].isPlay = false
+      this.setData({
+        groupCards
+      })
     })
   },
   playSound(e) {
@@ -140,8 +147,6 @@ Page({
       flag = true
     }
     if (flag) {
-      this.i = i
-      this.j = j
       if (oldI !== undefined) {
         groupCards[oldI].soundRowArr[oldJ].isPlay = false
       }
@@ -149,10 +154,24 @@ Page({
       this.setData({
         groupCards
       })
-      this.innerSoundContext && this.innerSoundContext.destroy()
-      this.initSound()
-      this.innerSoundContext.src = recordurl
+      // this.innerSoundContext && this.innerSoundContext.destroy()
+      // this.initSound()
+      if(this.innerSoundContext.src !== recordurl) {
+        this.innerSoundContext.src = recordurl
+      }
       this.innerSoundContext.play()
+      setTimeout(()=> {
+        this.i = i
+        this.j = j
+      },500)
+    }else {
+      groupCards[i].soundRowArr[j].isPlay = false;
+      this.setData({
+        groupCards
+      })
+      this.innerSoundContext.pause()
+      this.i = i
+      this.j = j
     }
 
   },
@@ -271,6 +290,7 @@ Page({
     this.innerAudioContext.destroy()
     this.recorderManager.stop()
     this.innerSoundContext && this.innerSoundContext.destroy()
+    clearInterval(this.loop);
   },
   onHide() {
     this.innerSoundContext && this.innerSoundContext.stop()

@@ -209,6 +209,24 @@
         {
           "name": "pages/tool/tool",
           "pathName": "pages/tool/tool",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/my/follow/follow",
+          "pathName": "pages/my/follow/follow",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/home/massManagement/massManagement",
+          "pathName": "pages/home/massManagement/massManagement",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/my/editData/editData",
+          "pathName": "pages/my/editData/editData",
           "scene": null
         }
       ]

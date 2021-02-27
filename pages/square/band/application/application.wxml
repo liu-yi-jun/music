@@ -74,7 +74,7 @@
       </view>
       <view class="okLogoWrap">
         
-        <image class="okLogo" src="http://cdn.eigene.cn/issuePuchCard/okLogo.png">
+        <image class="okLogo" src="http://cdn.eigene.cn/issuePuchCard/okLogo2.png">
           <button form-type="submit" class="okInner" plain='true'></button>
         </image>
       </view>

@@ -15,7 +15,8 @@ Page({
     describe: '',
     privates: 0,
     examine: 0,
-    groupDuty: 0
+    groupDuty: 0,
+    newNumber: 0
   },
 
   /**
@@ -24,6 +25,7 @@ Page({
   onLoad: function (options) {
     // 获取去除上面导航栏，剩余的高度
     tool.navExcludeHeight(this)
+    this.getNewNumber()
     // 将小组信息存储到data
     this.setData({
       groupInfo: app.groupInfo,
@@ -41,7 +43,16 @@ Page({
   onReady: function () {
 
   },
-
+  getNewNumber() {
+    app.get(app.Api.newNumber,{
+      groupId:app.groupInfo.id
+    },{loading:false}).then(res=> {
+    console.log(res);
+    this.setData({
+      newNumber: res.newNumber
+    })
+    })
+  },
   /**
    * 生命周期函数--监听页面显示
    */
@@ -59,21 +70,40 @@ Page({
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: async function () {
-    console.log('onUnload')
+  save: async function() {
+    console.log(1);
     const params = await this.validate()
     if (params) {
       let modifyResult = await this.modifyGroup(params)
       modifyResult.myGrouList = app.groupInfo.myGrouList
       app.groupInfo = modifyResult
+      if(modifyResult) {
+        common.Toast('已保存',1500,'success')
+        setTimeout(()=> {
+          wx.navigateBack()
+        },1500)
+        
+      }else {
+        common.Toast('保存失败,请稍后重试')
     }
+    }else {
+      common.Toast('已保存',1500,'success')
+      setTimeout(()=> {
+        wx.navigateBack()
+      },1500)
+    }
+
+  },
+  onUnload: async function () {
+    console.log('onUnload')
+  
   },
   // 修改小组
   modifyGroup(data) {
     return new Promise((resolve, reject) => {
       console.log(data)
       app.post(app.Api.modifyGroup, data, {
-        loading: false
+        loading: ['保存中...']
       }).then(res => resolve(res)).catch(err => reject(err))
     })
   },

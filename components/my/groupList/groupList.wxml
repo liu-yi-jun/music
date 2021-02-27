@@ -16,7 +16,7 @@
           <text>{{item.introduce}}</text>
         </view>
       </view>
-      <image data-index="{{index}}" catchtap="toFollow" class="follow"
+      <image wx:if="{{!isSettleGroup}}" data-index="{{index}}" catchtap="toFollow" class="follow"
         src="http://cdn.eigene.cn/followMass/follow{{item.isFollow?'ed':''}}.png"></image>
     </view>
   </view>

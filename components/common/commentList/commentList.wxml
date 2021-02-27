@@ -2,23 +2,48 @@
 <view>
 
   <view class="item" wx:for="{{commentArr}}" wx:key="id" wx:for-item="comment" wx:for-index="commentIndex">
-    <image class="avatar" src="{{comment.commenterAvatar}}" data-userid="{{comment.commenterId}}" catchtap="goPersonal"></image>
+    <!-- <image class="avatar" src="{{comment.commenterAvatar}}" data-userid="{{comment.commenterId}}" catchtap="goPersonal"></image>
     <view class="right">
       <view class="user1" >
         <text class="userName" catchtap="goPersonal" data-userid="{{comment.commenterId}}">{{comment.commenterName}}</text>
-        <text class="content1" catchtap="toReply" data-commentindex="{{commentIndex}}" >{{comment.commentCotent}}</text>
+        <view class="content1" hover-class="hover-user2" hover-stay-time="{{200}}" catchtap="toReply"   data-commentindex="{{commentIndex}}" >{{comment.commentCotent}}</view>
       </view>
-      <view class="user2" wx:for="{{comment.replyArr}}" wx:for-index="replyIndex" wx:key="id" >
+      <view class="user2" hover-class="hover-user2" hover-stay-time="{{200}}" wx:for="{{comment.replyArr}}" wx:for-index="replyIndex" wx:key="id"  catchtap="toReply" data-commentindex="{{commentIndex}}" data-replyindex="{{replyIndex}}">
         <view class="angle"></view>
-        <text class="userName" catchtap="goPersonal" data-userid="{{item.replyPersonId}}">{{item.replyPersonName}}</text>
+        <view class="userName" hover-stop-propagation="{{true}}" catchtap="goPersonal" data-userid="{{item.replyPersonId}}">{{item.replyPersonName}}</view>
         <text class="reply">回复：</text>
-        <text class="userName" wx:if="{{item.parentReplyId!==-1}}" catchtap="goPersonal" data-userid="{{item.parentReplyId}}">{{item.parentName}}</text>
-        <text class="content2" catchtap="toReply" data-commentindex="{{commentIndex}}" data-replyindex="{{replyIndex}}">{{item.replyContent}}</text>
+        <view class="userName" hover-stop-propagation="{{true}}"  wx:if="{{item.parentReplyId!==-1}}" catchtap="goPersonal" data-userid="{{item.parentReplyId}}" >{{item.parentName}}</view>
+        <text class="content2" >{{item.replyContent}}</text>
         <text class="replyTime" >{{item.releaseTime}}</text>
       </view>
       <view class="time">
         <text>{{comment.releaseTime}}</text>
       </view>
+    </view> -->
+
+    <view class="user1" hover-class="hover-user2" hover-stay-time="{{200}}" catchtap="toReply" data-commentindex="{{commentIndex}}">
+      <view class="avatar" style="background-image: url({{comment.commenterAvatar}});"   data-userid="{{comment.commenterId}}"
+        catchtap="goPersonal" hover-stop-propagation="{{true}}" ></view>
+      <view class="userName-content">
+        <view class="userName" hover-stop-propagation="{{true}}" catchtap="goPersonal"
+          data-userid="{{comment.commenterId}}">{{comment.commenterName}}</view>
+        <view class="content1" >{{comment.commentCotent}}</view>
+      </view>
+    </view>
+    <view class="user2" hover-class="hover-user2" hover-stay-time="{{200}}" wx:for="{{comment.replyArr}}"
+      wx:for-index="replyIndex" wx:key="id" catchtap="toReply" data-commentindex="{{commentIndex}}"
+      data-replyindex="{{replyIndex}}">
+      <view class="angle"></view>
+      <view class="userName" hover-stop-propagation="{{true}}" catchtap="goPersonal"
+        data-userid="{{item.replyPersonId}}">{{item.replyPersonName}}</view>
+      <text class="reply">回复：</text>
+      <view class="userName" hover-stop-propagation="{{true}}" wx:if="{{item.parentReplyId!==-1}}" catchtap="goPersonal"
+        data-userid="{{item.parentReplyId}}">{{item.parentName}}</view>
+      <text class="content2">{{item.replyContent}}</text>
+      <text class="replyTime">{{item.releaseTime}}</text>
+    </view>
+    <view class="time">
+      <text>{{comment.releaseTime}}</text>
     </view>
   </view>
 

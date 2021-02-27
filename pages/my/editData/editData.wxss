@@ -167,3 +167,9 @@
   box-shadow: 0rpx 0rpx 10rpx 2rpx rgba(0, 0, 255, .1)
 }
 
+.pickerWrap {
+  width: 100%;
+}
+.picker > text {
+  margin-right: 20rpx;
+}

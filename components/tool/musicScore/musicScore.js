@@ -17,8 +17,6 @@ Component({
    * 组件的初始数据
    */
   data: {
-    // 去除上面导航栏，剩余的高度
-    // excludeHeight: 0,
     // 控制右下角三角show
     tabBarBtnShow: false,
     circulars: [],
@@ -34,8 +32,6 @@ Component({
   },
   lifetimes: {
     created: function () {
-      // 获取去除上面导航栏，剩余的高度
-      // tool.navExcludeHeight(this)
       // this.getRandomTap()
       this.gettaps(this.data.value)
     },

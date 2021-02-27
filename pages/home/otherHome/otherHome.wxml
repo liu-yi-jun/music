@@ -21,20 +21,22 @@
         <text class="organization">{{groupNamebuttom}}</text>
       </view>
     </image>
-    <image class="follow" src="http://cdn.eigene.cn/home/follow{{groupInfo.isFollow?'ed':''}}.png" catchtap="follow"></image>
+    <image class="follow" src="http://cdn.eigene.cn/home/follow{{groupInfo.isFollow?'ed':''}}.png" catchtap="follow">
+    </image>
     <view mark:district="functionBar" class="functionBar {{functionBarShow? 'functionBarShow':''}}">
       <view catchtap="goPuchCard" class="puchCard {{functionBarShow? 'puchCardShow':''}}">
-        <image src="http://cdn.eigene.cn/home/puchCard.png"></image>
+        <image src="http://cdn.eigene.cn/home/puchCard2.png"></image>
         <text>打卡</text>
       </view>
       <view catchtap="goCourse" class="course {{functionBarShow? 'courseShow':''}}">
-        <image src="http://cdn.eigene.cn/home/course.png"></image>
+        <image src="http://cdn.eigene.cn/home/course2.png"></image>
         <text>课程</text>
       </view>
     </view>
   </view>
   <!-- mark:area不行 -->
-  <view mark:district="dynamic" class="dynamicShowBackground {{dynamicIsShow?'showDynamic':'hideDynamic'}}"  bindtouchstart="dynamicTouchstart" bindtouchend="dynamicTouchend">
+  <view mark:district="dynamic" class="dynamicShowBackground {{dynamicIsShow?'showDynamic':'hideDynamic'}}"
+    bindtouchstart="dynamicTouchstart" bindtouchend="dynamicTouchend">
     <text class="userName">{{showContent.nickName}}</text>
     <view class="title-time">
       <text class="title">{{showContent.introduce}}</text>
@@ -45,12 +47,13 @@
         <image class="dynamicImg" mode="aspectFill" src="{{item}}"></image>
       </swiper-item>
     </swiper>
-    <video  mark:operation="No" class="video"  object-fit="cover" hidden="{{showContent.mold !== 1 || !showVideo}}"
+    <video mark:operation="No" class="video" object-fit="cover" hidden="{{showContent.mold !== 1 || !showVideo}}"
       src="{{showContent.videoUrl}}"></video>
-      
-      <view hidden="{{showContent.mold !== 2}}" mark:operation="No" class="soundWrap">
+
+    <view hidden="{{showContent.mold !== 2}}" mark:operation="No" class="soundWrap">
       <playRecord id="playRecord" voiceUrl="{{showContent.voiceUrl}}"></playRecord>
     </view>
+    <view mark:operation="No" class="delete iconfont iconshenglve" catchtap="showMenu" data-index="{{index}}"></view>
     <view class="like-comment" mark:operation="No">
       <view class="like" catchtap="toLike">
         <image src="http://cdn.eigene.cn/dynamicLike{{showContent.isLike?'d':''}}.png"></image>
@@ -133,5 +136,8 @@
       </view>
     </view>
   </view>
- 
+
 </view>
+
+
+<menu id="menu" list="{{list}}" bind:handleStore="handleStore" bind:handleReport="handleReport" bind:hadleDelete="hadleDelete" bind:cancelMenu="cancelMenu"></menu>

@@ -20,20 +20,25 @@
         </view>
         <view class="sexWarp">
           <text>性别</text>
-          <image catchtap="changeWoman" src="http://cdn.eigene.cn/editData/woman{{userInfo.gender===2?'ed':''}}.png">
+          <image catchtap="changeWoman" src="http://cdn.eigene.cn/editData/woman1{{userInfo.gender===2?'ed':''}}.png">
           </image>
-          <image catchtap="changeman" src="http://cdn.eigene.cn/editData/man{{userInfo.gender===1?'ed':''}}.png">
+          <image catchtap="changeman" src="http://cdn.eigene.cn/editData/man1{{userInfo.gender===1?'ed':''}}.png">
           </image>
         </view>
         <view class="ageWrap">
           <text>年龄</text>
-          <input type="number"  maxlength="3" name="age" placeholder-class="placeholder"
+          <input type="number" maxlength="3" name="age" placeholder-class="placeholder"
             value="{{userInfo.age}}"></input>
         </view>
         <view class="constellationWrap">
-          <text>星座</text>
-          <input type="text" maxlength="4" name="constellation" placeholder-class="placeholder"
-            value="{{userInfo.constellation}}"></input>
+
+          <!-- <input type="text" maxlength="4" name="constellation" placeholder-class="placeholder"
+            value="{{userInfo.constellation}}"></input> -->
+          <picker name="constellation" class="pickerWrap" bindchange="bindPickerChange" value="{{index}}" range="{{array}}">
+            <view class="picker">
+              <text>星座</text>{{index!==0?array[index]:''}}
+            </view>
+          </picker>
         </view>
       </view>
     </view>

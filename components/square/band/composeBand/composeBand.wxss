@@ -3,34 +3,33 @@
   display: flex;
   flex-wrap: wrap;
   width: 100%;
-  padding: 0 15rpx;
+  padding: 0 20rpx;
   box-sizing: border-box;
 }
 
 .part {
-  width: 340rpx;
-  height: 335rpx;
-  border-radius: 20rpx;
+  width: 323rpx;
+  /* height: 350rpx; */
+  border-radius: 27rpx;
   background-color: white;
   box-sizing: border-box;
   padding: 10rpx 20rpx;
-  margin: 10rpx 10rpx 20rpx 10rpx;
+  margin: 10rpx 17rpx 24rpx 17rpx;
   overflow: hidden;
 }
 
 .partHead {
   display: flex;
-  margin-top: 10rpx;
+  margin-top: 5rpx;
 }
 
 .existWrap {
-  border-radius: 6rpx;
   border: 1px solid #AB85D9;
   color: #727171;
 }
 
 .recruit {
-  border-radius: 6rpx;
+
   border: 1px solid #AB85D9;
   background-color: #AB85D9;
   color: #FFFFFF;
@@ -39,10 +38,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 18rpx;
-  width: 52rpx;
-  height: 33rpx;
-  margin-top: 10rpx;
+  font-size: 16rpx;
+  width: 42rpx;
+  height: 29rpx;
+  margin-top: 5rpx;
+  border-radius: 6rpx;
 }
 
 .line {
@@ -54,7 +54,7 @@
 }
 
 .groupName {
-  font-size: 24rpx;
+  font-size: 23rpx;
   word-break: keep-all;
   color: #727171;
 }
@@ -86,7 +86,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-right: 18rpx;
+  margin-right: 16rpx;
 }
 .instruments {
   width: 60rpx;
@@ -98,4 +98,22 @@
 }
 .instrumentsRow {
   display: flex;
+  min-height: 80rpx;
+  margin-top: 4rpx;
+}
+.detailWrap {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  align-items: center;
+  margin-top: 6rpx;
+}
+.detailWrap > view {
+  font-size: 16rpx;
+  margin-right: 4rpx;
+  color: #727171;
+}
+.detailWrap > image {
+  width: 12rpx;
+  height: 13rpx;
 }

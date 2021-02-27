@@ -173,7 +173,7 @@
 .richTextWrap {
   color: white !important;
   box-sizing: border-box;
-  padding: 0 50rpx;
+  padding: 0 50rpx 150rpx;
   font-size: 28rpx;
   line-height: 50rpx;
 }

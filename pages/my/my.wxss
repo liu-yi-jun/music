@@ -12,9 +12,19 @@
 }
 
 .number {
+  font-size: 26rpx;
+  display: block;
+  background: #cc1a00;
+  border-radius: 50%;
+  width: 35rpx;
+  height: 35rpx;
+  line-height: 35rpx;
   color: white;
-  font-size: 62rpx;
-  margin-left: 10rpx;
+  text-align: center;
+  box-sizing: border-box;
+  position: absolute;
+  right: 0rpx;
+  top: 0rpx;
 }
 
 .text {
@@ -112,6 +122,7 @@
 .iconImg {
   width: 100rpx;
   height: 100rpx;
+  position: relative;
 }
 
 .iconWrap {

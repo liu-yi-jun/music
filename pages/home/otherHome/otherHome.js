@@ -86,7 +86,20 @@ Page({
     isLoop: false,
     lessMember: false,
     member: [],
-    showContent: {}
+    showContent: {},
+    list: [{
+      name: '分享',
+      open_type: 'share',
+      functionName: ''
+    }, {
+      name: '收藏',
+      open_type: '',
+      functionName: 'handleStore'
+    }, {
+      name: '投诉',
+      open_type: '',
+      functionName: 'handleReport'
+    }]
   },
 
 
@@ -132,7 +145,8 @@ Page({
     console.log(groupId)
     app.get(app.Api.getGroupInfo, {
       groupId,
-      userId: app.userInfo.id
+      userId: app.userInfo.id,
+      visit: true
     }, {
       loading: false
     }).then((res) => {
@@ -497,7 +511,8 @@ Page({
   },
   switchFunctionBar() {
     this.setData({
-      functionBarShow: !this.data.functionBarShow
+      functionBarShow: !this.data.functionBarShow,
+      dynamicIsShow: false,
     })
   },
   tap(e) {
@@ -613,6 +628,58 @@ Page({
   goPuchCard() {
     wx.navigateTo({
       url: `/pages/home/puchCard/puchCard?showGroupId=${this.data.groupInfo.id}`,
+    })
+  },
+  showMenu(e) {
+    if (app.userInfo.id === this.data.showContent.userId) {
+      let list = this.data.list
+      list[2] = {
+        name: '删除',
+        open_type: '',
+        functionName: 'hadleDelete'
+      }
+      this.setData({
+        list
+      }, () => {
+        this.selectComponent('#menu').show();
+      })
+
+    } else {
+        this.selectComponent('#menu').show();
+    }
+  },
+  handleStore() {
+    let showContent = this.data.showContent
+    core.operateStore(app.Api['groupdynamicsStore'], {
+      operate: true,
+      relation: {
+        userId: app.userInfo.id,
+        themeId: showContent.id
+      },
+    }).then(res => {
+      if (res.modify) {
+        common.Toast('收藏成功')
+      } else {
+        common.Toast('动态已存在')
+      }
+    })
+  },
+  handleReport() {
+    console.log('投诉');
+    common.showLoading('投诉中...')
+    setTimeout(() => {
+      wx.hideLoading()
+      common.Tip('投诉消息已发送至本平台，工作人员将进行审核')
+    }, 1200)
+  },
+  hadleDelete(e) {
+    common.Tip('是否删除该动态', '提示', '确认', true).then(res => {
+      if (res.confirm) {
+        console.log('用户点击确定')
+        this.deleteDynamic(e)
+      } else if (res.cancel) {
+        console.log('用户点击取消')
+      }
     })
   }
 })

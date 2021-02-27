@@ -10,7 +10,7 @@ Component({
       type: Array,
       value: []
     },
-    isMyGroup: {
+    isSettleGroup: {
       type: Boolean,
       value: false
     }
@@ -45,9 +45,9 @@ Component({
     },
     goOtherHome(e) {
       let id = e.currentTarget.dataset.id
-      if (this.data.isMyGroup) {
+      let group = this.data.groups[e.currentTarget.dataset.index]
+      if (group.isJoin === -1  || group.isJoin === 1 ) {
         app.switchData.isSwitchGroup = true
-        let group = this.data.groups[e.currentTarget.dataset.index]
         app.post(app.Api.switchGroup, {
           groupId: group.id,
           groupName: group.groupName,

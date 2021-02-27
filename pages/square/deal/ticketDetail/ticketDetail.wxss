@@ -38,9 +38,9 @@ swiper-item, .dynamicImg {
 
 .icon-time {
   box-sizing: border-box;
-  padding: 20rpx 20rpx 0 10rpx;
+  padding: 15rpx 20rpx 0rpx;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
 }
 
@@ -100,9 +100,9 @@ swiper-item, .dynamicImg {
 
 .commentWrap {
   display: flex;
-  align-items: center;
+  align-items:flex-end;
   box-sizing: border-box;
-  padding: 40rpx 20rpx 0;
+  padding: 40rpx 20rpx 10rpx;
 }
 
 .commentWrap image {
@@ -116,6 +116,7 @@ swiper-item, .dynamicImg {
   margin-left: 15rpx;
 }
 
+
 .recordWrap {
   width: 350rpx;
   height: 350rpx;
@@ -127,9 +128,10 @@ swiper-item, .dynamicImg {
   flex-direction: column;
   color: white;
   font-size: 28rpx;
-  align-items: center;
+  /* align-items: center; */
   box-sizing: border-box;
-  padding: 40rpx 20rpx 0;
+  padding: 0rpx 20rpx 0;
+  margin-top: -20rpx;
 }
 
 .brand-newOld-contact {

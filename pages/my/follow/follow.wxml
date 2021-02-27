@@ -1,11 +1,11 @@
-<!--pages/square/band/band.wxml-->
-<view>
+<!--pages/my/follow/follow.wxml-->
+<view class="fans">
   <navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' back="{{true}}" iconTheme='white'
     bindback="handlerGobackClick"></navBar>
   <view class="barWrap">
     <bar barList="{{barList}}" actIndex="{{actIndex}}" bind:switchBtn="switchBtn"></bar>
   </view>
-  <scroll-view bindscrolltolower="scrolltolower" scroll-y style="height: calc({{excludeHeight}}px - 82rpx);">
-    <composeBand bands="{{bands}}"></composeBand>
+  <scroll-view bindscrolltolower="scrolltolower" scroll-y style="height: calc({{excludeHeight}}px - 92rpx);">
+    <fansFollowList list="{{follows}}"> </fansFollowList>
   </scroll-view>
 </view>

@@ -30,7 +30,8 @@ Page({
         name: '发布'
       },
     ],
-    actIndex: 0
+    actIndex: 0,
+    noticeNumbe: 0
   },
 
   /**
@@ -39,6 +40,23 @@ Page({
   onLoad: function (options) {
     this.getDynamics(app.userInfo.id)
     this.getPersonalAlliance(app.userInfo.id)
+ 
+  },
+  getNoticeNumber(id) {
+    app.get(app.Api.noticeNumbe,{
+      userId: id
+    },{loading:false}).then(res=> {
+      let noticeNumbe = res.noticeNumbe
+      let systemMsg = wx.getStorageSync('systemMsg')
+      if(systemMsg) {
+        systemMsg.forEach(item => {
+          if(item.message.jsonDate.isNew) noticeNumbe++
+        })
+      }
+      this.setData({
+        noticeNumbe
+      })
+    })
   },
   getPersonalAlliance(id) {
     let alliancePagin = this.data.alliancePagin
@@ -104,6 +122,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    this.getNoticeNumber(app.userInfo.id)
     if (typeof this.getTabBar === 'function' &&
       this.getTabBar()) {
       this.getTabBar().setData({
@@ -171,9 +190,10 @@ Page({
       url: '/pages/my/editData/editData',
     })
   },
-  gofollowMass(e) {
+  goFollow(e) {
+    let otherId = app.userInfo.id
     wx.navigateTo({
-      url: `/pages/my/followMass/followMass`,
+      url: `/pages/my/follow/follow?otherId=${otherId}`,
     })
   },
   goInvitation() {

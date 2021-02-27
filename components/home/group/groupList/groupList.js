@@ -1,6 +1,7 @@
 // components/home/group/groupList/groupList.js
 let app = getApp()
 let common = require('../../../../assets/tool/common')
+const tool = require('../../../../assets/tool/tool')
 Component({
   /**
    * 组件的属性列表
@@ -10,10 +11,6 @@ Component({
       type: Array,
       value: []
     },
-    isMyGroup: {
-      type: Boolean,
-      value: false
-    }
   },
 
   /**
@@ -32,12 +29,13 @@ Component({
    */
   methods: {
     goOtherHome(event) {
+
       console.log('eventevent', event)
       if (app.userInfo) {
         let id = event.currentTarget.dataset.id
-        if (this.data.isMyGroup) {
+        let group = this.data.groups[event.currentTarget.dataset.index]
+        if (group.isJoin === 1 || group.isJoin === -1) {
           app.switchData.isSwitchGroup = true
-          let group = this.data.groups[event.currentTarget.dataset.index]
           app.post(app.Api.switchGroup, {
             groupId: group.id,
             groupName: group.groupName,
@@ -61,54 +59,33 @@ Component({
     },
     joinGroup(groupInfo) {
       // 加入
-      app.post(app.Api.joinGroup, {
-        groupId: groupInfo.id,
-        groupName: groupInfo.groupName,
-        userId: app.userInfo.id,
-        examine: groupInfo.examine
-      }).then(res => {
-        app.userInfo = res.userInfo
-        if (app.groupInfo) {
-          app.groupInfo.myGrouList = res.myGrouList
-        } else {
-          app.groupInfo = {}
-          app.groupInfo.myGrouList = res.myGrouList
-        }
-        groupInfo.isJoin = 1
-        this.setData({
-          groups: this.data.groups
-        })
-      }).catch(err => err)
+      return new Promise((resolve, reject) => {
+        app.post(app.Api.joinGroup, {
+          groupId: groupInfo.id,
+          groupName: groupInfo.groupName,
+          userId: app.userInfo.id,
+          examine: groupInfo.examine
+        }).then(res => {
+          app.userInfo = res.userInfo
+          if (app.groupInfo) {
+            app.groupInfo.myGrouList = res.myGrouList
+          } else {
+            app.groupInfo = {}
+            app.groupInfo.myGrouList = res.myGrouList
+          }
+          resolve(res)
+        }).catch(err => reject(err))
+      })
+
     },
     showJoin(e) {
       let index = e.currentTarget.dataset.index
       let groupInfo = this.data.groups[index]
       this.groupInfo = groupInfo
       if (app.userInfo) {
-        // if (app.groupInfo) {
-        //   if (app.groupInfo.myGrouList.length >= 5) {
-        //     wx.showModal({
-        //       title: '提示',
-        //       content: '最多只允许加入5个小组哦~',
-        //       showCancel: false
-        //     })
-        //   } else {
-        //     this.setData({
-        //       joinShow: true
-        //     })
-        //   }
-        // } else {
-        //   // app.switchData.isSwitchGroup = true
-        //   // this.joinGroup(groupInfo)
-        //   this.setData({
-        //     joinShow: true
-        //   })
-        // }
         this.setData({
           joinShow: true
         })
-
-
       } else {
         this.setData({
           dialogShow: true
@@ -117,7 +94,6 @@ Component({
     },
     yesJoin() {
       let groupInfo = this.groupInfo
-
       if (groupInfo.examine) {
         this.setData({
           applyShow: true,
@@ -127,8 +103,21 @@ Component({
         this.setData({
           joinShow: false
         })
-        app.switchData.isSwitchGroup = true
-        this.joinGroup(groupInfo)
+        this.joinGroup(groupInfo).then(res => {
+          app.switchData.isSwitchGroup = true
+          groupInfo.isJoin = 1 //通过
+          groupInfo.groupDuty = 2 //组员
+          this.setData({
+            groups: this.data.groups
+          })
+          common.Tip(`恭喜您成功加入${groupInfo.groupName}`, '提示', '确认', true).then(res => {
+            if(res.confirm) {
+              wx.navigateBack({
+                delta: 2,
+              })
+            }
+          })
+        })
       }
     },
     noJoin() {
@@ -154,45 +143,33 @@ Component({
         common.Tip('请输入内容')
         return
       }
-  
-      app.post(app.Api.joinGroup, {
-        groupId: groupInfo.id,
-        groupName: groupInfo.groupName,
-        userId: app.userInfo.id,
-        examine: groupInfo.examine
-      }).then(res => {
-        if (app.groupInfo) {
-          app.groupInfo.myGrouList = res.myGrouList
-        } else {
-          app.groupInfo = {}
-          app.groupInfo.myGrouList = res.myGrouList
-        }
-        groupInfo.isJoin = -1
-        
+      this.joinGroup(groupInfo).then(res => {
+        groupInfo.isJoin = -1 //审核中
+        groupInfo.groupDuty = -1 //审核中
         let from = {
-          userId: app.userInfo.id,
-          nickName: app.userInfo.nickName
-        },
-        to = {
-          userIdList:res.userIdList
-        },
-        message = {
-          type: 1,
-          jsonDate: {
-            groupId: groupInfo.id,
-            groupName: groupInfo.groupName,
-            applyContent,
-            isNew: 1,
-            status: 0
+            userId: app.userInfo.id,
+            nickName: app.userInfo.nickName
+          },
+          to = {
+            userIdList: res.userIdList
+          },
+          message = {
+            type: 1,
+            jsonDate: {
+              groupId: groupInfo.id,
+              groupName: groupInfo.groupName,
+              applyContent,
+              isNew: 1,
+              status: 0
+            }
           }
-        }
         app.socket.emit("sendSystemMsg", from, to, message);
         app.switchData.isSwitchGroup = true
         this.setData({
           groups: this.data.groups,
           applyShow: false
         })
-      }).catch(err => err)
+      })
     },
   }
 })

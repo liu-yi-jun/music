@@ -20,7 +20,7 @@
           <view class="record" catchtap="playRecord" data-index="{{i}}" data-voiceurl="{{item.voiceUrl}}"
             style="width:{{item.soundWidth}}rpx">
             <image class="recordImg" src="http://cdn.eigene.cn/play{{item.isPlay?'ing':''}}.gif" lazy-load="{{true}}"></image>
-            <text class="recordTime" wx:if="{{duration}}" >{{item.duration}}s</text>
+            <text class="recordTime" wx:if="{{item.duration}}" >{{item.duration}}s</text>
           </view>
         </view>
         <view class="imgWrap ul" wx:if="{{item.pictureUrls.length}}">

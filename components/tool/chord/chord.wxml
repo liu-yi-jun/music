@@ -1,4 +1,5 @@
 <!--components/tool/chord/chord.wxml-->
+<scroll-view    scroll-y style="height: calc({{excludeHeight }}px - 52rpx);">
 <view class="chord">
   <view class="bar">
     <view class="guitar {{switchbtn=='guitar'?'active':''}}" catchtap="switchbtn" data-switchbtn="guitar">吉他</view>
@@ -10,35 +11,40 @@
   <view class="keys-suffixes">
     <view class="keysWrap">
       <view class="key">Keys</view>
-      <view class="keyText" catchtouchstart="touchstart" catchtouchmove="touchmove" catchtouchend="touchend" data-objname="keyObj">
-        <view class="ul" style=" transform: translateX({{keyObj.translateX}}px); transition:{{keyObj.transition}};">
-          <view class="li" wx:for="{{keys}}" wx:key="index">{{item}}</view>
+      <view class="keyText" data-objname="keyObj">
+        <view class="ul" style=" transform: translateX({{keyObj.translateX}}rpx);">
+          <view
+            class="li {{keyObj.index === index?'seleteKey':((keyObj.index-1 === index|| keyObj.index+1 === index)?(keyObj.index-1 === index?'near nearLeft': 'near nearRight'):((keyObj.index-2 === index|| keyObj.index+2 === index)?'far':'other'))}}"
+            wx:for="{{keys}}" wx:key="index">{{item}}</view>
         </view>
         <view class="G-bg">
           <view class="G-left"></view>
-          <view class="G-mid"></view>
+          <view class="G-mid">
+            <view class="left" catchtap="keyLeft"></view>
+            <view class="right" catchtap="keyRight"></view>
+          </view>
           <view class="G-rigth"></view>
         </view>
-        <!-- <view catchtap="choosekey" data-key="Eb">Eb</view>
-        <view catchtap="choosekey" data-key="E">E</view>
-        <view catchtap="choosekey" data-key="F">F</view>
-        <view catchtap="choosekey" data-key="F#">F#</view>
-        <view catchtap="choosekey" data-key="G">G</view> -->
       </view>
     </view>
     <view class="suffixesWrap">
       <view class="suffixe">Suffixes</view>
-      <!-- catchtouchstart="touchstart" catchtouchmove="touchmove" catchtouchend="touchend" data-objname="suffixObj" -->
-      <!-- <view class="suffixeText" >
-        <view class="ul" style="transform: translateX({{suffixObj.translateX}}px); transition:{{suffixObj.transition}};">
-          <view class="li" wx:for="{{suffixs}}" wx:key="index">{{item}}</view>
+      <view class="keyText" data-objname="keyObj">
+        <view class="ul" style=" transform: translateX({{suffixObj.translateX}}rpx);">
+          <view
+            class="lis {{suffixObj.index === index?'seleteSuffix':((suffixObj.index-1 === index|| suffixObj.index+1 === index)?(suffixObj.index-1 === index?'nears nearLeft': 'nears nearRight'):((suffixObj.index-2 === index|| suffixObj.index+2 === index)?'far':'other'))}}"
+            wx:for="{{suffixs}}" wx:key="index">{{item}}</view>
         </view>
         <view class="G-bg">
           <view class="G-left"></view>
-          <view class="G-mid"></view>
+          <view class="G-mids">
+            <view class="left" catchtap="suffixeLeft"></view>
+            <view class="right" catchtap="suffixeRight"></view>
+          </view>
           <view class="G-rigth"></view>
         </view>
-      </view> -->
+      </view>
     </view>
   </view>
 </view>
+</scroll-view>

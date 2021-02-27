@@ -111,7 +111,10 @@ Component({
    * 组件的属性列表
    */
   properties: {
-
+    excludeHeight: {
+      type: Number,
+      value: 0
+    }
   },
 
   /**
@@ -119,8 +122,8 @@ Component({
    */
   data: {
     switchbtn: 'guitar',
-    key: 'F',
-    suffixe: '7b9',
+    key: 'D',
+    suffixe: 'minor',
     chordUrls: [],
     keys: guitarK,
     suffixs: guitarS,
@@ -128,13 +131,11 @@ Component({
     // transition: 'none',
     keyObj: {
       translateX: 0,
-      transition: 'none',
-      moveCx:0
+      index: 2,
     },
     suffixObj: {
       translateX: 0,
-      transition: 'none',
-      moveCx: 0
+      index: 1,
     }
   },
 
@@ -153,8 +154,20 @@ Component({
         return
       }
       this.setData({
-        switchbtn
-      })
+        switchbtn,
+        key: 'D',
+        suffixe: 'minor',
+        keys: switchbtn === 'guitar' ? guitarK : ukeleleK,
+        suffixs:  switchbtn === 'guitar' ? guitarS : ukeleleS,
+        keyObj: {
+          translateX: 0,
+          index: 2,
+        },
+        suffixObj: {
+          translateX: 0,
+          index: 1,
+        }
+      }, ()=>this.getsvg())
     },
     choosekey(e) {
       let key = e.currentTarget.dataset.key
@@ -186,7 +199,7 @@ Component({
     },
     touchstart(e) {
       let obj, objName = e.currentTarget.dataset.objname
-      console.log('objName',objName)
+      console.log('objName', objName)
       if (objName === 'keyObj') {
         obj = this.data.keyObj
       } else if (objName === 'suffixObj') {
@@ -194,19 +207,19 @@ Component({
       }
       obj.sY = e.changedTouches[0].clientY
       obj.sX = e.changedTouches[0].clientX
-      console.log('9999999999999999999',this.data[objName].translateX)
+      console.log('9999999999999999999', this.data[objName].translateX)
       obj.nX = this.data[objName].translateX
-      console.log('touchstart',objName)
+      console.log('touchstart', objName)
       obj.sTime = new Date().getTime()
       obj.lastX = obj.sX
       obj.canStart = false
       obj.canMove = false;
       obj.stopInertiaMove = true;
 
-    },    
+    },
     touchmove(e) {
       let obj, objName = e.currentTarget.dataset.objname
-      console.log('touchmove',objName)
+      console.log('touchmove', objName)
       if (objName === 'keyObj') {
         obj = this.data.keyObj
       } else if (objName === 'suffixObj') {
@@ -238,7 +251,7 @@ Component({
     },
     touchend(e) {
       let obj, objName = e.currentTarget.dataset.objname
-      console.log('touchend',objName)
+      console.log('touchend', objName)
       if (objName === 'keyObj') {
         obj = this.data.keyObj
       } else if (objName === 'suffixObj') {
@@ -271,7 +284,7 @@ Component({
           var speed = ((obj.nowX - obj.lastX) / (obj.eTime - obj.sTime))
           obj.stopInertiaMove = false;
           //惯性滚动函数
-          console.log('222222222',speed,obj.eTime,obj.nX, objName)
+          console.log('222222222', speed, obj.eTime, obj.nX, objName)
           this.test(speed, obj.eTime, obj.nX, objName)
         }
       }
@@ -377,6 +390,68 @@ Component({
     },
     GetSlideAngle(dx, dy) { //判断角度
       return Math.atan2(dy, dx) * 180 / Math.PI;
+    },
+    keyLeft() {
+      let translateX = this.data.keyObj.translateX
+      let {
+        keys
+      } = this.data
+      console.log(translateX);
+      if (translateX <= (-keys.length + 3) * 130) {
+        return
+      } else {
+        this.setData({
+          'keyObj.translateX': translateX - 130,
+          'keyObj.index': this.data.keyObj.index + 1,
+          key: keys[this.data.keyObj.index + 1]
+        }, () => this.getsvg())
+      }
+    },
+    suffixeLeft() {
+      let translateX = this.data.suffixObj.translateX
+      let {
+        suffixs
+      } = this.data
+      if (translateX <= (-suffixs.length + 2) * 216) {
+        return
+      } else {
+        this.setData({
+          'suffixObj.translateX': translateX - 216,
+          'suffixObj.index': this.data.suffixObj.index + 1,
+          suffixe: suffixs[this.data.suffixObj.index + 1]
+        }, () => this.getsvg())
+      }
+    },
+    keyRight() {
+      let translateX = this.data.keyObj.translateX
+      let {
+        keys
+      } = this.data
+      console.log(translateX);
+      if (translateX >= 2 * 130) {
+        return
+      } else {
+        this.setData({
+          'keyObj.translateX': translateX + 130,
+          'keyObj.index': this.data.keyObj.index - 1,
+          key: keys[this.data.keyObj.index - 1]
+        }, () => this.getsvg())
+      }
+    },
+    suffixeRight() {
+      let translateX = this.data.suffixObj.translateX
+      let {
+        suffixs
+      } = this.data
+      if (translateX >= 1 * 216) {
+        return
+      } else {
+        this.setData({
+          'suffixObj.translateX': translateX + 216,
+          'suffixObj.index': this.data.suffixObj.index - 1,
+          suffixe: suffixs[this.data.suffixObj.index - 1]
+        }, () => this.getsvg())
+      }
     }
   }
 })

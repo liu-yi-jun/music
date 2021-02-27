@@ -283,7 +283,8 @@ Page({
   validate(params) {
     let {
       mks,
-      recruits
+      recruits,
+      exists
     } = this.data
     let location = ''
 
@@ -300,6 +301,7 @@ Page({
         const error = this.WxValidate.errorList[0].msg
         return reject(error)
       }
+      if (!exists.length) reject('请选择要现有的乐器')
       if (!recruits.length) reject('请选择要招募的乐器')
       return resolve({
         title,

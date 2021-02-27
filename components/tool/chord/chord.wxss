@@ -24,7 +24,7 @@
 }
 
 .chord {
-  margin-top: 40rpx;
+  padding-top: 2vh;
 }
 
 .active {
@@ -37,7 +37,8 @@
   flex-wrap: wrap;
   box-sizing: border-box;
   padding: 0 20rpx;
-  margin-top: 30rpx;
+  margin-top: 3.24vh;
+  min-height: 600rpx;
 }
 
 .chordChart>image {
@@ -64,7 +65,7 @@
   align-items: center;
   color: white;
   font-size: 60rpx;
-  margin: 0rpx 20rpx 20rpx;
+  padding: 0rpx 20rpx 5.24vh;
 }
 
 .keys-suffixes {
@@ -72,19 +73,21 @@
   flex-direction: column;
   /* justify-content: center; */
   align-items: center;
+  padding-bottom: 100rpx;
+  margin-top: 1.49vh;
 }
 
 .keyText,
 .suffixeText {
   display: flex;
-  margin-top: 10rpx;
+  margin-top: 1.49vh;
 }
 
 /* .keyText > view,.suffixeText > view {
   margin: 0 30rpx;
 } */
 .keyText {
-  width: 550rpx;
+  width: 650rpx;
   overflow: hidden;
   height: 80rpx;
   position: relative;
@@ -93,16 +96,24 @@
 .ul {
   white-space: nowrap;
   display: flex;
-  transform: translateX(-10rpx);
+  transition: all .2s;
 }
 
 .li {
   display: flex;
-  width: 112rpx;
+  width: 130rpx;
   /* text-align: center; */
   align-items: center;
   justify-content: center;
-
+  transition: all .3s;
+}
+.lis {
+  display: flex;
+  width: 216rpx;
+  /* text-align: center; */
+  align-items: center;
+  justify-content: center;
+  transition: all .3s;
 }
 
 .G-bg {
@@ -124,4 +135,86 @@
 .G-mid {
   height: 100%;
   flex-grow: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 0 10rpx;
+  width: 150rpx;
+}
+.G-mids {
+  height: 100%;
+  flex-grow: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 0 10rpx;
+  width: 300rpx;
+}
+
+.left,
+.right {
+  width: 80rpx;
+  height: 80rpx;
+  margin-top: 6rpx;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 28rpx 32rpx;
+}
+
+.left {
+  background-image: url('http://cdn.eigene.cn/left.png');
+}
+
+.right {
+  background-image: url('http://cdn.eigene.cn/right.png');
+}
+
+.seleteKey {
+  font-size: 70rpx;
+  color: white;
+  position: relative;
+  top: 0rpx;
+}
+.seleteSuffix {
+  font-size: 52rpx;
+  color: white;
+  position: relative;
+  top: 0rpx;
+}
+
+.near {
+  opacity: 0.6;
+  position: relative;
+  top: 6rpx;
+  font-size: 60rpx;
+}
+.nears {
+  opacity: 0.6;
+  position: relative;
+  top: 6rpx;
+  font-size: 45rpx;
+}
+
+.nearLeft {
+  right: 20rpx;
+}
+
+.nearRight {
+  left: 20rpx;
+}
+
+.far {
+  opacity: 0.4;
+  position: relative;
+  top: 10rpx;
+  font-size: 55rpx;
+}
+
+.other {
+  opacity: 0.2;
+  position: relative;
+  top: 16rpx;
+  font-size: 50rpx;
 }

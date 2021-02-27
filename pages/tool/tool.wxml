@@ -10,7 +10,7 @@
   </view>
   <analysis wx:if="{{actIndex === 1 && pageShow}}"></analysis>
   <view hidden="{{actIndex !== 2}}">
-    <chord></chord>
+    <chord excludeHeight="{{excludeHeight}}"></chord>
   </view>
   <showTabBar tabBarBtnShow="{{tabBarBtnShow}}">
   </showTabBar>

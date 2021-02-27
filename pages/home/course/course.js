@@ -39,7 +39,8 @@ Page({
     } = this.data
     app.get(app.Api.getCourses, {
       pageSize,
-      pageIndex
+      pageIndex,
+      groupId: app.userInfo.groupId
     }).then(res => {
       if (res.length < pageSize) {
         this.setData({

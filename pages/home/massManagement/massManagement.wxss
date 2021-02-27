@@ -193,3 +193,16 @@
   color: white;
   font-size: 24rpx;
 }
+.save {
+  width: 130rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+  color: white;
+  text-align: center;
+  margin: auto;
+  border-radius: 999rem;
+  background: #b37ae5;
+  box-shadow: 0rpx 0rpx 10rpx 2rpx rgba(0, 0, 255, 0.1);
+  font-size: 30rpx;
+  margin-bottom: 40rpx;
+}

@@ -302,32 +302,29 @@ Page({
     })
   },
   deleteDynamic(e) {
-    let pages = getCurrentPages();
-    let prevPage = pages[pages.length - 2]; 
-    prevPage.doItemSelect()
+    // let pages = getCurrentPages();
+    // let prevPage = pages[pages.length - 2]; 
+    // prevPage.doItemSelect()
 
 
-    // common.showLoading('删除中')
-    // let detail = this.data.detail
-    // let {
-    //   tableName,
-    //   id
-    // } = detail
-    // console.log(tableName, id)
-    // app.post(app.Api[tableName + 'Delete'], {
-    //   tableName,
-    //   id
-    // }, {
-    //   loading: false
-    // }).then(res => {
-    //   console.log(res)
-    //   if (res.affectedRows) {
-    //     dynamics.splice(index, 1)
-    //     this.setData({
-    //       dynamics
-    //     })
-    //     common.Toast('已删除')
-    //   }
-    // })
+    common.showLoading('删除中')
+    let detail = this.data.detail
+    let {
+      tableName,
+      id
+    } = detail
+    console.log(tableName, id)
+    app.post(app.Api[tableName + 'Delete'], {
+      tableName,
+      id
+    }, {
+      loading: false
+    }).then(res => {
+      console.log(res)
+      if (res.affectedRows) {
+        wx.navigateBack()
+        common.Toast('已删除')
+      }
+    })
   },
 })

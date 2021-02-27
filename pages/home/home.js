@@ -337,6 +337,8 @@ Page({
 
     this.setData({
       showMember,
+      functionBarShow: false,
+      switchIssue: false,
       member,
       tabBarBtnShow: true,
       showContent: showMember[0],
@@ -807,7 +809,6 @@ Page({
   tap(e) {
     let district = e.mark.district
     if (district) return;
-
     this.setData({
       dynamicIsShow: false,
       switchIssue: false,
@@ -1109,17 +1110,17 @@ Page({
   },
   toGroupSettlement() {
     if (app.userInfo) {
-      if (app.userInfo.isSettle) {
-        wx.showModal({
-          title: '提示',
-          showCancel: false,
-          content: '最多入驻一个小组哦~'
-        })
-      } else {
+      // if (app.userInfo.isSettle) {
+      //   wx.showModal({
+      //     title: '提示',
+      //     showCancel: false,
+      //     content: '最多入驻一个小组哦~'
+      //   })
+      // } else {
         wx.navigateTo({
           url: '/pages/init/groupSettlement/groupSettlement',
         })
-      }
+      // }
     } else {
       wx.navigateTo({
         url: '/pages/init/groupSettlement/groupSettlement',

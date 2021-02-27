@@ -35,7 +35,7 @@
           </view>
           <view>   
             <switch  name="examine" checked="{{form.examine}}" bindchange="changeExamine" ></switch>
-            <text>入社审批</text>
+            <text>小组审批</text>
           </view>
         </view>
         <view class="createWarp">

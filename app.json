@@ -37,7 +37,6 @@
     "pages/home/puchCard/puchCard",
     "pages/home/puchCard/issuePuchCard/issuePuchCard",
     "pages/square/performance/alliancePost/alliancePost",
-    "pages/my/followMass/followMass",
     "pages/square/union/union",
     "pages/square/band/band",
     "pages/square/band/application/application",
@@ -63,7 +62,8 @@
     "pages/test/test3/test3",
     "pages/square/band/bandDetail/bandDetail",
     "pages/my/fans/fans",
-    "components/tool/chord/myPicker/myPicker"
+    "components/tool/chord/myPicker/myPicker",
+    "pages/my/follow/follow"
   ],
   "permission": {
     "scope.userLocation": {

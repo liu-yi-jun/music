@@ -17,7 +17,7 @@ Page({
       pageIndex: 1,
       isNotData: false,
     },
-   
+
   },
 
   /**
@@ -27,10 +27,10 @@ Page({
     // 获取去除上面导航栏，剩余的高度
     tool.navExcludeHeight(this)
     // this.pagingGetFollowGroup(this.data.groupName)
-    this.pagingGetGroup(this.data.groupName) 
+    this.pagingGetGroup(this.data.groupName)
   },
   pagingGetGroup(groupName) {
-    let groupPaging = this.data.groupPaging 
+    let groupPaging = this.data.groupPaging
     app.get(app.Api.pagingGetGroup, {
       groupName,
       ...groupPaging
@@ -60,8 +60,8 @@ Page({
     }
     app.groupInfo.myGrouList.forEach((item, index) => {
       groups.forEach(group => {
-        console.log(group.id, item.groupId);
         if (group.id == item.groupId) {
+          group.groupDuty = item.groupDuty
           if (item.groupDuty === -1) {
             group.isJoin = -1
           } else {
@@ -128,28 +128,27 @@ Page({
   },
   handlerGobackClick: app.handlerGobackClick,
 
-  messagePass : {
+  messagePass: {
     'systemMsg': []
   },
 
-  leaveDate : {
-  },
+  leaveDate: {},
 
-  send(){
+  send() {
     socket.on('getLeaveDate', () => {
       if (leaveDate[socket.user.userId]) {
-        for(key in messagePass) {
+        for (key in messagePass) {
           let p = Promise.resolve()
           leaveDate[socket.user.userId][key].forEach(async element => {
-              p = p.then(() => time()).then(() => {
-                  io.to(socket.user.roomId).emit(key, element.from, element.to, element.message);
-                  return
-              }).catch(err => reject(err))
+            p = p.then(() => time()).then(() => {
+              io.to(socket.user.roomId).emit(key, element.from, element.to, element.message);
+              return
+            }).catch(err => reject(err))
           });
           leaveDate[socket.user.userId][key] = []
         }
       }
-  })
+    })
   },
 
   text() {

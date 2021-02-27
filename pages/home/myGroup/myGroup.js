@@ -9,16 +9,30 @@ Page({
   data: {
     // 去除上面导航栏，剩余的高度
     excludeHeight: 0,
-    followGroups: [],
     followGroupPaging: {
-      pageSize: 20,
+      pageSize: 10,
       pageIndex: 1,
       isNotData: false,
     },
-    myGroups: [],
+    joinGroupPaging: {
+      pageSize: 10,
+      pageIndex: 1,
+      isNotData: false,
+    },
+    settleGroupPaging: {
+      pageSize: 10,
+      pageIndex: 1,
+      isNotData: false,
+    },
+    followGroups: [],
+    settleGroup:[],
+    joinGroup: [],
     groupName: '',
     barList: [{
-        name: '我的小组',
+        name: '入驻的小组'
+      },
+      {
+        name: '加入的小组',
       },
       {
         name: '关注的小组'
@@ -34,40 +48,47 @@ Page({
     // 获取去除上面导航栏，剩余的高度
     tool.navExcludeHeight(this)
     if (app.userInfo) {
+      this.getSettleGroup()
+      this.getJoinGroup()
       this.pagingGetFollowGroup(this.data.groupName)
-      this.getMyGroup()
+
+  
     }
 
   },
-  getMyGroup() {
-    console.log('getMyGroup')
-    app.get(app.Api.myGroup, {
-      userId: app.userInfo.id
+  getSettleGroup() {
+    let settleGroupPaging = this.data.settleGroupPaging
+    app.get(app.Api.pagingGetSettleGroup, {
+      userId: app.userInfo.id,
+      ...settleGroupPaging
     }).then(res => {
-      console.log(res)
+      if (res.length < settleGroupPaging.pageSize) {
+        this.setData({
+          'settleGroupPaging.isNotData': true
+        })
+      }
       this.setData({
-        myGroups: this.isJoinGroup(res)
+        settleGroup: this.data.settleGroup.concat(this.isJoinGroup(res)),
+        'settleGroupPaging.pageIndex': settleGroupPaging.pageIndex + 1
       })
     })
   },
-  isJoinGroup(groups) {
-    if (groups.length === 0 || !app.groupInfo) {
-      return groups
-    }
-    app.groupInfo.myGrouList.forEach((item, index) => {
-      groups.forEach(group => {
-        console.log(group.id, item.groupId);
-        if (group.id == item.groupId) {
-          if (item.groupDuty === -1) {
-            group.isJoin = -1
-          } else {
-            group.isJoin = 1
-          }
-          return
-        }
+  getJoinGroup() {
+    let joinGroupPaging = this.data.joinGroupPaging
+    app.get(app.Api.pagingGetJoinGroup, {
+      userId: app.userInfo.id,
+      ...joinGroupPaging
+    }).then(res => {
+      if (res.length < joinGroupPaging.pageSize) {
+        this.setData({
+          'joinGroupPaging.isNotData': true
+        })
+      }
+      this.setData({
+        joinGroup: this.data.joinGroup.concat(this.isJoinGroup(res)),
+        'joinGroupPaging.pageIndex': joinGroupPaging.pageIndex + 1
       })
     })
-    return groups
   },
   // 获取所有关注的小组
   pagingGetFollowGroup(groupName) {
@@ -85,13 +106,37 @@ Page({
         })
       }
       this.setData({
-        followGroups: this.data.followGroups.concat(res),
+        followGroups: this.data.followGroups.concat(this.isJoinGroup(res)),
         'followGroupPaging.pageIndex': followGroupPaging.pageIndex + 1
       })
     })
   },
+  isJoinGroup(groups) {
+    if (groups.length === 0 || !app.groupInfo) {
+      return groups
+    }
+    app.groupInfo.myGrouList.forEach((item, index) => {
+      groups.forEach(group => {
+        console.log(group.id, item.groupId);
+        if (group.id == item.groupId) {
+          group.groupDuty = item.groupDuty
+          if (item.groupDuty === -1) {
+            group.isJoin = -1
+          } else {
+            group.isJoin = 1
+          }
+          return
+        }
+      })
+    })
+    return groups
+  },
   scrolltolower() {
-    if (!this.data.followGroupPaging.isNotData && this.data.actIndex === 2) {
+    if (!this.data.settleGroupPaging.isNotData && this.data.actIndex === 0) {
+
+    } else if (!this.data.joinGroupPaging.isNotData && this.data.actIndex === 1) {
+      this.getJoinGroup()
+    } else if (!this.data.followGroupPaging.isNotData && this.data.actIndex === 2) {
       this.pagingGetFollowGroup(this.data.groupName)
     }
   },

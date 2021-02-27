@@ -71,7 +71,7 @@ Page({
     // 获取去除上面导航栏，剩余的高度
     tool.navExcludeHeight(this)
     // this.getRandomTap()
-    this.gettaps(this.data.value)
+    // this.gettaps(this.data.value)
 
   },
   toAnalysis() {

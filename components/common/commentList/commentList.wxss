@@ -6,12 +6,14 @@
   height: 62rpx;
   border-radius: 50%;
   flex-shrink: 0;
+  background-repeat: no-repeat;
+  background-size: 100%;
+  
 }
 
 .item {
-  display: flex;
   box-sizing: border-box;
-  padding: 30rpx 15rpx 0 15rpx;
+  /* padding: 30rpx 0rpx 0 0rpx; */
 }
 
 .right {
@@ -23,16 +25,17 @@
 
 .user1 {
   display: flex;
-  flex-direction: column;
+  align-items: flex-start;
+  padding: 20rpx 20rpx 0;
 }
 
 .user1 .content1 {
-  margin-top: 10rpx;
+
 }
 
 .user2 {
-  margin-top: 10rpx;
   /* display: flex; */
+  padding: 10rpx 15rpx 10rpx 92rpx
 }
 
 .angle {
@@ -51,6 +54,7 @@
   font-size: 28rpx;
   flex-shrink: 0;
   margin-right: 10rpx;
+  display: inline-block;
 }
 .content2 {
   font-size: 28rpx;
@@ -59,8 +63,10 @@
 }
 .content1 {
   font-size: 28rpx;
+  width: 100%;
   color: white;
   word-break:break-all;
+  padding: 10rpx 0rpx 10rpx 0;
 }
 
 .reply {
@@ -74,7 +80,7 @@
   color: white;
   border-bottom: 1rpx solid #CACBCB;
   box-sizing: border-box;
-  padding: 15rpx 0;
+  padding: 15rpx 15rpx 15rpx 97rpx;
 }
 
 .blank {
@@ -84,4 +90,11 @@
   font-size: 21rpx;
   color: white;
   margin-left: 10rpx;
+}
+.hover-user2 {
+  background:linear-gradient(to right, rgba(176, 122, 226, 0.2), rgba(0, 83, 218, 0.2));
+}
+.userName-content {
+  flex-grow: 1;
+  padding-left: 15rpx;
 }

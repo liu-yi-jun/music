@@ -47,7 +47,7 @@ Component({
           myId: app.userInfo.id
         })
       }
-
+      this.initSound()
     },
     detached: function () {
       this.innerSoundContext && this.innerSoundContext.destroy()
@@ -194,7 +194,7 @@ Component({
         console.log(duration, currentTime)
       })
       this.innerSoundContext.onEnded(() => {
-        console.log('// 录音播放结束')
+        console.log('//播放正常结束')
         let dynamics = this.data.dynamics
         dynamics[this.oldIndex].isPlay = false
         this.setData({
@@ -202,7 +202,7 @@ Component({
         })
       })
       this.innerSoundContext.onStop(() => {
-        console.log('// 录音结束')
+        console.log('// 播放结束')
         let dynamics = this.data.dynamics
         dynamics[this.oldIndex].isPlay = false
         this.setData({
@@ -210,12 +210,16 @@ Component({
         })
       })
       this.innerSoundContext.onPause(() => {
-        console.log('onPause')
-        this.innerSoundContext.stop()
+        // 切换src会调用，暂停后播放不会调用，
+        console.log('播放暂停');
+        let dynamics = this.data.dynamics
+        dynamics[this.oldIndex].isPlay = false
+        this.setData({
+          dynamics
+        })
       })
     },
     playRecord(e) {
-      console.log(e)
       let {
         voiceurl: voiceUrl,
         index
@@ -231,17 +235,25 @@ Component({
         if (this.oldIndex !== undefined) {
           dynamics[this.oldIndex].isPlay = false
         }
-        this.oldIndex = index
         dynamics[index].isPlay = true
         this.setData({
           dynamics
         })
-        this.innerSoundContext && this.innerSoundContext.destroy()
-        this.initSound()
-        this.innerSoundContext.src = voiceUrl
+        if(this.innerSoundContext.src !== voiceUrl) {
+          this.innerSoundContext.src = voiceUrl
+        }
         this.innerSoundContext.play()
+        setTimeout(()=> {
+          this.oldIndex = index
+        },500)
+      } else {
+        dynamics[index].isPlay = false
+        this.setData({
+          dynamics
+        })
+        this.innerSoundContext.pause()
+        this.oldIndex = index
       }
-
     },
     toLike(e) {
       console.log('toLiketoLike')

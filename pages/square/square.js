@@ -274,7 +274,6 @@ Page({
     if (district) return;
     this.setData({
       tabBarBtnShow: true,
-      hideBarShow: false
     })
     this.getTabBar().setData({
       show: false
@@ -405,12 +404,12 @@ Page({
     })
   },
   move(e) {
-    this.scrollTop = e.detail.scrollTop
-    console.log(this.scrollTop, 33333333333)
-    console.log(this.tempScrollTop, '22222222')
-    if (this.data.hideBarShow) {
+    if (this.getTabBar().data.show) {
       this.setData({
-        hideBarShow: false
+        tabBarBtnShow: true,
+      })
+      this.getTabBar().setData({
+        show: false
       })
     }
   },

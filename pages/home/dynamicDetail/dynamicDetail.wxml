@@ -20,7 +20,7 @@
       <playRecord voiceUrl="{{detail.voiceUrl}}"></playRecord>
     </view>
     <view class="icon-time">
-      <view class="iconWrap">
+      <!-- <view class="iconWrap">
         <view class="icon">
           <image src="http://cdn.eigene.cn/dynamicDetail/like.png"></image>
           <text>{{detail.likes}}</text>
@@ -37,15 +37,15 @@
           <image src="http://cdn.eigene.cn/dynamicDetail/share.png"></image>
           <text>{{detail.share}}</text>
         </view>
-      </view>
+      </view> -->
       <text class="time">{{detail.releaseTime}}</text>
     </view>
     <view class="content">
-      <text space="ensp"> {{detail.introduce}}</text>
+      <text space="ensp">{{detail.introduce}}</text>
     </view>
     <view class="commentWrap">
       <image src="http://cdn.eigene.cn/dynamicComment.png"></image>
-      <text>评论</text>
+      <text>共 {{detail.comment}} 条评论</text>
     </view>
     <commentList bind:toReply="toReply" commentArr="{{commentArr}}">
     </commentList>
