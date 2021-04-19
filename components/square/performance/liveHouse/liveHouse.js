@@ -20,7 +20,7 @@ Component({
    * 组件的初始数据
    */
   data: {
-
+    qiniuUrl: app.qiniuUrl,
   },
 
   /**
@@ -68,7 +68,14 @@ Component({
     goLiveHouseDetail(e) {
       let id = e.currentTarget.dataset.id
       this.index = e.currentTarget.dataset.index
-      let tableName = this.properties.tableName
+      let item = this.data.list[this.index]
+      let tableName = ''
+      if (item.tableName) {
+        tableName = item.tableName
+      } else {
+        tableName = this.properties.tableName
+      }
+      console.log(111111,item.tableName);
       wx.navigateTo({
         url: `/pages/square/performance/liveHouseDetail/liveHouseDetail?id=${id}&tableName=${tableName}`,
       })

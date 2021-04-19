@@ -6,7 +6,7 @@
     <view class="right">
       <view class="user1" >
         <text class="userName" catchtap="goPersonal" data-userid="{{comment.commenterId}}">{{comment.commenterName}}</text>
-        <view class="content1" hover-class="hover-user2" hover-stay-time="{{200}}" catchtap="toReply"   data-commentindex="{{commentIndex}}" >{{comment.commentCotent}}</view>
+        <view class="content1" hover-class="hover-user2" hover-stay-time="{{200}}" catchtap="toReply"   data-commentindex="{{commentIndex}}" >{{comment.commentContent}}</view>
       </view>
       <view class="user2" hover-class="hover-user2" hover-stay-time="{{200}}" wx:for="{{comment.replyArr}}" wx:for-index="replyIndex" wx:key="id"  catchtap="toReply" data-commentindex="{{commentIndex}}" data-replyindex="{{replyIndex}}">
         <view class="angle"></view>
@@ -21,13 +21,17 @@
       </view>
     </view> -->
 
-    <view class="user1" hover-class="hover-user2" hover-stay-time="{{200}}" catchtap="toReply" data-commentindex="{{commentIndex}}">
-      <view class="avatar" style="background-image: url({{comment.commenterAvatar}});"   data-userid="{{comment.commenterId}}"
-        catchtap="goPersonal" hover-stop-propagation="{{true}}" ></view>
+    <view class="user1" hover-class="hover-user2" hover-stay-time="{{200}}" catchtap="toReply"
+      data-commentindex="{{commentIndex}}">
+      <view class="avatar" style="background-image: url({{comment.commenterAvatar}});"
+        data-userid="{{comment.commenterId}}" catchtap="goPersonal" hover-stop-propagation="{{true}}"></view>
       <view class="userName-content">
         <view class="userName" hover-stop-propagation="{{true}}" catchtap="goPersonal"
           data-userid="{{comment.commenterId}}">{{comment.commenterName}}</view>
-        <view class="content1" >{{comment.commentCotent}}</view>
+        <view class="time">
+          <text>{{comment.releaseTime}}</text>
+        </view>
+        <view class="content1">{{comment.commentContent}}</view>
       </view>
     </view>
     <view class="user2" hover-class="hover-user2" hover-stay-time="{{200}}" wx:for="{{comment.replyArr}}"
@@ -41,9 +45,9 @@
         data-userid="{{item.parentReplyId}}">{{item.parentName}}</view>
       <text class="content2">{{item.replyContent}}</text>
       <text class="replyTime">{{item.releaseTime}}</text>
+
     </view>
-    <view class="time">
-      <text>{{comment.releaseTime}}</text>
+    <view class="line">
     </view>
   </view>
 

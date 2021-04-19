@@ -18,7 +18,7 @@
     </image>
   </view>
   <view class="textareaWarp">
-    <textarea maxlength="-1" name="describe" class="textarea" placeholder="请输入音频描述……" placeholder-class="placeholder"></textarea>
+    <textarea maxlength="1000" name="describe" class="textarea" placeholder="请输入音频描述……" placeholder-class="placeholder"></textarea>
   </view>
   <view class="locationWrap">
     <view class="location" catchtap="getLocation">

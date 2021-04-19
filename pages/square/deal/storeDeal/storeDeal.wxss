@@ -36,12 +36,10 @@
 
 .head {
   box-sizing: border-box;
-  padding: 0 30rpx;
+  padding: 10rpx 40rpx 20rpx 40rpx;
   display: flex;
   /* justify-content: space-around; */
   align-items: center;
-  margin-top: 15rpx;
-  margin-bottom: 20rpx;
 }
 
 .logo {
@@ -77,5 +75,4 @@
 
 .barWrap {
   box-sizing: border-box;
-  padding-left: 20rpx;
 }

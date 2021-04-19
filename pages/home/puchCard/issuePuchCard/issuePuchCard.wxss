@@ -4,13 +4,14 @@
   height:100%;
 }
 .card {
-  width: 630rpx;
-  height: 1070rpx;
+  width: 606rpx;
+  height: 1037rpx;
   position: absolute;
   left: 0;
   right: 0;
-  background: #a97ede;
-  border-radius: 60rpx;
+  background-color: #A97EDE;
+  box-shadow: 0rpx 0rpx 10rpx 2rpx rgba(0, 0, 0, .1);
+  border-radius: 40rpx;
   top: 13.75%;
   margin:auto;
   box-sizing: border-box;
@@ -40,7 +41,7 @@
 
 .part view {
   background: white;
-  color: #a97ede;
+  color: #727171;
   border-radius: 10rpx;
   font-size: 26rpx;
   padding: 8rpx 20rpx;
@@ -58,7 +59,7 @@
   border-radius: 50%;
   position: absolute;
   right: -26rpx;
-  bottom: 0rpx;
+  bottom: -20rpx;
 }
 
 .dataImg {

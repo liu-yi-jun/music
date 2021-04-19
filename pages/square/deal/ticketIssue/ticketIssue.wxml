@@ -42,7 +42,7 @@
           </view>
         </view>
         <view class="wrapVideo" wx:if="{{tempVideoPath}}">
-          <video object-fit="fill" src="{{tempVideoPath}}"></video>
+          <video object-fit="cover" src="{{tempVideoPath}}"></video>
         </view>
       <view class="locationWrap">
           <view class="location" catchtap="getLocation">

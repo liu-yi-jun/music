@@ -27,13 +27,13 @@ Component({
         url: `/pages/my/invitation/invitation?userId=${userId}`,
       })
     },
-  
+
     goAllianceDetail(e) {
       console.log(e)
       let id = e.currentTarget.dataset.id
-      console.log(id)
+      let index = e.currentTarget.dataset.index
       wx.navigateTo({
-         url: `/pages/square/performance/allianceDetail/allianceDetail?id=${id}`,
+        url: `/pages/square/performance/allianceDetail/allianceDetail?id=${id}&index=${index}`,
       })
     }
   }

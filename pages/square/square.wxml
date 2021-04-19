@@ -1,9 +1,9 @@
 <!--pages/square/square.wxml-->
 <view class="square" catchtap="tap" bindtouchmove="move">
   <!-- <scroll-view enable-back-to-top="{{true}}" bindscroll="move" class="scroll" scroll-with-animation scroll-y bindscrolltolower="scrolltolower" scroll-top="{{scrollTop}}"> -->
-    <navBar  backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' iconTheme='white' ></navBar>
-    <!-- bind:toScrollTop="toScrollTop" -->
-    <!-- <view class="hideBar" catchtap="hideBar">
+  <navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' iconTheme='white'></navBar>
+  <!-- bind:toScrollTop="toScrollTop" -->
+  <!-- <view class="hideBar" catchtap="hideBar">
     </view>
     <view mark:district="hideBarBackground" class="hideBarBackground {{hideBarShow? 'hideBarUnfold': 'hideBarPackUp'}}">
       <view catchtap="goUnion">
@@ -23,56 +23,58 @@
         <text>二手交易</text>
       </view>
     </view> -->
-    <view class="community">
-      <view class="cardWrap">
-        <view class="signInBackground">
-          <text class="everyday">每日打卡：</text>
-          <view class="date">
-            <view class="yearMonth">{{yearMonth}}</view>
-            <view class="day">{{day}}</view>
-          </view>
-          <view class="signInSumsWrap">
-            <view class="signInPart">
-              <text>{{signInSums[0]}}</text>
-              <text>{{signInSums[1]}}</text>
-            </view>
-            <view class="signInPart">
-              <text>{{signInSums[2]}}</text>
-              <text>{{signInSums[3]}}</text>
-            </view>
-          </view>
-          <text class="dayText">天</text>
-          <image catchtap="singIn" class="signIn" src="http://cdn.eigene.cn/square/signIn1.png"></image>
+  <view class="community">
+    <view class="cardWrap">
+      <view class="signInBackground"
+        style="background-image: url({{qiniuUrl}}/square/signInBackground.png); background-size: 100% 100%;">
+        <text class="everyday">每日打卡：</text>
+        <view class="date">
+          <view class="yearMonth">{{yearMonth}}</view>
+          <view class="day">{{day}}</view>
         </view>
-        <view class="recommendBackground" id="recommendBackground">
-          <view class="recommendBackgroundItem">
+        <view class="signInSumsWrap">
+          <view class="signInPart">
+            <text>{{signInSums[0]}}</text>
+            <text>{{signInSums[1]}}</text>
+          </view>
+          <view class="signInPart">
+            <text>{{signInSums[2]}}</text>
+            <text>{{signInSums[3]}}</text>
+          </view>
+        </view>
+        <text class="dayText">天</text>
+        <image catchtap="singIn" class="signIn" src="{{qiniuUrl}}/square/signIn.png"></image>
+      </view>
+      <view class="recommendBackground" id="recommendBackground"
+        style="background-image: url({{qiniuUrl}}/square/recommendBackground.png); background-size: 100% 100%;">
+        <view class="recommendBackgroundItem">
           <view catchtap="goBand"></view>
           <view catchtap="goPerformance"></view>
           <view catchtap="goDeal"></view>
         </view>
-          <!-- <marquee  id="marquee" text="{{song.songName}}-{{song.author}}"></marquee> -->
-          <!-- <image catchtap="playSong" data-songurl="{{song.songUrl}}" class="played" src="http://cdn.eigene.cn/square/play{{play?'ed':''}}.png"></image>
+        <!-- <marquee  id="marquee" text="{{song.songName}}-{{song.author}}"></marquee> -->
+        <!-- <image catchtap="playSong" data-songurl="{{song.songUrl}}" class="played" src="http://cdn.eigene.cn/square/play{{play?'ed':''}}.png"></image>
           <image catchtap="toStoreSong" class="store" src="http://cdn.eigene.cn/square/store{{song.isStore?'d':''}}.png"></image> -->
-        </view>
       </view>
-      <swiper class="topicWrap">
-        <swiper-item wx:for="{{topics}}" wx:key="index" wx:for-item="topic">
-          <view wx:for="{{topic}}" class="topic" catchtap="goTopic" data-topicid="{{item.id}}">
-         {{item.topicName}}
-          </view>
-        </swiper-item>
-      </swiper>
-      <dynamicList bind:fullscreenchange="fullscreenchange" id="dynamicList" dynamics="{{dynamics}}"></dynamicList>
-      <image class="issueDynamic" src="http://cdn.eigene.cn/square/issueDynamic2.png" >
-      <view class="issueDynamicInner" catchtap="goSquarePost"></view>
-      </image>
-
     </view>
+    <swiper class="topicWrap">
+      <swiper-item wx:for="{{topics}}" wx:key="index" wx:for-item="topic">
+        <view wx:for="{{topic}}" class="topic" catchtap="goTopic" data-topicid="{{item.id}}">
+          #{{item.topicName}}#
+        </view>
+      </swiper-item>
+    </swiper>
+    <dynamicList bind:fullscreenchange="fullscreenchange" id="dynamicList" dynamics="{{dynamics}}"></dynamicList>
+    <image class="issueDynamic" src="/images/square/issueDynamic2.png">
+      <view class="issueDynamicInner" catchtap="goSquarePost"></view>
+    </image>
+
+  </view>
   <!-- </scroll-view> -->
   <!-- <menu></menu> -->
   <showTabBar tabBarBtnShow="{{tabBarBtnShow}}">
   </showTabBar>
-  <view class="guideMask {{squareGuide?'showGuide': 'hideGuide'}} {{cross?'cross':''}}" >
+  <view class="guideMask {{squareGuide?'showGuide': 'hideGuide'}} {{cross?'cross':''}}">
     <image wx:if="{{leftGuide}}" class="leftGuide" src="http://cdn.eigene.cn/guide/left.png" catchtap="click"></image>
     <view wx:if="{{leftGuide}}" class="leftGuideText">点击发现隐藏版块</view>
   </view>

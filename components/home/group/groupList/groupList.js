@@ -2,6 +2,7 @@
 let app = getApp()
 let common = require('../../../../assets/tool/common')
 const tool = require('../../../../assets/tool/tool')
+const authorize = require('../../../../assets/tool/authorize')
 Component({
   /**
    * 组件的属性列表
@@ -17,6 +18,7 @@ Component({
    * 组件的初始数据
    */
   data: {
+    qiniuUrl: app.qiniuUrl,
     dialogShow: false,
     // 控制弹出框
     joinShow: false,
@@ -29,7 +31,6 @@ Component({
    */
   methods: {
     goOtherHome(event) {
-
       console.log('eventevent', event)
       if (app.userInfo) {
         let id = event.currentTarget.dataset.id
@@ -111,7 +112,7 @@ Component({
             groups: this.data.groups
           })
           common.Tip(`恭喜您成功加入${groupInfo.groupName}`, '提示', '确认', true).then(res => {
-            if(res.confirm) {
+            if (res.confirm) {
               wx.navigateBack({
                 delta: 2,
               })
@@ -163,11 +164,42 @@ Component({
               status: 0
             }
           }
+        app.post(app.Api.sendSubscribeInfo, {
+          userIdList: res.userIdList,
+          template_id: app.InfoId.joinGroup,
+          data: {
+            "thing1": {
+              "value": tool.cutstr(groupInfo.groupName, 16)
+            },
+            "name2": {
+              "value": tool.cutstr(app.userInfo.nickName, 16)
+            },
+            "thing6": {
+              "value": tool.cutstr(applyContent, 16)
+            },
+          },
+
+        })
         app.socket.emit("sendSystemMsg", from, to, message);
         app.switchData.isSwitchGroup = true
         this.setData({
           groups: this.data.groups,
           applyShow: false
+        })
+        authorize.isSubscription().then(res => {
+          if (res.mainSwitch && (!res.itemSettings || !res.itemSettings[app.InfoId.examine])) {
+            common.Tip('接下来将授权"审核结果"通知。授权时请勾选“总是保持以上选择,不再询问”，后续将第一时间通知到您', '申请信息已发送').then(res => {
+              if (res.confirm) {
+                authorize.alwaysSubscription([app.InfoId.examine]).then(res => {})
+              }
+            })
+          } else {
+            common.Tip('确保您已开启相应的通知权限，“审核结果”将会第一时间通知到您', '申请信息已发送').then(res => {
+              if (res.confirm) {
+                authorize.alwaysSubscription([app.InfoId.examine]).then(res => {})
+              }
+            })
+          }
         })
       })
     },

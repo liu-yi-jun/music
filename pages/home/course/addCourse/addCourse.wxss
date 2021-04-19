@@ -2,7 +2,7 @@
 
 
 .addImg-poster {
-  height: 500rpx;
+  height: 27vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -13,17 +13,19 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-bottom: 3.78vh;
   justify-content: center;
 }
 
 .addImg {
-  width: 278rpx;
-  height: 281rpx;
+  width: 240rpx;
+  height: 240rpx;
 }
 
 .limit {
-  color: #b7b8b8;
+  color: white;
   font-size: 24rpx;
+  opacity: 0.5;
 }
 
 .Wrap {
@@ -31,8 +33,8 @@
   box-sizing: border-box;
   display: block;
   width: 100%;
-  padding: 0 70rpx 200rpx;
-  font-size: 26rpx;
+  padding: 0 80rpx 200rpx;
+  font-size: 28rpx;
 }
 
 .courseNameWrap {
@@ -45,22 +47,24 @@
 }
 
 .courseIntroduceWrap {
-  margin-top: 60rpx;
+  margin-top: 3.22vh;
 }
 
 .courseIntroduceTextarea {
-  height: 239rpx;
+  height: 15.74vh;
   color: white;
   box-sizing: border-box;
   border-radius: 20rpx;
   padding: 15rpx 20rpx;
   width: 100%;
   background-color: rgba(255, 255, 255, 0.2);
-  margin-top: 30rpx;
+  margin-top: 2.24vh;
+  font-size: 28rpx;
 }
 
 .placeholder {
-  color: #B7B8B8;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 28rpx;
 }
 
 .suffix {
@@ -78,9 +82,18 @@
   top: 0rpx;
   right: 0rpx;
 }
+.delete {
+  width: 30rpx;
+  height: 33rpx;
+}
+.title-delete {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
 .media {
-  margin-top: 60rpx;
+  margin-top: 2.62vh;
 }
 
 /* .mediaRow {
@@ -182,7 +195,7 @@
 
 
 .btnWrap {
-  margin: 30rpx 0;
+  margin: 1.49vh 0;
   width: 100%;
   /* display: flex;
   align-items: center;
@@ -192,12 +205,12 @@
 .btn {
   width: 100%;
   text-align: center;
-  height: 70rpx;
-  line-height: 70rpx;
+  height: 68rpx;
+  line-height: 68rpx;
   background-color: #ECE4FC;
   border-radius: 10rpx;
   color: black;
-  font-size: 32rpx;
+  font-size: 30rpx;
 }
 
 .audioWrap,
@@ -207,24 +220,24 @@
 }
 
 .imgWrap {
-  width: 500rpx;
+  width: 100%;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
 }
 
 .addDatum {
-  margin-top: 18rpx;
-  width: 242rpx;
-  height: 330rpx;
+  margin-bottom: 34rpx;
+  width: 280rpx;
+  height: 383rpx;
   background-color: rgba(255, 255, 255, 0.2);
   position: relative;
 }
 
 .datumImg {
-  margin-top: 18rpx;
-  width: 242rpx;
-  height: 350rpx;
+  margin-bottom: 34rpx;
+  width: 280rpx;
+  height: 383rpx;
   border-radius: 15rpx;
   position: relative;
 }

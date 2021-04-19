@@ -1,5 +1,9 @@
 // components/tool/analysis/analysis.js
 // 1	2	3	4	5	6	7	8	9	10	11	12	
+
+const common = require("../../../assets/tool/common");
+const authorize = require("../../../assets/tool/authorize")
+
 // C	C#	D	Eb	E	F	F#	G	Ab	A	Bb	B	
 let oldCent = -50
 let app = getApp()
@@ -44,6 +48,7 @@ Component({
    * 组件的初始数据
    */
   data: {
+    qiniuUrl: app.qiniuUrl,
     options: [{
       id: 0,
       name: 'Standard',
@@ -141,13 +146,15 @@ Component({
   },
   lifetimes: {
     created: function () {
-      this.can = true
-      this.canPonit = true
-      this.initrecorderManager()
-      this.initSocket()
-      this.initCentBox()
-      this.start()
-
+      let that = this
+      authorize.authSettingRecord().then(() => {
+        that.can = true
+        that.canPonit = true
+        that.initrecorderManager()
+        that.initSocket()
+        that.initCentBox()
+        that.start()
+      })
     },
     ready: function () {
       this.initSelect()
@@ -230,7 +237,6 @@ Component({
       wx.getImageInfo({
         src: 'http://cdn.eigene.cn/analysis/dialogRed.png', //服务器返回的图片地址，需加入downloadFile白名单
         success: res => {
-          console.log('initCentBox', res)
           this.redCentBoxPath = res.path
         },
       });
@@ -263,7 +269,9 @@ Component({
       this.height = height
       this.canvas = canvas
       this.ctx = ctx
-      console.log(ctx)
+      let img = canvas.createImage()
+      img.src = '../../../images/success.png'
+      this.img = img
       // this.setData({
 
       // })
@@ -364,13 +372,24 @@ Component({
       ctx.closePath();
       ctx.fill()
       ctx.stroke();
+
       if (analysis.cent) {
-        // 画字体
-        ctx.font = "12px";
-        ctx.textAlign = "center";
-        ctx.textBaseline = "middle";
-        ctx.fillStyle = "white"
-        ctx.fillText(analysis.cent, A.x, A.y - box.tH - box.rectH / 2);
+        if (color === '#3DDB62') {
+          // 已完成矫正
+          let sc_x = E2.x + ((box.rectW - 21) / 2)
+          let sc_Y = E2.y + ((box.rectH - 16) / 2)
+          // img.onload = ()=> {
+          ctx.drawImage(this.img, sc_x, sc_Y, 21, 16);
+          // }
+        } else {
+          // 画字体
+          // ctx.font = "12px";
+          ctx.font = "normal bold 12px sans-serif";
+          // ctx.textAlign = "center";
+          // ctx.textBaseline = "middle";
+          ctx.fillStyle = "#FFFFFF"
+          ctx.fillText(analysis.cent, A.x, A.y - box.tH - box.rectH / 2);
+        }
       }
 
     },
@@ -400,8 +419,8 @@ Component({
       ctx.arc(width / seat, height - radius - y, radius, 0, Math.PI * 2);
       // ctx.shadowBlur = 5;
       // ctx.shadowColor = "white";
-      ctx.fillStyle = "white"
-      ctx.strokeStyle = "white"
+      ctx.fillStyle = "#FFFFFF"
+      ctx.strokeStyle = "#FFFFFF"
       ctx.fill();
       ctx.stroke();
       // this.setData({
@@ -428,7 +447,7 @@ Component({
       // ctx.shadowColor = "white";
       var gradient = ctx.createLinearGradient(0, 0, width / seat, 0);
       gradient.addColorStop(0, 'rgba(255,255,255,0)');
-      gradient.addColorStop(1, "white");
+      gradient.addColorStop(1, "#FFFFFF");
       ctx.strokeStyle = gradient;
       // ctx.moveTo(width / seat, height - radius - y);
       spots.unshift({
@@ -516,12 +535,10 @@ Component({
     initSocket() {
       app.socket.on('completeAnalysis2', (data) => {
         if (this.can) {
-          console.log(data)
           this.can = false
           this.v0 = this.data.v0
           // 拐点渲染次数
           this.inflection = 1
-          console.log(data)
           if (data.cent > 50) {
             data.cent = 50
           }
@@ -529,11 +546,9 @@ Component({
           if (data.cent > this.data.oldCent) {
             this.direction = 'up'
             this.realizationPainting(data)
-            console.log('向上')
           } else if (data.cent < this.data.oldCent) {
             this.direction = 'down'
             this.realizationPainting(data)
-            console.log('向下')
           } else {
             this.can = true
           }
@@ -542,7 +557,6 @@ Component({
     },
     // test() {
     //   oldCent++
-    //   console.log(oldCent)
     //   this.motionBall(oldCent)
 
     //   this.point = this.canvas.requestAnimationFrame(this.test.bind(this))
@@ -552,7 +566,6 @@ Component({
     //   }
     // },
     realizationPainting(data) {
-      console.log('realizationPainting')
       let color;
       let analysis = data
       let disparity = this.data.disparity
@@ -689,46 +702,48 @@ Component({
           minIndex = i
         }
       }
-      console.log('minIndex',minIndex)
+
       if (frequency - standard[minIndex].frequency > 0) {
-        console.log('右')
+
         if (minIndex === standard.length - 1) {
           logoTranslateX = stringWidt * minIndex + 8
         } else {
-          let tempIndex = 0, isMaximum = true
+          let tempIndex = 0,
+            isMaximum = true
           standard.forEach((item, index) => {
             if ((item.frequency > standard[minIndex].frequency) && (Math.abs(standard[minIndex].frequency - standard[index].frequency) < Math.abs(standard[minIndex].frequency - standard[tempIndex].frequency))) {
               tempIndex = index,
-              isMaximum = false
+                isMaximum = false
             }
           })
-          if(isMaximum) {
+          if (isMaximum) {
             logoTranslateX = (stringWidt * minIndex) + 8
           } else {
             logoTranslateX = (stringWidt * minIndex) + stringWidt * (frequency - standard[minIndex].frequency) / (standard[tempIndex].frequency - standard[minIndex].frequency)
           }
         }
       } else if (frequency - standard[minIndex].frequency < 0) {
-        console.log('左')
+
         if (minIndex === 0) {
-          logoTranslateX =  minIndex - 8
+          logoTranslateX = minIndex - 8
         } else {
-          let tempIndex = 0, isMinimum = true
+          let tempIndex = 0,
+            isMinimum = true
           standard.forEach((item, index) => {
             if ((item.frequency < standard[minIndex].frequency) && (Math.abs(standard[minIndex].frequency - standard[index].frequency) < Math.abs(standard[minIndex].frequency - standard[tempIndex].frequency))) {
               tempIndex = index,
-              isMinimum = false
+                isMinimum = false
             }
           })
-          if(isMinimum) {
+          if (isMinimum) {
             logoTranslateX = (stringWidt * minIndex) - 8
-            console.log()
+
           } else {
-            logoTranslateX = (stringWidt * minIndex) - stringWidt * (standard[minIndex].frequency - frequency) / ( standard[minIndex].frequency - standard[tempIndex].frequency)
+            logoTranslateX = (stringWidt * minIndex) - stringWidt * (standard[minIndex].frequency - frequency) / (standard[minIndex].frequency - standard[tempIndex].frequency)
           }
         }
       } else {
-        console.log('中间')
+
         logoTranslateX = stringWidt * minIndex
       }
       standardCurrent = minIndex
@@ -777,9 +792,9 @@ Component({
         }
       })
       this.recorderManager.onFrameRecorded((res) => {
-        // console.log(res.frameBuffer)
-        let array = new Int16Array(res.frameBuffer)
+        // let array = new Int16Array(res.frameBuffer)
         // window
+        let array = new Int16Array(res.frameBuffer.slice(0, 800))
         // if (array.length >= 800) {
         //   // 切
         //   array = array.subarray(0, 800)

@@ -4,6 +4,7 @@
   min-height: 0 !important;
   overflow: visible !important;
 }
+
 .issuePuchCard {
   width: 101rpx;
   height: 119rpx;
@@ -18,6 +19,8 @@
 .bar {
   color: white;
   font-size: 28rpx;
+  display: flex;
+  height: 100%;
 }
 
 .avatar-userName {
@@ -33,8 +36,9 @@
 
 .userName {
   color: white;
-  font-size: 22rpx;
+  font-size: 24rpx;
   margin-left: 10rpx;
+  font-family: 'SH-Bold';
 }
 
 .card {
@@ -42,8 +46,8 @@
   width: 615rpx;
   height: 1059rpx;
   box-sizing: border-box;
-  padding:0 30rpx 30rpx;
-  background: linear-gradient(180deg, #ea9fe1, #6067d1);
+  padding: 0 30rpx 30rpx;
+  background: linear-gradient(180deg, #A687DB, #7E72D6);
   border-radius: 30rpx;
   display: flex;
   flex-direction: column;
@@ -53,6 +57,7 @@
   transition: 0.3s all;
   flex-grow: 1;
   overflow: scroll;
+  -webkit-overflow-scrolling: touch;
 }
 
 .head {
@@ -69,6 +74,7 @@
   overflow: auto;
   height: auto;
   transition: 0.3s all;
+  -webkit-overflow-scrolling: touch;
 }
 
 .Musicscore {
@@ -135,8 +141,8 @@
 }
 
 .like {
-  width: 40rpx;
-  height: 40rpx;
+  width: 60rpx;
+  height: 60rpx;
   margin-right: 5rpx;
 }
 
@@ -274,42 +280,57 @@
 
 .practice {
   color: #dddddd;
+  display: flex;
+  align-items: center;
 }
 
 .demonstration {
   color: #dddddd;
   margin-left: 20rpx;
+  display: flex;
+  align-items: center;
 }
+
 .video {
   height: 380rpx;
   width: 100%;
 }
+
 .videoSound {
-  height: 526rpx!important;
+  height: 526rpx !important;
 }
+
 .voice {
   height: 30rpx;
   width: 54rpx;
 }
+
 @media screen and (max-aspect-ratio: 1/2) {
   .voice {
     height: 30rpx;
     width: 54rpx;
   }
+
   .video {
     height: 380rpx;
     width: 100%;
   }
+
   .videoSound {
-    height: 770rpx!important;
+    height: 770rpx !important;
   }
+
   .demonstration {
     color: #dddddd;
     margin-left: 20rpx;
+    display: flex;
+    align-items: center;
   }
 
   .practice {
     color: #dddddd;
+    display: flex;
+    align-items: center;
   }
 
   .active {
@@ -349,8 +370,9 @@
 
   .userName {
     color: white;
-    font-size: 22rpx;
+    font-size: 24rpx;
     margin-left: 10rpx;
+    font-weight: bold;
   }
 
   .card {
@@ -361,13 +383,14 @@
     height: 81.81vh;
     box-sizing: border-box;
     padding: 0 30rpx 30rpx;
-    background: linear-gradient(180deg, #ea9fe1, #6067d1);
+    background: linear-gradient(180deg, #A687DB, #7E72D6);
     border-radius: 30rpx;
   }
 
   .time-sound {
     flex-grow: 1;
     overflow: scroll;
+    -webkit-overflow-scrolling: touch;
   }
 
   .head {
@@ -380,10 +403,11 @@
 
   .MusicscoreWrap {
     min-height: 837rpx;
-    margin-top:0rpx;
+    margin-top: 0rpx;
     width: 100%;
     overflow: auto;
-    height:auto
+    height: auto;
+    -webkit-overflow-scrolling: touch;
   }
 
   .Musicscore {
@@ -455,8 +479,8 @@
   }
 
   .like {
-    width: 40rpx;
-    height: 40rpx;
+    width: 50rpx;
+    height: 50rpx;
   }
 
   .likeWrap {
@@ -566,4 +590,45 @@
     width: 72rpx;
     height: 56rpx;
   }
+}
+
+
+.guideMask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 9999999999999;
+  opacity: 0;
+  transition: 0.4s all;
+}
+
+
+.showGuide {
+  visibility: visible;
+  opacity: 1;
+}
+
+.hideGuide {
+  opacity: 0;
+  visibility: hidden;
+}
+
+
+.slide {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 550rpx;
+  height: 381rpx;
+}
+
+.slideText {
+  position: absolute;
+  left: 28%;
+  top: 30%;
+  color: white;
 }

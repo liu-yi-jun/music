@@ -10,6 +10,7 @@ Page({
   data: {
     // 去除上面导航栏，剩余的高度
     excludeHeight: 0,
+    qiniuUrl: app.qiniuUrl,
     groups: [],
     groupName: '',
     groupPaging: {
@@ -17,7 +18,8 @@ Page({
       pageIndex: 1,
       isNotData: false,
     },
-
+    tempValue: '',
+    triggered: false
   },
 
   /**
@@ -31,25 +33,36 @@ Page({
   },
   pagingGetGroup(groupName) {
     let groupPaging = this.data.groupPaging
-    app.get(app.Api.pagingGetGroup, {
-      groupName,
-      ...groupPaging
-    }).then((res) => {
-      if (res.length < groupPaging.pageSize) {
+    return new Promise((resolve, reject) => {
+      app.get(app.Api.pagingGetGroup, {
+        groupName,
+        ...groupPaging
+      },{
+        loading:false
+      }).then((res) => {
+        if (res.length < groupPaging.pageSize) {
+          this.setData({
+            'groupPaging.isNotData': true
+          })
+        }
         this.setData({
-          'groupPaging.isNotData': true
+          groups: this.data.groups.concat(this.isJoinGroup(res)),
+          'groupPaging.pageIndex': groupPaging.pageIndex + 1
         })
-      }
-      this.setData({
-        groups: this.data.groups.concat(this.isJoinGroup(res)),
-        'groupPaging.pageIndex': groupPaging.pageIndex + 1
+        resolve()
       })
+    })
+
+  },
+  searchInput(event) {
+    this.setData({
+      tempValue: event.detail.value,
     })
   },
   confirm(event) {
     this.setData({
       groups: [],
-      groupName: event.detail.value,
+      groupName: event.detail.value ? event.detail.value : this.data.tempValue,
       'groupPaging.isNotData': false,
       'groupPaging.pageIndex': 1
     }, () => this.pagingGetGroup(this.data.groupName))
@@ -91,7 +104,22 @@ Page({
   onShow: function () {
 
   },
-
+  onRefresh() {
+    if (this._freshing) return
+    this._freshing = true
+    this.setData({
+      'groupPaging.pageIndex': 1,
+      'groupPaging.isNotData':false,
+      groups:[]
+      },()=> {
+        this.pagingGetGroup(this.data.groupName).then(() => {
+          this._freshing = false
+          this.setData({
+            triggered: false
+          })
+        })
+      })
+  },
   /**
    * 生命周期函数--监听页面隐藏
    */

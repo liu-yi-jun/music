@@ -8,16 +8,17 @@ Page({
    */
   data: {
     // 去除上面导航栏，剩余的高度
+    qiniuUrl: app.qiniuUrl,
     excludeHeight: 0,
     pageSize: 10,
     pageIndex: 1,
     isNoData: false,
     bands: [],
     barList: [{
-        name: '一起组乐队',
-      }
-    ],
-    actIndex: 0
+      name: '一起组乐队',
+    }],
+    actIndex: 0,
+    triggered: false
   },
 
   /**
@@ -34,20 +35,25 @@ Page({
       pageSize,
       pageIndex
     } = this.data
-    app.get(app.Api.getBands, {
-      pageSize,
-      pageIndex
-    }).then(res => {
-      console.log(res)
-      if (res.length < pageSize) {
+    return new Promise((resolve, reject) => {
+      app.get(app.Api.getBands, {
+        pageSize,
+        pageIndex
+      }, {
+        loading: false
+      }).then(res => {
+        console.log(res)
+        if (res.length < pageSize) {
+          this.setData({
+            isNoData: true
+          })
+        }
         this.setData({
-          isNoData: true
+          bands: this.data.bands.concat(res),
+          pageIndex: pageIndex + 1
         })
-      }
-      this.setData({
-        bands: this.data.bands.concat(res),
-        pageIndex: pageIndex + 1
       })
+      resolve()
     })
   },
   /**
@@ -61,7 +67,9 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    if (app.bandBack) {
+    if (app.bandBack || app.bandDeleteBack) {
+      app.bandBack = false
+      app.bandDeleteBack = false
       this.setData({
         bands: [],
         pageSize: 10,
@@ -69,10 +77,22 @@ Page({
       }, () => {
         this.getBands()
       })
-      app.bandBack = false
+
     }
   },
-
+  onRefresh() {
+    if (this._freshing) return
+    this._freshing = true
+    this.data.isNoData = false
+    this.data.pageIndex = 1
+    this.data.bands = []
+    this.getBands().then(() => {
+      this._freshing = false
+      this.setData({
+        triggered: false
+      })
+    })
+  },
   /**
    * 生命周期函数--监听页面隐藏
    */
@@ -121,7 +141,11 @@ Page({
       url: '/pages/square/band/issueTeam/issueTeam',
     })
   },
-
+  toIssueTeam() {
+    wx.navigateTo({
+      url: '/pages/square/band/issueTeam/issueTeam',
+    })
+  },
   switchBtn(e) {
     let actIndex = e.detail.actIndex
     if (this.data.actIndex === actIndex) {

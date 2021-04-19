@@ -2,18 +2,19 @@
 
 
 .avatar {
-  width: 62rpx;
-  height: 62rpx;
+  width: 70rpx;
+  height: 70rpx;
   border-radius: 50%;
   flex-shrink: 0;
   background-repeat: no-repeat;
   background-size: 100%;
-  
+
 }
 
 .item {
   box-sizing: border-box;
   /* padding: 30rpx 0rpx 0 0rpx; */
+  line-height: 32rpx;
 }
 
 .right {
@@ -26,16 +27,14 @@
 .user1 {
   display: flex;
   align-items: flex-start;
-  padding: 20rpx 20rpx 0;
+  padding: 20rpx 32rpx 0;
 }
 
-.user1 .content1 {
-
-}
+.user1 .content1 {}
 
 .user2 {
   /* display: flex; */
-  padding: 10rpx 15rpx 10rpx 92rpx
+  padding: 10rpx 15rpx 10rpx 116rpx
 }
 
 .angle {
@@ -52,48 +51,69 @@
 
 .userName {
   font-size: 28rpx;
+  font-family: 'SH-Bold';
   flex-shrink: 0;
   margin-right: 10rpx;
   display: inline-block;
-}
-.content2 {
-  font-size: 28rpx;
   color: white;
-  word-break:break-all;
+
 }
+
+.content2 {
+  font-size: 24rpx;
+  color: white;
+  word-break: break-all;
+}
+
 .content1 {
-  font-size: 28rpx;
+  font-size: 26rpx;
   width: 100%;
   color: white;
-  word-break:break-all;
+  word-break: break-all;
   padding: 10rpx 0rpx 10rpx 0;
 }
 
 .reply {
   flex-shrink: 0;
-  font-size: 25rpx;
+  font-size: 24rpx;
   color: white;
 }
 
-.time {
-  font-size: 21rpx;
-  color: white;
-  border-bottom: 1rpx solid #CACBCB;
+.line {
+  padding: 25rpx 0rpx 0rpx 92rpx;
+
   box-sizing: border-box;
-  padding: 15rpx 15rpx 15rpx 97rpx;
+}
+
+.line::before {
+  width: 100%;
+  content: "";
+  display: flex;
+  border-bottom: 1rpx solid #CACB8B;
+}
+
+.time {
+  font-size: 24rpx;
+  color: #DBDCDC;
+  /* border-bottom: 1rpx solid #CACBCB; */
+  box-sizing: border-box;
+  padding: 8rpx 12rpx 0rpx 0rpx;
 }
 
 .blank {
   height: 400rpx;
 }
-.replyTime{
-  font-size: 21rpx;
+
+.replyTime {
+  font-size: 24rpx;
   color: white;
   margin-left: 10rpx;
 }
+
 .hover-user2 {
-  background:linear-gradient(to right, rgba(176, 122, 226, 0.2), rgba(0, 83, 218, 0.2));
+  background: linear-gradient(to right, rgba(176, 122, 226, 0.2), rgba(0, 83, 218, 0.2));
 }
+
 .userName-content {
   flex-grow: 1;
   padding-left: 15rpx;

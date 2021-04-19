@@ -16,13 +16,13 @@ Page({
     current: 0,
     // 录音四张图
     soundRecordSrcArr: [
-      'http://cdn.eigene.cn/uploadVoice/soundRecord.png',
-      'http://cdn.eigene.cn/uploadVoice/soundRecording.png',
-      'http://cdn.eigene.cn/uploadVoice/play.png',
-      'http://cdn.eigene.cn/uploadVoice/playing.png'
+      '/images/uploadVoice/soundRecord.png',
+      '/images/uploadVoice/soundRecording.png',
+      '/images/uploadVoice/play.png',
+      '/images/uploadVoice/playing.png'
     ],
     // 录音当前显示图
-    soundRecordSrc: 'http://cdn.eigene.cn/uploadVoice/soundRecord.png',
+    soundRecordSrc: '/images/uploadVoice/soundRecord.png',
     // 路音本地路径
     tempFilePath: '',
     // 控制width-none
@@ -37,7 +37,7 @@ Page({
     // 控制录音时间
     recordTime: 0,
     // 录音限制时间
-    limitTime: 60000,
+    limitTime: 300000,
     // 附近位置,
     index:0,
     mks:[]
@@ -49,7 +49,7 @@ Page({
   onLoad: function(options) {
     // 获取去除上面导航栏，剩余的高度
     tool.navExcludeHeight(this)
-    this.initialization()
+
   },
 
   /**
@@ -63,7 +63,9 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-
+    authorize.authSettingRecord().then(() => {
+      this.initialization()
+      })
   },
 
   /**
@@ -77,7 +79,7 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function() {
-
+    this.innerAudioContext.stop()
   },
 
   /**
@@ -158,7 +160,6 @@ Page({
       duration,
       currentTime
     } = this.innerAudioContext
-    console.log(duration, currentTime)
     if (duration / 2 <= currentTime && this.data.widthNone === true) {
       console.log('超过一半了')
       this.setData({
@@ -183,6 +184,7 @@ Page({
 
   // 点击图片调用
   soundRecord() {
+    authorize.authSettingRecord().then(() => {
     let current = this.data.current
     switch (current) {
       case 0:
@@ -241,6 +243,7 @@ Page({
       soundRecordSrc: this.data.soundRecordSrcArr[current],
       current
     })
+  })
   },
   // 重录
   remake() {
@@ -389,7 +392,7 @@ Page({
     } catch (err) {
       console.log(err)
       common.Tip(err)
-      // wx.hideLoading()
+      wx.hideLoading()
     }
   },
   goHome() {

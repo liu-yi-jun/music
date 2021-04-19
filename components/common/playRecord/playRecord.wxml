@@ -1,7 +1,7 @@
 <!--components/common/playRecord/playRecord.wxml-->
 <view class="soundWrap" id="progress_box">
-  <image wx:if="{{current===0}}" catchtap="playSound" class="soundImg" src="http://cdn.eigene.cn/home/sound.png">
+  <image wx:if="{{current===0}}" catchtap="playSound" class="soundImg" src="/images/playRecord/sound.png">
   </image>
-  <image wx:else catchtap="pauseSound" class="soundImg" src="http://cdn.eigene.cn/home/sounding.png"></image>
+  <image wx:else catchtap="pauseSound" class="soundImg" src="/images/playRecord/sounding.png"></image>
   <canvas class="progress_canvas" canvas-id="canvasProgress"> </canvas>
 </view>

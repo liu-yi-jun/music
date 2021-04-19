@@ -19,7 +19,14 @@ Page({
     },
     IsNoData: false,
     commentArr: [],
-
+    barList: [{
+        name: '详情',
+      },
+      {
+        name: '讨论区'
+      },
+    ],
+    actIndex: 0,
   },
 
   /**
@@ -77,12 +84,12 @@ Page({
       })
     })
   },
+  //切换btn 
   switchBtn(e) {
-    console.log(e)
-    let current = e.currentTarget.dataset.current
-    if (current === this.data.current) return
+    let actIndex = e.detail.actIndex
+    if (actIndex === this.data.actIndex) return
     this.setData({
-      current,
+      actIndex
     })
   },
   /**
@@ -219,6 +226,7 @@ Page({
     })
   },
   scrolltolower() {
-    if (!this.data.IsNoData) this.getComment(this.data.detail.id)
+    let actIndex = this.data.actIndex
+    if (!this.data.IsNoData && actIndex === 1) this.getComment(this.data.detail.id)
   }
 })

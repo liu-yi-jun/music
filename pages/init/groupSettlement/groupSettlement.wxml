@@ -15,7 +15,7 @@
      
       <image wx:if="{{tempFilePaths.length}}" class="logo" src="{{tempUrls[0]}}" mode="aspectFill"
         catchtap="previewImage" catchlongpress="deleteImg"></image>
-      <image wx:else catchtap="chooseGroupLogo" class="img" src="http://use.eigene.cn/bigAdd.png"></image>
+      <image wx:else catchtap="chooseGroupLogo" class="img" src="/images/groupSettlement/bigAdd.png"></image>
     </view>
 
     <view class="inputWarp">
@@ -29,11 +29,11 @@
       <view class="type">
         <text class="typeTile">小组类型</text>
         <view class="switchWarp">
-          <view>
+          <view class="selectWrap">
             <switch name="privates" checked="{{form.privates}}" bindchange="changePrivate"></switch>
             <text>设为私密</text>
           </view>
-          <view>   
+          <view class="selectWrap">   
             <switch  name="examine" checked="{{form.examine}}" bindchange="changeExamine" ></switch>
             <text>小组审批</text>
           </view>

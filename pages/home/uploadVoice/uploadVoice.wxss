@@ -1,20 +1,16 @@
 /* pages/home/uploadVoice/uploadVoice.wxss */
 
 .soundRecordWrap {
-  height: 500rpx;
+  margin-top: 5.24vh;
   position: relative;
-  margin-top: 213rpx;
 }
 
 .soundRecord {
   width: 447rpx;
   height: 447rpx;
   margin: auto;
-  position: absolute;
-  bottom: 0;
-  top: 0;
-  left: 0;
-  right: 0;
+  display: block;
+  position: relative;
 }
 
 .placeholder {
@@ -23,31 +19,27 @@
 }
 
 .textareaWarp {
-  position: relative;
-  height: 460rpx;
+  /* position: relative; */
+  /* height: 460rpx; */
+  margin-top: 5.39vh;
 }
 
+
 .textarea {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
   margin: auto;
-  width: 600rpx;
-  height: 360rpx;
+  width: 570rpx;
+  height: 340rpx;
   box-sizing: border-box;
-  border-radius: 20rpx;
+  border-radius: 50rpx;
   font-size: 30rpx;
   padding: 30rpx;
   color: white;
   background-color: rgba(255, 255, 255, 0.2);
 }
-
 .locationWrap {
   color: #b7b8b8;
-  margin: 20rpx auto 0;
-  width: 600rpx;
+  margin: 1.49vh auto 0;
+  width: 560rpx;
   font-size: 30rpx;
 }
 
@@ -55,37 +47,45 @@
 .location {
   display: inline-block;
 }
+
 .picker {
   color: white;
   margin-left: 34rpx;
 }
+
 .locationLogo {
   width: 26rpx;
   height: 36rpx;
   position: relative;
   top: 4rpx;
 }
+
 .locationText {
   margin-left: 8rpx;
+  font-size: 28rpx;
 }
 
 
 .issueWrap {
   box-sizing: border-box;
-  padding: 300rpx 0 100rpx;
+  padding: 5.24vh 0rpx 0rpx;
 }
 
 .issue {
-  width: 120rpx!important;
-  height: 72rpx!important;
-  background: #fff!important;
-  border: 1px solid #ab85d9!important;
-  opacity: 1!important;
-  border-radius: 23rpx!important;
-  text-align: center!important;
-  line-height: 72rpx!important;
-  color: #ab85d9!important;
-  margin: auto!important;
+  width: 162rpx !important;
+  height: 64rpx !important;
+  background: #A77FDC !important;
+  border: 1px solid #A77FDC !important;
+  opacity: 1 !important;
+  border-radius: 999rem !important;
+  text-align: center !important;
+  line-height: 64rpx !important;
+  color: white !important;
+  margin: auto !important;
+  font-size: 30rpx !important;
+  box-shadow: 0rpx 0rpx 10rpx 4rpx rgba(0, 0, 0, .1);
+  letter-spacing: 8rpx;
+  text-indent: 8rpx;
 }
 
 .remake {

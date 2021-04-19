@@ -1,8 +1,13 @@
 <!--components/my/groupList/groupList.wxml-->
 <view class="list">
-  <view class="card" wx:for="{{groups}}" wx:key="index">
+  <view class="card {{index==0?'first':''}}" wx:for="{{groups}}" wx:key="index">
     <view class="block" catchtap="goOtherHome" data-id="{{item.id}}" data-index="{{index}}">
-      <image src="{{item.groupLogo}}" class="communityLogo" mode="aspectFill"></image>
+      <image src="{{item.groupLogo}}" class="communityLogo" mode="aspectFill" >
+      </image>
+      <view class="followWrap">
+          <image wx:if="{{!isSettleGroup}}" data-index="{{index}}" catchtap="toFollow" class="follow"
+          src="/images/home/follow{{item.isFollow?'ed':''}}.png"></image>
+        </view>
       <view class="introduce">
         <view class="top">
           <text class="communityName">{{item.groupName}}</text>
@@ -16,8 +21,6 @@
           <text>{{item.introduce}}</text>
         </view>
       </view>
-      <image wx:if="{{!isSettleGroup}}" data-index="{{index}}" catchtap="toFollow" class="follow"
-        src="http://cdn.eigene.cn/followMass/follow{{item.isFollow?'ed':''}}.png"></image>
     </view>
   </view>
 </view>

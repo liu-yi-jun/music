@@ -3,13 +3,14 @@
 /* pages/home/uploadVideo/uploadVideo.wxss */
 
 .placeholder {
-  color: #c9cbcb;
+  color: rgba(255, 255, 255, 0.8);
   font-size: 30rpx;
 }
 
 .textareaWarp {
   position: relative;
-  height: 460rpx;
+  height: 34.48vh;
+  font-size: 30rpx;
 }
 
 .textarea {
@@ -22,7 +23,7 @@
   width: 600rpx;
   height: 360rpx;
   box-sizing: border-box;
-  border-radius: 20rpx;
+  border-radius: 50rpx;
   font-size: 30rpx;
   padding: 30rpx;
   color: white;
@@ -33,7 +34,7 @@
   display: flex;
   justify-content: center;
   position: relative;
-  padding: 40rpx 0 80rpx;
+  padding: 0rpx 0 5.99vh;
 }
 
 .imgArea {
@@ -60,14 +61,14 @@
   right: 0;
   bottom: 0;
   margin: auto;
-  height: 1rpx;
+  height: 3rpx;
   background-color: #b7b8b8;
 }
 
 
 .locationWrap {
   color: #b7b8b8;
-  margin: 20rpx auto 0;
+  margin: 2.62vh auto 0;
   width: 600rpx;
   font-size: 30rpx;
 }
@@ -76,43 +77,51 @@
 .location {
   display: inline-block;
 }
+
 .picker {
   color: white;
   margin-left: 34rpx;
 }
+
 .locationLogo {
   width: 26rpx;
   height: 36rpx;
   position: relative;
   top: 4rpx;
 }
+
 .locationText {
   margin-left: 8rpx;
+  font-size: 28rpx;
 }
 
 
 .issueWrap {
   box-sizing: border-box;
-  padding: 60rpx 0 100rpx;
+  padding: 4.49vh 0 100rpx;
 }
 
 .issue {
-  width: 120rpx!important;
-  height: 72rpx!important;
-  background: #fff!important;
-  border: 1px solid #ab85d9!important;
-  opacity: 1!important;
-  border-radius: 23rpx!important;
-  text-align: center!important;
-  line-height: 72rpx!important;
-  color: #ab85d9!important;
-  margin: auto!important;
+  width: 162rpx !important;
+  height: 64rpx !important;
+  background: #A77FDC !important;
+  border: 1px solid #A77FDC !important;
+  opacity: 1 !important;
+  border-radius: 999rem !important;
+  text-align: center !important;
+  line-height: 64rpx !important;
+  color: white !important;
+  margin: auto !important;
+  font-size: 30rpx !important;
+  box-shadow: 0rpx 0rpx 10rpx 4rpx rgba(0, 0, 0, .1);
+  letter-spacing: 8rpx;
+  text-indent: 8rpx;
 }
 
 .delete {
   position: absolute;
   right: 8rpx;
-  top: 8rpx;
+  top: 0rpx;
   font-size: 35rpx;
   z-index: 10;
   color: rgba(191, 191, 191, 0.8);

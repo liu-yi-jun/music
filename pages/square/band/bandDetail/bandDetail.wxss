@@ -1,12 +1,13 @@
 /* pages/square/band/bandDetail/bandDetail.wxss */
 .head {
   display: flex;
-  border-bottom: 4rpx solid #b7b8b8;
-  height: 150rpx;
+  border-bottom: 1rpx solid #b7b8b8;
+  height: 8.44vh;
   align-items: center;
   justify-content: space-between;
   box-sizing: border-box;
-  padding-left: 40rpx;
+  padding-left: 32rpx;
+  margin-top: 0.74vh;
 }
 
 .avatarWrap {
@@ -25,14 +26,15 @@
 }
 
 .avatar {
-  width: 65rpx;
-  height: 65rpx;
+  width: 70rpx;
+  height: 70rpx;
   border-radius: 50%;
 }
 
 .titleName {
   color: white;
-  font-size: 34rpx;
+  font-size: 32rpx;
+  font-family: 'SH-Bold';
 }
 
 .iconWrap {
@@ -48,20 +50,20 @@
 }
 
 .iconImg1 {
-  width: 32rpx;
-  height: 32rpx;
+  width: 24rpx;
+  height: 24rpx;
   margin-right: 8rpx;
 }
 
 .iconImg2 {
-  width: 32rpx;
-  height: 22rpx;
+  width: 30rpx;
+  height: 20rpx;
   margin-right: 8rpx;
 }
 
 .iconNumber {
-  font-size: 23rpx;
-  color: white;
+  font-size: 22rpx;
+  color: #B4B5B5;
 }
 
 
@@ -74,41 +76,53 @@
   width: 52rpx;
   height: 33rpx;
   margin-top: 10rpx;
-  border-radius: 6rpx;
+  border-radius: 8rpx;
+
+}
+
+.recruit {
   border: 1px solid #AB85D9;
   background-color: #AB85D9;
   color: #FFFFFF;
 }
 
+.exist {
+  background-color: #FFFFFF;
+  border: 1px solid #AB85D9;
+  color: black;
+}
+
 .bandPart {
   box-sizing: border-box;
-  padding: 20rpx 40rpx;
+  padding: 20rpx 32rpx;
   border-bottom: 1rpx solid #b7b8b8;
   position: relative;
 }
 
 .contentPart {
   box-sizing: border-box;
-  padding: 20rpx 40rpx;
+  padding: 34rpx 32rpx;
   border-bottom: 1rpx solid #b7b8b8;
   color: white;
+  font-size: 28rpx;
 }
+
 .commentWrap {
   display: flex;
-  align-items: center;
+  /* align-items:center; */
   box-sizing: border-box;
-  padding: 40rpx 20rpx 0;
+  padding: 40rpx 32rpx 10rpx;
 }
 
 .commentWrap image {
-  width: 60rpx;
-  height: 60rpx;
+  width: 34rpx;
+  height: 34rpx;
 }
 
 .commentWrap text {
   color: white;
-  font-size: 30rpx;
-  margin-left: 10rpx;
+  font-size: 27rpx;
+  margin-left: 9rpx;
 }
 
 .footerComment {
@@ -123,17 +137,19 @@
   width: 98%;
   margin: auto;
   box-sizing: border-box;
-  padding: 40rpx 0;
+  padding: 10rpx 0;
 }
 
 
-.existLogo image, .recruitLogo image {
+.existLogo image,
+.recruitLogo image {
   width: 85rpx;
   height: 85rpx;
 }
 
 
-.existLogo, .recruitLogo {
+.existLogo,
+.recruitLogo {
   display: flex;
   margin-top: 20rpx;
   height: 122rpx;
@@ -142,20 +158,25 @@
 
 
 
-.existLogo text, .recruitLogo text {
+.existLogo text,
+.recruitLogo text {
   font-size: 28rpx;
 }
+
 .recruitWrap {
   margin-top: 40rpx;
   position: relative;
 }
-.existLogo image, .recruitLogo image {
+
+.existLogo image,
+.recruitLogo image {
   width: 85rpx;
   height: 85rpx;
 }
 
 
-.existLogo, .recruitLogo {
+.existLogo,
+.recruitLogo {
   display: flex;
   margin-top: 20rpx;
   height: 122rpx;
@@ -165,7 +186,8 @@
 
 
 
-.existLogo text, .recruitLogo text {
+.existLogo text,
+.recruitLogo text {
   font-size: 22rpx;
 }
 
@@ -174,7 +196,7 @@ swiper-item {
 
 }
 
-swiper-item > view{
+swiper-item>view {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -189,11 +211,12 @@ swiper-item > view{
   right: 0rpx;
   bottom: 0rpx;
 }
-.joinInner{
+
+.joinInner {
   position: absolute;
   left: 50%;
   top: 50%;
-  transform: translate(-50%,-50%);
+  transform: translate(-50%, -50%);
   width: 70%;
   height: 70%;
 }
@@ -204,7 +227,25 @@ swiper-item > view{
   display: flex;
   flex-direction: column;
 }
+
 .nameBotoom {
   color: #b7b8b8;
   font-size: 22rpx;
+}
+
+.detailInfo {
+  font-family: 'SH-Bold';
+}
+
+.delete {
+  position: absolute;
+  width: 70rpx;
+  height: 70rpx;
+  font-size: 36rpx;
+  color: white;
+  text-align: center;
+  line-height: 70rpx;
+  margin-right: 20rpx;
+  right: 0rpx;
+  top: 18rpx;
 }

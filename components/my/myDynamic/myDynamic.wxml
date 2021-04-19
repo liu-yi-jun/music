@@ -1,0 +1,44 @@
+<!--components/my/myDynamic/myDynamic.wxml-->
+<view class="list">
+  <view class="item" wx:for="{{dynamics}}" wx:key="id" wx:for-index="i">
+    <view class="item-head" wx:if="{{item.tableName==='groupdynamics'}}">· 小组动态</view>
+    <view class="item-head" wx:elif="{{item.tableName==='squaredynamics' && !isInvitation}}">· 广场动态</view>
+    <!-- <view class="message">
+        <view class="right" wx:if="{{item.tableName==='groupdynamics'}}" catchtap="goOtherHome"
+          data-id="{{item.groupId}}">{{item.groupName}}</view>
+        <view class="right" wx:elif="{{item.tableName==='squaredynamics' && !isInvitation}}" catchtap="goOtherHome"
+          data-id="{{item.groupId}}">{{item.groupName}}</view>
+        <view class="right" wx:else>广场动态</view>
+      </view> -->
+    <view class="message-content">
+
+      <view class="content" catchtap="dynamicDetail" data-index="{{i}}">
+        <text class="contentText">{{item.introduce}}</text>
+        <view class="recordWrap" wx:if="{{item.voiceUrl}}">
+          <view class="record" catchtap="playRecord" data-index="{{i}}" data-voiceurl="{{item.voiceUrl}}"
+            style="width:{{item.soundWidth}}rpx">
+            <image class="recordImg" src="http://cdn.eigene.cn/play{{item.isPlay?'ing':''}}.gif" lazy-load="{{true}}">
+            </image>
+            <text class="recordTime" wx:if="{{item.duration}}">{{item.duration}}s</text>
+          </view>
+        </view>
+        <view class="imgWrap ul" wx:if="{{item.pictureUrls.length}}">
+          <view class="li" wx:for="{{item.pictureUrls}}" wx:key="i" wx:for-item="imgUrl" wx:for-index="j">
+            <image catchtap="previewImage" data-i="{{i}}" data-j="{{j}}"
+              mode="{{item.pictureUrls.length==1?'widthFix':'aspectFill'}}" class="img" src="{{imgUrl}}"
+              lazy-load="{{true}}"></image>
+          </view>
+        </view>
+        <view class="wrapVideo" mark:notDo="video" wx:if="{{item.videoUrl}}">
+          <video data-index="{{i}}" id="video{{i}}" bindplay="startPlay" bindfullscreenchange="bindfullscreenchange"
+            object-fit="cover" src="{{item.videoUrl}}"></video>
+        </view>
+      </view>
+      <view wx:if="{{item.topicName}}" class="topicWrap">
+        <view class="topic">
+          <text>#{{item.topicName}}#</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

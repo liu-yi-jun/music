@@ -63,12 +63,18 @@
     "pages/square/band/bandDetail/bandDetail",
     "pages/my/fans/fans",
     "components/tool/chord/myPicker/myPicker",
-    "pages/my/follow/follow"
+    "pages/my/follow/follow",
+    "components/my/myRelease/myRelease",
+    "pages/tool/musicScorePost/musicScorePost",
+    "pages/home/welcome/welcome"
   ],
   "permission": {
     "scope.userLocation": {
       "desc": "你的位置信息将用于动态发布"
     }
+  },
+  "useExtendedLib": {
+    "weui": true
   },
   "tabBar": {
     "custom": true,

@@ -10,6 +10,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    qiniuUrl: app.qiniuUrl,
     height: 0,
     tempFilePaths: [],
     tempUrls: [],
@@ -316,6 +317,7 @@ Page({
   create(e) {
     if (app.userInfo) {
       this.formSubmit(e)
+
     } else {
       this.setData({
         dialogShow: true
@@ -337,8 +339,26 @@ Page({
       })
       app.userInfo = result
       console.log(result)
-      common.Toast('创建成功')
-      this.goHome()
+      wx.hideLoading()
+      authorize.isSubscription().then(res => {
+        if (res.mainSwitch && (!res.itemSettings || !res.itemSettings[app.InfoId.joinGroup])) {
+          common.Tip('接下来将授权"申请加入小组"通知。授权时请勾选“总是保持以上选择,不再询问”，后续有其他用户加入本小组将会第一时间通知到您', '创建成功').then(res => {
+            if (res.confirm) {
+              authorize.alwaysSubscription([app.InfoId.joinGroup]).then(res => {
+                this.goHome()
+              })
+            }
+          })
+        } else {
+          common.Tip('小组已创建完成，快邀请您的伙伴加入吧!', '提示').then(res => {
+            if (res.confirm) {
+              authorize.alwaysSubscription([app.InfoId.joinGroup]).then(res => {
+                this.goHome()
+              })
+            }
+          })
+        }
+      })
     } catch (err) {
       common.Tip(err)
       console.log(err)

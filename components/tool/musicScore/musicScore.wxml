@@ -2,22 +2,28 @@
 <view class="musicScore">
   <view class="wrap">
     <view class="logo-search">
-      <image class="logo" src="http://use.eigene.cn/picture.png" catchtap="toAnalysis" ></image>
+      <image class="logo" src="/images/musicScore/logo.png" catchtap="toAnalysis"></image>
       <view class="searchWrap">
-        <input class="search" value="{{value}}" bindconfirm="confirm">
+        <input bindinput="searchInput" class="search" value="{{value}}" bindconfirm="confirm" >
         </input>
-        <image class="searchLog" src="http://cdn.eigene.cn/search.png"></image>
+        <image class="searchLog" src="/images/musicScore/search.png"></image>
       </view>
+      <view class="searchText" catchtap="confirm">搜索</view>
     </view>
   </view>
-  <scroll-view enable-back-to-top="{{true}}" bindscrolltolower="scrolltolower" scroll-with-animation   scroll-y style="height: calc({{excludeHeight}}px - 142rpx);"   class="scroll">
-  <!--  -->
+  <scroll-view enable-back-to-top="{{true}}" bindscrolltolower="scrolltolower" scroll-with-animation scroll-y
+    style="height: calc({{excludeHeight}}px - 181rpx);">
+    <!--  -->
     <view data-index="{{index}}" class="circular" wx:for="{{circulars}}" style="{{item.style}}" catchtap="goTapPractice"
       data-src="{{item.src}}">
       <view class="top top{{index + 1}}" style="{{item.TextStyle}}">
         <!-- <text class="number">{{index + 1}}</text> -->
         <text class="name">{{item.tapTitle}}</text>
         <text class="author">{{item.author}}</text>
+        <view class="fireWrap">
+          <image class="fire" src="/images/musicScore/fire.png"></image>
+          <text>{{item.views?item.views:0}}</text>
+        </view>
       </view>
     </view>
   </scroll-view>

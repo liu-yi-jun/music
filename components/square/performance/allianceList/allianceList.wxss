@@ -3,11 +3,13 @@
   height: 100%;
   width: 100%;
   box-sizing: border-box;
-  padding: 30rpx 30rpx 100rpx;
+  padding: 30rpx 58rpx 100rpx;
 }
+
 .userName {
-  font-size: 20rpx;
+  font-size: 22rpx;
   display: block;
+  font-family: 'SH-Medium';
 }
 
 .organization {
@@ -29,8 +31,8 @@
   align-items: center;
   flex-direction: column;
   position: absolute;
-  top: 330rpx;
-  width: 175rpx;
+  top: 300rpx;
+  width: 131rpx;
   right: 9rpx;
 }
 
@@ -41,8 +43,8 @@
 }
 
 .avatar {
-  width: 110rpx;
-  height: 110rpx;
+  width: 91rpx;
+  height: 91rpx;
   left: 0;
   top: 0;
   right: 0;
@@ -53,29 +55,35 @@
 }
 
 .avatarWarp {
-  width: 170rpx;
-  height: 175rpx;
-  top: 180rpx;
-  right: 10rpx;
+  width: 130rpx;
+  height: 133rpx;
+  top: 174rpx;
+  right: 8rpx;
   position: absolute;
 }
 
 
 
 .message {
-  font-size: 18rpx;
+  font-size: 20rpx;
   color: #808080;
   display: flex;
+  line-height: 30rpx;
   flex-direction: column;
 }
 
 .title {
-  font-size: 24rpx;
+  font-size: 26rpx;
   width: 75%;
+  /* line-height: 28rpx; */
+  font-family: 'SH-Bold';
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .card {
-  margin-bottom: 40rpx;
+  margin-bottom: 60rpx;
   position: relative;
   width: 100%;
   background: white;
@@ -92,13 +100,13 @@
 
 .img {
   width: 100%;
-  height: 270rpx;
+  height: 237rpx;
   overflow: hidden;
 }
 
 .content {
   width: 100%;
-  min-height: 148rpx;
+  /* min-height: 148rpx; */
   box-sizing: border-box;
   padding: 20rpx;
   display: flex;

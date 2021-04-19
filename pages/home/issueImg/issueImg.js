@@ -10,6 +10,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    qiniuUrl: app.qiniuUrl,
     // 剩余能够上传多少张图片
     restCount: 9,
     // 存放图片的数组
@@ -213,7 +214,7 @@ Page({
     } catch (err) {
       console.log(err)
       common.Tip(err)
-      // wx.hideLoading()
+      wx.hideLoading()
     }
   },
   goHome() {

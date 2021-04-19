@@ -2,6 +2,7 @@
   "usingComponents": {
     "dynamicList":"/components/square/dynamicList/dynamicList",
     "navBar": "/components/navBar/navBar",
-    "allianceList": "/components/square/performance/allianceList/allianceList"
+    "allianceList": "/components/square/performance/allianceList/allianceList",
+    "bar":"/components/common/bar/bar"
   }
 }

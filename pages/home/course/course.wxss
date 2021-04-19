@@ -9,7 +9,7 @@
   align-items: center;
 }
 
-.title::before {
+/* .title::before {
   content: "";
   display: block;
   position: absolute;
@@ -18,19 +18,19 @@
   background-color: #a3a3a4;
   left: 0rpx;
   top: 9rpx;
-}
+} */
 
 .title {
   display: flex;
   flex-direction: column;
   /* border-left: 1rpx #a3a3a4 solid; */
-  padding-left: 14rpx;
+  /* padding-left: 14rpx; */
   position: relative;
 }
 
 .title-top {
   color: #fff;
-  font-size: 30rpx;
+  font-size: 36rpx;
 }
 
 .title-bottom {

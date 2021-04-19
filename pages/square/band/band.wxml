@@ -5,7 +5,11 @@
   <view class="barWrap">
     <bar barList="{{barList}}" actIndex="{{actIndex}}" bind:switchBtn="switchBtn"></bar>
   </view>
-  <scroll-view bindscrolltolower="scrolltolower" scroll-y style="height: calc({{excludeHeight}}px - 82rpx);">
+  <scroll-view refresher-enabled="{{true}}" refresher-triggered="{{triggered}}" bindrefresherrefresh="onRefresh"
+    bindscrolltolower="scrolltolower" scroll-y style="height: calc({{excludeHeight}}px - 91rpx);">
     <composeBand bands="{{bands}}"></composeBand>
   </scroll-view>
+  <image class="issueDynamic" src="/images/square/issueDynamic2.png">
+    <view class="issueDynamicInner" catchtap="toIssueTeam"></view>
+  </image>
 </view>

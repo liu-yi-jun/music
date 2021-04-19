@@ -1,24 +1,54 @@
+const InfoId = {
+  like: 'b_JFxHhkQlp9nvVXyH2EEzlO2meF71EY0RJFTXCmpUQ',
+  content: 'gSZolmS3oikRODqlJy0LGyrWtJgRZv2wV05CZBmW8ko',
+  reply: 'OhXH6fGsvmuAQGzrTBZYnggUlasZfqBjd0xzFvgZtjI',
+  band: 'm1ULncMbn3rDVirXA_2-EoLHtmRWSsVc3Fg8NlCWW_s',
+  joinGroup: 'gVM-0N8z4sipyh4riEaEUrSuRVusfgsfk6U3DrDV_-w',
+  examine: 'HDFi5dRAZ-sWt-J7LJ6OR59Oc3hgAqtOTqyfosR3qX4',
+}
+const InfoName = {
+  [InfoId.like]: '点赞',
+  [InfoId.content]: '评论',
+  [InfoId.reply]: '回复',
+  [InfoId.band]: '组乐队申请',
+  [InfoId.joinGroup]: '申请加入小组',
+  [InfoId.examine]: '审核结果',
+
+}
 const requestUrls = {
-   Dev:{
+  Dev: {
     // baseUrl:"http://192.168.1.173:3000"
-    // baseUrl:"http://localhost:3000"
-    // baseUrl:"https://127.0.0.1"
-    baseUrl:"http://eigene.cn:3000"
-      // baseUrl:"https://eigene.cn"
+    //  baseUrl:"http://localhost:3000"
+    // baseUrl: "http://192.168.0.145:3000",
+    // baseUrl: "http://192.168.31.40:3000"
+    //  baseUrl:"http://192.168.31.72:3000"
+     baseUrl:"https://www.shengruo.top"
+    //  baseUrl:"https://www.shengruo.top"
+    // baseUrl: "http://47.111.87.121:3000"
+    //  baseUrl:"https://www.eigene.cn"
     // baseUrl:"http://eigene.free.idcfengye.com"
   },
-  Test:{
-    baseUrl:"http://test.iwenwiki.com"
+  Test: {
+    baseUrl: "https://www.eigene.cn"
   },
-  Prod:{
-    baseUrl:"http://iwenwiki.com"
+  Prod: {
+    baseUrl: "https://www.eigene.cn"
   },
   SocketProd: {
     // baseUrl:"http://192.168.31.72:8000"
-      // baseUrl:"http://localhost:8000",
-      baseUrl:"http://www.eigene.cn:8000/"
-  }
+    //  baseUrl:"https://localhost",
+    // baseUrl: "wss://www.eigene.cn"
+    baseUrl: "wss://www.shengruo.top"
+    // baseUrl:"ws://47.111.87.121:8000"
+  },
+  Qiniu: {
+    baseUrl: 'http://cdn.shengruo.top'
+  },
+
+
 }
 module.exports = {
+  InfoId:InfoId,
+  InfoName:InfoName,
   requestUrls: requestUrls
 }

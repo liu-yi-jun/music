@@ -2,7 +2,7 @@
 <view>
   <navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' back="{{true}}" iconTheme='white'
     bindback="handlerGobackClick"></navBar>
-  <scroll-view  style="height:{{excludeHeight}}px;" scroll-y bindscrolltolower="scrolltolower">
+  <scroll-view style="height:{{excludeHeight}}px;" scroll-y bindscrolltolower="scrolltolower">
     <view class="ticketWrap">
       <image class="poster" src="{{detail.showPoster}}"></image>
       <view class="introduce">
@@ -11,11 +11,11 @@
           <view class="right-bottom">
             <view class="row">
               <text>场次:</text>
-              <view >{{detail.showSession}}</view>
+              <view>{{detail.showSession}}</view>
             </view>
             <view class="row">
               <text>票档:</text>
-              <view >{{detail.showTicket}}</view>
+              <view>{{detail.showTicket}}</view>
             </view>
           </view>
         </view>
@@ -24,9 +24,9 @@
           <text>{{detail.showAddress}}</text>
         </view>
       </view>
-      <image class="buy" src="http://cdn.eigene.cn/liveHouseDetail/buy.png"></image>
+      <!-- <image class="buy" src="http://cdn.eigene.cn/liveHouseDetail/buy.png"></image> -->
     </view>
-    <view class="icon-time">
+    <!-- <view class="icon-time">
       <view class="iconWrap">
         <view class="icon">
           <image src="http://cdn.eigene.cn/dynamicDetail/like.png"></image>
@@ -45,12 +45,12 @@
           <text>{{detail.share}}</text>
         </view>
       </view>
-    </view>
+    </view> -->
     <!-- <view class="content">
       <rich-text nodes="{{content}}"></rich-text>
       <text space="ensp"> {{detail.showIntroduce}}</text>
     </view> -->
-    <view class="bar">
+    <!-- <view class="bar">
       <view class="datumWrap {{current === 'datum' ? 'active' : ''}}" catchtap="switchBtn" data-current="datum">
         <image class="datum" src="http://cdn.eigene.cn/courseDetail/datum.png"></image>
         <text class="datumText">详情</text>
@@ -59,12 +59,15 @@
         <image class="comment" src="http://cdn.eigene.cn/courseDetail/comment.png"></image>
         <text>讨论区</text>
       </view>
+    </view> -->
+    <view class="barWrap">
+      <bar size="{{30}}" gap="{{26}}" barList="{{barList}}" actIndex="{{actIndex}}" bind:switchBtn="switchBtn"></bar>
     </view>
-    <view class="richTextWrap" hidden="{{current !== 'datum'}}">
+    <view class="richTextWrap" hidden="{{actIndex !== 0}}">
       <view class="performanceIntroduction">『演出介绍』</view>
       <rich-text class="rich-text" nodes="{{detail.showIntroduce}}"></rich-text>
     </view>
-    <view hidden="{{current !== 'comment'}}">
+    <view hidden="{{actIndex !== 1}}">
       <commentList bind:toReply="toReply" commentArr="{{commentArr}}">
       </commentList>
     </view>

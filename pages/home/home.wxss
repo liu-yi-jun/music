@@ -1,5 +1,7 @@
 /* pages/home/home.wxss */
-
+page{
+  background: rgba(0, 78, 207, 1);
+}
 .home {
   width: 100vw;
   height: 100vh;
@@ -14,6 +16,7 @@
   /* background: url("http://cdn.eigene.cn/aaa/background.png") no-repeat; */
   /* background-size: 100% 100%; */
 }
+
 /* page:before{
   background: none;
 } */
@@ -28,19 +31,18 @@
   bottom: 0;
   background-size: 100% 100%;
 }
-.pageBackground{
+
+.pageBackground {
   position: absolute;
   left: 0;
   top: 0;
   height: 100vh;
   width: 100vw;
-  transition: all .3s;
-  background: url("http://cdn.eigene.cn/pageBackground.png") no-repeat;
-  background-size: 100% 100%;
-  /* z-index: 99999; */
+  transition: all .35s;
   z-index: 100;
 }
-.home::before {
+
+.homebg {
   content: ' ';
   position: fixed;
   z-index: -999;
@@ -48,9 +50,8 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: url("http://cdn.eigene.cn/home/background.png") no-repeat;
+  background: url("http://cdn.eigene.cn/home/background1.png") no-repeat;
   background-size: 100% 100%;
-
 }
 
 .header>view:first-child {
@@ -58,11 +59,11 @@
 }
 
 .avatar {
-  width: 80%;
+  width: 76%;
   height: 80%;
   border-radius: 50%;
   position: absolute;
-  top: 0;
+  top: -7rpx;
   left: 0;
   right: 0;
   bottom: 0;
@@ -91,13 +92,28 @@
   /* will-change: transform opacity bottom; */
   z-index: 30;
   transition: all 0.4s;
-  background: linear-gradient(to top, rgba(226, 145, 227, 1), rgba(0, 69, 207, 1));
   font-weight: bold;
   height: 30%;
   width: 100%;
   box-sizing: border-box;
   border-radius: 50%;
   position: absolute;
+}
+
+.section::after {
+  content: "";
+  position: absolute;
+  z-index: -99999;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 108%;
+  height: 116%;
+  /* background: #000; */
+  background: url(http://cdn.shengruo.top/home/avatarBackground.png);
+  background-position: center;
+  background-size: 110% 110%;
+  background-repeat: no-repeat;
 }
 
 .top-area {
@@ -196,21 +212,20 @@
 
 .follow {
   position: absolute;
-  right: 3rpx;
-  bottom: 15rpx;
-  width: 60rpx;
-  height: 60rpx;
+  right: 0rpx;
+  bottom: 13rpx;
+  width: 58rpx;
+  height: 58rpx;
 }
 
 .functionBar {
   position: absolute;
   transition: 0.4s all;
   height: 0rpx;
-  top: 288rpx;
+  top: 294rpx;
   width: 554rpx;
   left: -134rpx;
   z-index: 10;
-  background-image: url('http://cdn.eigene.cn/home/massBackground.png');
   background-size: 100% 100%;
   color: white;
   font-size: 24rpx;
@@ -233,7 +248,8 @@
 }
 
 .puchCard,
-.course,.setUp {
+.course,
+.setUp {
   position: absolute;
   transition: 0.3s all;
   display: flex;
@@ -252,6 +268,7 @@
   top: 69rpx;
   opacity: 1;
 }
+
 .setUpShow {
   transform: translateX(170rpx);
   visibility: visible;
@@ -269,22 +286,22 @@
 .logoWrap {
   position: absolute;
   /* 变化 */
-  top: 8.84%;
+  top: 8.99vh;
   /* 变化 x/750*不同设备像素  */
-  width: 285rpx;
-  height: 285rpx;
+  width: 290rpx;
+  height: 290rpx;
   left: 238rpx;
   z-index: 20;
 }
 
 .organizationName {
-  font-size: 22rpx;
+  font-size: 26rpx;
   font-weight: bold;
   margin-top: 10rpx;
 }
 
 .organization {
-  font-size: 20rpx;
+  font-size: 26rpx;
   font-weight: bold;
 }
 
@@ -333,19 +350,21 @@
   color: white;
   width: 165rpx;
   height: 125rpx;
-  top: 218rpx;
+  top: 15.14vh;
   text-align: center;
   line-height: 125rpx;
 }
 
 .memberNumber,
 .fanNumber {
-  font-size: 50rpx;
+  font-family: 'SH-Bold';
+  font-size: 58rpx;
 }
 
 .member,
 .fan {
-  font-size: 28rpx;
+  font-family: 'SH-Normal';
+  font-size: 26rpx;
   margin-left: 5rpx;
 }
 
@@ -362,6 +381,8 @@
 }
 
 .logoName {
+  font-family: 'SH-Normal';
+  font-weight: 400;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -370,6 +391,7 @@
   width: 100%;
   height: 88rpx;
   bottom: 0;
+  line-height: 30rpx;
   left: 0;
   background: white;
 }
@@ -393,11 +415,10 @@
   transition: 0.4s all;
   position: absolute;
   overflow: hidden;
-  left: 0rpx;
+  left: 54rpx;
   z-index: 100;
-  width: 750rpx;
-  bottom: 4%;
-  background-image: url('http://cdn.eigene.cn/dynamicShowBackground.png');
+  width: 652rpx;
+  bottom: 8%;
   background-size: 100%;
   background-repeat: no-repeat;
   border-top-left-radius: 50% 20%;
@@ -415,29 +436,29 @@
 
 .showDynamic {
   transform: scale(1);
-  height: 1118rpx;
+  height: 972rpx;
   visibility: visible;
   opacity: 1;
 }
 
 .swiper {
   position: absolute;
-  top: 224rpx;
-  left: 132rpx;
-  width: 481rpx;
-  height: 535rpx;
+  top: 186rpx;
+  left: 124rpx;
+  width: 418rpx;
+  height: 466rpx;
   border-radius: 10rpx;
   overflow: hidden;
 }
 
 .video {
   position: absolute;
-  top: 244rpx;
+  top: 235rpx;
   left: 0;
   right: 0;
   margin: auto;
-  width: 509rpx;
-  height: 404rpx;
+  width: 428rpx;
+  height: 320rpx;
   transition: all .4s;
   border-radius: 10rpx;
 }
@@ -464,13 +485,13 @@
 
 .dynamicImg {
   width: 100%;
-  height: 481rpx;
+  height: 418rpx;
 }
 
 .like-comment {
   position: absolute;
   left: 0;
-  top: 828rpx;
+  top: 706rpx;
   right: 0;
   margin: auto;
   width: 50%;
@@ -481,14 +502,14 @@
 }
 
 .like-comment image {
-  width: 74rpx;
-  height: 68rpx;
+  width: 64rpx;
+  height: 59rpx;
 }
 
 .like-comment text {
-  font-size: 34rpx;
+  font-size: 26rpx;
   color: white;
-  margin-left: 20rpx;
+  margin-left: 21rpx;
 }
 
 .comment,
@@ -498,16 +519,17 @@
 }
 
 .comment {
-  margin-top: 40rpx;
+  margin-top: 38rpx;
 }
 
 .userName {
+  font-family: 'SH-Bold';
   position: absolute;
-  font-size: 34rpx;
+  font-size: 33rpx;
   color: white;
   width: 60%;
   left: 0;
-  top: 66rpx;
+  top: 50rpx;
   right: 0;
   margin: auto;
   text-align: center;
@@ -515,9 +537,9 @@
 
 .title-time {
   position: absolute;
-  width: 482rpx;
-  left: 128rpx;
-  top: 142rpx;
+  width: 418rpx;
+  left: 120rpx;
+  top: 138rpx;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -526,18 +548,18 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  height: 40rpx;
 }
 
 .title-time .title {
-  font-size: 28rpx;
+  font-size: 26rpx;
   color: white;
 
 }
 
 .title-time .time {
   font-size: 26rpx;
-  color: #b5b6b6;
+  color: #FFFFFF;
+  opacity: 0.5;
 }
 
 .shade {
@@ -594,9 +616,9 @@
   position: absolute;
   left: 0;
   right: 0;
-  top: 245rpx;
-  width: 420rpx;
-  height: 420rpx;
+  top: 264rpx;
+  width: 330rpx;
+  height: 330rpx;
   margin: auto;
 }
 
@@ -617,12 +639,14 @@
   width: 70rpx;
   height: 70rpx;
   position: absolute;
-  right: 130rpx;
-  bottom: 327rpx;
+  right: 110rpx;
+  bottom: 290rpx;
   font-size: 36rpx;
   color: white;
   text-align: center;
   line-height: 70rpx;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 page {}
@@ -665,7 +689,7 @@ page {}
 
 .leftGuide {
   position: absolute;
-  left: 48%;
+  left: 62%;
   top: 346.84rpx;
   width: 175rpx;
   height: 135rpx;
@@ -673,8 +697,8 @@ page {}
 
 .leftGuideText {
   position: absolute;
-  left: 49%;
-  top: 28%;
+  left: 34%;
+  top: 31%;
   color: white;
 }
 
@@ -688,23 +712,23 @@ page {}
 
 .issueGuideText {
   position: absolute;
-  left: 16%;
-  top: 86%;
+  left: 14%;
+  top: 76%;
   color: white;
 }
 
 .bottomGuide {
   position: absolute;
   right: 7%;
-  bottom: calc(66rpx + env(safe-area-inset-bottom)) ;
+  bottom: calc(66rpx + env(safe-area-inset-bottom));
   height: 175rpx;
   width: 135rpx;
 }
 
 .bottomGuideText {
   position: absolute;
-  right: 10%;
-  bottom: 20%;
+  right: 14%;
+  bottom: 5%;
   color: white;
 }
 
@@ -760,9 +784,10 @@ page {}
   transform: translate(60rpx, -75rpx);
   /* transform: translate(60rpx,-50rpx); */
 }
+
 .pullPage {
   position: absolute;
-  right:20rpx;
+  right: 20rpx;
   top: 12%;
   width: 80rpx;
   height: 80rpx;
@@ -773,6 +798,7 @@ page {}
   background-repeat: no-repeat;
   z-index: 99999999;
 }
+
 .line {
   width: 5rpx;
   height: 13.6%;
@@ -821,7 +847,7 @@ page {}
 .fold {
   width: 100%;
   height: 616rpx;
-  background-repeat:no-repeat;
+  background-repeat: no-repeat;
   background-size: 100%;
   position: absolute;
   bottom: 0rpx;
@@ -829,23 +855,53 @@ page {}
 }
 
 .unionText {
-  width: 237rpx;
-  height: 59rpx;
-  top: 63rpx;
-  left: 246rpx;
+  width: 206rpx;
+  height: 45rpx;
+  top: 74rpx;
+  left: 270rpx;
   position: absolute;
 }
+
 .settle {
-  width: 241rpx;
-  height: 50rpx;
-  top: 232rpx;
-  left: 244rpx;
+  width: 210rpx;
+  height: 40rpx;
+  top: 239rpx;
+  left: 268rpx;
   position: absolute;
 }
+
 .my {
   width: 153rpx;
   height: 46rpx;
-  bottom: 76rpx;
-  left: 303rpx;
+  bottom: 131rpx;
+  left: 298rpx;
   position: absolute;
+}
+
+.firstPart {
+  width: 100%;
+  height: 616rpx;
+  position: absolute;
+  bottom: 0rpx;
+  border-top-left-radius: 50% 63%;
+  border-top-right-radius: 50% 63%;
+  z-index: 10;
+}
+.secondPart {
+  width: 100%;
+  height: 447rpx;
+  position: absolute;
+  bottom: 0rpx;
+  border-top-left-radius: 50% 84%;
+  border-top-right-radius: 50% 84%;
+  z-index: 20;
+}
+.thirdPart {
+  width: 100%;
+  height: 345rpx;
+  position: absolute;
+  bottom: -70rpx;
+  border-top-left-radius: 50% 100%;
+  border-top-right-radius: 50% 100%;
+  z-index: 30;
 }

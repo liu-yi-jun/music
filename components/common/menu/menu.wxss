@@ -35,18 +35,21 @@
   transition: all .2s;
   z-index: 99999;
 }
+
 .showMenu {
   transform: translateY(0rpx);
-}   
+}
 
 .shareTitle {
   font-size: 36rpx;
   color: #FF9900;
 }
+
 .topline {
   border-top: 1rpx solid #f6f5f8;
 
 }
+
 .inset-bottom {
   padding-bottom: env(safe-area-inset-bottom) !important;
   box-sizing: content-box !important;
@@ -58,4 +61,10 @@
   width: 100% !important;
   font-weight: normal !important;
   background-color: white !important;
+  border-bottom: 1rpx solid #F6F6F6;
+}
+
+.menuWrap>button.inset-bottom {
+  border-bottom: none;
+  border-top: 16rpx solid #F6F6F6;
 }

@@ -4,10 +4,10 @@
     bindback="handlerGobackClick"></navBar>
   <view class="head">
     <view class="avatar-userName">
-    <image catchtap="goPersonal" class="avatar" src="{{detail.avatarUrl}}"></image>
-    <text class="userName">{{detail.nickName}}</text>
-  </view>
-   <view catchtap="showMenu" class="delete iconfont iconshenglve"></view>
+      <image mode="aspectFill"  catchtap="goPersonal" class="avatar" src="{{detail.avatarUrl}}"></image>
+      <text class="userName">{{detail.nickName}}</text>
+    </view>
+    <view catchtap="showMenu" class="delete iconfont iconshenglve"></view>
   </view>
   <scroll-view style="height: calc({{excludeHeight}}px - 130rpx);" scroll-y bindscrolltolower="scrolltolower">
     <swiper wx:if="{{detail.mold === 0}}" class="swiper" indicator-dots duration="400">
@@ -16,9 +16,19 @@
       </swiper-item>
     </swiper>
     <video class="video" object-fit="cover" wx:if="{{detail.mold === 1}}" src="{{detail.videoUrl}}"></video>
-    <view class="recordWrap" wx:if="{{detail.mold === 2}}">
-      <playRecord voiceUrl="{{detail.voiceUrl}}"></playRecord>
-    </view>
+    <block wx:if="{{detail.mold === 2}}">
+      <view wx:if="{{!isSquare}}" class="recordWrap">
+        <playRecord voiceUrl="{{detail.voiceUrl}}"></playRecord>
+      </view>
+      <view class="recordSecond" wx:else>
+        <view class="record" catchtap="playRecord" data-index="{{i}}" data-voiceurl="{{detail.voiceUrl}}"
+          style="width:{{detail.soundWidth}}rpx">
+          <image class="recordImg" src="http://cdn.eigene.cn/play{{isPlay?'ing':''}}.gif" >
+          </image>
+          <text class="recordTime" wx:if="{{detail.duration}}">{{detail.duration}}s</text>
+        </view>
+      </view>
+    </block>
     <view class="icon-time">
       <!-- <view class="iconWrap">
         <view class="icon">
@@ -44,8 +54,9 @@
       <text space="ensp">{{detail.introduce}}</text>
     </view>
     <view class="commentWrap">
-      <image src="http://cdn.eigene.cn/dynamicComment.png"></image>
-      <text>共 {{detail.comment}} 条评论</text>
+      <image src="/images/home/dynamicComment.png"></image>
+      <text>评论</text>
+      <!-- <text>共 {{detail.comment}} 条评论</text> -->
     </view>
     <commentList bind:toReply="toReply" commentArr="{{commentArr}}">
     </commentList>

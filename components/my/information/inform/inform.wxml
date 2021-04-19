@@ -5,12 +5,35 @@
     <view class="content" catchtap="toDetail" data-index="{{index}}">
       <view>
         <text class="name">{{item.nickName}}</text>
-        <text class="elaborate" wx:if="{{item.theme === 'groupdynamics'}}">赞了你的小组动态</text>
-        <text class="elaborate" wx:if="{{item.theme === 'squaredynamics'}}">赞了你的广场动态</text>
-        <text class="elaborate" wx:if="{{item.theme === 'alliance'}}">赞了你的联盟活动</text>
-        <text class="elaborate" wx:if="{{item.theme === 'groupcourse'}}">赞了你的课程</text>
+        <block wx:if="{{item.type===0}}">
+          <text class="elaborate" wx:if="{{item.theme === 'groupdynamics'}}">赞了你的小组动态</text>
+          <text class="elaborate" wx:if="{{item.theme === 'squaredynamics'}}">赞了你的广场动态</text>
+          <text class="elaborate" wx:if="{{item.theme === 'alliance'}}">赞了你的小组活动</text>
+          <text class="elaborate" wx:if="{{item.theme === 'groupcourse'}}">赞了你的课程</text>
+          <text class="elaborate" wx:if="{{item.theme === 'band'}}">赞了你的一起组乐队</text>
+          <text class="elaborate" wx:if="{{item.theme === 'second'}}">赞了你的二手乐器</text>
+          <text class="elaborate" wx:if="{{item.theme === 'ticket'}}">赞了你的票务转让</text>
+        </block>
+        <block wx:if="{{item.type===1}}">
+          <text class="elaborate" wx:if="{{item.theme === 'groupdynamics'}}">评论了你的小组动态</text>
+          <text class="elaborate" wx:if="{{item.theme === 'squaredynamics'}}">评论了你的广场动态</text>
+          <text class="elaborate" wx:if="{{item.theme === 'alliance'}}">评论你了的小组活动</text>
+          <text class="elaborate" wx:if="{{item.theme === 'groupcourse'}}">评论了你的课程</text>
+          <text class="elaborate" wx:if="{{item.theme === 'band'}}">评论了你的一起组乐队</text>
+          <text class="elaborate" wx:if="{{item.theme === 'second'}}">评论了你的二手乐器</text>
+          <text class="elaborate" wx:if="{{item.theme === 'ticket'}}">评论了你的票务转让</text>
+        </block>
+        <block wx:if="{{item.type===2}}">
+          <text class="elaborate" >回复了你的评论</text>
+        </block>
       </view>
-      <text class="words">{{item.themeTitle}}</text>
+      <block wx:if="{{item.type===0 || item.type===1}}">
+        <text class="words">{{item.themeTitle}}</text>
+      </block>
+      <block wx:if="{{item.type===2}}">
+        <text class="words">{{item.content}}</text>
+      </block>
+
       <view class="number" wx:if="{{item.isNew}}">{{item.isNew}}</view>
     </view>
   </view>

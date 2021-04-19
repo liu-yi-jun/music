@@ -1,7 +1,8 @@
 //app.js
 var QQMapWX = require('./qqmap-wx-jssdk1.0/qqmap-wx-jssdk.js')
 let {
-  requestUrls
+  requestUrls,
+  InfoId
 } = require("./assets/request/config.js")
 let Api = require("./assets/request/api.js");
 let Req = require("./assets/request/Req.js");
@@ -25,15 +26,29 @@ App({
         home: true,
         square: true,
         union: true,
-        init: true
+        init: true,
+        puchCard: true
       }
       wx.setStorageSync('guide', guide)
     }
     this.globalData.guide = guide
+    // wx.loadFontFace({
+    //   family: 'NotoSansHans-Bold', //设置一个font-family使用的名字 中文或英文
+    //   global: true,//是否全局生效
+    //   source: 'url("https://www.shengruo.top/font/NotoSansHans-Bold.ttf")', //字体资源的地址
+    //   success: function(e){
+    //     console.log('字体调用成功')
+    //   },
+    //   fail: function (e) {
+    //     console.log('字体调用失败')
+    //   },
+    // })
   },
 
   requestUrls: requestUrls[env], // 给页面js用的
   socketUrls: requestUrls['SocketProd'],
+  qiniuUrl: requestUrls['Qiniu'].baseUrl,
+  InfoId: InfoId,
   Api,
   get: Req.fetch,
   post: (url, data, option = {}) => {

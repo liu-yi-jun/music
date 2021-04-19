@@ -5,8 +5,8 @@
 }
 
 .img {
-  width: 124rpx;
-  height: 165rpx;
+  width: 140rpx;
+  height: 200rpx;
   font-size: 0;
   flex-shrink: 0;
 }
@@ -23,8 +23,8 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: 650rpx;
-  height: 347rpx;
+  width: 680rpx;
+  height: 396rpx;
   border-radius: 20rpx;
   background-image: url('http://cdn.eigene.cn/deal/cardBackground.png');
   background-size: 100%;
@@ -58,23 +58,28 @@
 
 .message {
   font-size: 20rpx;
+  line-height: 30rpx;
   display: flex;
   color: #808080;
   flex-direction: column;
 }
-.message > view > text:first-child {
-  font-weight: bold;
+
+.message>view>text:first-child {
+  font-family: 'SH-Bold';
   color: black;
 }
-.message > view > text, .title {
+
+.message>view>text,
+.title {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  font-family: 'SH-Bold';
 }
 
 .bottom {
   box-sizing: border-box;
-  padding: 0rpx 40rpx 20rpx 40rpx;
+  padding: 0rpx 40rpx 30rpx 40rpx;
   display: flex;
   justify-content: space-between;
 }
@@ -92,7 +97,6 @@
 
 .nameLocation {
   margin-left: 10rpx;
-  font-size: 16rpx;
   color: #808080;
   display: flex;
   flex-direction: column;
@@ -100,12 +104,15 @@
 }
 
 .name {
- 
+  font-size: 20rpx;
+  font-family: 'SH-Bold';
 }
 
 .money {
   color: #ce4646;
-  font-size: 40rpx;
+  font-size: 34rpx;
+  line-height: 64rpx;
+  font-family: 'SH-Bold';
 }
 
 .issueDynamic {
@@ -122,5 +129,5 @@
   position: absolute;
   left: 50%;
   top: 50%;
-  transform: translate(-50%,-50%);
+  transform: translate(-50%, -50%);
 }

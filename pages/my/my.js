@@ -1,13 +1,16 @@
 // pages/my/my.js
 let app = getApp()
+let socket = require('../../assets/request/socket')
 const common = require('../../assets/tool/common')
 const upload = require('../../assets/request/upload')
+const authorize = require('../../assets/tool/authorize')
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
+    qiniuUrl: app.qiniuUrl,
     // 控制右下角三角show
     tabBarBtnShow: false,
     userInfo: {},
@@ -16,41 +19,239 @@ Page({
       pageIndex: 1,
       isNotData: false
     },
-    alliancePagin: {
+    alliancePaging: {
       pageSize: 20,
       pageIndex: 1,
       isNotData: false
     },
+    bandsPaging: {
+      pageSize: 20,
+      pageIndex: 1,
+      isNotData: false
+    },
+    secondPaging: {
+      pageSize: 20,
+      pageIndex: 1,
+      isNotData: false
+    },
+    ticketPaging: {
+      pageSize: 20,
+      pageIndex: 1,
+      isNotData: false
+    },
+    squarePaging: {
+      pageSize: 20,
+      pageIndex: 1,
+      isNotData: false
+    },
+    groupdPaging: {
+      pageSize: 20,
+      pageIndex: 1,
+      isNotData: false
+    },
+    seconds: [
+      [],
+      []
+    ],
     dynamics: [],
     alliances: [],
+    groupdDynamics: [],
+    squareDynamics: [],
+    bands: [],
+    tickets: [],
     barList: [{
         name: '动态',
+        children: [{
+            name: '小组'
+          },
+          {
+            name: '广场'
+          }
+        ]
       },
       {
-        name: '发布'
-      },
+        name: '发布',
+        children: [{
+            name: '小组活动'
+          },
+          {
+            name: '一起组乐队'
+          },
+          {
+            name: '二手乐器'
+          },
+          {
+            name: '票务转让'
+          }
+        ]
+      }
     ],
-    actIndex: 0,
-    noticeNumbe: 0
+    actIndexArr: [0, 0],
+    noticeNumbe: 0,
+    showHideBar: false,
+    myReleasePagin: {
+      pageSize: 18,
+      pageIndex: 1,
+      isNotData: false
+    },
+    release: [],
+    applyShow: false,
+    feedbackContent: ''
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    if (app.userInfo) {
+      // this.getDynamics(app.userInfo.id)
+      this.getPersonalAlliance(app.userInfo.id)
+      this.getBand(app.userInfo.id)
+      this.getSecond(app.userInfo.id)
+      this.getTicket(app.userInfo.id)
+      this.getSquareDynamics(app.userInfo.id)
+      this.getGroupdDynamics(app.userInfo.id)
+      // this.getmyRelease(app.userInfo.id)
+    }
+  },
+
+  completeGetUserInfo() {
+    app.myGetUserInfo = true
     this.getDynamics(app.userInfo.id)
-    this.getPersonalAlliance(app.userInfo.id)
- 
+    this.getmyRelease(app.userInfo.id)
+    this.setUserInfo()
+  },
+  getSquareDynamics(id) {
+    let squarePaging = this.data.squarePaging
+    app.get(app.Api.getMysquareDynamics, {
+      ...squarePaging,
+      userId: id
+    }).then(res => {
+      if (res.length < squarePaging.pageSize) {
+        this.setData({
+          'squarePaging.isNotData': true
+        })
+      }
+      this.setData({
+        squareDynamics: this.data.squareDynamics.concat(res),
+        'squarePaging.pageIndex': squarePaging.pageIndex + 1
+      })
+    })
+  },
+  getGroupdDynamics(id) {
+    let groupdPaging = this.data.groupdPaging
+    app.get(app.Api.getMygroupdDynamics, {
+      ...groupdPaging,
+      userId: id
+    }).then(res => {
+      if (res.length < groupdPaging.pageSize) {
+        this.setData({
+          'groupdPaging.isNotData': true
+        })
+      }
+      this.setData({
+        groupdDynamics: this.data.groupdDynamics.concat(res),
+        'groupdPaging.pageIndex': groupdPaging.pageIndex + 1
+      })
+    })
+  },
+  getTicket(id) {
+    return new Promise((resolve, reject) => {
+      let ticketPaging = this.data.ticketPaging
+      app.get(app.Api.myTicket, {
+        ...ticketPaging,
+        userId: id
+      }).then(res => {
+        if (res.length < ticketPaging.pageSize) {
+          this.setData({
+            'ticketPaging.isNotData': true
+          })
+        }
+        resolve()
+        this.setData({
+          tickets: this.data.tickets.concat(res),
+          'ticketPaging.pageIndex': ticketPaging.pageIndex + 1
+        })
+      })
+    })
+
+  },
+  getSecond(id) {
+    let secondPaging = this.data.secondPaging
+    app.get(app.Api.mySecond, {
+      ...secondPaging,
+      userId: id
+    }).then(res => {
+      if (res.length < secondPaging.pageSize) {
+        this.setData({
+          'secondPaging.isNotData': true
+        })
+      }
+      let seconds = this.data.seconds
+
+      res.forEach(item => {
+        if (seconds[0].length > seconds[1].length) {
+          seconds[1].push(item)
+        } else {
+          seconds[0].push(item)
+        }
+      })
+
+      this.setData({
+        seconds,
+        'secondPaging.pageIndex': secondPaging.pageIndex + 1
+      })
+    })
+  },
+  getBand(id) {
+    let bandsPaging = this.data.bandsPaging
+    app.get(app.Api.myBand, {
+      ...bandsPaging,
+      userId: id
+    }).then(res => {
+      if (res.length < bandsPaging.pageSize) {
+        this.setData({
+          'bandsPaging.isNotData': true
+        })
+      }
+      this.setData({
+        bands: this.data.bands.concat(res),
+        'bandsPaging.pageIndex': bandsPaging.pageIndex + 1
+      })
+    })
+  },
+  getmyRelease(id) {
+    return new Promise((resolve, reject) => {
+      let myReleasePagin = this.data.myReleasePagin
+      app.get(app.Api.myRelease, {
+        ...myReleasePagin,
+        userId: id
+      }).then(res => {
+        if (res.length < myReleasePagin.pageSize) {
+          this.setData({
+            'myReleasePagin.isNotData': true
+          })
+        }
+        this.setData({
+          release: this.data.release.concat(res),
+          'myReleasePagin.pageIndex': myReleasePagin.pageIndex + 1
+        })
+        resolve()
+      })
+    })
+
   },
   getNoticeNumber(id) {
-    app.get(app.Api.noticeNumbe,{
+    app.get(app.Api.noticeNumbe, {
       userId: id
-    },{loading:false}).then(res=> {
+    }, {
+      loading: false
+    }).then(res => {
       let noticeNumbe = res.noticeNumbe
       let systemMsg = wx.getStorageSync('systemMsg')
-      if(systemMsg) {
+      if (systemMsg) {
         systemMsg.forEach(item => {
-          if(item.message.jsonDate.isNew) noticeNumbe++
+          if (item.message.jsonDate.isNew) noticeNumbe++
         })
       }
       this.setData({
@@ -59,19 +260,19 @@ Page({
     })
   },
   getPersonalAlliance(id) {
-    let alliancePagin = this.data.alliancePagin
+    let alliancePaging = this.data.alliancePaging
     app.get(app.Api.personalAlliance, {
-      ...alliancePagin,
+      ...alliancePaging,
       userId: id
     }).then(res => {
-      if (res.length < alliancePagin.pageSize) {
+      if (res.length < alliancePaging.pageSize) {
         this.setData({
-          'alliancePagin.isNotData': true
+          'alliancePaging.isNotData': true
         })
       }
       this.setData({
         alliances: this.data.alliances.concat(res),
-        'alliancePagin.pageIndex': alliancePagin.pageIndex + 1
+        'alliancePaging.pageIndex': alliancePaging.pageIndex + 1
       })
     })
   },
@@ -95,12 +296,12 @@ Page({
   onReachBottom() {
     let {
       dynamicsPaging,
-      alliancePagin,
+      alliancePaging,
       actIndex
     } = this.data
     if (actIndex === 0 && !dynamicsPaging.isNotData) {
       this.getDynamics()
-    } else if (actIndex === 1 && !alliancePagin.isNotData) {
+    } else if (actIndex === 1 && !alliancePaging.isNotData) {
       this.getPersonalAlliance()
     }
   },
@@ -122,24 +323,27 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    this.getNoticeNumber(app.userInfo.id)
+    if (app.userInfo) {
+      this.setUserInfo()
+      this.getNoticeNumber(app.userInfo.id)
+    }
+    if (app.backGroup) {
+      app.backGroup = false
+      let e = {
+        currentTarget: {
+          dataset: {
+            path: '/pages/home/home'
+          }
+        }
+      }
+      this.getTabBar().switchTab(e)
+    }
     if (typeof this.getTabBar === 'function' &&
       this.getTabBar()) {
       this.getTabBar().setData({
         selected: 3
       })
-      // app.getNotice(this, app.userInfo.id)
     }
-    if (app.userInfo) {
-      this.setUserInfo()
-    } else {
-      this.setData({
-        dialogShow: true
-      })
-    }
-  },
-  handleGetUserInfo() {
-    this.setUserInfo()
   },
   /**
    * 生命周期函数--监听页面隐藏
@@ -159,7 +363,43 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
+    if (app.userInfo) {
+      this.setData({
+        'squarePaging.isNotData': false,
+        'squarePaging.pageIndex': 1,
+        'groupdPaging.isNotData': false,
+        'groupdPaging.pageIndex': 1,
+        'alliancePaging.isNotData': false,
+        'alliancePaging.pageIndex': 1,
+        'bandsPaging.isNotData': false,
+        'bandsPaging.pageIndex': 1,
+        'secondPaging.isNotData': false,
+        'secondPaging.pageIndex': 1,
+        'ticketPaging.isNotData': false,
+        'ticketPaging.pageIndex': 1,
+        seconds: [
+          [],
+          []
+        ],
+        dynamics: [],
+        alliances: [],
+        bands: [],
+        tickets: [],
+        groupdDynamics: [],
+        squareDynamics: [],
+      }, () => {
+        this.setUserInfo()
+        this.getNoticeNumber(app.userInfo.id)
+        this.getSquareDynamics(app.userInfo.id)
+        this.getGroupdDynamics(app.userInfo.id)
+        this.getPersonalAlliance(app.userInfo.id)
+        this.getBand(app.userInfo.id)
+        this.getSecond(app.userInfo.id)
+        this.getTicket(app.userInfo.id).then(() => {
+          wx.stopPullDownRefresh()
+        })
+      })
+    }
   },
 
   /**
@@ -207,11 +447,7 @@ Page({
       url: '/pages/my/store/store',
     })
   },
-  goInformation() {
-    wx.navigateTo({
-      url: '/pages/my/information/information',
-    })
-  },
+
   goFans(e) {
     let otherId = app.userInfo.id
     wx.navigateTo({
@@ -270,10 +506,85 @@ Page({
   },
   //切换btn 
   switchBtn(e) {
-    let actIndex = e.detail.actIndex
-    if (actIndex === this.data.actIndex) return
     this.setData({
-      actIndex
+      actIndexArr: e.detail.actIndexArr
     })
   },
+  switchHideBar() {
+    this.setData({
+      showHideBar: !this.data.showHideBar
+    })
+  },
+  handleGetUserInfo(data) {
+    wx.getUserProfile({
+      desc: '用于完善个人资料',
+      success: (data) => {
+        if (!app.userInfo) {
+          app.post(app.Api.register, {
+            userInfo: data.userInfo
+          }, {
+            loading: false
+          }).then(res => {
+            app.userInfo = res.userInfo
+            socket.initSocketEvent()
+            this.completeGetUserInfo()
+          })
+        }
+      }
+    })
+  },
+  goInformation() {
+    wx.navigateTo({
+      url: '/pages/my/information/information',
+    })
+    this.authorizeNotice([app.InfoId.like, app.InfoId.content, app.InfoId.reply]).then(res => {
+
+    })
+  },
+  authorizeNotice(requestId) {
+    return new Promise((resolve, reject) => {
+      authorize.alwaysSubscription(requestId).then(res => {
+        resolve(res)
+      }).catch(err => resolve())
+    })
+
+  },
+  toFeedback() {
+    this.setData({
+      applyShow: true
+    })
+  },
+  cancelApply() {
+    this.setData({
+      applyShow: false
+    })
+  },
+  inputApply(e) {
+    let feedbackContent = e.detail.value
+    this.setData({
+      feedbackContent
+    })
+  },
+  commitFeedback() {
+    if (!this.data.feedbackContent) return common.Toast('写点建议吧!')
+
+    app.post(app.Api.feedback, {
+      userId: app.userInfo.id,
+      feedbackContent: this.data.feedbackContent
+    }).then(() => {
+      common.Toast('感谢您的反馈!')
+      this.setData({
+        applyShow: false
+      })
+    })
+  }
+  // sendinfo() {
+  //   app.post(app.Api.sendSubscribeInfo,{
+  //     msgtype
+  //   }).then(res => {
+  //     console.log(res);
+  //   })
+  // },
+
+
 })

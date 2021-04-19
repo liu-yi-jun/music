@@ -1,7 +1,7 @@
 /* components/home/course/courseDatum/courseDatum.wxss */
 .datumWrap {
   box-sizing: border-box;
-  padding: 40rpx 25rpx;
+  padding: 32rpx 25rpx;
 }
 .datum {
   width: 100%;

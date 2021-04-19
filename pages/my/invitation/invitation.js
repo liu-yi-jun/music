@@ -8,9 +8,9 @@ Page({
    * 页面的初始数据
    */
   data: {
+    qiniuUrl: app.qiniuUrl,
     // 去除上面导航栏，剩余的高度
     excludeHeight: 0,
-    switchBtn: 'dynamic',
     personal: {},
     dynamicsPaging: {
       pageSize: 20,
@@ -26,7 +26,15 @@ Page({
     alliances: [],
     userId: 0,
     otherId: 0,
-    isFollow: false
+    isFollow: false,
+    barList: [{
+        name: '动态',
+      },
+      {
+        name: '发布'
+      },
+    ],
+    actIndex: 0,
   },
 
 
@@ -83,11 +91,11 @@ Page({
     let {
       dynamicsPaging,
       alliancePagin,
-      switchBtn
+      actIndex
     } = this.data
-    if (switchBtn === 'dynamic' && !dynamicsPaging.isNotData) {
+    if (actIndex === 0 && !dynamicsPaging.isNotData) {
       this.getDynamics()
-    } else if (switchBtn === 'issue' && !alliancePagin.isNotData) {
+    } else if (actIndex === 1 && !alliancePagin.isNotData) {
       this.getPersonalAlliance()
     }
   },
@@ -207,10 +215,10 @@ Page({
   },
   //切换btn 
   switchBtn(e) {
-    const switchBtn = e.currentTarget.dataset.switchbtn
-    if (switchBtn === this.switchBtn) return
+    let actIndex = e.detail.actIndex
+    if (actIndex === this.data.actIndex) return
     this.setData({
-      switchBtn
+      actIndex
     })
   },
   completeLike(commenetBarData) {

@@ -133,11 +133,13 @@ canvas {
 }
 
 .middleLetter {
+    /* font-family: 'SH-Normal'; */
   display: flex;
   /* line-height: 0rpx; */
   width: 190rpx;
   height: 200rpx;
   position: relative;
+  
 }
 
 .leftLetter {

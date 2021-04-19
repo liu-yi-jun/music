@@ -1,6 +1,6 @@
 // components/my/information/system/system.js
 const common = require('../../../../assets/tool/common.js')
-
+const tool = require('../../../../assets/tool/tool')
 let app = getApp()
 Component({
   /**
@@ -17,6 +17,7 @@ Component({
    * 组件的初始数据
    */
   data: {
+    qiniuUrl: app.qiniuUrl,
     msgList: [],
     pageSize: 5,
     pageIndex: 1,
@@ -46,8 +47,8 @@ Component({
         this.setData({
           msgList: this.data.msgList
         })
-        this.data.msgList.forEach(item=> {
-          if(item.message.jsonDate.isNew)  item.message.jsonDate.isNew = 0
+        this.data.msgList.forEach(item => {
+          if (item.message.jsonDate.isNew) item.message.jsonDate.isNew = 0
         })
         wx.setStorageSync('systemMsg', this.systemMsg)
         this.data.pageIndex++
@@ -87,6 +88,24 @@ Component({
                 agree: true
               }
             }
+          app.post(app.Api.sendSubscribeInfo, {
+            userIdList: res.userIdList,
+            template_id: app.InfoId.examine,
+            data: {
+              "thing3": {
+                "value": `申请加入“${section.message.jsonDate.groupName}”小组`
+              },
+              "phrase1": {
+                "value": "通过"
+              },
+              "name7": {
+                "value": tool.cutstr(app.userInfo.nickName, 16)
+              },
+              "thing2": {
+                "value": '无'
+              }
+            }
+          })
           app.socket.emit("sendSystemMsg", from, to, message);
           let control = {
             title: `恭喜您，成为"${section.message.jsonDate.groupName}"小组成员`,
@@ -98,6 +117,24 @@ Component({
           to = {
             userId: section.from.userId
           }
+          app.post(app.Api.sendSubscribeInfo, {
+            otherId: section.from.userId,
+            template_id: app.InfoId.examine,
+            data: {
+              "thing3": {
+                "value": `申请加入“${section.message.jsonDate.groupName}”小组`
+              },
+              "phrase1": {
+                "value": "通过"
+              },
+              "name7": {
+                "value": tool.cutstr(app.userInfo.nickName, 16)
+              },
+              "thing2": {
+                "value": '无'
+              }
+            }
+          })
           app.socket.emit("sendPageRefresh", from, to, control);
         } else {
           common.Tip('申请状态已过期').then(() => {
@@ -126,6 +163,7 @@ Component({
             msgList
           })
           wx.setStorageSync('systemMsg', this.systemMsg)
+          // 发送给其他管理员
           let from = {
               userId: app.userInfo.id,
               nickName: app.userInfo.nickName
@@ -143,7 +181,26 @@ Component({
                 agree: false
               }
             }
+          app.post(app.Api.sendSubscribeInfo, {
+            userIdList: res.userIdList,
+            template_id: app.InfoId.examine,
+            data: {
+              "thing3": {
+                "value": `申请加入“${section.message.jsonDate.groupName}”小组`
+              },
+              "phrase1": {
+                "value": "未通过"
+              },
+              "name7": {
+                "value": tool.cutstr(app.userInfo.nickName, 16)
+              },
+              "thing2": {
+                "value": '无'
+              }
+            }
+          })
           app.socket.emit("sendSystemMsg", from, to, message);
+          // 发送给用户
           let control = {
             title: `很抱歉，您未能通过"${section.message.jsonDate.groupName}"小组的审核`,
             proper: {
@@ -154,6 +211,24 @@ Component({
           to = {
             userId: section.from.userId
           }
+          app.post(app.Api.sendSubscribeInfo, {
+            otherId: section.from.userId,
+            template_id: app.InfoId.examine,
+            data: {
+              "thing3": {
+                "value": `申请加入“${section.message.jsonDate.groupName}”小组`
+              },
+              "phrase1": {
+                "value": "未通过"
+              },
+              "name7": {
+                "value": tool.cutstr(app.userInfo.nickName, 16)
+              },
+              "2": {
+                "value": '无'
+              }
+            }
+          })
           app.socket.emit("sendPageRefresh", from, to, control);
         } else {
           common.Tip('申请状态已过期').then(() => {

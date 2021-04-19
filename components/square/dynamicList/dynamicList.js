@@ -12,7 +12,15 @@ Component({
       type: Array,
       value: []
     },
+    isSquare: {
+      type: Boolean,
+      value: false
+    },
     isInvitation: {
+      type: Boolean,
+      value: false
+    },
+    isBack: {
       type: Boolean,
       value: false
     }
@@ -22,6 +30,7 @@ Component({
    * 组件的初始数据
    */
   data: {
+    qiniuUrl: app.qiniuUrl,
     myId: 0,
     list: [{
       name: '分享',
@@ -32,7 +41,7 @@ Component({
       open_type: '',
       functionName: 'handleStore'
     }, {
-      name: '投诉',
+      name: '举报',
       open_type: '',
       functionName: 'handleReport'
     }]
@@ -64,10 +73,22 @@ Component({
       let index = e.currentTarget.dataset.index
       this.index = index
       let detail = this.data.dynamics[index]
+      let list = this.data.list
+      console.log(detail.isStore);
+      if (detail.isStore) {
+        list[1].name = '取消收藏'
+        this.setData({
+          list
+        })
+      } else {
+        list[1].name = '收藏'
+        this.setData({
+          list
+        })
+      }
       if (this.getTabBar()) {
         this.tabBarShow = this.getTabBar().data.show
         if (app.userInfo.id === detail.userId) {
-          let list = this.data.list
           list[2] = {
             name: '删除',
             open_type: '',
@@ -107,6 +128,9 @@ Component({
 
     },
     cancelMenu() {
+      this.showTabBarShow()
+    },
+    showTabBarShow() {
       if (this.tabBarShow) {
         this.getTabBar().setData({
           show: true
@@ -115,27 +139,41 @@ Component({
     },
     handleStore() {
       let detail = this.data.dynamics[this.index]
-      core.operateStore(app.Api[detail.tableName + 'Store'], {
-        operate: true,
-        relation: {
-          userId: app.userInfo.id,
-          themeId: detail.id
-        },
-      }).then(res => {
-        if (res.modify) {
-          common.Toast('收藏成功')
-        } else {
-          common.Toast('动态已存在')
-        }
+      detail.isStore = !detail.isStore
+      this.setData({
+        detail
+      }, () => {
+        core.operateStore(app.Api[detail.tableName + 'Store'], {
+          operate: detail.isStore,
+          relation: {
+            userId: app.userInfo.id,
+            themeId: detail.id
+          },
+        }).then(res => {
+          if (res.modify) {
+            if (detail.isStore) {
+              common.Toast('收藏成功')
+            } else {
+              common.Toast('已取消收藏')
+            }
+          } else {
+            common.Toast('系统繁忙,请稍后再试')
+          }
+
+        })
       })
+
     },
-    handleReport() {
-      console.log('投诉');
-      common.showLoading('投诉中...')
-      setTimeout(() => {
-        wx.hideLoading()
-        common.Tip('投诉消息已发送至本平台，工作人员将进行审核')
-      }, 1200)
+    handleReport(e) {
+      let {
+        tableName,
+        id
+      } = this.data.dynamics[this.index]
+      core.handleReport({
+        userId: app.userInfo.id,
+        theme: tableName,
+        themeId: id
+      })
     },
     hadleDelete(e) {
       common.Tip('是否删除该动态', '提示', '确认', true).then(res => {
@@ -239,13 +277,13 @@ Component({
         this.setData({
           dynamics
         })
-        if(this.innerSoundContext.src !== voiceUrl) {
+        if (this.innerSoundContext.src !== voiceUrl) {
           this.innerSoundContext.src = voiceUrl
         }
         this.innerSoundContext.play()
-        setTimeout(()=> {
+        setTimeout(() => {
           this.oldIndex = index
-        },500)
+        }, 500)
       } else {
         dynamics[index].isPlay = false
         this.setData({
@@ -322,14 +360,62 @@ Component({
       }
       param = JSON.stringify(param)
       wx.navigateTo({
-        url: `/pages/home/dynamicDetail/dynamicDetail?param=${param}`
+        url: `/pages/home/dynamicDetail/dynamicDetail?param=${param}&isSquare=${true}`
       })
     },
     goOtherHome(e) {
-      let id = e.currentTarget.dataset.id
-      wx.navigateTo({
-        url: `/pages/home/otherHome/otherHome?showGroupId=${id}`,
-      })
+      let {
+        id,
+        groupname
+      } = e.currentTarget.dataset
+
+      let flag = false
+      let groupDuty
+      console.log(app.groupInfo.myGrouList);
+      if (id === app.groupInfo.id) {
+        if (this.data.isBack) {
+          wx.navigateBack({
+            delta: 9999,
+          })
+          app.backGroup = true
+        } else {
+          e.currentTarget.dataset.path = '/pages/home/home'
+          this.getTabBar().switchTab(e)
+        }
+      } else {
+        app.groupInfo.myGrouList.forEach(item => {
+          if (item.groupId === id) {
+            groupDuty = item.groupDuty
+            return flag = true
+          }
+        })
+        if (flag) {
+          app.post(app.Api.switchGroup, {
+            groupId: id,
+            groupName:groupname,
+            groupDuty,
+            userId: app.userInfo.id
+          }, {
+            loading: false
+          }).then((res) => {
+            app.switchData.isSwitchGroup = true
+            if (this.data.isBack) {
+              wx.navigateBack({
+                delta: 9999,
+              })
+              app.backGroup = true
+            } else {
+              e.currentTarget.dataset.path = '/pages/home/home'
+              this.getTabBar().switchTab(e)
+            }
+          })
+        } else {
+          wx.navigateTo({
+            url: `/pages/home/otherHome/otherHome?showGroupId=${id}`,
+          })
+        }
+      }
+
     },
     goPersonal(e) {
       let userId = e.currentTarget.dataset.userid

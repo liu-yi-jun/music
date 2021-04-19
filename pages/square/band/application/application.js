@@ -10,6 +10,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    qiniuUrl: app.qiniuUrl,
     // 去除上面导航栏，剩余的高度
     excludeHeight: 0,
     isShowPopup: false,
@@ -133,10 +134,12 @@ Page({
           userId: params.joinId,
           nickName: params.nickName,
           avatarUrl: params.avatarUrl,
-     
+
         },
         to = {
-          userIdList: [{userId:params.issueId}]
+          userIdList: [{
+            userId: params.issueId
+          }]
         },
         message = {
           type: 3,
@@ -147,10 +150,22 @@ Page({
             bandId: params.bandId,
             perform: params.perform,
             contact: params.contact,
-            remark :params.remark,
+            remark: params.remark,
             isNew: 1
           }
         }
+      app.post(app.Api.sendSubscribeInfo, {
+        otherId: params.issueId,
+        template_id: app.InfoId.band,
+        data: {
+          "name1": {
+            "value": tool.cutstr(params.userName, 16)
+          },
+          "thing5": {
+            "value": tool.cutstr(params.userName, 16)
+          },
+        }
+      })
       app.socket.emit("sendSystemMsg", from, to, message);
       wx.hideLoading()
       common.Tip('申请已发送，等待审核').then(() => {

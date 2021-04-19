@@ -2,12 +2,13 @@
 
 .head {
   display: flex;
-  border-bottom: 6rpx solid #b7b8b8;
-  height: 150rpx;
+  border-bottom: 1rpx solid #b7b8b8;
+  height: 7.94vh;
   align-items: center;
   justify-content: space-between;
   box-sizing: border-box;
   padding-left: 56rpx;
+  margin-top: 0.74vh;
 }
 
 .head input {
@@ -15,13 +16,15 @@
 }
 
 .avatar {
-  width: 65rpx;
-  height: 65rpx;
+  width: 70rpx;
+  height: 70rpx;
   border-radius: 50%;
 }
 
 .placeholder {
   color: white;
+  font-size: 32rpx;
+  font-weight: bold;
 }
 
 .avatarWrap {
@@ -45,12 +48,14 @@
   height: 85rpx;
 }
 
-
+.existLogo {
+  margin-bottom: 20rpx;
+}
 .existLogo,
 .recruitLogo {
   display: flex;
   margin-top: 20rpx;
-  height: 122rpx;
+  height: 126rpx;
   color: white;
 }
 
@@ -58,7 +63,7 @@
 
 .existLogo text,
 .recruitLogo text {
-  font-size: 28rpx;
+  font-size: 26rpx;
 }
 
 .exist {
@@ -75,40 +80,41 @@
 .exist {
   display: inline-block;
   border-radius: 15rpx;
-  font-size: 28rpx;
+  font-size: 26rpx;
   margin-left: 40rpx;
-  padding: 8rpx 12rpx;
+  padding: 0rpx 12rpx;
 }
 
 .recruitWrap {
-  margin-top: 40rpx;
+  /* margin-top: 40rpx; */
   position: relative;
+  height: 208rpx;
 }
 
 .exist-recruit {
   width: 98%;
   margin: auto;
   box-sizing: border-box;
-  padding: 40rpx 0;
+  padding: 2.54vh 0;
   border-bottom: 1rpx solid #b7b8b8;
 }
 
 .textareaWarp {
   box-sizing: border-box;
-  padding: 40rpx 0;
+  padding: 2.24vh 0 20rpx  ;
   width: 98%;
   margin: auto;
   border-bottom: 1rpx solid #b7b8b8;
 }
 
 .textarea {
-  font-size: 30rpx;
+  font-size: 28rpx;
   margin: auto;
-  width: 680rpx;
-  height: 360rpx;
+  width: 660rpx;
+  height: 23.61vh;
   box-sizing: border-box;
   border-radius: 20rpx;
-  padding: 25rpx;
+  padding: 20rpx;
   color: white;
   background-color: rgba(255, 255, 255, 0.2);
 }
@@ -117,28 +123,32 @@
   color: #b7b8b8;
   /* margin-left: 50rpx; */
   font-size: 30rpx;
-  margin-top: 20rpx;
+  margin-top: 1.19vh;
 }
 
 .issueWrap {
   box-sizing: border-box;
-  padding: 100rpx 0;
+  padding: 3.74vh 0;
 }
 
 .issue {
-  width: 120rpx !important;
-  height: 50rpx !important;
-  background: white !important;
-  color: #9679cd !important;
-  border-radius: 999rem !important;
-  text-align: center !important;
-  line-height: 50rpx !important;
   margin: auto !important;
-  box-shadow: 0rpx 0rpx 10rpx 2rpx rgba(0, 0, 255, 0.1) !important;
+  text-align: center;
+  line-height: 56rpx !important;
+  width: 140rpx !important;
+  color: white;
+  height: 56rpx !important;
+  border-radius: 999rem;
+  font-size: 26rpx !important;
+  background: #B37AE5;
+  box-shadow: 0rpx 0rpx 10rpx 4rpx rgba(0, 0, 0, .1);
+  letter-spacing: 8rpx;
+  text-indent: 8rpx;
 }
 
 .existWrap {
   /* position: relative; */
+  height: 15.59vh;
 }
 
 .existPopup,
@@ -182,7 +192,7 @@
 }
 
 .instrumentsName {
-  font-size: 20rpx;
+  font-size: 22rpx;
 }
 
 .select {
@@ -211,7 +221,7 @@ swiper-item>view {
 
 .locationWrap {
   color: #B7B8B8;
-  margin-left: 30rpx;
+  margin-left: 40rpx;
   font-size: 30rpx;
 }
 
@@ -233,7 +243,9 @@ swiper-item>view {
 
 .locationText {
   margin-left: 8rpx;
+  font-size: 28rpx;
 }
+
 
 .addRecruit,
 .addExist {
@@ -246,19 +258,24 @@ swiper-item>view {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 200rpx;
+  /* height: 208rpx; */
+  height: 100%;
 }
+
 .complete {
-  width: 130rpx;
-  height: 60rpx;
-  line-height: 60rpx;
-  color:  white;
   text-align: center;
-  background:#B37AE5;
+  line-height: 56rpx !important;
+  width: 140rpx !important;
+  color: white;
+  height: 56rpx !important;
   border-radius: 999rem;
-  box-shadow: 0rpx 0rpx 14rpx 2rpx rgba(0, 0, 0, .2);
-  font-size: 30rpx;
+  font-size: 26rpx !important;
+  background: #B37AE5;
+  box-shadow: 0rpx 0rpx 10rpx 4rpx rgba(0, 0, 0, .1);
+  letter-spacing: 8rpx;
+  text-indent: 8rpx;
 }
+
 .completeWrap {
   width: 100%;
   display: flex;
@@ -266,4 +283,26 @@ swiper-item>view {
   align-items: center;
   margin-top: 20rpx;
   margin-bottom: 12rpx;
+}
+
+.placeholderText {
+  font-size: 28rpx;
+  color: white;
+}
+
+.shade {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 9999;
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.4s all;
+}
+.shadeShow {
+  opacity: 1;
+  visibility: visible;
 }

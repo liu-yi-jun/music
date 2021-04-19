@@ -131,7 +131,6 @@ function compressManyImage(tempFilePaths, compress ={}) {
  function compressImage(tempFilePath,{isCompress = true,quality = 1,canvasid = 'canvas', max_width,max_height}) {
   return new Promise(async (resolve, reject) => {
   if (!isCompress) return resolve({tempFilePath})
-  console.log(max_width,max_height)
   if (!max_width && !max_height) max_width = getSystemWH().windowWidth
   let { width,height } = await imageSize(tempFilePath, max_width,max_height)
       const ctx = wx.createCanvasContext(canvasid);
@@ -163,7 +162,6 @@ function getSystemWH() {
 }
 
 function imageSize(tempFilePath,max_width,max_height) {
-  console.log('max_width=',max_width,'max_height:',max_height)
   return new Promise((resolve, reject)=> {
     wx.getImageInfo({
       src: tempFilePath

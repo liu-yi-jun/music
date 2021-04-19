@@ -9,6 +9,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    qiniuUrl: app.qiniuUrl,
     // 点击第一个头像后显示光圈
     dynamicIsShow: false,
     // 打卡、课程功能板块
@@ -51,14 +52,14 @@ Page({
       },
       {
         index: 4,
-        bottom: 34,
+        bottom: 36,
         scaleX: 0.8,
         scaleY: 0.6,
         opacity: 1,
       },
       {
         index: 5,
-        bottom: 4,
+        bottom: 8,
         scaleX: 1,
         scaleY: 1,
         opacity: 1,
@@ -70,6 +71,7 @@ Page({
         scaleY: 1,
         opacity: 0,
       },
+
     ],
     isNotData: false,
     styleLeight: 7,
@@ -87,19 +89,20 @@ Page({
     lessMember: false,
     member: [],
     showContent: {},
-    list: [{
-      name: '分享',
-      open_type: 'share',
-      functionName: ''
-    }, {
-      name: '收藏',
-      open_type: '',
-      functionName: 'handleStore'
-    }, {
-      name: '投诉',
-      open_type: '',
-      functionName: 'handleReport'
-    }]
+    // list: [{
+    //   name: '分享',
+    //   open_type: 'share',
+    //   functionName: ''
+    // }, {
+    //   name: '收藏',
+    //   open_type: '',
+    //   functionName: 'handleStore'
+    // }, {
+    //   name: '举报',
+    //   open_type: '',
+    //   functionName: 'handleReport'
+    // }],
+    showVideo: false,
   },
 
 
@@ -113,6 +116,12 @@ Page({
       this.urlPush()
     })
   },
+    // 视频加载完成
+    loadedmetadata(e) {
+      this.setData({
+        'showContent.videoLoad': true
+      })
+    },
   groupPagingGetGroupdynamics(groupId) {
     return new Promise((resolve, reject) => {
       console.log('groupPagingGetGroupdynamics')
@@ -244,8 +253,7 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-    let playRecord = this.selectComponent('#playRecord')
-    playRecord.endSound()
+    this.stopPlayRecord()
   },
 
   /**
@@ -289,6 +297,7 @@ Page({
       }
     })
   },
+  // 动态显示时-触碰结果
   dynamicMoveRealize(e) {
     return new Promise((resolve, reject) => {
       let dynamicEndX = this.dynamicEndX
@@ -296,20 +305,21 @@ Page({
       let dynamicStartX = this.dynamicStartX
       let dynamicStartY = this.dynamicStartY
       let memberLength = this.data.member.length
-      if (Math.abs(dynamicEndY - dynamicStartY) > 5 || Math.abs(dynamicEndX - dynamicStartX) > 5) {
-        if (Math.abs(dynamicEndX - dynamicStartX) > 50) return
+      let direction = tool.GetSlideDirection(dynamicStartX, dynamicStartY, dynamicEndX, dynamicEndY)
+      if (direction === 1 || direction === 2) {
         this.setData({
           dynamicIsShow: false
         }, () => {
           setTimeout(() => {
+            this.stopPlayRecord()
             // 滑
-            if (dynamicStartY - dynamicEndY > 50) {
+            if (direction === 1) {
               if ((this.data.lessMember || !this.data.isLoop) && this.data.MB_Index == 0) {
                 return
               }
               this.upSilde().then(() => resolve())
               return
-            } else if (dynamicEndY - dynamicStartY > 50) {
+            } else if (direction === 2) {
               if ((this.data.lessMember || !this.data.isLoop) && this.data.MB_Index == memberLength - 1) {
                 return
               }
@@ -317,7 +327,7 @@ Page({
             }
           }, 210)
         })
-      } else {
+      } else if (direction === 0) {
         this.dynamicDetail(e)
       }
     })
@@ -514,6 +524,7 @@ Page({
       functionBarShow: !this.data.functionBarShow,
       dynamicIsShow: false,
     })
+    this.stopPlayRecord()
   },
   tap(e) {
     let district = e.mark.district
@@ -523,9 +534,6 @@ Page({
       functionBarShow: false,
       showContent: {}
     })
-    let playRecord = this.selectComponent('#playRecord')
-    playRecord.endSound()
-
   },
   dynamicDetail(e) {
     let operation = e.mark.operation
@@ -645,7 +653,7 @@ Page({
       })
 
     } else {
-        this.selectComponent('#menu').show();
+      this.selectComponent('#menu').show();
     }
   },
   handleStore() {
@@ -665,12 +673,7 @@ Page({
     })
   },
   handleReport() {
-    console.log('投诉');
-    common.showLoading('投诉中...')
-    setTimeout(() => {
-      wx.hideLoading()
-      common.Tip('投诉消息已发送至本平台，工作人员将进行审核')
-    }, 1200)
+    core.handleReport()
   },
   hadleDelete(e) {
     common.Tip('是否删除该动态', '提示', '确认', true).then(res => {
@@ -681,5 +684,9 @@ Page({
         console.log('用户点击取消')
       }
     })
+  },
+  stopPlayRecord() {
+    let playRecord = this.selectComponent('#playRecord')
+    playRecord && playRecord.endSound()
   }
 })

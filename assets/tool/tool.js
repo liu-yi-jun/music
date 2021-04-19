@@ -7,7 +7,7 @@ function navExcludeHeight(that) {
     screenHeight
   } = app.globalSystemInfo
   that.setData({
-    excludeHeight: (screenHeight - navBarHeight - navBarExtendHeight) 
+    excludeHeight: (screenHeight - navBarHeight - navBarExtendHeight)
   })
 }
 // 将逆地址解析
@@ -107,12 +107,12 @@ function arraySplit(array, oneDimensionalNumber, groupNumber) {
   let newArray = []
   if (groupNumber) {
     oneDimensionalNumber = Math.floor(array.length / groupNumber)
-    if(!oneDimensionalNumber){
-      array.forEach((item, index)=> {
+    if (!oneDimensionalNumber) {
+      array.forEach((item, index) => {
         newArray[index] = [item]
       })
       return newArray
-    } 
+    }
   }
   array.forEach((item, index) => {
     const group = Math.floor(index / oneDimensionalNumber)
@@ -201,6 +201,31 @@ function getDateDiff(dateTimeStamp) {
     result = "刚刚";
   return result;
 }
+
+function GetSlideDirection(startX, startY, endX, endY) { //判读手指滑动方向
+  var dy = startY - endY;
+  var dx = endX - startX;
+  var result = 0;
+  //如果滑动距离太短
+  if (Math.abs(dx) < 2 && Math.abs(dy) < 2) {
+    return result;
+  }
+  var angle = GetSlideAngle(dx, dy);
+  if (angle >= -45 && angle < 45) {
+    result = 4; //右
+  } else if (angle >= 45 && angle < 135) {
+    result = 1; //上
+  } else if (angle >= -135 && angle < -45) {
+    result = 2; //下
+  } else if ((angle >= 135 && angle <= 180) || (angle >= -180 && angle < -135)) {
+    result = 3; //左
+  }
+  return result;
+}
+
+function GetSlideAngle(dx, dy) { //判断角度
+  return Math.atan2(dy, dx) * 180 / Math.PI;
+}
 module.exports = {
   navExcludeHeight: navExcludeHeight,
   reverseGeocoder: reverseGeocoder,
@@ -209,5 +234,6 @@ module.exports = {
   arraySplit: arraySplit,
   cutstr: cutstr,
   getDateDiff: getDateDiff,
-  reduction:reduction
+  reduction: reduction,
+  GetSlideDirection: GetSlideDirection
 }

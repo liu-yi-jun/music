@@ -1,18 +1,25 @@
 <!--components/common/comment/commentBar/commentBar.wxml-->
 <view class="warp">
-  <view class="input" catchtap="toComment">......</view>
+  <view class="input" catchtap="toComment">
+    <view class="point"></view>
+    <view class="point"></view>
+    <view class="point"></view>
+    <view class="point"></view>
+    <view class="point"></view>
+    <view class="point"></view>
+  </view>
   <view class="icon">
     <view catchtap="toLike">
-      <image class="min" src="http://use.eigene.cn/like{{commenetBarData.isLike?'d':''}}.png"></image>
+      <image class="min" src="/images/commentBar/like{{commenetBarData.isLike?'d':''}}.png"></image>
       <text>{{commenetBarData.likes}}</text>
     </view>
     <view  catchtap="toStore">
-      <image src="http://use.eigene.cn/store{{commenetBarData.isStore?'d':''}}.png"></image>
+      <image src="/images/commentBar/store{{commenetBarData.isStore?'d':''}}.png"></image>
       <text>{{commenetBarData.store}}</text>
     </view>
     <view>
       <button class="shareBtn" open-type='share' plain='true'></button>
-      <image src="http://use.eigene.cn/share.png"></image>
+      <image src="/images/commentBar/share.png"></image>
       <text>{{commenetBarData.share}}</text>
     </view>
 

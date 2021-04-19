@@ -52,7 +52,19 @@ Page({
     this.getUserInfo()
     this.initValidate()
   },
-
+  // 处理声音条的宽度
+  initSoundWidth(duration) {
+    const recordTime = this.data.recordTime
+    const {
+      minWidth,
+      maxWidth
+    } = this.data.voiceBar
+    const changeRange = maxWidth - minWidth
+    let soundWidth = duration * changeRange / recordTime + minWidth
+    soundWidth >= maxWidth ? soundWidth = maxWidth : soundWidth
+    
+    return (soundWidth)
+  },
   // 初始化声音条实例
   initSound() {
     // wx.setInnerAudioOption({
@@ -77,25 +89,35 @@ Page({
       })
     })
     this.innerSoundContext.onStop(() => {
+      console.log('onStop')
       this.setData({
         isPlay: false
       })
     })
     this.innerSoundContext.onPause(() => {
       console.log('onPause')
-      this.innerSoundContext.stop()
+      this.setData({
+        isPlay: false
+      })
     })
   },
   playRecord() {
-    if (this.data.isPlay) return
-    let tempRecordPath = this.data.tempRecordPath
-    this.innerSoundContext && this.innerSoundContext.destroy()
-    this.initSound()
-    this.innerSoundContext.src = tempRecordPath
-    this.innerSoundContext.play()
-    this.setData({
-      isPlay: true
-    })
+    if (!this.innerSoundContext) {
+      this.initSound()
+      this.innerSoundContext.src = this.data.tempRecordPath
+    }
+    if (this.data.isPlay) {
+      this.innerSoundContext.pause()
+      this.setData({
+        isPlay: false
+      })
+    } else {
+      this.innerSoundContext.play()
+      this.setData({
+        isPlay: true
+      })
+    }
+
   },
   getUserInfo() {
     let {
@@ -113,7 +135,7 @@ Page({
       title: {
         required: true,
         minlength: 4,
-        maxlength: 12
+        maxlength: 20
       },
       activityLocation: {
         required: true,
@@ -128,8 +150,8 @@ Page({
     const messages = {
       title: {
         required: '请填写标题',
-        minlength: '小组名称不少于4个字符',
-        maxlength: '小组名称不大于20个字符'
+        minlength: '小组活动名称不少于4个字符',
+        maxlength: '小组活动名称不大于20个字符'
       },
       activityLocation: {
         required: '请填写活动地点',
@@ -208,8 +230,6 @@ Page({
     common.chooseImage(9).then(res => {
       this.setData({
         tempImagePaths: res.tempFilePaths,
-        tempRecordPath: '',
-        tempVideoPath: '',
         isImageLink: false
       })
     })
@@ -230,44 +250,32 @@ Page({
   chooseVideo() {
     common.chooseVideo().then(res => {
       this.setData({
-        tempRecordPath: '',
-        tempImagePaths: [],
         tempVideoPath: res.tempFilePath,
         isVideoLink: false
       })
     })
   },
   recordSheet() {
-    wx.showActionSheet({
-      itemList: ['添加网络链接', '在线录音'],
-      success: res => {
-        if (res.tapIndex === 1) {
-          let record = this.selectComponent('#record')
-          record.startRecord()
-        } else if (res.tapIndex === 0) {
-          this.showPopup(1)
-        }
-      }
+    wx.navigateTo({
+      url: '/pages/common/record/record',
     })
+    // wx.showActionSheet({
+    //   itemList: ['添加网络链接', '在线录音'],
+    //   success: res => {
+    //     if (res.tapIndex === 1) {
+    //       let record = this.selectComponent('#record')
+    //       record.startRecord()
+    //     } else if (res.tapIndex === 0) {
+    //       this.showPopup(1)
+    //     }
+    //   }
+    // })
   },
-  // 处理声音条的宽度
-  initSoundWidth(duration) {
-    const recordTime = this.data.recordTime
-    const {
-      minWidth,
-      maxWidth
-    } = this.data.voiceBar
-    const changeRange = maxWidth - minWidth
-    let soundWidth = duration * changeRange / recordTime + minWidth
-    return (soundWidth)
-  },
-  recordResult(e) {
+  recordResult(data) {
     this.setData({
-      tempImagePaths: [],
-      tempVideoPath: '',
-      tempRecordPath: e.detail.tempFilePath,
-      duration: e.detail.duration,
-      soundWidth: this.initSoundWidth(e.detail.duration),
+      tempRecordPath: data.tempFilePath,
+      duration: data.duration,
+      soundWidth: this.initSoundWidth(data.duration),
       isRecordLink: false
     })
   },
@@ -313,7 +321,8 @@ Page({
       let {
         tempVideoPath,
         tempImagePaths,
-        tempRecordPath
+        tempRecordPath,
+        duration
       } = this.data
       let {
         date,
@@ -324,6 +333,7 @@ Page({
         const error = this.WxValidate.errorList[0].msg
         return reject(error)
       }
+      if (!tempImagePaths && !tempImagePaths.length) return reject('请添加图片')
       if (date === '活动日期') return reject('请选择活动开始日期')
       if (time === '活动时间') return reject('请选择活动开始时间')
       if (!tempImagePaths.length) return reject('需要添加图片哦')
@@ -333,6 +343,7 @@ Page({
 
       let activityTime = `${dates[0]}年${dates[1]}月${dates[2]}日${time}`
       return resolve({
+        duration,
         userId: app.userInfo.id,
         nickName: app.userInfo.nickName,
         avatarUrl: app.userInfo.avatarUrl,
@@ -374,7 +385,7 @@ Page({
     } catch (err) {
       console.log(err)
       common.Tip(err)
-      // wx.hideLoading()
+      wx.hideLoading()
     }
   },
   goPerformance() {

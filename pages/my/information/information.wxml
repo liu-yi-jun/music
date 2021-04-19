@@ -5,8 +5,8 @@
   <view class="barWrap">
     <bar barList="{{barList}}" actIndex="{{actIndex}}" bind:switchBtn="switchBtn"></bar>
   </view>
-  <scroll-view scroll-y style="height: calc({{excludeHeight}}px - 83rpx);" bindscrolltolower="scrolltolower"
-    refresher-enabled="{{true}}" scroll-into-view="{{intoView}}" refresher-triggered="{{triggered}}"
+  <scroll-view scroll-y style="height: calc({{excludeHeight}}px - 93rpx);" bindscrolltolower="scrolltolower"
+    refresher-enabled="{{true}}" scroll-into-view="{{intoView}}"  refresher-triggered="{{triggered}}"
     bindrefresherrefresh="onRefresh">
     <view hidden="{{actIndex !== 'privateLetter'}}">
       <privateLetter userMessage="{{userMessage}}">
@@ -19,7 +19,7 @@
     <view hidden="{{actIndex !== 1}}">
       <system systems="{{systems}}" id="system">
       </system>
-      <view id="last"></view>
+      <view id="last" class="last"></view>
     </view>
   </scroll-view>
 </view>

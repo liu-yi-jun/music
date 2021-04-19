@@ -5,7 +5,8 @@
     bindback="handlerGobackClick"></navBar>
   <form bindsubmit="formSubmit">
     <view class="textareaWarp">
-      <textarea maxlength="5000" class="textarea" placeholder="请输入描述……" placeholder-class="placeholder" name="describe"></textarea>
+      <textarea maxlength="1000" class="textarea" placeholder="请输入描述……" placeholder-class="placeholder"
+        name="describe"></textarea>
     </view>
     <view class="imgWrap">
       <view class="imgArea">
@@ -14,13 +15,13 @@
           <view class="delete iconfont icondelete" catchtap="toDelete" data-id="{{index}}"></view>
         </image>
         <image wx:if="{{restCount}}" catchtap="addImg" class="addImg" mode="aspectFill"
-          src="http://cdn.eigene.cn/issueImg/addImg.png">
+          src="{{qiniuUrl}}/issueImg/addImg.png">
         </image>
       </view>
     </view>
     <view class="locationWrap">
       <view class="location" catchtap="getLocation">
-        <image class="locationLogo" src="http://cdn.eigene.cn/squarePost/locationLogo.png"></image>
+        <image class="locationLogo" src="{{qiniuUrl}}/issueImg/locationLogo.png"></image>
         <text class="locationText">你在哪里?</text>
       </view>
       <picker class="picker" bindchange="bindPickerChange" value="{{index}}" range="{{mks}}" range-key="title">
@@ -32,5 +33,5 @@
     <view class="issueWrap">
       <button class="issue" form-type="submit">发布</button>
     </view>
-  </form>>
+  </form>
 </view>

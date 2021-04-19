@@ -28,8 +28,9 @@ Component({
       let detail = informs[index]
       if (detail.isNew) {
         app.post(app.Api.modifyInform, {
-          theme: detail.theme,
-          themeId: detail.themeId
+          id:detail.id
+          // theme: detail.theme,
+          // themeId: detail.themeId
         }).then((res) => {
           console.log(res)
           detail.isNew = 0
@@ -56,6 +57,18 @@ Component({
       } else if (detail.theme === 'groupcourse') {
         wx.navigateTo({
           url: `/pages/home/course/courseDetail/courseDetail?id=${detail.themeId}`,
+        })
+      } else if (detail.theme === 'band') {
+        wx.navigateTo({
+          url: `/pages/square/band/bandDetail/bandDetail?id=${detail.themeId}`,
+        })
+      } else if (detail.theme === 'second') {
+        wx.navigateTo({
+          url: `/pages/square/deal/secondDetail/secondDetail?id=${detail.themeId}`,
+        })
+      } else if (detail.theme === 'ticket') {
+        wx.navigateTo({
+          url: `/pages/square/deal/ticketDetail/ticketDetail?id=${detail.themeId}`,
         })
       }
     },

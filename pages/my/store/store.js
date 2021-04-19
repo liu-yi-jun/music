@@ -12,6 +12,8 @@ Page({
     courses: [],
     alliances: [],
     dynamics: [],
+    bands: [],
+    performances: [],
     coursePaging: {
       pageSize: 10,
       pageIndex: 1,
@@ -27,6 +29,16 @@ Page({
       pageIndex: 1,
       isNotData: false
     },
+    bandPagin: {
+      pageSize: 10,
+      pageIndex: 1,
+      isNotData: false
+    },
+    performancePagin: {
+      pageSize: 10,
+      pageIndex: 1,
+      isNotData: false
+    },
     barList: [{
         name: '动态',
       },
@@ -34,10 +46,13 @@ Page({
         name: '课程'
       },
       {
-        name: '联盟活动'
+        name: '小组活动'
       },
       {
         name: '演出咨讯'
+      },
+      {
+        name: '一起组乐队'
       }
     ],
     actIndex: 0
@@ -50,6 +65,43 @@ Page({
     this.getMyStoreCourse()
     this.getmyStoreAlliance()
     this.getMyStoreDynamic()
+    this.getStoreBand()
+    this.getStorePerformance()
+  },
+  getStorePerformance() {
+    let performancePagin = this.data.performancePagin
+    app.get(app.Api.myStorePerformance, {
+      userId: app.userInfo.id,
+      ...performancePagin
+    }).then((res => {
+      if (res.length < performancePagin.pageSize) {
+        this.setData({
+          'performancePagin.isNotData': true
+        })
+      }
+      this.setData({
+        performances: this.data.performances.concat(res),
+        'performancePagin.pageIndex': performancePagin.pageIndex + 1
+      })
+    }))
+  },
+  // 获取分页一起组乐队信息
+  getStoreBand() {
+    let bandPagin = this.data.bandPagin
+    app.get(app.Api.myStoreBand, {
+      userId: app.userInfo.id,
+      ...bandPagin
+    }).then((res => {
+      if (res.length < bandPagin.pageSize) {
+        this.setData({
+          'bandPagin.isNotData': true
+        })
+      }
+      this.setData({
+        bands: this.data.bands.concat(res),
+        'bandPagin.pageIndex': bandPagin.pageIndex + 1
+      })
+    }))
   },
   // 获取分页动态信息
   getMyStoreDynamic() {
@@ -118,7 +170,12 @@ Page({
       this.getMyStoreCourse()
     } else if (actIndex === 2 && !alliancePaging.isNotData) {
       this.getmyStoreAlliance()
+    } else if (actIndex === 3 && !performancePagin.isNotData) {
+      this.getStorePerformance()
+    } else if (actIndex === 4 && !bandPagin.isNotData) {
+      this.getStoreBand()
     }
+
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -132,7 +189,36 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    if(app.dynamicDeleteBack) {
+      app.dynamicDeleteBack = false
+      this.setData({
+        dynamics: [],
+        'dynamicPaging.isNotData': false,
+        'dynamicPaging.pageIndex': 1
+      }, () => {
+        this.getMyStoreDynamic()
+      })
+    }
+    if (app.courseDeleteBack) {
+      app.courseDeleteBack = false
+      this.setData({
+        courses: [],
+        'coursePaging.isNotData': false,
+        'coursePaging.pageIndex': 1
+      }, () => {
+        this.getMyStoreCourse()
+      })
+    }
+    if (app.allianceDeleteBack) {
+      app.allianceDeleteBack = false
+      this.setData({
+        alliances: [],
+        'alliancePaging.isNotData': false,
+        'alliancePaging.pageIndex': 1
+      }, () => {
+        this.getmyStoreAlliance()
+      })
+    }
   },
 
   /**
@@ -171,13 +257,24 @@ Page({
   },
   handlerGobackClick: app.handlerGobackClick,
   completeLike(commenetBarData) {
-    const dynamicList = this.selectComponent('#dynamicList');
-    dynamicList.completeLike(commenetBarData)
-
+    let actIndex = this.data.actIndex
+    if (actIndex === 0) {
+      const dynamicList = this.selectComponent('#dynamicList');
+      dynamicList.completeLike(commenetBarData)
+    } else if (actIndex === 3) {
+      const liveHouse = this.selectComponent('#liveHouse');
+      liveHouse.completeLike(commenetBarData)
+    }
   },
   completeStore(commenetBarData) {
-    const dynamicList = this.selectComponent('#dynamicList');
-    dynamicList.completeStore(commenetBarData)
+    let actIndex = this.data.actIndex
+    if (actIndex === 0) {
+      const dynamicList = this.selectComponent('#dynamicList');
+      dynamicList.completeStore(commenetBarData)
+    } else if (actIndex === 3) {
+      const liveHouse = this.selectComponent('#liveHouse');
+      liveHouse.completeStore(commenetBarData)
+    }
   },
 
   //切换btn 

@@ -5,6 +5,7 @@ let tool = require('../../assets/tool/tool')
 let core = require('../../assets/tool/core')
 let authorize = require('../../assets/tool/authorize')
 let socket = require('../../assets/request/socket')
+const { Tip } = require('../../assets/tool/common')
 
 let Style = [{
     index: 0,
@@ -36,14 +37,14 @@ let Style = [{
   },
   {
     index: 4,
-    bottom: 34,
+    bottom: 36,
     scaleX: 0.8,
     scaleY: 0.6,
     opacity: 1,
   },
   {
     index: 5,
-    bottom: 4,
+    bottom: 8,
     scaleX: 1,
     scaleY: 1,
     opacity: 1,
@@ -63,6 +64,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    qiniuUrl: app.qiniuUrl,
     // 点击第一个头像后显示光圈
     dynamicIsShow: false,
     // 控制右下角三角show
@@ -104,19 +106,19 @@ Page({
     lessMember: false,
     isShowGroup: false,
     isShowPull: false,
-    list: [{
-      name: '分享',
-      open_type: 'share',
-      functionName: ''
-    }, {
-      name: '收藏',
-      open_type: '',
-      functionName: 'handleStore'
-    }, {
-      name: '投诉',
-      open_type: '',
-      functionName: 'handleReport'
-    }]
+    // list: [{
+    //   name: '分享',
+    //   open_type: 'share',
+    //   functionName: ''
+    // }, {
+    //   name: '收藏',
+    //   open_type: '',
+    //   functionName: 'handleStore'
+    // }, {
+    //   name: '举报',
+    //   open_type: '',
+    //   functionName: 'handleReport'
+    // }]
   },
 
 
@@ -128,9 +130,7 @@ Page({
     //   groupId: myGroupId,
     //   groupDuty
     // } = app.userInfo
-    // this.setData({
-    //   myId: app.userInfo.id
-    // })
+
 
     // this.getGroupInfo(myGroupId)
     // this.groupPagingGetGroupdynamics(myGroupId).then(() => {
@@ -184,6 +184,9 @@ Page({
         // 有用户信息，存入app
         app.userInfo = res.userInfo
         let groupId = app.userInfo.groupId
+        this.setData({
+          myId: app.userInfo.id
+        })
         socket.initSocketEvent()
         if (groupId) {
           // 获取信息
@@ -263,8 +266,11 @@ Page({
       }, {
         loading: false
       }).then((res) => {
+        if(res=== null) {
+          return common.Tip('很抱歉，你所在的小组已被解散')
+        }
         console.log(res)
-        let groupNameTop, groupNamebuttom
+        let groupNameTop, groupNamebuttom = ''
         if (res.groupName.length > 7) {
           groupNameTop = res.groupName.substr(0, 7)
           groupNamebuttom = res.groupName.substr(7)
@@ -466,7 +472,8 @@ Page({
       })
       // app.getNotice(this, app.userInfo.id)
     }
-    if (app.switchData.refresh) {
+    if (app.switchData.refresh || app.dynamicDeleteBack) {
+      app.dynamicDeleteBack = false
       this.setData({
         dynamicIsShow: false,
         showMember: [],
@@ -496,8 +503,7 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-    let playRecord = this.selectComponent('#playRecord')
-    playRecord.endSound()
+    this.stopPlayRecord()
   },
 
   /**
@@ -550,20 +556,21 @@ Page({
       let dynamicStartX = this.dynamicStartX
       let dynamicStartY = this.dynamicStartY
       let memberLength = this.data.member.length
-      if (Math.abs(dynamicEndY - dynamicStartY) > 5 || Math.abs(dynamicEndX - dynamicStartX) > 5) {
-        if (Math.abs(dynamicEndX - dynamicStartX) > 50) return
+      let direction = tool.GetSlideDirection(dynamicStartX, dynamicStartY, dynamicEndX, dynamicEndY)
+      if (direction === 1 || direction === 2) {
         this.setData({
           dynamicIsShow: false
         }, () => {
           setTimeout(() => {
             // 滑
-            if (dynamicStartY - dynamicEndY > 50) {
+            this.stopPlayRecord()
+            if (direction === 1) {
               if ((this.data.lessMember || !this.data.isLoop) && this.data.MB_Index == 0) {
                 return
               }
               this.upSilde().then(() => resolve())
               return
-            } else if (dynamicEndY - dynamicStartY > 50) {
+            } else if (direction === 2) {
               if ((this.data.lessMember || !this.data.isLoop) && this.data.MB_Index == memberLength - 1) {
                 return
               }
@@ -571,7 +578,7 @@ Page({
             }
           }, 210)
         })
-      } else {
+      } else if (direction === 0) {
         this.dynamicDetail(e)
       }
     })
@@ -789,7 +796,7 @@ Page({
         functionBarShow: false
       })
     }
-
+    this.stopPlayRecord()
   },
   // 隐藏发布按钮
   putIssueBtn() {
@@ -804,6 +811,7 @@ Page({
       dynamicIsShow: false,
       switchIssue: false
     })
+    this.stopPlayRecord()
   },
   // 点击空白区域收起所有
   tap(e) {
@@ -816,12 +824,76 @@ Page({
       tabBarBtnShow: true,
       showContent: {}
     })
-    let playRecord = this.selectComponent('#playRecord')
-    playRecord.endSound()
     this.getTabBar().setData({
       show: false
     })
   },
+  tapStart(e) {
+    let district = e.mark.district
+    if (district) return;
+    this.tapStartY = e.changedTouches[0].clientY
+    this.tapStartX = e.changedTouches[0].clientX
+  },
+  tapEnd(e) {
+    let district = e.mark.district
+    if (district) return;
+    let tapEndY = e.changedTouches[0].clientY
+    let tapEndX = e.changedTouches[0].clientX
+    let direction = tool.GetSlideDirection(this.tapStartX, this.tapStartY, tapEndX, tapEndY)
+    if (direction == 2) {
+      this.setData({
+        isShowGroup: false,
+        tabBarBtnShow: true
+      })
+      this.getTabBar().setData({
+        show: false
+      })
+      this.stopPlayRecord()
+    } else {
+
+      this.setData({
+        dynamicIsShow: false,
+        switchIssue: false,
+        functionBarShow: false,
+        tabBarBtnShow: true,
+        showContent: {}
+      })
+      this.getTabBar().setData({
+        show: false
+      })
+    }
+
+  },
+  indexStart(e) {
+    let district = e.mark.district
+    if (district) return;
+    this.indexStartY = e.changedTouches[0].clientY
+    this.indexStartX = e.changedTouches[0].clientX
+  },
+  indexEnd(e) {
+    let district = e.mark.district
+    if (district) return; 
+    let indexEndY = e.changedTouches[0].clientY
+    let indexEndX = e.changedTouches[0].clientX
+    let direction = tool.GetSlideDirection(this.indexStartX, this.indexStartY, indexEndX, indexEndY)
+    if (direction == 1) {
+      if(this.data.isShowPull) {
+        this.setData({
+          isShowGroup: true
+        })
+      }
+    } else {
+      console.log(33333333333);
+      this.getTabBar().setData({
+        show: false
+      })
+      this.setData({
+        tabBarBtnShow: true
+      })
+    }
+
+  },
+
   // 去评论
   goComment() {
     let {
@@ -877,7 +949,6 @@ Page({
         }
       })
     })
-
   },
   // 去课程
   goCourse() {
@@ -963,7 +1034,6 @@ Page({
     })
   },
   deleteDynamic(e) {
-    console.log(Style, '1111111111111')
     common.showLoading('删除中')
     let {
       showMember,
@@ -975,7 +1045,8 @@ Page({
     // showMember(ableIndex - 1) % styleLeight]
     app.post(app.Api.groupdynamicsDelete, {
       tableName: 'groupdynamics',
-      id: this.data.showContent.id
+      id: this.data.showContent.id,
+      groupId: app.groupInfo.id
     }, {
       loading: false
     }).then(res => {
@@ -1117,9 +1188,9 @@ Page({
       //     content: '最多入驻一个小组哦~'
       //   })
       // } else {
-        wx.navigateTo({
-          url: '/pages/init/groupSettlement/groupSettlement',
-        })
+      wx.navigateTo({
+        url: '/pages/init/groupSettlement/groupSettlement',
+      })
       // }
     } else {
       wx.navigateTo({
@@ -1155,6 +1226,7 @@ Page({
         })
       }
     })
+    this.stopPlayRecord()
   },
   showMenu(e) {
     this.getTabBarShow = this.getTabBar().data.show
@@ -1205,12 +1277,7 @@ Page({
     })
   },
   handleReport() {
-    console.log('投诉');
-    common.showLoading('投诉中...')
-    setTimeout(() => {
-      wx.hideLoading()
-      common.Tip('投诉消息已发送至本平台，工作人员将进行审核')
-    }, 1200)
+    core.handleReport()
   },
   hadleDelete(e) {
     common.Tip('是否删除该动态', '提示', '确认', true).then(res => {
@@ -1221,5 +1288,9 @@ Page({
         console.log('用户点击取消')
       }
     })
+  },
+  stopPlayRecord() {
+    let playRecord = this.selectComponent('#playRecord')
+    playRecord && playRecord.endSound()
   }
 })

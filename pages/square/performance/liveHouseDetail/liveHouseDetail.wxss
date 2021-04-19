@@ -204,10 +204,11 @@
 .row>view {
   color: black;
   width: 250rpx;
-  white-space: nowrap; 
+  white-space: nowrap;
   overflow: hidden;
-  text-overflow:ellipsis;
+  text-overflow: ellipsis;
 }
+
 .right-bottom {
   margin-top: 30rpx;
 }
@@ -218,6 +219,15 @@
 
 }
 
-.location > text {
+.location>text {
   margin-left: 8rpx;
+}
+
+.barWrap {
+  padding: 40rpx 0rpx 0rpx 40rpx;
+  box-sizing: border-box;
+  width: 100%;
+}
+.title {
+  font-family: 'SH-Bold';
 }

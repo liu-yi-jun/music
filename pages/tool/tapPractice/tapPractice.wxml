@@ -37,7 +37,7 @@
       <view hidden="{{flag !== 'demonstration'}}">
       <txv-video class="video" height="380" vid="{{tapDetail.tapVideoLink}}" playerid="txv1"></txv-video>
     </view>
-      <!-- <video wx:else src="{{tapDetail.tapVideoLink}}" class="video" object-fit="fill"></video> -->
+      <!-- <video wx:else src="{{tapDetail.tapVideoLink}}" class="video" object-fit="cover"></video> -->
     </view>
     <view class="timeWrap">
       <text class="time">{{tapDetail.releaseTime}}</text>
@@ -48,24 +48,24 @@
           <view class="soundRow" wx:for="{{tapRecord}}" wx:key="id" wx:for-item="soundRow" wx:for-index="j">
             <view class="avatarWrap">
               <text class="rank" wx:if="{{j===0||j===1||j===2}}">{{j+1}}</text>
-              <image wx:if="{{j===0}}" class="avatarBackground" src="http://cdn.eigene.cn/puchCard/firstBackground.png">
+              <image wx:if="{{j===0}}" class="avatarBackground" src="/images/puchCard/firstBackground.png">
               </image>
               <image wx:if="{{j===1}}" class="avatarBackground"
-                src="http://cdn.eigene.cn/puchCard/secondBackground.png"></image>
-              <image wx:if="{{j===2}}" class="avatarBackground" src="http://cdn.eigene.cn/puchCard/thirdBackground.png">
+                src="/images/puchCard/secondBackground.png"></image>
+              <image wx:if="{{j===2}}" class="avatarBackground" src="/images/puchCard/thirdBackground.png">
               </image>
               <image class="avatar" src="{{soundRow.avatarUrl}}"></image>
             </view>
             <view class="recordingStripWrap">
               <view catchtap="playSound"  data-j="{{j}}" class="recordingStrip"
                 style="width:{{soundRow.width}}rpx" data-recordurl="{{soundRow.recordUrl}}">
-                <image src="http://cdn.eigene.cn/play{{soundRow.isPlay?'ing':''}}.gif" class="voice"></image>
+                <image src="/images/puchCard/play{{soundRow.isPlay?'ing':''}}.gif" class="voice"></image>
                 <text>{{soundRow.duration}}s</text>
               </view>
             </view>
             <view class="likeWrap" data-islike="{{soundRow.isLike}}" data-index="{{j}}" catchtap="toLike">
-              <!-- <image class="like" src="http://cdn.eigene.cn/puchCard/like.png"></image> -->
-              <image class="like" src="http://cdn.eigene.cn/dynamicLike{{soundRow.isLike?'d':''}}.png"></image>
+              <!-- <image class="like" src="/images/puchCard/like.png"></image> -->
+              <image class="like" src="/images/commentBar/like{{soundRow.isLike?'d':''}}.png"></image>
               <text class="likeNumber">{{soundRow.likes}}</text>
             </view>
           </view>
@@ -76,23 +76,23 @@
   <!-- </swiper-item>
   </swiper> -->
   <image class="soundBackground{{current!==0?'2':'1'}}"
-    src="http://cdn.eigene.cn/puchCard/soundBackground{{current!==0?'2':'1'}}.png">
+    src="/images/puchCard/soundBackground{{current!==0?'2':'1'}}.png">
     <view class='progress_box' id="progress_box">
-      <image wx:if="{{current===0}}" class="sound" src="http://cdn.eigene.cn/puchCard/sound.png" catchtap="startRecord">
+      <image wx:if="{{current===0}}" class="sound" src="/images/puchCard/sound.png" catchtap="startRecord">
       </image>
-      <image wx:elif="{{current===1}}" class="sound" src="http://cdn.eigene.cn/puchCard/recording.png"
+      <image wx:elif="{{current===1}}" class="sound" src="/images/puchCard/recording.png"
         catchtap="endRecord"></image>
-      <image wx:elif="{{current===2}}" class="playSound" src="http://cdn.eigene.cn/puchCard/playSound.png"
+      <image wx:elif="{{current===2}}" class="playSound" src="/images/puchCard/playSound.png"
         catchtap="startPlay"></image>
-      <image wx:elif="{{current===3}}" class="playingSound" src="http://cdn.eigene.cn/puchCard/playingSound.png"
+      <image wx:elif="{{current===3}}" class="playingSound" src="/images/puchCard/playingSound.png"
         catchtap="pausePlay"></image>
       <canvas hidden="{{current===0}}" class="progress_bg" canvas-id="canvasProgressbg"> </canvas>
       <canvas hidden="{{current===0}}" class="progress_canvas" canvas-id="canvasProgress"> </canvas>
     </view>
     <image wx:if="{{current===2 || current===3}}" class="deleteSound"
-      src="http://cdn.eigene.cn/puchCard/deleteSound.png" catchtap="deleteSound"></image>
+      src="/images/puchCard/deleteSound.png" catchtap="deleteSound"></image>
     <image catchtap="sendTapRecord" wx:if="{{current===2 || current===3}}" class="completeSound"
-      src="http://cdn.eigene.cn/puchCard/completeSound.png"></image>
+      src="/images/puchCard/completeSound.png"></image>
   </image>
 
 </view>

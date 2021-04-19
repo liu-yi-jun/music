@@ -1,12 +1,26 @@
-/* pages/home/otherHome/otherHome.wxss */
+/* pages/home/home.wxss */
 
 .home {
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
+
   /* position: relative; */
+  /* content: ' '; */
+  /* z-index: -999; */
+  /* top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0; */
+  /* background: url("http://cdn.eigene.cn/home/background.png") no-repeat; */
+  /* background: url("http://cdn.eigene.cn/aaa/background.png") no-repeat; */
+  /* background-size: 100% 100%; */
 }
 
-page::before {
+/* page:before{
+  background: none;
+} */
+
+.bg {
   content: ' ';
   position: fixed;
   z-index: -999;
@@ -14,16 +28,41 @@ page::before {
   left: 0;
   right: 0;
   bottom: 0;
-  background: url("http://cdn.eigene.cn/home/background.png") no-repeat;
   background-size: 100% 100%;
 }
 
+.pageBackground {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  width: 100vw;
+  transition: all .3s;
+  z-index: 100;
+}
+
+.homebg {
+  content: ' ';
+  position: fixed;
+  z-index: -999;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url("http://cdn.eigene.cn/home/background1.png") no-repeat;
+  background-size: 100% 100%;
+}
+
+.header>view:first-child {
+  font-size: 34rpx;
+}
+
 .avatar {
-  width: 80%;
+  width: 76%;
   height: 80%;
   border-radius: 50%;
   position: absolute;
-  top: 0;
+  top: -7rpx;
   left: 0;
   right: 0;
   bottom: 0;
@@ -34,7 +73,7 @@ page::before {
   position: absolute;
   left: 209rpx;
   bottom: 0;
-  height: 100%;
+  height: 100vh;
   width: 350rpx;
   z-index: 10;
   justify-content: space-around;
@@ -52,13 +91,28 @@ page::before {
   /* will-change: transform opacity bottom; */
   z-index: 30;
   transition: all 0.4s;
-  background: linear-gradient(to top, rgba(226, 145, 227, 1), rgba(0, 69, 207, 1));
   font-weight: bold;
   height: 30%;
   width: 100%;
   box-sizing: border-box;
   border-radius: 50%;
   position: absolute;
+}
+
+.section::after {
+  content: "";
+  position: absolute;
+  z-index: -99999;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 108%;
+  height: 116%;
+  /* background: #000; */
+  background: url(http://cdn.shengruo.top/home/avatarBackground.png);
+  background-position: center;
+  background-size: 110% 110%;
+  background-repeat: no-repeat;
 }
 
 .top-area {
@@ -157,21 +211,21 @@ page::before {
 
 .follow {
   position: absolute;
-  right: 3rpx;
-  bottom: 15rpx;
-  width: 60rpx;
-  height: 60rpx;
+  right: 0rpx;
+  bottom: 13rpx;
+  width: 58rpx;
+  height: 58rpx;
 }
 
 .functionBar {
   position: absolute;
   transition: 0.4s all;
   height: 0rpx;
-  top: 288rpx;
-  width: 394rpx;
-  left: -55rpx;
+  top: 294rpx;
+  width: 390rpx;
+  left: -43rpx;
   z-index: 10;
-  background-image: url('http://cdn.eigene.cn/home/massBackground.png');
+  background-image: url('http://cdn.shengruo.top/home/massBackground.png');
   background-size: 100% 100%;
   color: white;
   font-size: 24rpx;
@@ -182,36 +236,48 @@ page::before {
 .functionBarShow {
   opacity: 1;
   transform: scale(1);
-  height: 227rpx;
+  height: 233rpx;
 }
 
-.puchCard image, .course image {
+.puchCard image,
+.course image,
+.setUp image {
   width: 116rpx;
   height: 116rpx;
+  /* margin-bottom: 10rpx; */
 }
 
-.puchCard, .course {
+.puchCard,
+.course,
+.setUp {
   position: absolute;
   transition: 0.3s all;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  left: 147rpx;
+  left: 225rpx;
   top: -20rpx;
   visibility: hidden;
   opacity: 0;
 }
 
 .puchCardShow {
-  transform: translateX(-90rpx);
+  transform: translateX(-170rpx);
+  visibility: visible;
+  top: 69rpx;
+  opacity: 1;
+}
+
+.setUpShow {
+  transform: translateX(170rpx);
   visibility: visible;
   top: 69rpx;
   opacity: 1;
 }
 
 .courseShow {
-  transform: translateX(90rpx);
+  transform: translateX(0rpx);
   visibility: visible;
   top: 69rpx;
   opacity: 1;
@@ -220,22 +286,22 @@ page::before {
 .logoWrap {
   position: absolute;
   /* 变化 */
-  top: 8.84%;
+  top: 8.99vh;
   /* 变化 x/750*不同设备像素  */
-  width: 285rpx;
-  height: 285rpx;
+  width: 290rpx;
+  height: 290rpx;
   left: 238rpx;
   z-index: 20;
 }
 
 .organizationName {
-  font-size: 22rpx;
+  font-size: 26rpx;
   font-weight: bold;
   margin-top: 10rpx;
 }
 
 .organization {
-  font-size: 20rpx;
+  font-size: 26rpx;
   font-weight: bold;
 }
 
@@ -243,47 +309,61 @@ page::before {
   position: absolute;
   left: 30rpx;
   bottom: 20.61%;
-  transition: 0.4s all;
+  transition: 0.5s all;
+  height: 0;
+  width: 0;
   height: 87rpx;
   width: 124rpx;
   transform: scale(0);
   opacity: 0;
 }
 
+.hideExpandIssue {
+  /* transform: translate(15px, -24px); */
+  /* bottom: 23.61%;
+  left: 50rpx; */
+}
+
 .showExpandIssue {
   transform: scale(1);
   opacity: 1;
+
 }
 
 .socialManagement {
   position: absolute;
-  left: 20rpx;
-  top: 80rpx;
-  width: 80rpx;
-  height: 80rpx;
+  left: 10rpx;
+  top: 100rpx;
+  width: 100rpx;
+  height: 60rpx;
   z-index: 10;
-  background-image: url('http://cdn.eigene.cn/socialManagement.png');
-  background-size: 38rpx 38rpx;
+  background-image: url('http://cdn.eigene.cn/switchGroup.png');
+  background-size: 43rpx 37rpx;
   background-position: center;
   background-repeat: no-repeat;
+  z-index: 99999;
 }
 
-.fanWrap, .memberWrap {
+.fanWrap,
+.memberWrap {
   position: absolute;
   color: white;
   width: 165rpx;
   height: 125rpx;
-  top: 218rpx;
+  top: 15.14vh;
   text-align: center;
   line-height: 125rpx;
 }
 
-.memberNumber, .fanNumber {
-  font-size: 50rpx;
+.memberNumber,
+.fanNumber {
+  font-size: 62rpx;
 }
 
-.member, .fan {
-  font-size: 28rpx;
+.member,
+.fan {
+  font-family: 'NotoSansHans-Light';
+  font-size: 26rpx;
   margin-left: 5rpx;
 }
 
@@ -308,6 +388,7 @@ page::before {
   width: 100%;
   height: 88rpx;
   bottom: 0;
+  line-height: 30rpx;
   left: 0;
   background: white;
 }
@@ -331,11 +412,11 @@ page::before {
   transition: 0.4s all;
   position: absolute;
   overflow: hidden;
-  left: 0rpx;
+  left: 54rpx;
   z-index: 100;
-  width: 750rpx;
-  bottom: 4%;
-  background-image: url(http://cdn.eigene.cn/dynamicShowBackground.png);
+  width: 652rpx;
+  bottom: 8%;
+  background-image: url('http://cdn.shengruo.top/home/dynamicShowBackground1.png');
   background-size: 100%;
   background-repeat: no-repeat;
   border-top-left-radius: 50% 20%;
@@ -347,81 +428,105 @@ page::before {
 .hideDynamic {
   height: 0rpx;
   transform: scale(0);
+  visibility: hidden;
+  opacity: 0;
 }
 
 .showDynamic {
   transform: scale(1);
-  height: 1118rpx;
+  height: 972rpx;
   visibility: visible;
-  opacity: 1
+  opacity: 1;
 }
 
 .swiper {
   position: absolute;
-  top: 224rpx;
-  left: 132rpx;
-  width: 481rpx;
-  height: 535rpx;
+  top: 186rpx;
+  left: 124rpx;
+  width: 418rpx;
+  height: 466rpx;
   border-radius: 10rpx;
   overflow: hidden;
 }
+
 .video {
   position: absolute;
-  top: 244rpx;
+  top: 235rpx;
   left: 0;
   right: 0;
   margin: auto;
-  width: 509rpx;
-  height: 404rpx;
+  width: 428rpx;
+  height: 320rpx;
   transition: all .4s;
   border-radius: 10rpx;
 }
 
+.videoLoad {
+  left: 50%;
+  top: 39%;
+  transform: translate(-50%, -50%);
+  position: absolute;
+}
+
+/* .videoShow {
+  opacity: 1;
+  visibility: visible;
+  width: 480rpx;
+  height: 350rpx;
+}
+.videohide {
+  opacity: 0;
+  visibility: hidden;
+  width: 0rpx;
+  height: 0rpx;
+} */
+
 .dynamicImg {
   width: 100%;
-  height: 481rpx;
+  height: 418rpx;
 }
 
 .like-comment {
   position: absolute;
-    left: 0;
-    top: 828rpx;
-    right: 0;
-    margin: auto;
-    width: 50%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  left: 0;
+  top: 706rpx;
+  right: 0;
+  margin: auto;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .like-comment image {
-  width: 74rpx;
-  height: 68rpx;
+  width: 64rpx;
+  height: 59rpx;
 }
 
 .like-comment text {
-  font-size: 34rpx;
+  font-size: 26rpx;
   color: white;
-  margin-left: 20rpx;
+  margin-left: 21rpx;
 }
 
-.comment, .like {
+.comment,
+.like {
   display: flex;
   align-items: center;
 }
 
 .comment {
-  margin-top: 40rpx;
+  margin-top: 38rpx;
 }
 
 .userName {
   position: absolute;
-  font-size: 34rpx;
+  font-size: 33rpx;
   color: white;
   width: 60%;
   left: 0;
-  top: 66rpx;
+  top: 50rpx;
   right: 0;
   margin: auto;
   text-align: center;
@@ -429,9 +534,9 @@ page::before {
 
 .title-time {
   position: absolute;
-  width: 482rpx;
-  left: 128rpx;
-  top: 142rpx;
+  width: 418rpx;
+  left: 120rpx;
+  top: 138rpx;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -440,18 +545,18 @@ page::before {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  height: 40rpx;
-
 }
 
 .title-time .title {
   font-size: 26rpx;
   color: white;
+
 }
 
 .title-time .time {
-  font-size: 24rpx;
-  color: #b5b6b6;
+  font-size: 26rpx;
+  color: #FFFFFF;
+  opacity: 0.5;
 }
 
 .shade {
@@ -467,26 +572,27 @@ page::before {
   transition: 0.4s all;
 }
 
+
 .shadeShow {
   opacity: 1;
   visibility: visible;
 }
 
 .dialog {
-  width: 549rpx;
-  height: 481rpx;
+  width: 397rpx;
+  height: 347rpx;
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
   margin: auto;
-  background: linear-gradient(to bottom, rgba(226, 145, 227, 0.7), rgba(0, 69, 207, 0.7));
+  background: linear-gradient(to bottom, rgba(226, 145, 227, 0.6), rgba(0, 69, 207, 0.6));
   border-radius: 40rpx;
   box-sizing: border-box;
-  padding: 100rpx 38rpx 30rpx;
+  padding: 70rpx 30rpx 30rpx;
   color: white;
-  font-size: 38rpx;
+  font-size: 30rpx;
   display: flex;
   justify-content: space-between;
   flex-flow: column;
@@ -499,26 +605,31 @@ page::before {
 }
 
 .yesOrNo image {
-  width: 220rpx;
-  height: 222rpx;
+  width: 160rpx;
+  height: 160rpx;
 }
-
 
 .soundWrap {
   position: absolute;
   left: 0;
   right: 0;
-  top: 245rpx;
-  width: 420rpx;
-  height: 420rpx;
+  top: 264rpx;
+  width: 330rpx;
+  height: 330rpx;
   margin: auto;
 }
 
-.videoLoad {
-  left: 50%;
-  top: 39%;
-  transform: translate(-50%, -50%);
+.soundImg {
+  width: 100%;
+  height: 100%;
   position: absolute;
+  z-index: 999;
+}
+
+.progress_canvas {
+  position: absolute;
+  width: 100%;
+  height: 100%;
 }
 
 .delete {
@@ -531,4 +642,233 @@ page::before {
   color: white;
   text-align: center;
   line-height: 70rpx;
+}
+
+page {}
+
+.guideMask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 9999999999999;
+  opacity: 0;
+  transition: 0.4s all;
+}
+
+.cross {
+  transition: 2s all;
+  background: rgba(0, 0, 0, 1);
+}
+
+.hideCross {
+  opacity: 0;
+}
+
+.showCross {
+
+  opacity: 1;
+}
+
+.showGuide {
+  visibility: visible;
+  opacity: 1;
+}
+
+.hideGuide {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.leftGuide {
+  position: absolute;
+  left: 62%;
+  top: 346.84rpx;
+  width: 175rpx;
+  height: 135rpx;
+}
+
+.leftGuideText {
+  position: absolute;
+  left: 34%;
+  top: 31%;
+  color: white;
+}
+
+.issueGuide {
+  position: absolute;
+  left: 14%;
+  bottom: 25%;
+  width: 134rpx;
+  height: 175rpx;
+}
+
+.issueGuideText {
+  position: absolute;
+  left: 14%;
+  top: 76%;
+  color: white;
+}
+
+.bottomGuide {
+  position: absolute;
+  right: 7%;
+  bottom: calc(66rpx + env(safe-area-inset-bottom));
+  height: 175rpx;
+  width: 135rpx;
+}
+
+.bottomGuideText {
+  position: absolute;
+  right: 14%;
+  bottom: 5%;
+  color: white;
+}
+
+
+.travel {
+  transition: 2s all;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  color: white;
+  transform: translate(-50%, -50%);
+}
+
+
+
+.fakeTab-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to bottom, rgba(226, 145, 227, 0.8), rgba(0, 69, 207, 0.8));
+  padding-bottom: calc(env(safe-area-inset-bottom) - 24rpx);
+  visibility: visible;
+  display: flex;
+  height: 130rpx;
+  opacity: 1;
+  transform: translateY(0rpx);
+  z-index: 99999;
+  transition: all .4s;
+}
+
+.hideFakeTab-bar {
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(130rpx);
+}
+
+
+.tab-bar-item {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.tab-bar-item image {
+  width: 82rpx;
+  height: 82rpx;
+  position: relative;
+}
+
+.hideIssue {
+  transform: translate(60rpx, -75rpx);
+  /* transform: translate(60rpx,-50rpx); */
+}
+
+.pullPage {
+  position: absolute;
+  right: 20rpx;
+  top: 12%;
+  width: 80rpx;
+  height: 80rpx;
+  z-index: 10;
+  background-image: url('http://cdn.eigene.cn/socialManagement.png');
+  background-size: 38rpx 38rpx;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 99999999;
+}
+
+.line {
+  width: 5rpx;
+  height: 13.6%;
+  background: white;
+  position: absolute;
+  z-index: 9999999;
+  right: 58rpx;
+  top: 0;
+}
+
+@media screen and (max-aspect-ratio: 1/2) {
+  .scrollArea {
+    bottom: 13px;
+    position: absolute;
+    z-index: 20;
+    height: 72%;
+    width: 100%;
+  }
+
+  .scroll-midguide {
+    position: absolute;
+    left: 197rpx;
+    bottom: 0;
+    height: 100%;
+    width: 370rpx;
+    z-index: 10;
+    justify-content: space-around;
+  }
+}
+
+
+
+/* 首页部分 */
+
+
+.indexLogo {
+  position: absolute;
+  width: 463rpx;
+  height: 308rpx;
+  left: 183rpx;
+  top: 257rpx;
+}
+
+
+
+.fold {
+  width: 100%;
+  height: 616rpx;
+  background-repeat: no-repeat;
+  background-size: 100%;
+  position: absolute;
+  bottom: 0rpx;
+  left: 0rpx;
+}
+
+.unionText {
+  width: 237rpx;
+  height: 59rpx;
+  top: 63rpx;
+  left: 246rpx;
+  position: absolute;
+}
+
+.settle {
+  width: 241rpx;
+  height: 50rpx;
+  top: 232rpx;
+  left: 244rpx;
+  position: absolute;
+}
+
+.my {
+  width: 153rpx;
+  height: 46rpx;
+  bottom: 76rpx;
+  left: 303rpx;
+  position: absolute;
 }

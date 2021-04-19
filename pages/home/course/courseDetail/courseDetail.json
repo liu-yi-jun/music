@@ -5,7 +5,8 @@
     "inputBox": "/components/common/comment/inputBox/inputBox",
     "commentList": "/components/common/commentList/commentList",
     "courseDatum": "/components/home/course/courseDatum/courseDatum",
-    "menu": "/components/common/menu/menu"
+    "menu": "/components/common/menu/menu",
+    "bar":"/components/common/bar/bar"
   },
     "disableScroll": true
 }

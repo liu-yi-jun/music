@@ -1,0 +1,38 @@
+<!--pages/tool/musicScorePost/musicScorePost.wxml-->
+<view class="musicScorePost">
+  <navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' back="{{true}}" iconTheme='white'
+    bindback="handlerGobackClick"></navBar>
+  <form bindsubmit="formSubmit">
+    <view class="card">
+      <view class="part topPart {{isData?'part-change':''}}">
+        <text wx:if="{{!isData}}">曲谱资料</text>
+        <image mode="aspectFill" class="dataImg" wx:if="{{isData}}" src="{{tempImgPaths[0]}}" catchtap="previewImage">
+        </image>
+        <view wx:if="{{!isData}}" catchtap="chooseData" class="uploadData topUpload">上传</view>
+      </view>
+      <view class="part bottomPart {{isVideo?'part-change':''}}">
+        <text wx:if="{{!isVideo}}">演示视频</text>
+        <video object-fit="cover" class="video" wx:if="{{isVideo}}" src="{{tempVideoPath}}">
+        </video>
+        <view wx:if="{{!isVideo}}" catchtap="chooseVideo" class="uploadVideo bottomUpload">上传</view>
+      </view>
+      <view class="basicWrap">
+        <view class="row">
+          <text>歌曲名称：</text>
+          <input name="tapTitle" maxlength="30"></input>
+        </view>
+        <view class="row">
+          <text>词曲作者：</text>
+          <input name="author" maxlength="30"></input>
+        </view>
+        <view class="row">
+          <text>编配/来源：</text>
+          <input name="source" maxlength="30"></input>
+        </view>
+      </view>
+      <image class="okLogo" src="/images/issuePuchCard/okLogo3.png">
+        <button class="okInner" form-type="submit"></button>
+      </image>
+    </view>
+  </form>
+</view>

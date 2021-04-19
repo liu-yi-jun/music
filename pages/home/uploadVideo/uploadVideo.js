@@ -10,6 +10,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    qiniuUrl: app.qiniuUrl,
     // 去除上面导航栏，剩余的高度
     excludeHeight: 0,
     // 附近位置,
@@ -203,7 +204,7 @@ Page({
     } catch (err) {
       console.log(err)
       common.Tip(err)
-      // wx.hideLoading()
+      wx.hideLoading()
     }
   },
   goHome() {

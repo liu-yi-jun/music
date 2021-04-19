@@ -9,6 +9,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    qiniuUrl: app.qiniuUrl,
     // 去除上面导航栏，剩余的高度
     excludeHeight: 0,
     commentArr: [],
@@ -20,21 +21,26 @@ Page({
     indexObject: {},
     IsNoData: false,
     // 评论或回复的参数
-    param:{},
-    commenetBarData:{},
+    param: {},
+    commenetBarData: {},
     list: [{
-      name: '分享',
-      open_type: 'share',
-      functionName: ''
-    }, {
-      name: '收藏',
-      open_type: '',
-      functionName: 'handleStore'
-    }, {
-      name: '投诉',
+      name: '举报',
       open_type: '',
       functionName: 'handleReport'
     }]
+    // list: [{
+    //   name: '分享',
+    //   open_type: 'share',
+    //   functionName: ''
+    // }, {
+    //   name: '收藏',
+    //   open_type: '',
+    //   functionName: 'handleStore'
+    // }, {
+    //   name: '举报',
+    //   open_type: '',
+    //   functionName: 'handleReport'
+    // }]
   },
 
   /**
@@ -46,9 +52,9 @@ Page({
     this.getTicketDetail(id, this.table, 'detail')
     // 获取去除上面导航栏，剩余的高度
     tool.navExcludeHeight(this)
-    
+
   },
-  getTicketDetail(id,table,type) {
+  getTicketDetail(id, table, type) {
     let commentPaging = this.data.commentPaging
     app.get(app.Api.ticketDetailAndCommont, {
       id,
@@ -57,7 +63,7 @@ Page({
       type,
       userId: app.userInfo.id
     }).then(res => {
-      console.log(res,'111111111111')
+      console.log(res, '111111111111')
       if (res.commentArr.length < commentPaging.pageSize) {
         this.setData({
           IsNoData: true
@@ -85,6 +91,11 @@ Page({
         commentArr: this.data.commentArr.concat(res.commentArr),
         commentPaging
       })
+    }).catch(err => {
+      common.Toast('该票务已不存在')
+      setTimeout(() => {
+        wx.navigateBack()
+      }, 1500)
     })
   },
   /**
@@ -161,7 +172,7 @@ Page({
     let commentArr = this.data.commentArr
     param.releaseTime = '刚刚'
     console.log(param)
-    if (param.themeId) {
+    if (!param.isReply) {
       // 属于评论的，将内容插入到commentArr的第一个
       this.data.detail.comment++
       this.setData({
@@ -191,7 +202,7 @@ Page({
       detail,
       commenetBarData
     })
-    
+
   },
   completeStore(e) {
     let commenetBarData = e.detail.commenetBarData
@@ -211,6 +222,9 @@ Page({
     this.setData({
       showTextara: true,
       param: {
+        type: '票务',
+        themeUserId: this.data.detail.userId,
+        themeTitle: this.data.detail.title,
         theme: this.table,
         themeId: this.data.detail.id,
         commenterId: app.userInfo.id,
@@ -220,19 +234,25 @@ Page({
     })
   },
   toReply(e) {
+    // 加入通知的一些参数
+    let param = e.detail.param
+    param.theme = this.table
+    param.themeId = this.data.detail.id
+    param.themeTitle = this.data.detail.title
+    param.isReply = true
     this.setData({
       showTextara: true,
-      param: e.detail.param,
+      param,
       indexObject: e.detail.indexObject
     })
   },
   scrolltolower() {
-    if (!this.data.IsNoData) this.getTicketDetail(this.data.detail.id,this.table)
+    if (!this.data.IsNoData) this.getTicketDetail(this.data.detail.id, this.table)
   },
   showMenu(e) {
     if (app.userInfo.id === this.data.detail.userId) {
       let list = this.data.list
-      list[2] = {
+      list[0] = {
         name: '删除',
         open_type: '',
         functionName: 'hadleDelete'
@@ -263,12 +283,11 @@ Page({
     })
   },
   handleReport() {
-    console.log('投诉');
-    common.showLoading('投诉中...')
-    setTimeout(() => {
-      wx.hideLoading()
-      common.Tip('投诉消息已发送至本平台，工作人员将进行审核')
-    }, 1200)
+    core.handleReport({
+      userId: app.userInfo.id,
+      theme: this.table,
+      themeId: this.data.detail.id
+    })
   },
   hadleDelete(e) {
     common.Tip('是否删除该动态', '提示', '确认', true).then(res => {
@@ -291,6 +310,10 @@ Page({
     }).then(res => {
       if (res.affectedRows) {
         common.Toast('已删除')
+        setTimeout(() => {
+          app.ticketDeleteBack = true
+          wx.navigateBack()
+        }, 1500)
       } else {
         common.Toast('该票务已不存在')
       }

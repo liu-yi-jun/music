@@ -3,11 +3,11 @@
   <navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' iconTheme='white' back="{{true}}"
     bindback="handlerGobackClick"></navBar>
   <view class="barWrap">
-    <bar barList="{{barList}}" actIndex="{{actIndex}}" bind:switchBtn="switchBtn"></bar>
+    <bar barList="{{barList}}" gap="{{20}}" actIndex="{{actIndex}}" bind:switchBtn="switchBtn"></bar>
   </view>
-  <scroll-view bindscrolltolower="scrolltolower" scroll-y style="height: calc({{excludeHeight}}px - 81rpx);">
+  <scroll-view bindscrolltolower="scrolltolower" scroll-y style="height: calc({{excludeHeight}}px - 91rpx);">
     <view hidden="{{actIndex !== 0}}">
-      <dynamicList id="dynamicList" isInvitation="{{true}}" dynamics="{{dynamics}}"></dynamicList>
+      <dynamicList id="dynamicList" isInvitation="{{true}}" dynamics="{{dynamics}}" isBack="{{true}}"></dynamicList>
     </view>
     <view hidden="{{actIndex !== 1}}">
       <courseList courses="{{courses}}"></courseList>
@@ -16,7 +16,10 @@
       <allianceList alliances="{{alliances}}"> </allianceList>
     </view>
     <view hidden="{{actIndex !== 3}}">
-      <liveHouse> </liveHouse>
+      <liveHouse id="liveHouse" list="{{performances}}"> </liveHouse>
+    </view>
+    <view hidden="{{actIndex !== 4}}">
+      <composeBand bands="{{bands}}" isMyStore="{{true}}"></composeBand>
     </view>
   </scroll-view>
 </view>

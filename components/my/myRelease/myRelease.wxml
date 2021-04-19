@@ -1,0 +1,115 @@
+<!--components/my/myRelease/myRelease.wxml-->
+
+<view class="myRelease">
+  <view class="part">
+    <block wx:for="{{release}}" wx:key="index">
+      <view class="part-item" wx:if="{{item.type === 1}}">
+        <view  class="part-title">· 小组活动</view>
+        <view class="card" catchtap="goAllianceDetail"  data-id="{{item.id}}">
+          <view class="avatarWarp" catchtap="goPersonal" data-userid="{{item.userId}}">
+            <image class="avatarBackground" src="http://use.eigene.cn/avatarBackground.png" lazy-load="{{true}}">
+              <image class="avatar" src="{{item.avatarUrl}}" lazy-load="{{true}}"></image>
+            </image>
+          </view>
+          <view class="userNameOrganization">
+            <text class="userName">{{item.nickName}}</text>
+            <!-- <view class="organization">{{item.groupName}}</view> -->
+          </view>
+          <view class="wallWrap">
+            <image class="wallimg" src="{{item.pictureUrls[0]}}" mode="aspectFill" lazy-load="{{true}}"></image>
+          </view>
+          <view class="content">
+            <view class="title">
+              {{item.title}}
+            </view>
+            <view class="message">
+              <text>组织者：{{item.organization}}</text>
+              <text>演出时间：{{item.activityTime}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="part-item" wx:if="{{item.type === 2}}">
+        <view  class="part-title">· 一起组乐队</view>
+        <view class="card" catchtap="toBandDetail" data-id="{{item.id}}">
+          <view class="band-item" >
+            <view class="partHead">
+              <view class="groupName">{{item.title}}</view>
+              <view class="line"></view>
+            </view>
+            <view class="exist-recruit">
+              <view class="existWrap">
+                <view class="exist">现有</view>
+                <view class="instrumentsRow">
+                  <view class="instrumentsWrap" wx:for="{{item.existArr}}" wx:for-item="instrument">
+                    <image class="instruments" src="{{qiniuUrl + instrument.instrumentsUrl}}"></image>
+                    <view class="instrumentsName">{{instrument.instrumentsName}}</view>
+                  </view>
+                </view>
+              </view>
+              <view class="recruitWrap">
+                <view class="recruit">招募</view>
+                <view class="instrumentsRow">
+                  <view class="instrumentsWrap" wx:for="{{item.recruitArr}}" wx:for-item="instrument">
+                    <image class="instruments" src="{{qiniuUrl + instrument.instrumentsUrl}}"></image>
+                    <view class="instrumentsName">{{instrument.instrumentsName}}</view>
+                  </view>
+                </view>
+              </view>
+            </view>
+            <view class="detailWrap">
+              <view>详情</view>
+              <image mode="aspectFill" src="http://cdn.eigene.cn/composeBand/detail.png"></image>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="part-item" wx:if="{{item.type === 3}}">
+        <view class="part-title">· 二手器乐</view>
+        <view class="card" catchtap="toSecondDetail" data-id="{{item.id}}">
+          <view class="secondWrap">
+            <view class="video-content">
+              <view class="video-swiper">
+                <video object-fit="cover" class="img img{{item.id % 4}} video" wx:if="{{item.videoUrl}}"
+                  src="{{item.videoUrl}}"></video>
+                <swiper wx:else class="img img{{item.id % 4}} swiper" indicator-dots>
+                  <swiper-item wx:for="{{item.pictureUrls}}" wx:for-item="url">
+                    <image class="img img{{item.id % 4}}" mode="aspectFill" src="{{url}}" data-url="{{url}}"
+                      data-urls="{{item.pictureUrls}}" catchtap="pre">
+
+                    </image>
+                  </swiper-item>
+                </swiper>
+              </view>
+              <view class="bottomContent">
+                <view class="goods">
+                  <view class="brandWrap">
+                    <text>品牌型号：</text>
+                    <text>{{item.brand}}</text></view>
+                  <view class="newOldWrap">
+                    <text>新旧程度：</text>
+                    <text>{{item.newOld}}</text></view>
+                  <view class="contactWrap">
+                    <text>联系方式：</text>
+                    <text>{{item.contact}}</text>
+                  </view>
+                  <view wx:if="{{item.additional}}" class="additionalWrap">
+                    <text>附加信息：</text>
+                    <text>{{item.additional}}</text>
+                  </view>
+                </view>
+                <view class="bottomBar">
+                  <view class="right">¥{{item.price}}</view>
+                </view>
+              </view>
+            </view>
+            <view class="detailWrap">
+              <view>详情</view>
+              <image mode="aspectFill" src="http://cdn.eigene.cn/composeBand/detail.png"></image>
+            </view>
+          </view>
+        </view>
+      </view>
+    </block>
+  </view>
+</view>

@@ -4,14 +4,15 @@
   <view class="head">
     <view class="title">
       <text class="title-top">课程</text>
-      <text class="title-bottom">Course</text>
+      <!-- <text class="title-bottom">Course</text> -->
     </view>
   </view>
-  <scroll-view bindscrolltolower="scrolltolower"   style="height: calc({{excludeHeight}}px - 85rpx);" scroll-y>
+  <scroll-view  refresher-enabled="{{true}}" refresher-triggered="{{triggered}}"
+    bindrefresherrefresh="onRefresh"  bindscrolltolower="scrolltolower"   style="height: calc({{excludeHeight}}px - 77rpx);" scroll-y>
   <courseList courses="{{courses}}">
   </courseList>
   </scroll-view>
-  <image  wx:if="{{isMyGroup && (groupDuty === 0 || groupDuty === 1)}}" class="issueDynamic" src="http://cdn.eigene.cn/square/issueDynamic2.png">
+  <image  wx:if="{{isMyGroup && (groupDuty === 0 || groupDuty === 1)}}" class="issueDynamic" src="{{qiniuUrl}}/square/issueDynamic.png">
     <view class="issueDynamicInner" catchtap="goAddCourse"></view>
   </image>
 

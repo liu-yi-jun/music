@@ -7,6 +7,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    qiniuUrl: app.qiniuUrl,
     // 去除上面导航栏，剩余的高度
     excludeHeight: 0,
     secondPaging: {
@@ -36,7 +37,8 @@ Page({
         name: '票务转让'
       },
     ],
-    actIndex: 0
+    actIndex: 0,
+    tempValue:''
   },
 
   /**
@@ -103,6 +105,11 @@ Page({
       })
     })
   },
+  searchInput(event){
+    this.setData({
+      tempValue: event.detail.value,
+    })
+  },
   confirm(event) {
     let value = event.detail.value
     let actIndex = this.data.actIndex
@@ -112,14 +119,14 @@ Page({
           [],
           []
         ],
-        brand: value,
+        brand: value?value:this.data.tempValue,
         'secondPaging.isNotData': false,
         'secondPaging.pageIndex': 1
       }, () => this.searchSeconds(this.data.brand))
     } else if (actIndex === 1) {
       this.setData({
         tickets: [],
-        title: value,
+        title:value?value:this.data.tempValue,
         'ticketPaging.isNotData': false,
         'ticketPaging.pageIndex': 1
       }, () => this.searchTickets(this.data.title))
@@ -145,8 +152,9 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    if (app.secondIssueBack) {
+    if (app.secondIssueBack || app.secondDeleteBack) {
       app.secondIssueBack = false
+      app.secondDeleteBack = false
       this.setData({
         doubleSeconds: [
           [],
@@ -158,8 +166,9 @@ Page({
       }, () => this.searchSeconds(this.data.brand))
 
     }
-    if (app.ticketIssueBack) {
+    if (app.ticketIssueBack || app.ticketDeleteBack) {
       app.ticketIssueBack = false
+      app.ticketDeleteBack = false
       this.setData({
         tickets: [],
         title: '',
@@ -223,7 +232,9 @@ Page({
     let actIndex = e.detail.actIndex
     if (actIndex === this.data.actIndex) return
     this.setData({
-      actIndex
+      actIndex,
+      tempValue:'',
+      groupName:''
     })
   },
   storeDeal() {

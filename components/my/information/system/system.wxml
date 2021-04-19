@@ -15,7 +15,7 @@
     </view>
   </view> -->
   <view class="row" wx:for="{{msgList}}" wx:key="id">
-    <image class="avatar" src="http://cdn.eigene.cn/system/systemLogo.png"></image>
+    <image class="avatar" src="{{qiniuUrl}}/system/systemLogo.png"></image>
     <view class="contentWrap">
       <text class="title" wx:if="{{item.message.type === 1 || item.message.type === 2}}">小组申请</text>
       <text class="title" wx:if="{{item.message.type === 3}}">有人申请和你一起组乐队！</text>
@@ -78,7 +78,7 @@
             <text class="form">表演形式：</text>
             <view class="formRightWrap">
               <view class="formImgWrap" wx:for="{{item.message.jsonDate.perform}}" wx:key="index" wx:for-item="instrument">
-                <image src="{{instrument.instrumentsUrl}}"></image>
+                <image src="{{'/images' + instrument.instrumentsUrl}}"></image>
                 <text>{{instrument.instrumentsName}}</text>
               </view>
             </view>
@@ -93,5 +93,5 @@
     </view>
 
   </view>
-
+ 
 </view>

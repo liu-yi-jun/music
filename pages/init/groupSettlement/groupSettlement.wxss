@@ -1,10 +1,11 @@
 /* pages/init/groupSettlement/groupSettlement.wxss */
 
 .title {
-  font-size: 35rpx;
+  font-size: 36rpx;
   color: white;
   box-sizing: border-box;
-  padding: 40rpx;
+  padding: 2.5vh;
+  font-family: 'SH-Bold';
 }
 
 .imgWarp {
@@ -24,17 +25,19 @@
   margin: auto;
   width: 260rpx;
   color: white;
-  padding-bottom: 8rpx;
+  font-size: 32rpx;
+  /* padding-bottom: 8rpx; */
   border-bottom: 1rpx #fff solid;
 }
 
 .placeholder {
-  color: white;
+  font-size: 32rpx;
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .textareaWarp {
   position: relative;
-  height: 460rpx;
+  height: 34.03vh;
 }
 
 .textarea {
@@ -44,11 +47,12 @@
   top: 0;
   bottom: 0;
   margin: auto;
-  width: 600rpx;
-  height: 360rpx;
+  width: 534rpx;
+  height: 330rpx;
   box-sizing: border-box;
   border-radius: 20rpx;
   padding: 15rpx 15rpx;
+  font-size: 32rpx;
   color: white;
   background-color: rgba(255, 255, 255, 0.2);
 }
@@ -71,8 +75,9 @@
 
 .typeTile {
   color: white;
-  margin-top: 40rpx;
+  /* margin-top: 40rpx; */
   display: block;
+  font-size: 32rpx;
 }
 
 /* on */
@@ -95,32 +100,33 @@
 
 .wx-switch-input::after {
   width: 50rpx !important;
-  height: 50rpx !important;
+  height:50rpx !important;
 }
 
 .switchWarp {
-  margin-top: 40rpx;
+  margin-top: 1.04vh;
   display: flex;
   justify-content: space-between;
   color: white;
-  font-size: 24rpx;
+  font-size: 28rpx;
 }
 
 .create {
   text-align: center;
-  line-height: 60rpx !important;
-  width: 170rpx !important;
+  line-height: 56rpx !important;
+  width: 140rpx !important;
   color: white;
-  height: 60rpx !important;
-  font-size: medium !important;
+  height: 56rpx !important;
   border-radius: 999rem;
-  font-size: 32rpx !important;
+  font-size: 26rpx !important;
   background: #B37AE5;
-  box-shadow: 0rpx 0rpx 10rpx 2rpx rgba(0, 0, 255, .1)
+  box-shadow: 0rpx 0rpx 10rpx 4rpx rgba(0, 0, 0, .1);
+  letter-spacing: 8rpx;
+  text-indent: 8rpx;
 }
 
 .createWarp {
-  margin-top: 80rpx;
+  margin-top: 4.497vh;
   display: flex;
   justify-content: center;
 }
@@ -153,4 +159,8 @@
   width: 285rpx;
   height: 285rpx;
 
+}
+.selectWrap {
+  display: flex;
+  align-items: center;
 }

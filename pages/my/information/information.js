@@ -1,12 +1,15 @@
 // pages/my/information/information.js
 const app = getApp()
 const tool = require('../../../assets/tool/tool.js')
+const authorize = require('../../../assets/tool/authorize')
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
+    top: 0,
+    qiniuUrl: app.qiniuUrl,
     // 去除上面导航栏，剩余的高度
     excludeHeight: 0,
     informPaging: {
@@ -24,8 +27,7 @@ Page({
     userMessage: {},
     intoView: '',
     triggered: false,
-    barList: [
-      {
+    barList: [{
         name: '通知'
       },
       {
@@ -127,7 +129,7 @@ Page({
     setTimeout(() => {
       if (actIndex === 1) {
         let system = this.selectComponent('#system')
-        system.loadData().then(()=> {
+        system.loadData().then(() => {
           this.setData({
             triggered: false,
           })

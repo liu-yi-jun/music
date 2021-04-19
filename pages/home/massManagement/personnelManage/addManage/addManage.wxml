@@ -4,16 +4,27 @@
     bindback="handlerGobackClick"></navBar>
   <view class="head">
     <text> 添加管理员</text>
-    <view class="logo-search">
-      <image class="logo" src="http://cdn.eigene.cn/personnelManage/logo.png"></image>
+    <!-- <view class="logo-search">
+      <image class="logo" src="/images/addManage/logo.png"></image>
       <view  class="searchWrap">
         <input class="search" bindconfirm="confirm"></input>
-        <image class="searchLog" src="http://cdn.eigene.cn/search.png"></image>
+        <image class="searchLog" src="/images/addManage/search.png"></image>
       </view>
+    </view> -->
+  </view>
+  <view class="wrap">
+    <view class="logo-search">
+      <image class="logo" src="/images/musicScore/logo.png" catchtap="toAnalysis"></image>
+      <view class="searchWrap">
+        <input class="search" value="{{value}}" bindconfirm="confirm"  bindinput="searchInput">
+        </input>
+        <image class="searchLog" src="/images/musicScore/search.png"></image>
+      </view>
+      <view class="searchText" catchtap="confirm">搜索</view>
     </view>
   </view>
-  <scroll-view style="height: calc({{excludeHeight}}px - 116rpx);" scroll-y>
-    <view class="list">
+  <scroll-view style="height: calc({{excludeHeight}}px - 191rpx);" scroll-y>
+    <view class="list" wx:if="{{member.length}}">
       <view class="row" wx:for="{{member}}" wx:key="id">
         <image class="avatar" src="{{item.avatarUrl}}"></image>
         <view class="information" catchtap="toAddManage" data-userid="{{item.id}}">

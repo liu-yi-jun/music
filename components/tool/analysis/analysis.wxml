@@ -1,20 +1,19 @@
 <!--components/tool/analysis/analysis.wxml-->
 <view>
   <view class="middle">
-    <!-- <view class="left" catchtap="switchPiece">标准</view> -->
-    <view class="container" bindtap="close">
+    <view class="left" catchtap="switchPiece">标准</view>
+    <!-- <view class="container" bindtap="close">
       <view class="select-wrap">
         <view class="select-box">
           <view class="select-current" catchtap="openClose">
             <text class="current-name">{{current.name}}</text>
-            <!-- <text class="current-name">喜欢</text> -->
           </view>
           <view class="option-list" wx:if="{{isShow}}" catchtap="optionTap">
             <text class="option" wx:for="{{options}}" wx:key="{{item.id}}" data-index="{{index}}">{{item.name}}</text>
           </view>
         </view>
       </view>
-    </view>
+    </view> -->
     <view class="right">
       <text>自动</text>
       <switch checked="{{isAuto}}" bindchange="changeAuto"></switch>
@@ -24,7 +23,7 @@
     <!-- <cover-view class="cover-view"style="left:{{circleCenterX}}px;top:{{circleCenterY}}px;">{{analysis.cent}}</cover-view> -->
     <!-- <cover-view wx:if="{{circleCenterX !== 0}}" class="cover-wrap"
       style="left:{{circleCenterX-18}}px;top:{{circleCenterY-40}}px;">
-      <cover-image src="http://cdn.eigene.cn/analysis/dialog{{color=='#FF5791'?'Red':'Green'}}.png" class="cover-image">
+      <cover-image src="/images/analysis/dialog{{color=='#FF5791'?'Red':'Green'}}.png" class="cover-image">
       </cover-image>
       <cover-view class="cover-text">{{analysis.cent}}</cover-view>
     </cover-view> -->
@@ -41,17 +40,16 @@
     </view>
   </view>
   <view class="stringWrap">
-
-    <image class="columnTrue" src="http://cdn.eigene.cn/analysis/row.png">
+    <image class="columnTrue" src="/images/analysis/row.png">
       <view class="column" id="column">
         <image class="logo" id="logo" style="transform: translate({{logoTranslateX}}px,-50%);"
-          src="http://cdn.eigene.cn/analysis/logo{{color=='#FF5791'?'Red':'Green'}}.png">
+          src="/images/analysis/logo{{color=='#FF5791'?'Red':'Green'}}.png">
         </image>
       </view>
     </image>
     <view class="string" wx:for="{{standard}}" wx:key="index" catchtap="string" data-index="{{index}}">
       <view class="circular {{standardCurrent===index?'calibration':''}}">{{item.name}}</view>
-      <image class="line" src="http://cdn.eigene.cn/analysis/column.png"></image>
+      <image class="line" mode="aspectFill"  src="/images/analysis/column.png"></image>
     </view>
   </view>
 

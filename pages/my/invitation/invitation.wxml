@@ -2,56 +2,59 @@
 <view class="invitation">
   <navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' back="{{true}}" iconTheme='white'
     bindback="handlerGobackClick" class="navBar"></navBar>
-    <view class="information">
-      <image class="backgroundImg" src="{{personal.bgWall}}" mode="aspectFill">
-        <image wx:if="{{userId!==otherId}}" class="follow" catchtap="followUser"
-          src="http://cdn.eigene.cn/invitation/follow{{personal.isFollow?'ed':''}}.png"></image>
-        <view class="backgroundWarp">
-          <view class="avatarName">
-            <image src="{{personal.avatarUrl}}" class="avatar" mode="aspectFill"></image>
-            <text class="name">{{personal.nickName}}</text>
-            <view class="nameBotoom">
-              <text wx:if="{{personal.gender=== 1}}">♂</text>
-              <text wx:if="{{personal.gender=== 2}}">♀</text>
-              <text class="constellation" wx:if="{{personal.constellation}}">{{personal.constellation}}</text>
-              <text wx:if="{{personal.age}}">{{personal.age}}岁</text>
-            </view>
+  <view class="information">
+    <image class="backgroundImg" src="{{personal.bgWall}}" mode="aspectFill">
+      <image wx:if="{{userId!==otherId}}" class="follow" catchtap="followUser"
+        src="/images/invitation/follow{{personal.isFollow?'ed':''}}.png"></image>
+      <view class="backgroundWarp">
+        <view class="avatarName">
+          <image src="{{personal.avatarUrl}}" class="avatar" mode="aspectFill"></image>
+          <text class="name">{{personal.nickName}}</text>
+          <view class="nameBotoom">
+            <text wx:if="{{personal.gender=== 1}}">♂</text>
+            <text wx:if="{{personal.gender=== 2}}">♀</text>
+            <text class="constellation" wx:if="{{personal.constellation}}">{{personal.constellation}}</text>
+            <text wx:if="{{personal.age}}">{{personal.age}}岁</text>
           </view>
         </view>
-      </image>
-      <view catchtap="goOtherHome" data-id="{{personal.groupId}}" class="organization" wx:if="{{personal.groupName}}">
-        {{personal.groupName}}
-        {{personal.groupDuty===0?'组长':(personal.groupDuty===1?'管理员':(personal.groupDuty===2?'组员':'申请中'))}}</view>
+      </view>
+    </image>
+    <view catchtap="goOtherHome" data-id="{{personal.groupId}}" class="organization" wx:if="{{personal.groupName}}">
+      <text class="groupName">{{personal.groupName}}</text>
+      <text>{{personal.groupDuty===0?'组长':(personal.groupDuty===1?'管理员':(personal.groupDuty===2?'组员':'申请中'))}}</text>
     </view>
-    <view class="statistics">
-      <view catchtap="goFansFollow" data-flag="0">
-        <text class="text">粉丝</text>
-        <text class="number">{{personal.fans}}</text>
-      </view>
-      <view catchtap="goFansFollow" data-flag="1">
-        <text class="text">关注</text>
-        <text class="number">{{personal.follows}}</text>
-      </view>
-      <view>
-        <text class="text">帖子</text>
-        <text class="number">{{personal.posts}}</text>
-      </view>
+  </view>
+  <view class="statistics">
+    <view catchtap="goFansFollow" data-flag="0">
+      <text class="text">粉丝</text>
+      <text class="number">{{personal.fans}}</text>
     </view>
-    <view class="bar">
-      <!-- <view class="letter" catchtap="goPrivateLetter" wx:if="{{userId!==otherId}}">私信Ta</view> -->
+    <view catchtap="goFansFollow" data-flag="1">
+      <text class="text">关注</text>
+      <text class="number">{{personal.follows}}</text>
+    </view>
+    <view>
+      <text class="text">帖子</text>
+      <text class="number">{{personal.posts}}</text>
+    </view>
+  </view>
+  <view class="barWrap">
+    <bar size="{{30}}" gap="{{26}}" barList="{{barList}}" actIndex="{{actIndex}}" bind:switchBtn="switchBtn"></bar>
+  </view>
+  <!-- <view class="bar">
       <view class="portion {{switchBtn === 'dynamic' ? 'active' : ''}}" catchtap="switchBtn" data-switchBtn="dynamic">
         动态
       </view>
       <view class="issue portion {{switchBtn === 'issue' ? 'active' : ''}}" catchtap="switchBtn" data-switchBtn="issue">
         发布
       </view>
+    </view> -->
+  <view class="list">
+    <view hidden="{{actIndex !== 0}}">
+      <dynamicList id="dynamicList" dynamics="{{dynamics}}" isInvitation="{{true}}"  isBack="{{true}}"></dynamicList>
     </view>
-    <view class="list">
-      <view hidden="{{switchBtn !== 'dynamic'}}">
-        <dynamicList id="dynamicList" dynamics="{{dynamics}}" isInvitation="{{true}}"></dynamicList>
-      </view>
-      <view hidden="{{switchBtn !== 'issue'}}">
-        <allianceList alliances="{{alliances}}"></allianceList>
-      </view>
+    <view hidden="{{actIndex !== 1}}">
+      <allianceList alliances="{{alliances}}"></allianceList>
     </view>
+  </view>
 </view>

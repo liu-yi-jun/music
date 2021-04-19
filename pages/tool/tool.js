@@ -8,6 +8,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    qiniuUrl: app.qiniuUrl,
     // switchBtn: 'musicScore',
     // analysis
     // 去除上面导航栏，剩余的高度
@@ -35,7 +36,7 @@ Page({
         name: '和弦库'
       }
     ],
-    actIndex: 2
+    actIndex: 0
   },
 
   /**
@@ -67,7 +68,6 @@ Page({
     })
   },
   onLoad: function (options) {
-
     // 获取去除上面导航栏，剩余的高度
     tool.navExcludeHeight(this)
     // this.getRandomTap()
@@ -85,6 +85,7 @@ Page({
       tapTitle,
       ...taPPaging
     }).then(res => {
+    
       if (res.length < taPPaging.pageSize) {
         this.setData({
           'taPPaging.isNotData': true
@@ -108,6 +109,7 @@ Page({
     let randomWH, deg, delay, duration, circularLeft
     let direction, translate
     circulars.forEach((item, index) => {
+        item.views = item.views.replace(/[^0-9]/ig, "");
         deg = tool.randomNumber(0, 360)
         duration = tool.randomNumber(1500, 2500)
         randomWH = tool.randomNumber(30, 180)
@@ -140,6 +142,8 @@ Page({
     transform: translateX(${translate}%);
     `
       }),
+      
+ 
       this.setData({
         circulars: this.data.circulars.concat(circulars)
       })
@@ -248,4 +252,9 @@ Page({
       this.gettaps(value)
     }
   },
+  goMusicScorePost() {
+    wx.navigateTo({
+      url: '/pages/tool/musicScorePost/musicScorePost',
+    })
+  }
 })

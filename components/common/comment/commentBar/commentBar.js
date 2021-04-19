@@ -16,7 +16,7 @@ Component({
    * 组件的初始数据
    */
   data: {
-
+    qiniuUrl: app.qiniuUrl,
   },
   created(){
     console.log(this.properties)
@@ -60,6 +60,7 @@ Component({
       let commenetBarData = this.data.commenetBarData
       commenetBarData.isStore = !commenetBarData.isStore
       commenetBarData.isStore?++commenetBarData.store:--commenetBarData.store
+      console.log(commenetBarData,33333333);
       this.setData({
         commenetBarData
       },()=> {

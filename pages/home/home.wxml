@@ -3,12 +3,17 @@
 <!-- <block wx:if="{{isPage}}"> -->
 
 <!-- </block> -->
-
-
+<!-- catchtap="tap" -->
+<image class="socialManagement" catchtap="pullPage" wx:if="{{isShowPull}}"
+  style="background-image: url({{qiniuUrl}}/home/switchGroup.png); background-size: 43rpx 37rpx;"></image>
 <!-- <block wx:if="{{isShowGroup}}"> -->
-<view class="home" catchtap="tap">
+<view wx:if="{{isShowGroup===true}}" class="home"  bindtouchstart="tapStart" bindtouchend="tapEnd" >
+  <!-- style="background: url(/images/home/background.png) no-repeat;" -->
+  <view class="homebg"
+    style="background: url({{qiniuUrl}}/home/background1.png) no-repeat; background-size: 100% 100%;">
+  </view>
   <canvas canvas-id='canvas' class='canvas'></canvas>
-  <image class="socialManagement" catchtap="pullPage" wx:if="{{isShowPull}}"></image>
+
   <!-- <view class="line" wx:if="{{isShowPull}}"></view> -->
   <!-- <image class="pullPage" catchtap="pullPage" wx:if="{{isShowPull}}"></image> -->
   <view class="memberWrap">
@@ -22,32 +27,32 @@
     <text class="fan">粉丝</text>
   </view>
 
-  <view class="logoWrap">
+  <view class="logoWrap" mark:district="logoWrap">
     <image mode="aspectFill" class="logo" catchtap="switchFunctionBar" src="{{groupInfo.groupLogo}}">
       <view class="logoName">
         <text class="organizationName">{{groupNameTop}}</text>
         <text class="organization">{{groupNamebuttom}}</text>
       </view>
     </image>
-    <image class="follow" src="http://cdn.eigene.cn/home/follow{{groupInfo.isFollow?'ed':''}}.png" catchtap="follow">
+    <image class="follow" src="/images/home/follow{{groupInfo.isFollow?'ed':''}}.png" catchtap="follow">
     </image>
-    <view mark:district="functionBar" class="functionBar {{functionBarShow? 'functionBarShow':''}}">
+    <view mark:district="functionBar" class="functionBar {{functionBarShow? 'functionBarShow':''}}" style="background-image: url('{{qiniuUrl}}/home/massBackground.png');">
       <view catchtap="goPuchCard" class="puchCard {{functionBarShow? 'puchCardShow':''}}">
-        <image src="http://cdn.eigene.cn/home/puchCard2.png"></image>
+        <image src="/images/home/puchCard.png"></image>
         <text>打卡</text>
       </view>
       <view catchtap="goCourse" class="course {{functionBarShow? 'courseShow':''}}">
-        <image src="http://cdn.eigene.cn/home/course2.png"></image>
+        <image src="/images/home/course.png"></image>
         <text>课程</text>
       </view>
       <view catchtap="goMassManagement" class="setUp {{functionBarShow? 'setUpShow':''}}">
-        <image src="http://cdn.eigene.cn/setUp.png"></image>
+        <image src="/images/home/setUp.png"></image>
         <text>设置</text>
       </view>
     </view>
   </view>
   <view mark:district="dynamic" class="dynamicShowBackground {{dynamicIsShow?'showDynamic':'hideDynamic'}}"
-    bindtouchstart="dynamicTouchstart" bindtouchend="dynamicTouchend">
+  style="background-image: url('{{qiniuUrl}}/home/dynamicShowBackground1.png');"  bindtouchstart="dynamicTouchstart"  bindtouchend="dynamicTouchend">
     <text class="userName">{{showContent.nickName}}</text>
     <view class="title-time">
       <text class="title">{{showContent.introduce}}</text>
@@ -64,19 +69,21 @@
         class="video" object-fit="cover" hidden="{{!showContent.videoLoad}}" src="{{showContent.videoUrl}}"></video>
     </view>
     <!--  -->
-    <view hidden="{{showContent.mold !== 2}}" mark:operation="No" class="soundWrap">
+    <view wx:if="{{showContent.mold == 2}}" mark:operation="No" class="soundWrap">
       <playRecord id="playRecord" voiceUrl="{{showContent.voiceUrl}}"></playRecord>
     </view>
-    <view  mark:operation="No" class="delete iconfont iconshenglve" catchtap="showMenu"  data-index="{{index}}" ></view>
-    <!-- <image wx:if="delete{{showContent.userId === myId}}" mark:operation="No" class="delete" catchtap="delete"
-      data-index="{{index}}" src="http://cdn.eigene.cn/delete.png"></image> -->
+    <!-- <view mark:operation="No" class="delete iconfont iconshenglve" catchtap="showMenu" data-index="{{index}}"></view> -->
+    <view wx:if="{{showContent.userId === myId}}" mark:operation="No" class="delete" catchtap="hadleDelete"
+      data-index="{{index}}" style="background-image: url(/images/home/delete.png);background-size: 30rpx 32rpx;">
+    </view>
+    <!-- <image  src=""></image> -->
     <view class="like-comment" mark:operation="No">
       <view class="like" catchtap="toLike">
-        <image src="http://cdn.eigene.cn/dynamicLike{{showContent.isLike?'d':''}}.png"></image>
+        <image src="/images/home/like{{showContent.isLike?'d':''}}.png"></image>
         <text>{{showContent.likes}}</text>
       </view>
       <view class="comment" catchtap="goComment">
-        <image src="http://cdn.eigene.cn/dynamicComment.png"></image>
+        <image src="/images/home/dynamicComment.png"></image>
         <text>{{showContent.comment}}</text>
       </view>
     </view>
@@ -84,85 +91,92 @@
   <view class="scroll-midguide" id="scroll-midguide" wx:if="{{member.length}}">
     <view class="scrollArea" catchtouchstart="touchstart" catchtouchend="touchend">
       <view class="section" mark:index="6"
-        style="bottom:{{style[0].bottom}}%; transform: scale({{style[0].scaleX}}, {{style[0].scaleY}}); opacity:{{style[0].opacity ? (showMember[5] ? 1:0): 0}}">
-        <image class="avatarBackground" src="http://cdn.eigene.cn/avatarBackground.png">
-          <image class="avatar" wx:if="{{showMember[5]}}" src="{{showMember[5].avatarUrl}}"></image>
-        </image>
+        style="bottom:{{style[0].bottom}}%; transform: scale({{style[0].scaleX}}, {{style[0].scaleY}}); opacity:{{style[0].opacity ? (showMember[5] ? 1:0): 0}}" wx:if="{{showMember[5]}}">
+        <view class="avatarBackground">
+          <image mode="aspectFill" class="avatar" src="{{showMember[5].avatarUrl}}"></image>
+        </view>
+  
       </view>
       <view class="section" mark:index="5"
-        style="bottom:{{style[1].bottom}}%; transform: scale({{style[1].scaleX}}, {{style[1].scaleY}});  opacity:{{style[1].opacity ? (showMember[4] ? 1:0): 0}}">
-        <image class="avatarBackground" src="http://cdn.eigene.cn/avatarBackground.png">
-          <image class="avatar" wx:if="{{showMember[4]}}" src="{{showMember[4].avatarUrl}}"></image>
-        </image>
+        style="bottom:{{style[1].bottom}}%; transform: scale({{style[1].scaleX}}, {{style[1].scaleY}});  opacity:{{style[1].opacity ? (showMember[4] ? 1:0): 0}}"  wx:if="{{showMember[4]}}">
+        <view class="avatarBackground">
+          <image mode="aspectFill" class="avatar" src="{{showMember[4].avatarUrl}}"></image>
+        </view>
+        <view class="section-after" style="background: url(/images/home/avatarBackground.png);background-size:110% 110%; "></view>
       </view>
       <view class="section" mark:index="4"
-        style="bottom:{{style[2].bottom}}%; transform: scale({{style[2].scaleX}}, {{style[2].scaleY}});  opacity:{{style[2].opacity ? (showMember[3] ? 1:0): 0}}">
-        <image class="avatarBackground" src="http://cdn.eigene.cn/avatarBackground.png">
-          <image class="avatar" wx:if="{{showMember[3]}}" src="{{showMember[3].avatarUrl}}"></image>
-        </image>
+        style="bottom:{{style[2].bottom}}%; transform: scale({{style[2].scaleX}}, {{style[2].scaleY}});  opacity:{{style[2].opacity ? (showMember[3] ? 1:0): 0}}" wx:if="{{showMember[3]}}">
+        <view class="avatarBackground">
+          <image mode="aspectFill" class="avatar"  src="{{showMember[3].avatarUrl}}"></image>
+        </view>
+
       </view>
       <view class="section" mark:index="3"
-        style="bottom:{{style[3].bottom}}%; transform: scale({{style[3].scaleX}}, {{style[3].scaleY}});  opacity:{{style[3].opacity ? (showMember[2] ? 1:0): 0}}">
-        <image class="avatarBackground" src="http://cdn.eigene.cn/avatarBackground.png">
-          <image class="avatar" wx:if="{{showMember[2]}}" src="{{showMember[2].avatarUrl}}"></image>
-        </image>
+        style="bottom:{{style[3].bottom}}%; transform: scale({{style[3].scaleX}}, {{style[3].scaleY}});  opacity:{{style[3].opacity ? (showMember[2] ? 1:0): 0}}" wx:if="{{showMember[2]}}">
+        <view class="avatarBackground">
+          <image mode="aspectFill" class="avatar"  src="{{showMember[2].avatarUrl}}"></image>
+        </view>
+
       </view>
       <view class="section" mark:index="2"
-        style="bottom:{{style[4].bottom}}%; transform: scale({{style[4].scaleX}}, {{style[4].scaleY}});  opacity:{{style[4].opacity ? (showMember[1] ? 1:0): 0}}">
-        <image class="avatarBackground" src="http://cdn.eigene.cn/avatarBackground.png">
-          <image class="avatar" wx:if="{{showMember[1]}}" src="{{showMember[1].avatarUrl}}"></image>
-        </image>
+        style="bottom:{{style[4].bottom}}%; transform: scale({{style[4].scaleX}}, {{style[4].scaleY}});  opacity:{{style[4].opacity ? (showMember[1] ? 1:0): 0}}" wx:if="{{showMember[1]}}" >
+        <view class="avatarBackground">
+          <image mode="aspectFill" class="avatar" src="{{showMember[1].avatarUrl}}"></image>
+        </view>
+
       </view>
       <view class="section" mark:index="1"
-        style="bottom:{{style[5].bottom}}%; transform: scale({{style[5].scaleX}}, {{style[5].scaleY}});  opacity:{{style[5].opacity ? (showMember[0] ? 1:0): 0}}">
-        <image class="avatarBackground" src="http://cdn.eigene.cn/avatarBackground.png">
-          <image class="avatar" wx:if="{{showMember[0]}}" src="{{showMember[0].avatarUrl}}"></image>
-        </image>
+        style="bottom:{{style[5].bottom}}%; transform: scale({{style[5].scaleX}}, {{style[5].scaleY}});  opacity:{{style[5].opacity ? (showMember[0] ? 1:0): 0}}" wx:if="{{showMember[0]}}">
+        <view class="avatarBackground">
+          <image mode="aspectFill" class="avatar"  src="{{showMember[0].avatarUrl}}"></image>
+        </view>
+
       </view>
       <view class="section" mark:index="0"
-        style="bottom:{{style[6].bottom}}%; transform: scale({{style[6].scaleX}}, {{style[6].scaleY}});  opacity:{{style[6].opacity ? (showMember[6] ? 1:0): 0}}">
-        <image class="avatarBackground" src="http://cdn.eigene.cn/avatarBackground.png">
-          <image class="avatar" wx:if="{{showMember[6]}}" src="{{showMember[6].avatarUrl}}"></image>
-        </image>
+        style="bottom:{{style[6].bottom}}%; transform: scale({{style[6].scaleX}}, {{style[6].scaleY}});  opacity:{{style[6].opacity ? (showMember[6] ? 1:0): 0}}" wx:if="{{showMember[6]}}">
+        <view class="avatarBackground">
+          <image mode="aspectFill" class="avatar"  src="{{showMember[6].avatarUrl}}"></image>
+        </view>
+
       </view>
     </view>
   </view>
   <image mark:district="issue" class="issue-background {{switchIssue?'showIssue':'hideIssue'}}"
-    src="http://cdn.eigene.cn/issue-background.png">
-    <image class="uploadVoice" src="http://cdn.eigene.cn/uploadVoice.png" catchtap="goUploadVoice"></image>
-    <image class="uploadVideo" src="http://cdn.eigene.cn/uploadVideo.png" class="uploadVideo" catchtap="goUploadVideo">
+    src="/images/home/issue-background.png">
+    <image class="uploadVoice" src="/images/home/uploadVoice.png" catchtap="goUploadVoice"></image>
+    <image class="uploadVideo" src="/images/home/uploadVideo.png" class="uploadVideo" catchtap="goUploadVideo">
     </image>
-    <image class="issueImg" src="http://cdn.eigene.cn/issueImg.png" catchtap="goIssueImg"></image>
-    <image class="issueBtn" src="http://cdn.eigene.cn/issueBtn.png" catchtap="putIssueBtn"></image>
+    <image class="issueImg" src="/images/home/issueImg.png" catchtap="goIssueImg"></image>
+    <image class="issueBtn" src="/images/home/issueBtn.png" catchtap="putIssueBtn"></image>
   </image>
   <image class="expandIssue {{!switchIssue?'showExpandIssue':'hideExpandIssue'}}" catchtap="switchIssue"
-    src="http://cdn.eigene.cn/expandIssue.png"></image>
+    src="/images/home/expandIssue.png"></image>
 
-  <view class="shade {{dialogShow? 'shadeShow':''}}" mark:district="shade">
+  <!-- <view class="shade {{dialogShow? 'shadeShow':''}}" mark:district="shade">
     <view class="dialog">
       <text>是否确定加入该小组？</text>
       <view class="yesOrNo">
-        <image catchtap="noJoin" src="http://cdn.eigene.cn/home/no.png"></image>
-        <image catchtap="yesJoin" src="http://cdn.eigene.cn/home/yes.png"></image>
+        <image catchtap="noJoin" src="/images/home/no.png"></image>
+        <image catchtap="yesJoin" src="/images/home/yes.png"></image>
       </view>
     </view>
-  </view>
+  </view> -->
 </view>
 <view class="guideMask {{homeGuide?'showGuide': 'hideGuide'}} {{cross?'cross':''}}" catchtap="stopBubbling">
   <block wx:if="{{leftGuide}}">
-    <image class="leftGuide" src="http://cdn.eigene.cn/guide/left.png" catchtap="click" data-click="leftGuide">
+    <image class="leftGuide" src="/images/home/leftGuide.png" catchtap="click" data-click="leftGuide">
     </image>
-    <!-- <view class="leftGuideText">点击发现隐藏版块</view> -->
+    <view class="leftGuideText" catchtap="click" data-click="leftGuide">“发现隐藏版块”</view>
   </block>
   <block wx:if="{{issueGuide}}">
-    <image class="issueGuide" src="http://cdn.eigene.cn/guide/leftbottom.png" catchtap="click" data-click="issueGuide">
+    <image class="issueGuide" src="/images/home/leftbottom.png" catchtap="click" data-click="issueGuide">
     </image>
-    <!-- <view class="issueGuideText">点击发布动态</view> -->
+    <view class="issueGuideText" catchtap="click" data-click="issueGuide">“发布动态”</view>
   </block>
   <block wx:if="{{bottomGuide}}">
-    <image class="bottomGuide" src="http://cdn.eigene.cn/guide/bottom.png" catchtap="click" data-click="bottomGuide">
+    <image class="bottomGuide" src="/images/home/bottom.png" catchtap="click" data-click="bottomGuide">
     </image>
-    <!-- <view class="bottomGuideText">点击展开下栏</view> -->
+    <view class="bottomGuideText" catchtap="click" data-click="bottomGuide">“展开主菜单”</view>
   </block>
 
   <block>
@@ -188,13 +202,22 @@
 </showTabBar>
 <!-- </block> -->
 
-<view class="pageBackground" catchtap="cancelTabbar" style="transform: translateY({{isShowGroup?'-100':'0'}}%);">
-  <image class="indexLogo" src="http://cdn.eigene.cn/index-logo.png"></image>
-  <view class="fold" style="background-image: url(http://cdn.eigene.cn/home/fold.png);">
-    <image class="unionText" src="http://cdn.eigene.cn/home/unionText.png" catchtap="toUnion"></image>
-    <image class="settle" src="http://cdn.eigene.cn/home/settle.png" catchtap="toGroupSettlement"></image>
-    <image class="my" src="http://cdn.eigene.cn/home/my.png" catchtap="toMyGroup"></image>
+<view class="pageBackground" bindtouchstart="indexStart" 
+bindtouchend="indexEnd" 
+  style="transform: translateY({{isShowGroup?'-106':'0'}}%); background: url({{qiniuUrl}}/home/pageBackground2.png) no-repeat;  background-size: 100% 100%;">
+  <image class="indexLogo" src="/images/home/index-logo.png"></image>
+  <view mark:district="fold" class="fold" style="background-image: url({{qiniuUrl}}/home/fold.png);">
+    <view class="firstPart"  catchtap="toUnion">
+    </view>
+    <view class="secondPart" catchtap="toGroupSettlement">
+    </view>
+    <view class="thirdPart" catchtap="toMyGroup">
+    </view>
+    <image class="unionText" src="/images/home/unionText1.png"></image>
+    <image class="settle" src="/images/home/settle1.png" ></image>
+    <image class="my" src="/images/home/my1.png" ></image>
   </view>
 </view>
 
-<menu id="menu" list="{{list}}" bind:handleStore="handleStore" bind:handleReport="handleReport" bind:hadleDelete="hadleDelete" bind:cancelMenu="cancelMenu"></menu>
+<menu id="menu" list="{{list}}" bind:handleStore="handleStore" bind:handleReport="handleReport"
+  bind:hadleDelete="hadleDelete" bind:cancelMenu="cancelMenu"></menu>

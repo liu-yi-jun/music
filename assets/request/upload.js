@@ -51,6 +51,17 @@
           success(res) {
             let result = JSON.parse(res.data)
             console.log(result)
+            if (result.code === -2) {
+              // 无效token
+              wx.login({
+                success: res => {
+                  App.getToken(res.code).then(res => {
+                    uploadFile(url, tempFilePath, option, conf).then(res => resolve(res)).catch(err => reject(err))
+                  })
+                }
+              })
+              return
+            }
             result.code == 0 ? resolve(result.data) : reject(result.message)
             if (toast.length) {
               wx.showToast({

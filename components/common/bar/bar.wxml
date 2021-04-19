@@ -1,6 +1,6 @@
 <!--components/common/bar/bar.wxml-->
 <view class="bar">
-  <view class="part" style="margin-left: {{index!==0?gap:0}}rpx; font-size: {{size}}rpx;" class="portion {{index === actIndex ?'active':''}}"
+  <view class="part" style="margin-left: {{index!==0?gap:0}}rpx; font-size: {{size}}rpx;" class="portion {{index === actIndex ?'active':'not'}}"
     wx:for="{{barList}}" wx:key="*this" catchtap="switchBtn" data-index="{{index}}">
     {{item.name}}
   </view>

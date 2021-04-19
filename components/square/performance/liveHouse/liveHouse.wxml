@@ -1,8 +1,9 @@
 <!--components/square/performance/liveHouse/liveHouse.wxml-->
 <view class="showInformationList">
-  <view class="card" wx:for="{{list}}" wx:key="id" catchtap="goLiveHouseDetail" data-id="{{item.id}}" data-index="{{index}}">
+  <view style="background-image: url({{qiniuUrl}}/liveHouse/cardBackground.png);background-size: 100% 100%;" class="card" wx:for="{{list}}" wx:key="id" catchtap="goLiveHouseDetail"
+    data-id="{{item.id}}" data-index="{{index}}">
     <view class="top">
-      <image class="img" src="{{item.showPoster}}" lazy-load="{{true}}"></image>
+      <image mode="aspectFill" class="img" src="{{item.showPoster}}" lazy-load="{{true}}"></image>
       <view class="introduce">
         <text class="title">#{{item.showTitle}}#</text>
         <view class="message">
@@ -14,19 +15,19 @@
     <view class="bottom">
       <view class="fontBar">
         <view class="fontWrap" catchtap="toLike" data-index="{{index}}">
-          <image src="http://cdn.eigene.cn/liveHouse/like{{item.isLike?'d':''}}.png" lazy-load="{{true}}"></image>
+          <image src="/images/liveHouse/like{{item.isLike?'d':''}}.png" lazy-load="{{true}}"></image>
           <text>{{item.likes}}</text>
         </view>
         <view class="fontWrap" catchtap="toStore" data-index="{{index}}">
-          <image src="http://cdn.eigene.cn/liveHouse/store{{item.isStore?'d':''}}.png" lazy-load="{{true}}"></image>
+          <image src="/images/liveHouse/store{{item.isStore?'d':''}}.png" lazy-load="{{true}}"></image>
           <text>{{item.store}}</text>
         </view>
         <view class="fontWrap">
-          <image src="http://cdn.eigene.cn/liveHouse/comment.png" lazy-load="{{true}}"></image>
+          <image src="/images/liveHouse/comment.png" lazy-load="{{true}}"></image>
           <text>{{item.comment}}</text>
         </view>
         <view class="fontWrap">
-          <image src="http://cdn.eigene.cn/liveHouse/share.png" lazy-load="{{true}}"></image>
+          <image src="/images/liveHouse/share.png" lazy-load="{{true}}"></image>
           <text>{{item.share}}</text>
         </view>
       </view>

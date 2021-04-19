@@ -17,14 +17,16 @@ Component({
    * 组件的初始数据
    */
   data: {
+    qiniuUrl: app.qiniuUrl,
     // 控制右下角三角show
     tabBarBtnShow: false,
     circulars: [],
     limit: 50,
     isNotData: false,
     value: '',
+    tempValue:'',
     taPPaging: {
-      pageSize: 20,
+      pageSize: 50,
       pageIndex: 1,
       isNotData: false
     },
@@ -76,9 +78,10 @@ Component({
       let randomWH, deg, delay, duration, circularLeft
       let direction, translate
       circulars.forEach((item, index) => {
+          item.views = item.views.replace(/[^0-9]/ig, "");
           deg = tool.randomNumber(0, 360)
           duration = tool.randomNumber(1500, 2500)
-          randomWH = tool.randomNumber(30, 180)
+          randomWH = tool.randomNumber(40, 180)
           circularLeft = tool.randomNumber(0, deviceW - randomWH)
 
           if (randomWH / 2 + circularLeft <= deviceW / 2) {
@@ -126,9 +129,14 @@ Component({
         })
       }
     },
+    searchInput(event){
+      this.setData({
+        tempValue: event.detail.value,
+      })
+    },
     confirm(event) {
       this.setData({
-        value: event.detail.value,
+        value: event.detail.value?event.detail.value:this.data.tempValue,
         circulars: [],
         taPPaging: {
           pageSize: 50,
@@ -136,7 +144,7 @@ Component({
           isNotData: false
         },
       }, () => [
-        this.gettaps(event.detail.value)
+        this.gettaps(this.data.value)
       ])
 
     },

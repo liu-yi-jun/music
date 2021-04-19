@@ -3,8 +3,8 @@
 .head {
   color: white;
   box-sizing: border-box;
-  padding: 20rpx 20rpx 40rpx 30rpx;
-  font-size: 34rpx;
+  padding: 20rpx 20rpx 40rpx 34rpx;
+  font-size: 32rpx;
   display: flex;
   justify-content: space-between;
 }
@@ -12,7 +12,7 @@
 .list {
   margin-top: 20rpx;
   box-sizing: border-box;
-  padding: 0 30rpx;
+  padding: 0 34rpx;
   overflow: hidden;
   border-bottom: 1rpx solid #cacbcb;
 }
@@ -25,14 +25,15 @@
 .name {
   font-size: 32rpx;
   color: white;
+  font-family: 'SH-Bold';
 }
 
 .nameBotoom {
   color: #b7b8b8;
-  font-size: 18rpx;
+  font-size: 22rpx;
 }
 
-.nameBotoom > text {
+.nameBotoom>text {
   margin-right: 10rpx;
 }
 
@@ -45,17 +46,17 @@
 .right {
   color: #d18cdd;
   background: white;
-  font-size: 22rpx;
+  font-size: 24rpx;
   border-radius: 999rem;
-  height: 45rpx;
+  height: 48rpx;
   width: 110rpx;
   text-align: center;
-  line-height: 45rpx;
+  line-height: 48rpx;
 }
 
 .information {
   box-sizing: border-box;
-  padding: 0 30rpx;
+  padding: 0 0rpx 0rpx 30rpx;
   display: flex;
   flex-grow: 1;
   align-items: center;
@@ -63,8 +64,8 @@
 }
 
 .avatar {
-  width: 110rpx;
-  height: 110rpx;
+  width: 100rpx;
+  height: 100rpx;
   border-radius: 50%;
 }
 
@@ -78,7 +79,8 @@
 .addManageWrap {
   box-sizing: border-box;
   width: 100%;
-  padding: 40rpx;
+  padding: 34rpx;
+
 }
 
 .addManage {

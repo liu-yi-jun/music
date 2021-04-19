@@ -59,10 +59,11 @@ Component({
       let param = this.properties.param
       return new Promise((resolve, reject) => {
         app.post(app.Api.sendComment, {
-          commentCotent: comment,
+          commentContent: comment,
           ...param
         }, {
-          loading: ['发布中...']
+          loading: ['发布中...'],
+          toast: ['发布失败，请重试']
         }).then(res => resolve(res)).catch(err => reject(err))
       })
     },
@@ -73,15 +74,16 @@ Component({
           replyContent: comment,
           ...param
         }, {
-          loading: ['发布中...']
+          loading: ['发布中...'],
+          toast: ['发布失败，请重试']
         }).then(res => resolve(res)).catch(err => reject(err))
       })
     },
     formSubmit(e) {
       let comment = e.detail.value.comment
-      let theme = this.properties.param.theme
+      let isReply = this.properties.param.isReply
       if (comment) {
-        if (theme) {
+        if (!isReply) {
           // 评论文章
           this.sendComment(comment).then((res) => {
             let insertId = res.insertId
@@ -91,24 +93,23 @@ Component({
             })
             this.triggerEvent('completeCommentOrReply', {
               ...this.properties.param,
-              commentCotent: comment,
-              id:insertId
+              commentContent: comment,
+              id: insertId
             })
-            
             wx.hideKeyboard()
           })
         } else {
           // 回复评论
           this.sendReply(comment).then((res) => {
             let insertId = res.insertId
-            common.Toast('评论已发布')
+            common.Toast('回复已发布')
             this.setData({
               comment: ''
             })
             this.triggerEvent('completeCommentOrReply', {
               ...this.properties.param,
               replyContent: comment,
-              id:insertId
+              id: insertId
             })
             wx.hideKeyboard()
           })
@@ -119,8 +120,7 @@ Component({
     },
   },
   lifetimes: {
-    created() {
-    },
+    created() {},
     // 在组件实例进入页面节点树时执行
     attached: function () {
       wx.onKeyboardHeightChange(res => {

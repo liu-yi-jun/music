@@ -1,5 +1,8 @@
 <!--pages/home/otherHome/otherHome.wxml-->
 <view class="home" catchtap="tap">
+  <view class="homebg"
+    style="background: url({{qiniuUrl}}/home/background1.png) no-repeat; background-size: 100% 100%;">
+  </view>
   <navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' back="{{true}}" iconTheme='white'
     bindback="handlerGobackClick"></navBar>
   <view class="memberWrap">
@@ -15,7 +18,8 @@
   </view>
 
   <view class="logoWrap">
-    <image mode="aspectFill" class="logo" catchtap="switchFunctionBar" src="{{groupInfo.groupLogo}}">
+    <!--  catchtap="switchFunctionBar"  -->
+    <image mode="aspectFill" class="logo" src="{{groupInfo.groupLogo}}">
       <view class="logoName">
         <text class="organizationName">{{groupNameTop}}</text>
         <text class="organization">{{groupNamebuttom}}</text>
@@ -32,6 +36,10 @@
         <image src="http://cdn.eigene.cn/home/course2.png"></image>
         <text>课程</text>
       </view>
+      <!-- <view catchtap="goMassManagement" class="setUp {{functionBarShow? 'setUpShow':''}}">
+        <image src="{{qiniuUrl}}/home/setUp.png"></image>
+        <text>设置</text>
+      </view> -->
     </view>
   </view>
   <!-- mark:area不行 -->
@@ -47,20 +55,25 @@
         <image class="dynamicImg" mode="aspectFill" src="{{item}}"></image>
       </swiper-item>
     </swiper>
-    <video mark:operation="No" class="video" object-fit="cover" hidden="{{showContent.mold !== 1 || !showVideo}}"
-      src="{{showContent.videoUrl}}"></video>
-
-    <view hidden="{{showContent.mold !== 2}}" mark:operation="No" class="soundWrap">
+    <view hidden="{{showContent.mold !== 1 || !showVideo}}">
+      <view class="videoLoad" hidden="{{showContent.videoLoad}}">加载中........</view>
+      <video mark:operation="No" bindloadedmetadata="loadedmetadata" bindfullscreenchange="bindfullscreenchange"
+        class="video" object-fit="cover" hidden="{{!showContent.videoLoad}}" src="{{showContent.videoUrl}}"></video>
+    </view>
+    <!--  -->
+    <view wx:if="{{showContent.mold == 2}}" mark:operation="No" class="soundWrap">
       <playRecord id="playRecord" voiceUrl="{{showContent.voiceUrl}}"></playRecord>
     </view>
-    <view mark:operation="No" class="delete iconfont iconshenglve" catchtap="showMenu" data-index="{{index}}"></view>
+    <!-- <view mark:operation="No" class="delete iconfont iconshenglve" catchtap="showMenu" data-index="{{index}}"></view> -->
+    <!-- <image wx:if="delete{{showContent.userId === myId}}" mark:operation="No" class="delete" catchtap="delete"
+      data-index="{{index}}" src="{{qiniuUrl}}/delete.png"></image> -->
     <view class="like-comment" mark:operation="No">
       <view class="like" catchtap="toLike">
-        <image src="http://cdn.eigene.cn/dynamicLike{{showContent.isLike?'d':''}}.png"></image>
+        <image src="{{qiniuUrl}}/home/like{{showContent.isLike?'d':''}}.png"></image>
         <text>{{showContent.likes}}</text>
       </view>
       <view class="comment" catchtap="goComment">
-        <image src="http://cdn.eigene.cn/dynamicComment.png"></image>
+        <image src="{{qiniuUrl}}/home/dynamicComment.png"></image>
         <text>{{showContent.comment}}</text>
       </view>
     </view>
@@ -77,7 +90,7 @@
       </swiper-item>
 
     </swiper>
-    <video mark:operation="No" class="video" object-fit="fill" wx:elif="{{showContent.mold === 1}}"
+    <video mark:operation="No" class="video" object-fit="cover" wx:elif="{{showContent.mold === 1}}"
       src="{{showContent.videoUrl}}"></video>
     <view class="like-comment" mark:operation="No">
       <view class="like">
@@ -93,46 +106,46 @@
   <view class="scroll-midguide" id="scroll-midguide" wx:if="{{member.length}}">
     <view class="scrollArea" catchtouchstart="touchstart" catchtouchend="touchend">
       <view class="section" mark:index="6"
-        style="bottom:{{style[0].bottom}}%; transform: scale({{style[0].scaleX}}, {{style[0].scaleY}}); opacity:{{style[0].opacity ? (showMember[5] ? 1:0): 0}}">
-        <image class="avatarBackground" src="http://cdn.eigene.cn/avatarBackground.png">
-          <image class="avatar" wx:if="{{showMember[5]}}" src="{{showMember[5].avatarUrl}}"></image>
-        </image>
+        style="bottom:{{style[0].bottom}}%; transform: scale({{style[0].scaleX}}, {{style[0].scaleY}}); opacity:{{style[0].opacity ? (showMember[5] ? 1:0): 0}}" wx:if="{{showMember[5]}}">
+        <view class="avatarBackground">
+          <image mode="aspectFill"  class="avatar"  src="{{showMember[5].avatarUrl}}"></image>
+        </view>
       </view>
       <view class="section" mark:index="5"
-        style="bottom:{{style[1].bottom}}%; transform: scale({{style[1].scaleX}}, {{style[1].scaleY}});  opacity:{{style[1].opacity ? (showMember[4] ? 1:0): 0}}">
-        <image class="avatarBackground" src="http://cdn.eigene.cn/avatarBackground.png">
-          <image class="avatar" wx:if="{{showMember[4]}}" src="{{showMember[4].avatarUrl}}"></image>
-        </image>
+        style="bottom:{{style[1].bottom}}%; transform: scale({{style[1].scaleX}}, {{style[1].scaleY}});  opacity:{{style[1].opacity ? (showMember[4] ? 1:0): 0}}" wx:if="{{showMember[4]}}">
+        <view class="avatarBackground">
+          <image mode="aspectFill"  class="avatar"  src="{{showMember[4].avatarUrl}}"></image>
+        </view>
       </view>
       <view class="section" mark:index="4"
-        style="bottom:{{style[2].bottom}}%; transform: scale({{style[2].scaleX}}, {{style[2].scaleY}});  opacity:{{style[2].opacity ? (showMember[3] ? 1:0): 0}}">
-        <image class="avatarBackground" src="http://cdn.eigene.cn/avatarBackground.png">
-          <image class="avatar" wx:if="{{showMember[3]}}" src="{{showMember[3].avatarUrl}}"></image>
-        </image>
+        style="bottom:{{style[2].bottom}}%; transform: scale({{style[2].scaleX}}, {{style[2].scaleY}});  opacity:{{style[2].opacity ? (showMember[3] ? 1:0): 0}}" wx:if="{{showMember[3]}}">
+        <view class="avatarBackground">
+          <image mode="aspectFill"  class="avatar"  src="{{showMember[3].avatarUrl}}"></image>
+        </view>
       </view>
       <view class="section" mark:index="3"
-        style="bottom:{{style[3].bottom}}%; transform: scale({{style[3].scaleX}}, {{style[3].scaleY}});  opacity:{{style[3].opacity ? (showMember[2] ? 1:0): 0}}">
-        <image class="avatarBackground" src="http://cdn.eigene.cn/avatarBackground.png">
-          <image class="avatar" wx:if="{{showMember[2]}}" src="{{showMember[2].avatarUrl}}"></image>
-        </image>
+        style="bottom:{{style[3].bottom}}%; transform: scale({{style[3].scaleX}}, {{style[3].scaleY}});  opacity:{{style[3].opacity ? (showMember[2] ? 1:0): 0}}"  wx:if="{{showMember[2]}}">
+        <view class="avatarBackground">
+          <image mode="aspectFill"  class="avatar" src="{{showMember[2].avatarUrl}}"></image>
+        </view>
       </view>
       <view class="section" mark:index="2"
-        style="bottom:{{style[4].bottom}}%; transform: scale({{style[4].scaleX}}, {{style[4].scaleY}});  opacity:{{style[4].opacity ? (showMember[1] ? 1:0): 0}}">
-        <image class="avatarBackground" src="http://cdn.eigene.cn/avatarBackground.png">
-          <image class="avatar" wx:if="{{showMember[1]}}" src="{{showMember[1].avatarUrl}}"></image>
-        </image>
+        style="bottom:{{style[4].bottom}}%; transform: scale({{style[4].scaleX}}, {{style[4].scaleY}});  opacity:{{style[4].opacity ? (showMember[1] ? 1:0): 0}}"  wx:if="{{showMember[1]}}">
+        <view class="avatarBackground">
+          <image mode="aspectFill"  class="avatar" src="{{showMember[1].avatarUrl}}"></image>
+        </view>
       </view>
       <view class="section" mark:index="1"
-        style="bottom:{{style[5].bottom}}%; transform: scale({{style[5].scaleX}}, {{style[5].scaleY}});  opacity:{{style[5].opacity ? (showMember[0] ? 1:0): 0}}">
-        <image class="avatarBackground" src="http://cdn.eigene.cn/avatarBackground.png">
-          <image class="avatar" wx:if="{{showMember[0]}}" src="{{showMember[0].avatarUrl}}"></image>
-        </image>
+        style="bottom:{{style[5].bottom}}%; transform: scale({{style[5].scaleX}}, {{style[5].scaleY}});  opacity:{{style[5].opacity ? (showMember[0] ? 1:0): 0}}" wx:if="{{showMember[0]}}">
+        <view class="avatarBackground">
+          <image mode="aspectFill"  class="avatar"  src="{{showMember[0].avatarUrl}}"></image>
+        </view>
       </view>
       <view class="section" mark:index="0"
-        style="bottom:{{style[6].bottom}}%; transform: scale({{style[6].scaleX}}, {{style[6].scaleY}});  opacity:{{style[6].opacity ? (showMember[6] ? 1:0): 0}}">
-        <image class="avatarBackground" src="http://cdn.eigene.cn/avatarBackground.png">
-          <image class="avatar" wx:if="{{showMember[6]}}" src="{{showMember[6].avatarUrl}}"></image>
-        </image>
+        style="bottom:{{style[6].bottom}}%; transform: scale({{style[6].scaleX}}, {{style[6].scaleY}});  opacity:{{style[6].opacity ? (showMember[6] ? 1:0): 0}}" wx:if="{{showMember[6]}}">
+        <view class="avatarBackground">
+          <image mode="aspectFill"  class="avatar"  src="{{showMember[6].avatarUrl}}"></image>
+        </view>
       </view>
     </view>
   </view>

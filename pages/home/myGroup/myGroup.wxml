@@ -5,7 +5,8 @@
   <view class="barWrap">
     <bar barList="{{barList}}" actIndex="{{actIndex}}" bind:switchBtn="switchBtn"></bar>
   </view>
-  <scroll-view bindscrolltolower="scrolltolower" style="height: calc({{excludeHeight}}px - 82rpx);" scroll-y>
+  <scroll-view refresher-enabled="{{true}}" refresher-triggered="{{triggered}}"
+    bindrefresherrefresh="onRefresh" bindscrolltolower="scrolltolower" style="height: calc({{excludeHeight}}px - 91rpx);" scroll-y>
     <view hidden="{{actIndex !== 0}}">
       <groupList groups="{{settleGroup}}" isSettleGroup="{{true}}"></groupList>
     </view>

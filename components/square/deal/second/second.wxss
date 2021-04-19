@@ -3,7 +3,7 @@
 .second {
   box-sizing: border-box;
   width: 100%;
-  padding: 0 25rpx;
+  padding: 20rpx 25rpx;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -95,7 +95,8 @@ swiper {
 
 .right {
   color: #ce4646;
-  font-size: 37rpx;
+  font-size: 34rpx;
+  font-family: 'SH-Bold';
 }
 
 .wx {
@@ -113,13 +114,11 @@ swiper {
 }
 
 .avatar-username {
-  margin-top: 20rpx;
   display: flex;
   align-items: flex-end;
 }
 
 .username {
-  margin-bottom: 8rpx;
   margin-left: 10rpx;
   color: #808080;
   font-size: 20rpx;
@@ -140,16 +139,18 @@ swiper {
   position: absolute;
   left: 50%;
   top: 50%;
-  transform: translate(-50%,-50%);
+  transform: translate(-50%, -50%);
 }
+
 .bottomBar {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-top: 20rpx;
 }
 
 .goods>view>text:first-child {
-  font-weight: bold;
+  font-family: 'SH-Bold';
 }
 
 .wx-swiper-dots {

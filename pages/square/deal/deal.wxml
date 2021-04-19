@@ -2,23 +2,25 @@
 <view class="deal">
   <navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' back="{{true}}" iconTheme='white'
     bindback="handlerGobackClick"></navBar>
-  <view class="title">
-    <text class="title-top">二手交易</text>
-    <text class="title-bottom">flea market</text>
-    <image class="myStore" catchtap="storeDeal" src="http://cdn.eigene.cn/deal/myStore.png"></image>
-  </view>
-  <view class="head">
-    <image class="logo" src="http://cdn.eigene.cn/deal/logo.png"></image>
-    <view class="searchWrap">
-      <input class="search" value="{{groupName}}" bindconfirm="confirm">
-      </input>
-      <image class="searchLog" src="http://cdn.eigene.cn/search.png"></image>
-    </view>
     <view class="barWrap">
       <bar barList="{{barList}}" actIndex="{{actIndex}}" bind:switchBtn="switchBtn" gap="{{10}}" size="{{30}}" ></bar>
+      <image class="myStore" catchtap="storeDeal" src="/images/deal/myStore.png"></image>
     </view>
+  <!-- <view class="title">
+    <text class="title-top">二手交易</text>
+    <text class="title-bottom">flea market</text>
+
+  </view> -->
+  <view class="head">
+    <image class="logo" src="/images/musicScore/logo.png"></image>
+    <view class="searchWrap">
+      <input class="search" value="{{groupName}}" bindinput="searchInput" bindconfirm="confirm">
+      </input>
+      <image class="searchLog" src="/images/musicScore/search.png"></image>
+    </view>
+    <view class="searchText" catchtap="confirm">搜索</view>
   </view>
-  <scroll-view scroll-y style="height: calc({{excludeHeight}}px - 162rpx);" bindscrolltolower="scrolltolower">
+  <scroll-view scroll-y style="height: calc({{excludeHeight}}px - 178rpx);" bindscrolltolower="scrolltolower">
     <view hidden="{{actIndex !== 0}}">
       <second id="second" seconds="{{doubleSeconds}}"></second>
     </view>

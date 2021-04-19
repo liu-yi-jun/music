@@ -14,9 +14,9 @@
         </view>
         <view class="row sexRow">
           <text>性别</text>
-          <image class="sexImg" src="http://cdn.eigene.cn/editData/man{{userInfo.gender===1?'ed':''}}.png">
+          <image class="sexImg" src="/images/editData/man{{userInfo.gender===1?'ed':''}}.png">
           </image>
-          <image class="sexImg" src="http://cdn.eigene.cn/editData/woman{{userInfo.gender===2?'ed':''}}.png">
+          <image class="sexImg" src="/images/editData/woman{{userInfo.gender===2?'ed':''}}.png">
           </image>
         </view>
         <view class="row">
@@ -41,10 +41,10 @@
               <view class="part" data-i="{{i}}" data-j="{{j}}" wx:for-index="j" wx:for="{{recruit}}" wx:key="index"
                 catchtap="select">
                 <view class="instrumentsWrap">
-                  <image class="instruments" src="{{item.instrumentsUrl}}"></image>
-                  <text class="instrumentsName">{{item.instrumentsName}}</text>
+                  <image class="instruments" src="{{'/images/' + item.instrumentsUrl}}"></image>
+                  <text class="instrumentsName">{{ item.instrumentsName}}</text>
                 </view>
-                <image class="select" src="http://cdn.eigene.cn/issueTeam/{{item.exist?'':'not'}}Selected.png"></image>
+                <image class="select" src="/images/issueTeam/{{item.exist?'':'not'}}Selected.png"></image>
               </view>
             </view>
           </view>
@@ -54,10 +54,10 @@
               <view class="part" data-i="{{i}}" data-j="{{j}}" wx:for-index="j" wx:for="{{recruit}}" wx:key="index"
                 catchtap="select">
                 <view class="instrumentsWrap">
-                  <image class="instruments" src="{{item.instrumentsUrl}}"></image>
+                  <image class="instruments" src="{{'/images/' + item.instrumentsUrl}}"></image>
                   <text class="instrumentsName">{{item.instrumentsName}}</text>
                 </view>
-                <image class="select" src="http://cdn.eigene.cn/issueTeam/{{item.exist?'':'not'}}Selected.png"></image>
+                <image class="select" src="/images/issueTeam/{{item.exist?'':'not'}}Selected.png"></image>
               </view>
             </swiper-item>
           </swiper>
@@ -74,7 +74,7 @@
       </view>
       <view class="okLogoWrap">
         
-        <image class="okLogo" src="http://cdn.eigene.cn/issuePuchCard/okLogo2.png">
+        <image class="okLogo" src="/images/issuePuchCard/okLogo3.png">
           <button form-type="submit" class="okInner" plain='true'></button>
         </image>
       </view>

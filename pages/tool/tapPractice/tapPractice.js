@@ -4,6 +4,7 @@ const tool = require('../../../assets/tool/tool.js')
 const common = require('../../../assets/tool/common')
 const upload = require('../../../assets/request/upload')
 const core = require('../../../assets/tool/core')
+const authorize = require('../../../assets/tool/authorize')
 Page({
 
   /**
@@ -52,9 +53,6 @@ Page({
     // 获取去除上面导航栏，剩余的高度
     tool.navExcludeHeight(this)
     this.getTapDetail(options.id)
-    this.initialization()
-    this.getProgressBoxInfo()
-
   },
 
 
@@ -163,7 +161,7 @@ Page({
       }
       pagingTapRecord.pageIndex = pagingTapRecord.pageIndex + 1
       let tapRecord = this.initSoundWidth(res.tapRecord)
-      res.tapDetail.tapVideoLink = this.getParam(res.tapDetail.tapVideoLink,'vid')
+      res.tapDetail.tapVideoLink = this.getParam(res.tapDetail.tapVideoLink, 'vid')
       this.setData({
         pagingTapRecord,
         tapDetail: res.tapDetail,
@@ -194,6 +192,7 @@ Page({
     const changeRange = maxWidth - minWidth
     tapRecord.forEach((item, index) => {
       item.width = item.duration * changeRange / recordTime + minWidth
+      item.width >= maxWidth ? item.width = maxWidth : item.width
     })
     return (tapRecord)
   },
@@ -207,7 +206,12 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {},
+  onShow: function () {
+    authorize.authSettingRecord().then(() => {
+      this.initialization()
+      this.getProgressBoxInfo()
+    })
+  },
 
   /**
    * 生命周期函数--监听页面卸载
@@ -303,25 +307,26 @@ Page({
   },
   // 开始录音
   startRecord() {
-    this.innerSoundContext && this.innerSoundContext.stop()
+    authorize.authSettingRecord().then(() => {
+      this.innerSoundContext && this.innerSoundContext.stop()
 
-    const options = {
-      duration: this.data.recordTime * 1000,
-      format: 'mp3'
-    }
-    this.setData({
-      current: 1
+      const options = {
+        duration: this.data.recordTime * 1000,
+        format: 'mp3'
+      }
+      this.setData({
+        current: 1
+      })
+      wx.showToast({
+        title: '开始录音',
+        icon: 'success',
+        mask: true,
+        duration: 2000
+      })
+      setTimeout(() => {
+        this.recorderManager.start(options)
+      }, 2000)
     })
-    wx.showToast({
-      title: '开始录音',
-      icon: 'success',
-      mask: true,
-      duration: 2000
-    })
-    setTimeout(() => {
-      this.recorderManager.start(options)
-    }, 2000)
-
   },
   // 结束录音
   endRecord() {

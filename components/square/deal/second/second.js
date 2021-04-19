@@ -21,6 +21,7 @@ Component({
    * 组件的初始数据
    */
   data: {
+    qiniuUrl: app.qiniuUrl,
     // images: [
     //   [{
     //       src: 'http://cdn.eigene.cn/deal/guitar1.png',

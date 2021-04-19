@@ -157,9 +157,8 @@ Page({
   },
   playRecord() {
     if (!this.innerSoundContext) {
-      let tempRecordPath = this.data.tempRecordPath
       this.initSound()
-      this.innerSoundContext.src = tempRecordPath
+      this.innerSoundContext.src = this.data.tempRecordPath
     }
     if (this.data.isPlay) {
       this.innerSoundContext.pause()
@@ -184,18 +183,9 @@ Page({
     } = this.data.voiceBar
     const changeRange = maxWidth - minWidth
     let soundWidth = duration * changeRange / recordTime + minWidth
+    soundWidth >= maxWidth ? soundWidth = maxWidth : soundWidth
     return (soundWidth)
   },
-  // recordResult(e) {
-  //   this.setData({
-  //     tempImagePaths: [],
-  //     tempVideoPath: '',
-  //     tempRecordPath: e.detail.tempFilePath,
-  //     duration: e.detail.duration,
-  //     soundWidth: this.initSoundWidth(e.detail.duration),
-  //     isRecordLink: false
-  //   })
-  // },
   recordResult(data) {
     this.setData({
       tempImagePaths: [],
@@ -381,7 +371,7 @@ Page({
     } catch (err) {
       console.log(err)
       common.Tip(err)
-      // wx.hideLoading()
+      wx.hideLoading()
     }
   },
   goSquare() {

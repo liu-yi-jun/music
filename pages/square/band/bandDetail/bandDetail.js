@@ -1,12 +1,15 @@
 // pages/square/band/bandDetail/bandDetail.js
 let app = getApp()
 const tool = require('../../../../assets/tool/tool')
+const core = require('../../../../assets/tool/core')
+const common = require('../../../../assets/tool/common')
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
+    qiniuUrl: app.qiniuUrl,
     detail: {},
     // 去除上面导航栏，剩余的高度
     excludeHeight: 0,
@@ -16,6 +19,11 @@ Page({
       pageIndex: 1,
     },
     IsNoData: false,
+    list: [{
+      name: '举报',
+      open_type: '',
+      functionName: 'handleReport'
+    }]
   },
 
   /**
@@ -44,13 +52,15 @@ Page({
       }
       commentPaging.pageIndex = commentPaging.pageIndex + 1
       if (res.detail) {
-        res.detail.existArr = tool.arraySplit(JSON.parse(res.detail.recruitArr), 4)
+        res.detail.uploadExists = JSON.parse(res.detail.existArr)
+        res.detail.uploadRecruits = JSON.parse(res.detail.recruitArr)
+        res.detail.existArr = tool.arraySplit(JSON.parse(res.detail.existArr), 4)
         res.detail.recruitArr = tool.arraySplit(JSON.parse(res.detail.recruitArr), 4)
         this.setData({
           detail: res.detail,
           commenetBarData: {
             otherId: res.detail.userId,
-            themeTitle: res.detail.introduce,
+            themeTitle: res.detail.title,
             likes: res.detail.likes,
             share: res.detail.share,
             store: res.detail.store,
@@ -66,6 +76,11 @@ Page({
         commentArr: this.data.commentArr.concat(res.commentArr),
         commentPaging
       })
+    }).catch(err => {
+      common.Toast('该一起组乐队已不存在')
+      setTimeout(() => {
+        wx.navigateBack()
+      }, 1500)
     })
   },
   /**
@@ -79,7 +94,14 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    if (app.bandBack) {
+      this.setData({
+        'commentPaging.pageIndex': 1,
+        IsNoData: false,
+      }, () => {
+        this.getBandDetailAndCommont(this.data.detail.id, this.table, 'detail')
+      })
+    }
   },
 
   /**
@@ -134,7 +156,7 @@ Page({
     let commentArr = this.data.commentArr
     param.releaseTime = '刚刚'
     console.log(param)
-    if (param.themeId) {
+    if (!param.isReply) {
       // 属于评论的，将内容插入到commentArr的第一个
       this.data.detail.comment++
       this.setData({
@@ -157,10 +179,12 @@ Page({
     })
   },
   toComment(e) {
-    // console.log(e.detail.showTextara)
     this.setData({
       showTextara: true,
       param: {
+        type: '一组乐队',
+        themeUserId: this.data.detail.userId,
+        themeTitle: this.data.detail.title,
         theme: this.table,
         themeId: this.data.detail.id,
         commenterId: app.userInfo.id,
@@ -170,9 +194,14 @@ Page({
     })
   },
   toReply(e) {
+    let param = e.detail.param
+    param.theme = this.table
+    param.themeId = this.data.detail.id
+    param.themeTitle = this.data.detail.title
+    param.isReply = true
     this.setData({
       showTextara: true,
-      param: e.detail.param,
+      param,
       indexObject: e.detail.indexObject
     })
   },
@@ -183,5 +212,79 @@ Page({
     wx.navigateTo({
       url: `/pages/square/band/application/application?recruits=${recruits}&bandId=${detail.id}&userId=${detail.userId}`,
     })
-  }
+  },
+  goPersonal(e) {
+    let userId = e.currentTarget.dataset.userid
+    wx.navigateTo({
+      url: `/pages/my/invitation/invitation?userId=${userId}`,
+    })
+  },
+  showMenu(e) {
+    if (app.userInfo.id === this.data.detail.userId) {
+      let list = [{
+        name: '编辑',
+        open_type: '',
+        functionName: 'handleEdit'
+      }, {
+        name: '删除',
+        open_type: '',
+        functionName: 'hadleDelete'
+      }]
+      this.setData({
+        list
+      }, () => {
+        this.selectComponent('#menu').show();
+      })
+    } else {
+      this.selectComponent('#menu').show();
+    }
+  },
+  handleEdit(e) {
+    let detail = JSON.stringify(this.data.detail)
+    wx.navigateTo({
+      url: `/pages/square/band/issueTeam/issueTeam?detail=${detail}&isEdit=1`,
+    })
+  },
+  hadleDelete(e) {
+    common.Tip('是否删除该动态', '提示', '确认', true).then(res => {
+      if (res.confirm) {
+        console.log('用户点击确定')
+        this.deleteDynamic(e)
+      } else if (res.cancel) {
+        console.log('用户点击取消')
+      }
+    })
+  },
+  handleReport() {
+    core.handleReport({
+      userId: app.userInfo.id,
+      theme: this.table,
+      themeId: this.data.detail.id
+    })
+  },
+  deleteDynamic(e) {
+    common.showLoading('删除中')
+    let detail = this.data.detail
+    let {
+      id
+    } = detail
+    console.log(this.table, 1);
+    app.post(app.Api[this.table + 'Delete'], {
+      tableName: this.table,
+      id
+    }, {
+      loading: false
+    }).then(res => {
+      console.log(res)
+      if (res.affectedRows) {
+        common.Toast('已删除')
+        setTimeout(() => {
+          app.bandDeleteBack = true
+          wx.navigateBack()
+        }, 1500)
+      } else {
+        common.Toast('删除失败，请稍后再试')
+      }
+    })
+  },
 })

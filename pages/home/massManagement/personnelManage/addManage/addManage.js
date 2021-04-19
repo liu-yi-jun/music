@@ -8,9 +8,11 @@ Page({
    * 页面的初始数据
    */
   data: {
+    qiniuUrl: app.qiniuUrl,
     // 去除上面导航栏，剩余的高度
     excludeHeight: 0,
-    member: []
+    member: [],
+    tempValue:''
   },
 
   /**
@@ -19,18 +21,23 @@ Page({
   onLoad: function (options) {
     // 获取去除上面导航栏，剩余的高度
     tool.navExcludeHeight(this)
-    this.getGroupMember()
+    // this.getGroupMember()
   },
-  getGroupMember() {
-    app.get(app.Api.groupMember, {
-      groupId: app.groupInfo.id
-    }, {
-      loading: false
-    }).then((res) => {
-      console.log(res)
-      this.setData({
-        member: res
-      })
+  // getGroupMember() {
+  //   app.get(app.Api.groupMember, {
+  //     groupId: app.groupInfo.id
+  //   }, {
+  //     loading: false
+  //   }).then((res) => {
+  //     console.log(res)
+  //     this.setData({
+  //       member: res
+  //     })
+  //   })
+  // },
+  searchInput(event){
+    this.setData({
+      tempValue: event.detail.value,
     })
   },
   /**
@@ -84,7 +91,7 @@ Page({
   handlerGobackClick: app.handlerGobackClick,
   confirm(event) {
     let value = event.detail.value
-    this.searchGroupMember(value)
+    this.searchGroupMember(value?value:this.data.tempValue)
   },
   searchGroupMember(nickName) {
     app.get(app.Api.searchGroupMember, {

@@ -1,10 +1,12 @@
 <!--components/square/deal/ticket/ticket.wxml-->
 <view class="ticket">
-  <view class="card" wx:for="{{tickets}}" wx:key="id" catchtap="toTicketDetail" data-id="{{item.id}}" data-index="{{index}}" >
+  <view class="card" style="background-image: url({{qiniuUrl}}/liveHouse/cardBackground.png);background-size: 100% 100%;"
+    wx:for="{{tickets}}" wx:key="id" catchtap="toTicketDetail" data-id="{{item.id}}" data-index="{{index}}">
     <image class="ticketStore" data-index="{{index}}" catchtap="switchTicketStore"
-      src="http://cdn.eigene.cn/deal/ticketStore{{item.isStore?'d':''}}.png"></image>
+      src="/images/ticket/ticketStore{{item.isStore?'d':''}}.png"></image>
     <view class="top">
-      <image class="img" mode="aspectFill" catchtap="pre" data-url="{{item.pictureUrls[0]}}" src="{{item.pictureUrls[0]}}" data-urls="{{item.pictureUrls}}"></image>
+      <image class="img" mode="aspectFill" catchtap="pre" data-url="{{item.pictureUrls[0]}}"
+        src="{{item.pictureUrls[0]}}" data-urls="{{item.pictureUrls}}"></image>
       <view class="introduce">
         <text class="title">{{item.title}}</text>
         <view class="message">
@@ -33,16 +35,16 @@
     </view>
     <view class="bottom">
       <view class="avatar-name">
-        <image class="avatar"  data-userid="{{item.userId}}" catchtap="goPersonal"src="{{item.avatarUrl}}"></image>
+        <image class="avatar" data-userid="{{item.userId}}" catchtap="goPersonal" src="{{item.avatarUrl}}"></image>
         <view class="nameLocation">
           <text class="name">{{item.nickName}}</text>
-          <text >{{item.location}}</text>
+          <!-- <text>{{item.location}}</text> -->
         </view>
       </view>
       <view class="money">¥{{item.price}}</view>
     </view>
   </view>
-  <image wx:if="{{isShowAdd}}" class="issueDynamic" src="http://cdn.eigene.cn/square/issueDynamic2.png">
+  <image wx:if="{{isShowAdd}}" class="issueDynamic" src="/images/square/issueDynamic2.png">
     <view class="issueDynamicInner" catchtap="goTicketIssue"></view>
   </image>
 

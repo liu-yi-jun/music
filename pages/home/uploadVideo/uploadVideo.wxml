@@ -3,15 +3,15 @@
   <navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' back="{{true}}" iconTheme='white' bindback="handlerGobackClick"></navBar>
   <form bindsubmit="formSubmit">
   <view class="textareaWarp">
-    <textarea maxlength="-1" class="textarea" name="describe" placeholder="请输入描述……" placeholder-class="placeholder"></textarea>
+    <textarea  maxlength="1000" class="textarea" name="describe" placeholder="请输入描述……" placeholder-class="placeholder"></textarea>
   </view>
   <view class="videoWrap">
     <video catchlongpress="deletevideo" src="{{tempFilePath}}" object-fit="cover" wx:if="{{tempFilePath}}"></video>
-    <image wx:else class="add" src="http://cdn.eigene.cn/issueImg/addImg.png" catchtap="chooseVideo" ></image>
+    <image wx:else class="add" src="{{qiniuUrl}}/issueImg/addImg.png" catchtap="chooseVideo" ></image>
   </view>
   <view class="locationWrap">
     <view class="location" catchtap="getLocation">
-      <image class="locationLogo" src="http://cdn.eigene.cn/squarePost/locationLogo.png"></image>
+      <image class="locationLogo" src="{{qiniuUrl}}/issueImg/locationLogo.png"></image>
       <text class="locationText">你在哪里?</text>
     </view>
     <picker class="picker" bindchange="bindPickerChange" value="{{index}}" range="{{mks}}" range-key="title">

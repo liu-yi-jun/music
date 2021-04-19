@@ -5,7 +5,8 @@
     "liveHouse": "/components/square/performance/liveHouse/liveHouse",
     "navBar": "/components/navBar/navBar",
     "dynamicList":"/components/square/dynamicList/dynamicList",
-    "bar":"/components/common/bar/bar"
+    "bar":"/components/common/bar/bar",
+    "composeBand": "/components/square/band/composeBand/composeBand"
   },
   "disableScroll": true
 }

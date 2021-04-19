@@ -10,96 +10,97 @@ Page({
    * 页面的初始数据
    */
   data: {
+    qiniuUrl: app.qiniuUrl,
     // 去除上面导航栏，剩余的高度
     excludeHeight: 0,
     showExistPopup: false,
     showRecruitPopup: false,
     instruments: [{
         instrumentsName: '民谣吉他',
-        instrumentsUrl: 'http://cdn.eigene.cn/issueTeam/folkGuitar.png',
+        instrumentsUrl: '/issueTeam/folkGuitar.png',
         exist: false,
         recruit: false
       }, {
         instrumentsName: '贝斯',
-        instrumentsUrl: 'http://cdn.eigene.cn/issueTeam/bass.png',
+        instrumentsUrl: '/issueTeam/bass.png',
         exist: false,
         recruit: false
       },
       {
         instrumentsName: '主音吉他',
-        instrumentsUrl: 'http://cdn.eigene.cn/issueTeam/leadGuitar.png',
+        instrumentsUrl: '/issueTeam/leadGuitar.png',
         exist: false,
         recruit: false
       },
       {
         instrumentsName: '小提琴',
-        instrumentsUrl: 'http://cdn.eigene.cn/issueTeam/violin.png',
+        instrumentsUrl: '/issueTeam/violin.png',
         exist: false,
         recruit: false
       },
       {
         instrumentsName: '尤克里里',
-        instrumentsUrl: 'http://cdn.eigene.cn/issueTeam/yukrili.png',
+        instrumentsUrl: '/issueTeam/yukrili.png',
         exist: false,
         recruit: false
       },
       {
         instrumentsName: '萨克斯',
-        instrumentsUrl: 'http://cdn.eigene.cn/issueTeam/sax.png',
+        instrumentsUrl: '/issueTeam/sax.png',
         exist: false,
         recruit: false
       },
       {
         instrumentsName: '小号',
-        instrumentsUrl: 'http://cdn.eigene.cn/issueTeam/trumpet.png',
+        instrumentsUrl: '/issueTeam/trumpet.png',
         exist: false,
         recruit: false
       },
       {
         instrumentsName: '口琴',
-        instrumentsUrl: 'http://cdn.eigene.cn/issueTeam/harmonica.png',
+        instrumentsUrl: '/issueTeam/harmonica.png',
         exist: false,
         recruit: false
       },
       {
         instrumentsName: '手鼓',
-        instrumentsUrl: 'http://cdn.eigene.cn/issueTeam/tambourine.png',
+        instrumentsUrl: '/issueTeam/tambourine.png',
         exist: false,
         recruit: false
       },
       {
         instrumentsName: '主唱',
-        instrumentsUrl: 'http://cdn.eigene.cn/issueTeam/leadSinger.png',
+        instrumentsUrl: '/issueTeam/leadSinger.png',
         exist: false,
         recruit: false
       },
       {
         instrumentsName: '手风琴',
-        instrumentsUrl: 'http://cdn.eigene.cn/issueTeam/accordion.png',
+        instrumentsUrl: '/issueTeam/accordion.png',
         exist: false,
         recruit: false
       },
       {
         instrumentsName: '键盘',
-        instrumentsUrl: 'http://cdn.eigene.cn/issueTeam/keyboard.png',
+        instrumentsUrl: '/issueTeam/keyboard.png',
         exist: false,
         recruit: false
       },
       {
         instrumentsName: '口风琴',
-        instrumentsUrl: 'http://cdn.eigene.cn/issueTeam/oralOrgan.png',
+        instrumentsUrl: '/issueTeam/oralOrgan.png',
         exist: false,
         recruit: false
       },
       {
         instrumentsName: '架子鼓',
-        instrumentsUrl: 'http://cdn.eigene.cn/issueTeam/drumKit.png',
+        instrumentsUrl: '/issueTeam/drumKit.png',
         exist: false,
         recruit: false
       },
       {
         instrumentsName: '沙锤',
-        instrumentsUrl: 'http://cdn.eigene.cn/issueTeam/sandHammer.png',
+        instrumentsUrl: '/issueTeam/sandHammer.png',
         exist: false,
         recruit: false
       }
@@ -112,37 +113,73 @@ Page({
     nickName: '',
     avatarUrl: '',
     uploadExists: [],
-    uploadRecruits: []
+    uploadRecruits: [],
+    title: '',
+    introduce: '',
+    isEdit: false
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    if (options.detail) options.detail = this.initData(JSON.parse(options.detail), options.isEdit)
     // 获取去除上面导航栏，剩余的高度
     tool.navExcludeHeight(this)
     this.initValidate()
     this.setUserInfo()
-
+  },
+  initData(detail, isEdit) {
+    this.themeId = detail.id
+    console.log(detail);
+    let instruments = this.data.instruments
+    detail.uploadExists.forEach(exist => {
+      instruments.forEach(item => {
+        if (exist.instrumentsName === item.instrumentsName) {
+          item.exist = true
+          return
+        }
+      })
+    })
+    detail.uploadRecruits.forEach(recruit => {
+      instruments.forEach(item => {
+        if (recruit.instrumentsName === item.instrumentsName) {
+          item.recruit = true
+          return
+        }
+      })
+      this.setData({
+        instruments
+      })
+    })
+    this.setData({
+      title: detail.title,
+      introduce: detail.introduce,
+      uploadExists: detail.uploadExists,
+      uploadRecruits: detail.uploadRecruits,
+      recruits: detail.recruitArr,
+      exists: detail.existArr,
+      isEdit
+    })
   },
   //验证规则函数
   initValidate() {
     const rules = {
-      // title: {
-      //   required: true,
-      //   minlength: 4,
-      //   maxlength: 12
-      // },
+      title: {
+        required: true,
+        minlength: 4,
+        maxlength: 24
+      },
       introduce: {
         required: true
       }
     }
     const messages = {
-      // title: {
-      //   required: '请填写标题',
-      //   minlength: '标题不少于4个字符',
-      //   maxlength: '标题不大于12个字符'
-      // },
+      title: {
+        required: '请填写标题',
+        minlength: '标题不少于4个字符',
+        maxlength: '标题不大于24个字符'
+      },
       introduce: {
         required: '请填写详情'
       }
@@ -177,7 +214,17 @@ Page({
   },
 
   handlerGobackClick: app.handlerGobackClick,
+  cancel(e) {
+    console.log(e);
+    if (e.mark.flag) return
+    this.setData({
+      showExistPopup: false,
+      showRecruitPopup: false,
+      instruments: this.instruments
+    })
+  },
   toggleRecruit() {
+    this.instruments = JSON.parse(JSON.stringify(this.data.instruments))
     this.setData({
       showRecruitPopup: !this.data.showRecruitPopup,
       showExistPopup: false
@@ -203,14 +250,14 @@ Page({
     })
   },
   toggleExist() {
+    this.instruments = JSON.parse(JSON.stringify(this.data.instruments))
     this.setData({
       showExistPopup: !this.data.showExistPopup,
       showRecruitPopup: false
     }, () => {
       if (!this.data.showExistPopup) {
         let instruments = this.data.instruments
-        let exists = [],
-          recruits = []
+        let exists = []
         instruments.forEach(item => {
           if (item.exist) {
             exists.push({
@@ -219,24 +266,11 @@ Page({
             })
           }
         })
-        instruments.forEach(item => {
-          if (item.recruit) {
-            recruits.push({
-              instrumentsName: item.instrumentsName,
-              instrumentsUrl: item.instrumentsUrl
-            })
-          }
-        })
         let uploadExists = exists
-        let uploadRecruits = recruits
-        console.log('recruits', recruits);
         exists = tool.arraySplit(exists, 4)
-        recruits = tool.arraySplit(recruits, 4)
         this.setData({
           exists,
-          recruits,
           uploadExists,
-          uploadRecruits
         })
       }
     })
@@ -325,6 +359,13 @@ Page({
       }).then(res => resolve(res)).catch(err => reject(err))
     })
   },
+  saveTeam(data) {
+    return new Promise((resolve, reject) => {
+      app.post(app.Api.saveTeam, data, {
+        loading: false
+      }).then(res => resolve(res)).catch(err => reject(err))
+    })
+  },
   // 提交表单
   async formSubmit(e) {
     console.log('form发生了submit事件，携带的数据为：', e.detail.value)
@@ -332,17 +373,46 @@ Page({
     try {
       params = await this.validate(params)
       console.log(params)
-      common.showLoading('发布中')
-      let result = await this.issueTeam(params)
-      if (result.affectedRows) {
-        common.Toast('已发布')
-        this.goBand()
+      if (!this.data.isEdit) {
+        common.showLoading('发布中')
+        let result = await this.issueTeam(params)
+        if (result.affectedRows) {
+          wx.hideLoading()
+          authorize.isSubscription().then(res => {
+            if (res.mainSwitch && (!res.itemSettings || !res.itemSettings[app.InfoId.band])) {
+              common.Tip('接下来将授权"组乐队申请"通知。授权时请勾选“总是保持以上选择,不再询问”，后续有其他用户申请与您组乐队，将会第一时间通知到您', '发布成功').then(res => {
+                if (res.confirm) {
+                  authorize.alwaysSubscription([app.InfoId.band]).then(res => {
+                    this.goBand()
+                  })
+                }
+              })
+            } else {
+              common.Tip('确保您已开启相应的通知权限，“组乐队申请”将会第一时间通知到您', '发布成功').then(res => {
+                if (res.confirm) {
+                  authorize.alwaysSubscription([app.InfoId.band]).then(res => {
+                    this.goBand()
+                  })
+                }
+              })
+            }
+          })
+
+        }
+      } else {
+        common.showLoading('保存中')
+        params.themeId = this.themeId
+        let result = await this.saveTeam(params)
+        if (result.affectedRows) {
+          common.Toast('已保存')
+          this.goBand()
+        }
       }
 
     } catch (err) {
       console.log(err)
       common.Tip(err)
-      // wx.hideLoading()
+      wx.hideLoading()
     }
   },
   goBand() {

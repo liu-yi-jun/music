@@ -5,3 +5,20 @@
   box-sizing: border-box;
   width: 100%;
 }
+.issueDynamic {
+  width: 233rpx;
+  height: 233rpx;
+  position: fixed;
+  bottom: calc(0rpx + env(safe-area-inset-bottom));
+  right: -16rpx;
+}
+
+.issueDynamicInner {
+  width: 70%;
+  height: 70%;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999999;
+}

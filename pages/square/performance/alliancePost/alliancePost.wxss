@@ -5,7 +5,7 @@
 }
 
 .placeholder {
-  color: #b6b7b7;
+  color: rgba(255, 255, 255, 0.5);
 }
 
 .date {
@@ -60,7 +60,7 @@
   background-color: rgba(255, 255, 255, 0.2);
   border-radius: 20rpx;
   width: 100%;
-  margin: 70rpx 0 50rpx;
+  margin: 70rpx 0 0;
   padding: 20rpx 20rpx;
   min-height: 377rpx;
   color: white;
@@ -98,6 +98,7 @@
   display: flex;
   justify-content: center;
   position: relative;
+  margin-top: 50rpx;
   /* padding: 0 0 30rpx; */
 }
 
@@ -105,11 +106,13 @@
   height: 400rpx;
   width: 100%;
   padding: 0 8rpx;
+  margin-top: 50rpx;
   box-sizing: border-box;
 }
 
 .recordWrap {
   padding: 0 8rpx;
+  margin-top: 50rpx;
   box-sizing: border-box;
 }
 
@@ -204,3 +207,5 @@ video {
   margin-top: 20rpx;
 
 }
+
+

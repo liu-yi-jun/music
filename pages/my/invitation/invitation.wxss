@@ -9,13 +9,13 @@
 
 .number {
   color: white;
-  font-size: 62rpx;
+  font-size: 63rpx;
   margin-left: 10rpx;
 }
 
 .text {
-  color: #b6b7b7;
-  font-size: 30rpx;
+  color:white;
+  font-size: 28rpx;
 }
 
 .backgroundImg {
@@ -27,33 +27,25 @@
 }
 
 .avatar {
-  width: 157rpx;
-  height: 157rpx;
+  width: 158rpx;
+  height: 158rpx;
   border-radius: 50%;
 }
 
 .name {
-   margin-top: 10rpx;
-  font-size: 35rpx;
+  margin-top: 16rpx;
+  font-size: 36rpx;
+  font-weight: 800;
+  line-height: 42rpx;
 }
 
 .nameBotoom {
   font-size: 22rpx;
+  margin-top: 8rpx;
 }
 
 .constellation {
   margin: 0 10rpx;
-}
-
-.icon {
-  width: 13px;
-  height: 18px;
-  font-size: 13px;
-  font-family: SourceHanSansCN-Regular-GBpc-EUC-H;
-  line-height: 16px;
-  color: rgba(255, 255, 255, 1);
-  letter-spacing: 47px;
-  opacity: 1;
 }
 
 .organization {
@@ -61,12 +53,14 @@
   left: 50%;
   text-align: center;
   transform: translate(-50%, 0);
+  white-space: nowrap;
   padding: 8rpx 30rpx;
   bottom: -23rpx;
   z-index: 999;
   background-color: white;
   border-radius: 999rem;
   font-size: 22rpx;
+  line-height: 24rpx;
 }
 
 .portion {
@@ -91,16 +85,6 @@
   text-align: center;
 }
 
-.bar {
-  position: relative;
-  /* height: 85rpx; */
-  display: flex;
-  box-sizing: border-box;
-  /* align-items: center; */
-  width: 100%;
-  padding: 0 30rpx;
-  margin-top: 10rpx;
-}
 
 .active {
   border-bottom: 6rpx solid #aa7edf;
@@ -123,7 +107,6 @@
   justify-content: space-around;
   align-items: center;
 }
-
 .avatarName {
   text-align: center;
   color: white;
@@ -133,7 +116,7 @@
   justify-content: center;
   align-items: center;
   position: absolute;
-  top: 270rpx;
+  top: 251rpx;
   left: 0;
   right: 0;
   margin: 0 auto;
@@ -150,7 +133,7 @@
   width: 70rpx;
   height: 70rpx;
   right: 50rpx;
-  top: 186rpx;
+  top: 13.94vh;
 }
 
 .issue {
@@ -161,4 +144,14 @@
   top: 0;
   left: 0;
   width: 100%;
+}
+
+.barWrap {
+  padding: 0rpx 0rpx 0rpx 40rpx;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.groupName {
+  font-family: 'SH-bold';
 }

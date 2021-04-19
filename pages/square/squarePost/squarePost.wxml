@@ -6,9 +6,9 @@
   <form bindsubmit="formSubmit">
     <issueHead avatarUrl="{{avatarUrl}}" nickName="{{nickName}}">
     </issueHead>
-    <scroll-view  style="height: calc({{excludeHeight}}px - 160rpx);" scroll-y>
+    <scroll-view  style="height: calc({{excludeHeight}}px - 120rpx);" scroll-y>
       <view class="wrap">
-        <textarea class="introduce" name="introduce" maxlength="5000" placeholder="说点什么吧……" placeholder-class="placeholder"
+        <textarea class="introduce" name="introduce" maxlength="1000" placeholder="说点什么吧……" placeholder-class="placeholder"
           auto-height></textarea>
         <view class="imgWrap" wx:if="{{tempImagePaths.length}}">
           <view class="imgArea">
@@ -23,7 +23,7 @@
         </view>
         <view class="recordWrap" wx:if="{{tempRecordPath}}">
           <view class="playRecord" catchtap="playRecord" style="width:{{soundWidth}}rpx">
-            <image class="recordImg" src="http://cdn.eigene.cn/play{{isPlay?'ing':''}}.gif"></image>
+            <image class="recordImg" src="/images/puchCard/play{{isPlay?'ing':''}}.gif"></image>
             <text class="recordTime" wx:if="{{duration}}" >{{duration}}s</text>
           </view>
         </view>
@@ -63,12 +63,12 @@
             <!-- {{topics[index].topicName}} -->
           </view>
         </picker>
-        <image src="http://cdn.eigene.cn/squarePost/topic.png"></image>
+        <image src="/images/secondIssue/topic.png"></image>
       </view>
 
-      <image catchtap="imgSheet" src="http://cdn.eigene.cn/squarePost/picture.png"></image>
-      <image catchtap="videoSheet" src="http://cdn.eigene.cn/squarePost/video.png"></image>
-      <image src="http://cdn.eigene.cn/squarePost/record.png" catchtap="recordSheet"></image>
+      <image catchtap="imgSheet" src="/images/secondIssue/picture.png"></image>
+      <image catchtap="videoSheet" src="/images/secondIssue/video.png"></image>
+      <image src="/images/secondIssue/selectRecord.png" catchtap="recordSheet"></image>
     </view>
   </view>
 

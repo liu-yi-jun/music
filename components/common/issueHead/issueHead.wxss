@@ -5,7 +5,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 160rpx;
+  height: 8.99vh;
   border-bottom: 1rpx solid #b7b8b8;
   box-sizing: border-box;
   /* left: 0;
@@ -17,17 +17,17 @@
 .head image {
   border-radius: 50%;
   margin-right: 30rpx;
-  width: 88rpx;
-  height: 88rpx;
+  width: 80rpx;
+  height: 80rpx;
 }
 
 .btn {
-  width: 140rpx!important;
-  height: 60rpx!important;
-  line-height: 60rpx!important;
+  width: 120rpx!important;
+  height: 56rpx!important;
+  line-height: 56rpx!important;
   text-align: center!important;
   background: white!important;
-  font-size: 30rpx!important;
+  font-size: 26rpx!important;
   color: #a58cd4!important;
   border-radius: 999rem!important;
 }
@@ -35,6 +35,10 @@
 .avatarName {
   display: flex;
   align-items: center;
-  font-weight: bold;
-  font-size: 31rpx;
+
+  font-size: 32rpx;
+  color: white;
+}
+.avatarName > text {
+   font-family: 'SH-Bold';
 }

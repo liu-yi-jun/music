@@ -12,9 +12,9 @@
   </view>
   <view class="footer" style="bottom:{{keyBoardHeight}}">
     <view class="footerInner">
-      <image src="http://cdn.eigene.cn/deal/picture.png" catchtap="chooseImg"></image>
-      <image src="http://cdn.eigene.cn/deal/video.png" catchtap="chooseVideo"></image>
-      <image catchtap="popupMoney" src="http://cdn.eigene.cn/deal/price.png"></image>
+      <image src="/images/secondIssue/picture.png" catchtap="chooseImg"></image>
+      <image src="/images/secondIssue/video.png" catchtap="chooseVideo"></image>
+      <image catchtap="popupMoney" src="/images/secondIssue/price.png"></image>
     </view>
   </view>
 </view>

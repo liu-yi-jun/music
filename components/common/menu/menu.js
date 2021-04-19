@@ -15,7 +15,7 @@ Component({
         open_type: '',
         functionName: 'handleStore'
       }, {
-        name: '投诉',
+        name: '举报',
         open_type: '',
         functionName: 'handleReport'
       }]
@@ -49,6 +49,7 @@ Component({
       this.setData({
         showMenu: false
       })
+      this.triggerEvent('showTabBarShow')
       this.triggerEvent(functionName)
     }
   }

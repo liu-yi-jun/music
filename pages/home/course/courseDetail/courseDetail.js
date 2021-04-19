@@ -9,6 +9,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    qiniuUrl: app.qiniuUrl,
     current: 'comment',
     // 去除上面导航栏，剩余的高度
     excludeHeight: 0,
@@ -28,19 +29,32 @@ Page({
     datumUrls: [],
     // 是否播放
     isPlay: false,
+    actIndex: 0,
+    barList: [{
+        name: '评论',
+      },
+      {
+        name: '课程资料'
+      },
+    ],
     list: [{
-      name: '分享',
-      open_type: 'share',
-      functionName: ''
-    }, {
-      name: '收藏',
-      open_type: '',
-      functionName: 'handleStore'
-    }, {
-      name: '投诉',
+      name: '举报',
       open_type: '',
       functionName: 'handleReport'
     }]
+    // list: [{
+    //   name: '分享',
+    //   open_type: 'share',
+    //   functionName: ''
+    // }, {
+    //   name: '收藏',
+    //   open_type: '',
+    //   functionName: 'handleStore'
+    // }, {
+    //   name: '举报',
+    //   open_type: '',
+    //   functionName: 'handleReport'
+    // }]
   },
 
   /**
@@ -50,6 +64,7 @@ Page({
     let id = options.id
     this.getCourseDetail(id)
     this.getCourseCommont(id)
+    this.table = 'groupcourse'
     // 获取去除上面导航栏，剩余的高度
     tool.navExcludeHeight(this)
     // this.initAudio()
@@ -249,7 +264,7 @@ Page({
     let commentArr = this.data.commentArr
     param.releaseTime = '刚刚'
     console.log(param)
-    if (param.themeId) {
+    if (!param.isReply) {
       // 属于评论的，将内容插入到commentArr的第一个
       this.data.detail.comment++
       this.setData({
@@ -295,7 +310,10 @@ Page({
     this.setData({
       showTextara: true,
       param: {
-        theme: 'groupcourse',
+        type: '课程',
+        themeUserId: this.data.detail.userId,
+        themeTitle: this.data.detail.courseName,
+        theme:  this.table,
         themeId: this.data.detail.id,
         commenterId: app.userInfo.id,
         commenterAvatar: app.userInfo.avatarUrl,
@@ -304,19 +322,24 @@ Page({
     })
   },
   toReply(e) {
+    let param = e.detail.param
+    param.theme = this.table
+    param.themeId = this.data.detail.id
+    param.themeTitle = this.data.detail.courseName
+    param.isReply = true
     this.setData({
       showTextara: true,
-      param: e.detail.param,
+      param,
       indexObject: e.detail.indexObject
     })
   },
   scrolltolower() {
-    if (!this.data.IsNoData) this.getCourseCommont(this.data.detail.id)
+    if (!this.data.IsNoData && this.data.actIndex == 0) this.getCourseCommont(this.data.detail.id)
   },
   showMenu(e) {
     if (app.userInfo.id === this.data.detail.userId) {
       let list = this.data.list
-      list[2] = {
+      list[0] = {
         name: '删除',
         open_type: '',
         functionName: 'hadleDelete'
@@ -347,12 +370,11 @@ Page({
     })
   },
   handleReport() {
-    console.log('投诉');
-    common.showLoading('投诉中...')
-    setTimeout(() => {
-      wx.hideLoading()
-      common.Tip('投诉消息已发送至本平台，工作人员将进行审核')
-    }, 1200)
+    core.handleReport({
+      userId: app.userInfo.id,
+      theme: this.table,
+      themeId: this.data.detail.id
+    })
   },
   hadleDelete(e) {
     common.Tip('是否删除该动态', '提示', '确认', true).then(res => {
@@ -370,15 +392,27 @@ Page({
     let detail = this.data.detail
     app.post(app.Api[tableName + 'Delete'], {
       tableName,
-      id:detail.id
+      id: detail.id
     }, {
       loading: false
     }).then(res => {
       if (res.affectedRows) {
         common.Toast('已删除')
-      }else {
+        setTimeout(() => {
+          app.courseDeleteBack = true
+          wx.navigateBack()
+        }, 1500)
+      } else {
         common.Toast('该课程已不存在')
       }
     })
-  }
+  },
+  //切换btn 
+  switchBtn(e) {
+    let actIndex = e.detail.actIndex
+    if (actIndex === this.data.actIndex) return
+    this.setData({
+      actIndex
+    })
+  },
 })

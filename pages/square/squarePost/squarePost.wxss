@@ -1,7 +1,7 @@
 /* pages/square/squarePost/squarePost.wxss */
 
 .placeholder {
-  color: #b7b8b8;
+ color: rgba(255, 255, 255, 0.5);
   font-size: 28rpx;
 }
 
@@ -170,17 +170,22 @@ video {
   height: 78rpx;
 }
 
-
 .topic {
   position: relative;
-  background-image: url('http://cdn.eigene.cn/square/topic1.png');
+  border: 1rpx solid #AAAEB5;
   background-repeat: no-repeat;
   background-size: 100% 100%;
   box-sizing: border-box;
-  padding: 15rpx 25rpx;
-  font-size: 23rpx;
+  padding: 8rpx 25rpx;
+  font-size: 22rpx;
+  color: white;
+  border-radius: 999rem;
+  display: flex;
+  align-items: center;
   display: inline-block;
+  justify-content: center;
 }
+
 .topicWrap {
   box-sizing: border-box;
   padding: 0 8rpx;

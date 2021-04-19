@@ -4,16 +4,17 @@
     bindback="handlerGobackClick"></navBar>
   <view class="head">
     <view class="logo-search">
-      <image class="logo" src="http://cdn.eigene.cn/home/searchLogo.png"></image>
+      <image class="logo" src="/images/alliance/searchLogo.png"></image>
       <view class="searchWrap">
         <input placeholder="输入小组..." placeholder-class="searchPlaceholder" class="search" value="{{groupName}}"
-          bindconfirm="confirm">
+          bindconfirm="confirm" bindinput="searchInput">
         </input>
       </view>
       <view class="searchText" catchtap="confirm">搜索</view>
     </view>
   </view>
-  <scroll-view bindscrolltolower="scrolltolower" style="height: calc({{excludeHeight}}px - 130rpx);" scroll-y>
+  <scroll-view  refresher-enabled="{{true}}" refresher-triggered="{{triggered}}"
+    bindrefresherrefresh="onRefresh"  bindscrolltolower="scrolltolower" style="height: calc({{excludeHeight}}px - 126rpx);" scroll-y>
     <groupList groups="{{groups}}"></groupList>
   </scroll-view>
 </view>

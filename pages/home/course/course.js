@@ -7,6 +7,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    qiniuUrl: app.qiniuUrl,
     // 去除上面导航栏，剩余的高度
     excludeHeight: 0,
     pageSize: 10,
@@ -15,7 +16,8 @@ Page({
     isNoData: false,
     // 是否是自己的小组
     isMyGroup: false,
-    groupDuty: 0
+    groupDuty: 0,
+    triggered: false
   },
 
   /**
@@ -37,26 +39,27 @@ Page({
       pageSize,
       pageIndex
     } = this.data
-    app.get(app.Api.getCourses, {
-      pageSize,
-      pageIndex,
-      groupId: app.userInfo.groupId
-    }).then(res => {
-      if (res.length < pageSize) {
+    return new Promise((resolve, reject) => {
+      app.get(app.Api.getCourses, {
+        pageSize,
+        pageIndex,
+        groupId: app.userInfo.groupId
+      }, {
+        loading: false
+      }).then(res => {
+        if (res.length < pageSize) {
+          this.setData({
+            isNoData: true
+          })
+        }
         this.setData({
-          isNoData: true
+          courses: this.data.courses.concat(res),
+          pageIndex: pageIndex + 1
         })
-      }
-      this.setData({
-        courses: this.data.courses.concat(res),
-        pageIndex: pageIndex + 1
+        resolve()
       })
-      console.log(res)
-      // res.forEach((item)=> {
-      //   item.introduce = tool.cutstr(item.introduce, 32)
-      // })
-      // console.log(res)
     })
+
   },
 
   /**
@@ -70,7 +73,9 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    if (app.addCourseBack) {
+    if (app.addCourseBack || app.courseDeleteBack) {
+      app.courseDeleteBack = false
+      app.addCourseBack = false
       this.setData({
         courses: [],
         pageSize: 10,
@@ -79,10 +84,22 @@ Page({
       }, () => {
         this.getCourses()
       })
-      app.addCourseBack = false
+
     }
   },
-
+  onRefresh() {
+    if (this._freshing) return
+    this._freshing = true
+    this.data.isNoData = false
+    this.data.pageIndex = 1
+    this.data.courses = []
+    this.getCourses().then(() => {
+      this._freshing = false
+      this.setData({
+        triggered: false
+      })
+    })
+  },
   /**
    * 生命周期函数--监听页面隐藏
    */

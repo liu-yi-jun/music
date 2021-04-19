@@ -2,14 +2,14 @@
 <view class="learnGuitarList">
   <view wx:for="{{courses}}" wx:key="id" class="card" catchtap="goLearnGuitarDetail" data-id="{{item.id}}">
     <view class="avatarWrap" catchtap="goPersonal" data-userid="{{item.userId}}">
-      <image class="avatarBackground" src="http://use.eigene.cn/avatarBackground.png">
+      <image class="avatarBackground" src="/images/courseList/avatarBackground.png">
         <image class="avatar" src="{{item.avatarUrl}}"></image>
       </image>
     </view>
-    <view class="userNameOrganization">
+    <!-- <view class="userNameOrganization">
       <text class="userName">{{item.nickName}}</text>
       <view class="organization">{{item.groupName}}</view>
-    </view>
+    </view> -->
     <view class="img">
       <image class="wallimg" src="{{item.posterUrl}}" mode="aspectFill"></image>
     </view>
@@ -18,11 +18,11 @@
       </view>
       <view class="iconWrap">
         <view class="store">
-          <image src="http://use.eigene.cn/collectionNumber.png"></image>
+          <image src="/images/courseList/collectionNumber.png"></image>
           <text>{{item.store}}</text>
         </view>
         <view class="views">
-          <image src="http://use.eigene.cn/views.png"></image>
+          <image src="/images/courseList/views.png"></image>
           <text>{{item.views}}</text>
         </view>
  

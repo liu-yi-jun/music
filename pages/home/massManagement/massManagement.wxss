@@ -3,8 +3,9 @@
 .head {
   color: white;
   box-sizing: border-box;
-  padding: 20rpx 40rpx;
-  font-size: 34rpx;
+  padding: 1.49vh 40rpx 0rpx;
+  font-size: 36rpx;
+  font-family: 'SH-Bold';
 }
 
 .logo-group {
@@ -12,17 +13,19 @@
   flex-direction: column;
   align-items: center;
   box-sizing: border-box;
-  padding: 40rpx 0;
+  padding: 2.99vh 0 0rpx;
 }
 
 .logo-group text {
-  margin-top: 30rpx;
+  margin-top: 38rpx;
   color: white;
+  font-size: 32rpx;
+  font-family: 'SH-Heavy';
 }
 
 .logo {
-  width: 167rpx;
-  height: 167rpx;
+  width: 169rpx;
+  height: 169rpx;
   border-radius: 50%;
 }
 
@@ -31,16 +34,17 @@
   height: 47rpx;
   position: absolute;
   right: 0;
-  bottom: 0;
+  bottom: 9rpx;
 }
 
 .logoWrap {
   position: relative;
+  line-height: 0rpx;
 }
 
 .typeWrap {
   position: relative;
-  height: 200rpx;
+  height: 209rpx;
 }
 
 .type {
@@ -56,7 +60,8 @@
 
 .typeTile {
   color: white;
-  margin-top: 40rpx;
+  margin-top: 72rpx;
+  font-size: 32rpx;
   display: block;
 }
 
@@ -84,33 +89,34 @@
 }
 
 .switchWarp {
-  margin-top: 40rpx;
+  margin-top: 20rpx;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   color: white;
-  font-size: 24rpx;
+  font-size: 28rpx;
 }
 
 .placeholder {
-  color: white;
-  font-size: 30rpx;
+  font-size: 27rpx;
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .textareaWarp {
   position: relative;
-  height: 450rpx;
+  height: 428rpx;
 }
 
 .textarea {
   position: absolute;
-  font-size: 30rpx;
+  font-size: 27rpx;
   left: 0;
   right: 0;
   top: 0;
   bottom: 0;
   margin: auto;
-  width: 600rpx;
-  height: 360rpx;
+  width: 534rpx;
+  height: 330rpx;
   box-sizing: border-box;
   border-radius: 20rpx;
   padding: 25rpx;
@@ -120,20 +126,21 @@
 
 .personnel {
   color: white;
+  font-size: 32rpx;
 }
 
 .dataWrap {
-  margin: 20rpx auto;
-  width: 575rpx;
+  margin: 41rpx auto 0rpx;
+  width: 534rpx;
   color: white;
 }
 
 .data {
-  margin-top: 60rpx;
+  margin-top: 4.49vh;
   display: flex;
   justify-content: space-between;
   box-sizing: border-box;
-  padding: 0 40rpx;
+  padding: 0 30rpx;
 }
 
 .data view {
@@ -143,66 +150,115 @@
 }
 
 .data .number {
-  font-size: 60rpx;
+  font-size: 67rpx;
 }
 
 .data .numberText {
-  margin-top: 10rpx;
-  font-size: 22rpx;
+  margin-top: 7rpx;
+  font-size: 24rpx;
 }
 
 .dissolutionWrap {
   width: 100%;
   box-sizing: border-box;
-  padding: 80rpx 0 100rpx;
+  padding: 4.94vh 0 7.49vh;
 }
 
 .dissolution {
-  width: 200rpx;
-  height: 60rpx;
-  line-height: 60rpx;
+  width: 214rpx;
+  height: 56rpx;
+  line-height: 56rpx;
   color: white;
   text-align: center;
   margin: auto;
   border-radius: 999rem;
-  background: #b37ae5;
-  box-shadow: 0rpx 0rpx 10rpx 2rpx rgba(0, 0, 255, 0.1);
-  font-size: 30rpx;
+  background: #A77FDC;
+  box-shadow: 0px 0px 9rpx rgba(0, 0, 0, 0.2);
+  /* box-shadow: 0rpx 0rpx 10rpx 2rpx rgba(0, 0, 255, 0.1); */
+  font-size: 26rpx;
+  letter-spacing: 8rpx;
+  text-indent: 8rpx;
 }
 
 .personnelWrap {
-  width: 575rpx;
+  width: 534rpx;
   margin: auto;
   display: flex;
   justify-content: space-between;
   padding: 20rpx 0;
+  margin-top: -20rpx;
+  margin-bottom: -20rpx;
   box-sizing: border-box;
   align-items: center;
 }
+
 .jump {
   width: 16rpx;
   height: 25rpx;
 }
+
 .introduceWarp {
-  padding: 60rpx 0 80rpx;
+  padding: 4.49vh 0 5.99vh;
 }
+
 .introduce {
   text-align: center;
   width: 50%;
   margin: auto;
   color: white;
-  font-size: 24rpx;
+  font-size: 26rpx;
 }
+
 .save {
-  width: 130rpx;
-  height: 60rpx;
-  line-height: 60rpx;
+  width: 140rpx;
+  height: 56rpx;
+  line-height: 56rpx;
   color: white;
   text-align: center;
   margin: auto;
   border-radius: 999rem;
-  background: #b37ae5;
-  box-shadow: 0rpx 0rpx 10rpx 2rpx rgba(0, 0, 255, 0.1);
-  font-size: 30rpx;
+  background: #A77FDC;
+  box-shadow: 0px 0px 9rpx rgba(0, 0, 0, 0.2);
+  /* box-shadow: 0rpx 0rpx 10rpx 2rpx rgba(0, 0, 255, 0.1); */
+  font-size: 26rpx;
   margin-bottom: 40rpx;
+  letter-spacing: 8rpx;
+  text-indent: 8rpx;
+}
+
+.groupData {
+  font-size: 32rpx;
+  line-height: 33rpx;
+}
+
+
+.shade {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 9999;
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.4s all;
+}
+.shadeShow {
+  opacity: 1;
+  visibility: visible;
+}
+
+.shade >image {
+  width: 600rpx;
+  height: 600rpx;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+
+}
+
+.generate {
+  margin-top: 20rpx;
 }

@@ -1,15 +1,53 @@
 <!--components/tool/chord/chord.wxml-->
-<scroll-view    scroll-y style="height: calc({{excludeHeight }}px - 52rpx);">
-<view class="chord">
-  <view class="bar">
-    <view class="guitar {{switchbtn=='guitar'?'active':''}}" catchtap="switchbtn" data-switchbtn="guitar">吉他</view>
-    <view class="yukri {{switchbtn=='ukelele'?'active':''}}" catchtap="switchbtn" data-switchbtn="ukelele">尤克里里</view>
-  </view>
-  <view class="chordChart">
-    <image wx:for="{{chordUrls}}" src="{{item}}" wx:key="index"></image>
-  </view>
-  <view class="keys-suffixes">
-    <view class="keysWrap">
+<scroll-view scroll-y style="height: calc({{excludeHeight }}px - 61rpx);">
+  <view class="chord">
+    <view class="bar">
+      <view class="guitar {{switchbtn=='guitar'?'active':''}}" catchtap="switchbtn" data-switchbtn="guitar">吉他</view>
+      <view class="yukri {{switchbtn=='ukelele'?'active':''}}" catchtap="switchbtn" data-switchbtn="ukelele">尤克里里</view>
+    </view>
+    <view class="chordChart">
+      <block wx:if="{{show}}">
+        <image wx:for="{{chordUrls}}" src="{{item}}" wx:key="index"></image>
+      </block>
+      <block wx:else>
+        <mp-loading class="mp-loading" type="circle" ext-class='loading' tips='生成中'></mp-loading>
+      </block>
+    </view>
+    <view class="keys-suffixes">
+      <view class="keysWrap">
+        <view class="key">Keys</view>
+        <view class="keyText">
+          <swiper class="swiper" display-multiple-items="{{5}}" duration="{{200}}" easing-function="default"
+            circular="{{true}}" current="{{keyObj.current}}" bindchange="keyChange" bindtransition="keyTransition"
+            bindanimationfinish="keyAnimationfinish">
+            <swiper-item wx:for="{{keys}}" id="swiper-item-key">
+              <view
+                class="swiper-item-inner {{(keyObj.index + 2) % keys.length === index?'seleteKey':((keyObj.index + 1) % keys.length === index?'near nearLeft':((keyObj.index + 3) % keys.length === index?'near nearRight':'far'))}}">
+                {{item}}</view>
+            </swiper-item>
+          </swiper>
+          <view class="left" style="background-image: url('{{qiniuUrl}}/chord/left.png');" catchtap="keyLeft"></view>
+          <view class="right" style="background-image: url('{{qiniuUrl}}/chord/right.png');" catchtap="keyRight"></view>
+        </view>
+      </view>
+      <view class="suffixesWrap">
+        <view class="suffixe">Suffixes</view>
+        <view class="keyText">
+          <swiper class="swiper" display-multiple-items="{{3}}" duration="{{200}}" easing-function="default"
+            circular="{{true}}" current="{{suffixObj.current}}" bindchange="suffixChange"
+            bindtransition="suffixTransition" bindanimationfinish="suffixAnimationfinish">
+            <swiper-item wx:for="{{suffixs}}" id="swiper-item-suffix">
+              <view
+                class="swiper-item-inner {{(suffixObj.index + 1) % suffixs.length === index?'seleteSuffix':((suffixObj.index + 0) % suffixs.length === index?'nears nearLeft':((suffixObj.index + 2) % suffixs.length === index?'nears nearRight':'nears'))}}">
+                {{item}}</view>
+            </swiper-item>
+          </swiper>
+          <view class="left lefts" style="background-image: url('{{qiniuUrl}}/chord/left.png');" catchtap="suffixeLeft"></view>
+          <view class="right rights" style="background-image: url('{{qiniuUrl}}/chord/right.png');" catchtap="suffixeRight"></view>
+        </view>
+      </view>
+    </view>
+    <!-- <view class="keysWrap">
       <view class="key">Keys</view>
       <view class="keyText" data-objname="keyObj">
         <view class="ul" style=" transform: translateX({{keyObj.translateX}}rpx);">
@@ -44,7 +82,9 @@
           <view class="G-rigth"></view>
         </view>
       </view>
-    </view>
+    </view> -->
+
+
+
   </view>
-</view>
 </scroll-view>

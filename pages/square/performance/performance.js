@@ -7,6 +7,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    qiniuUrl: app.qiniuUrl,
     // 去除上面导航栏，剩余的高度
     excludeHeight: 0,
     alliances: [],
@@ -34,7 +35,7 @@ Page({
         name: '音乐节'
       },
       {
-        name: '联盟活动'
+        name: '小组活动'
       }
     ],
     actIndex: 0
@@ -51,8 +52,6 @@ Page({
     this.getLiveHouse()
     this.getMusicFestival()
     this.getAlliance()
-
-
   },
   getLiveHouse() {
     let livehousePaging = this.data.livehousePaging
@@ -119,8 +118,9 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    if (app.alliancePostBack) {
+    if (app.alliancePostBack || app.allianceDeleteBack) {
       app.alliancePostBack = false
+      app.allianceDeleteBack = false
       this.setData({
         alliances: [],
         'alliancePaging.isNotData': false,
@@ -200,7 +200,8 @@ Page({
       const mussicList = this.selectComponent('#mussicList');
       mussicList.completeLike(commenetBarData)
     } else if (actIndex === 0) {
-
+      const LiveHouse = this.selectComponent('#LiveHouse');
+      LiveHouse.completeLike(commenetBarData)
 
     }
 
@@ -212,7 +213,15 @@ Page({
       const mussicList = this.selectComponent('#mussicList');
       mussicList.completeStore(commenetBarData)
     } else if (actIndex === 0) {
-
+      const LiveHouse = this.selectComponent('#LiveHouse');
+      LiveHouse.completeStore(commenetBarData)
     }
+  },
+  doItemDelete(data) {
+    let index = parseInt(data.index) 
+    this.data.alliances.splice(index, 1)
+    this.setData({
+      alliances: this.data.alliances
+    })
   },
 })

@@ -2,17 +2,17 @@
 <view class="deal">
   <navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' back="{{true}}" iconTheme='white'
     bindback="handlerGobackClick"></navBar>
-  <view class="title">
+  <!-- <view class="title">
     <text class="title-top">二手交易</text>
     <text class="title-bottom">flea market</text>
-  </view>
+  </view> -->
   <view class="head">
-    <image class="logo" src="http://cdn.eigene.cn/deal/logo.png"></image>
+    <!-- <image class="logo" src="http://cdn.eigene.cn/deal/logo.png"></image> -->
     <view class="barWrap">
       <bar barList="{{barList}}" actIndex="{{actIndex}}" bind:switchBtn="switchBtn" gap="{{10}}" size="{{30}}" ></bar>
     </view>
   </view>
-  <scroll-view scroll-y  style="height: calc({{excludeHeight}}px - 122rpx);" bindscrolltolower="scrolltolower">
+  <scroll-view scroll-y  style="height: calc({{excludeHeight}}px - 88rpx);" bindscrolltolower="scrolltolower">
     <view hidden="{{actIndex !== 0}}">
       <second id="second" seconds="{{doubleSeconds}}" isShowAdd="{{false}}"></second>
     </view>

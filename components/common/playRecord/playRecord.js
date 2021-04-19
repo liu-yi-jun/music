@@ -1,4 +1,5 @@
 // components/common/playRecord/playRecord.js
+let app = getApp()
 Component({
   /**
    * 组件的属性列表
@@ -14,12 +15,16 @@ Component({
    * 组件的初始数据
    */
   data: {
+    qiniuUrl: app.qiniuUrl,
     current: 0,
     progressBox: {}
   },
   lifetimes:{
     created() {
       this.initAudio()
+    },
+    detached() {
+      this.endSound()
     }
   },
   /**

@@ -1,7 +1,8 @@
 // components/tool/chord/chord.js
 let app = getApp()
-const guitarK = ["C", "C#", "D", "Eb", "E", "F", "F#", "G", "Ab", "A", "Bb", "B"]
+const guitarK = ["Bb", "B", "C", "C#", "D", "Eb", "E", "F", "F#", "G", "Ab", "A", ]
 const guitarS = [
+  'madd9',
   'major',
   'minor',
   'dim',
@@ -41,9 +42,11 @@ const guitarS = [
   'mmaj9',
   'mmaj11',
   'add9',
-  'madd9'
+
 ]
 const ukeleleK = [
+  'Bb',
+  'B',
   'C',
   'Db',
   'D',
@@ -54,10 +57,10 @@ const ukeleleK = [
   'G',
   'Ab',
   'A',
-  'Bb',
-  'B'
+
 ];
 const ukeleleS = [
+  'madd9',
   'major',
   'minor',
   'dim',
@@ -103,7 +106,7 @@ const ukeleleS = [
   'mmaj9',
   'mmaj11',
   'add9',
-  'madd9'
+
 ];
 
 Component({
@@ -121,9 +124,10 @@ Component({
    * 组件的初始数据
    */
   data: {
+    qiniuUrl: app.qiniuUrl,
     switchbtn: 'guitar',
-    key: 'D',
-    suffixe: 'minor',
+    key: 'C',
+    suffixe: 'major',
     chordUrls: [],
     keys: guitarK,
     suffixs: guitarS,
@@ -131,12 +135,17 @@ Component({
     // transition: 'none',
     keyObj: {
       translateX: 0,
-      index: 2,
+      index: 0,
+      current: 0,
+      width: 0
     },
     suffixObj: {
       translateX: 0,
-      index: 1,
-    }
+      index: 0,
+      current: 0,
+      width: 0
+    },
+    show: false
   },
 
   /**
@@ -145,40 +154,143 @@ Component({
   lifetimes: {
     created: function () {
       this.getsvg()
+    },
+    ready() {
+    
+        var query = this.createSelectorQuery()
+        query.select('#swiper-item-key').boundingClientRect(rect => {
+          console.log(rect.width);
+          this.setData({
+            'keyObj.width': rect.width
+          })
+        }).exec();
+        query.select('#swiper-item-suffix').boundingClientRect(rect => {
+          console.log(rect.width);
+          this.setData({
+            'suffixObj.width': rect.width
+          })
+        }).exec();
+
+  
+
     }
   },
   methods: {
+    keyChange(e) {
+      console.log(e);
+      let keys = this.data.keys
+      this.setData({
+        'keyObj.current': e.detail.current,
+        'keyObj.index': e.detail.current,
+        key: keys[(e.detail.current + 2) % keys.length],
+      })
+      clearTimeout(this.timeout)
+      this.timeout = setTimeout(() => {
+        this.setData({
+          show: false
+        }, () => this.getsvg())
+      }, 1000)
+    },
+    keyAnimationfinish() {
+      this.kIndex = undefined
+      this.isSwitchKey = false
+    },
+    keyTransition(e) {
+      if (this.isSwitchKey) return
+      let dx = e.detail.dx
+      let width = this.data.keyObj.width
+      let length = this.data.keys.length
+      let num = parseInt(dx / width);
+      if (this.kIndex === undefined) {
+        this.kIndex = this.data.keyObj.index
+      }
+      if (dx >= 0) {
+        ((dx % width) > (width / 2)) ? num++ : num
+      } else {
+        (Math.abs(dx % width) > (width / 2)) ? num-- : num
+      }
+      if (this.kIndex + num >= 0) {
+        num = (this.kIndex + num) % length
+      } else {
+        num = length + this.kIndex + num
+      }
+      this.setData({
+        'keyObj.index': num
+      })
+    },
+    suffixChange(e) {
+      console.log(e.detail.current);
+      let suffixs = this.data.suffixs
+      this.setData({
+        'suffixObj.current': e.detail.current,
+        'suffixObj.index': e.detail.current,
+        suffixe: suffixs[(e.detail.current + 1) % suffixs.length]
+      })
+      clearTimeout(this.timeout)
+      this.timeout = setTimeout(() => {
+        this.setData({
+          show: false
+        }, () => this.getsvg())
+      }, 1000)
+    },
+    suffixAnimationfinish() {
+      this.sIndex = undefined
+      this.isSwitchSuffix = false
+    },
+    suffixTransition(e) {
+      if (this.isSwitchSuffix) return
+      let dx = e.detail.dx
+      let width = this.data.suffixObj.width
+      let length = this.data.suffixs.length
+      let num = parseInt(dx / width);
+      if (this.sIndex === undefined) {
+        this.sIndex = this.data.suffixObj.index
+      }
+      if (dx >= 0) {
+        ((dx % width) > (width / 2)) ? num++ : num
+      } else {
+        (Math.abs(dx % width) > (width / 2)) ? num-- : num
+      }
+      if (this.sIndex + num >= 0) {
+        num = (this.sIndex + num) % length
+      } else {
+        num = length + this.sIndex + num
+      }
+      console.log(num, 444444444);
+      this.setData({
+        'suffixObj.index': num
+      })
+    },
+
     switchbtn(e) {
       let switchbtn = e.currentTarget.dataset.switchbtn
       if (this.data.switchbtn === switchbtn) {
         return
       }
+      this.isSwitchKey = true
+      this.isSwitchSuffix = true
       this.setData({
         switchbtn,
         key: 'D',
         suffixe: 'minor',
         keys: switchbtn === 'guitar' ? guitarK : ukeleleK,
-        suffixs:  switchbtn === 'guitar' ? guitarS : ukeleleS,
+        suffixs: switchbtn === 'guitar' ? guitarS : ukeleleS,
         keyObj: {
           translateX: 0,
-          index: 2,
+          index: 0,
+          current: 0,
+          width: this.data.keyObj.width
         },
+        show: false,
         suffixObj: {
           translateX: 0,
-          index: 1,
+          index: 0,
+          current: 0,
+          width: this.data.suffixObj.width
         }
-      }, ()=>this.getsvg())
+      }, () => this.getsvg())
     },
-    choosekey(e) {
-      let key = e.currentTarget.dataset.key
-      this.data.key = key
-      this.getsvg()
-    },
-    choosesuffixe(e) {
-      let suffixe = e.currentTarget.dataset.suffixe
-      this.data.suffixe = suffixe
-      this.getsvg()
-    },
+
     getsvg() {
       let {
         suffixe,
@@ -193,7 +305,8 @@ Component({
         loading: false
       }).then(res => {
         this.setData({
-          chordUrls: res.chordUrls
+          chordUrls: res.chordUrls,
+          show: true
         })
       })
     },
@@ -367,91 +480,32 @@ Component({
       inertiaMove.call(this)
 
     },
-
-    GetSlideDirection(startX, startY, endX, endY) { //判读手指滑动方向
-      var dy = startY - endY;
-      var dx = endX - startX;
-      var result = 0;
-      //如果滑动距离太短
-      if (Math.abs(dx) < 2 && Math.abs(dy) < 2) {
-        return result;
-      }
-      var angle = this.GetSlideAngle(dx, dy);
-      if (angle >= -45 && angle < 45) {
-        result = 4; //右
-      } else if (angle >= 45 && angle < 135) {
-        result = 1; //上
-      } else if (angle >= -135 && angle < -45) {
-        result = 2; //下
-      } else if ((angle >= 135 && angle <= 180) || (angle >= -180 && angle < -135)) {
-        result = 3; //左
-      }
-      return result;
-    },
-    GetSlideAngle(dx, dy) { //判断角度
-      return Math.atan2(dy, dx) * 180 / Math.PI;
-    },
     keyLeft() {
-      let translateX = this.data.keyObj.translateX
-      let {
-        keys
-      } = this.data
-      console.log(translateX);
-      if (translateX <= (-keys.length + 3) * 130) {
-        return
-      } else {
-        this.setData({
-          'keyObj.translateX': translateX - 130,
-          'keyObj.index': this.data.keyObj.index + 1,
-          key: keys[this.data.keyObj.index + 1]
-        }, () => this.getsvg())
+      let current = this.data.keyObj.current - 1
+      if(current<0){
+        current = current + this.data.keys.length
       }
-    },
-    suffixeLeft() {
-      let translateX = this.data.suffixObj.translateX
-      let {
-        suffixs
-      } = this.data
-      if (translateX <= (-suffixs.length + 2) * 216) {
-        return
-      } else {
-        this.setData({
-          'suffixObj.translateX': translateX - 216,
-          'suffixObj.index': this.data.suffixObj.index + 1,
-          suffixe: suffixs[this.data.suffixObj.index + 1]
-        }, () => this.getsvg())
-      }
+      this.isSwitchKey = true
+      this.keyChange({detail:{current}})
     },
     keyRight() {
-      let translateX = this.data.keyObj.translateX
-      let {
-        keys
-      } = this.data
-      console.log(translateX);
-      if (translateX >= 2 * 130) {
-        return
-      } else {
-        this.setData({
-          'keyObj.translateX': translateX + 130,
-          'keyObj.index': this.data.keyObj.index - 1,
-          key: keys[this.data.keyObj.index - 1]
-        }, () => this.getsvg())
-      }
+      let current = (this.data.keyObj.current + 1) % this.data.keys.length
+      this.isSwitchKey = true
+      this.keyChange({detail:{current}})
     },
-    suffixeRight() {
-      let translateX = this.data.suffixObj.translateX
-      let {
-        suffixs
-      } = this.data
-      if (translateX >= 1 * 216) {
-        return
-      } else {
-        this.setData({
-          'suffixObj.translateX': translateX + 216,
-          'suffixObj.index': this.data.suffixObj.index - 1,
-          suffixe: suffixs[this.data.suffixObj.index - 1]
-        }, () => this.getsvg())
+    suffixeLeft() {
+      let current = this.data.suffixObj.current - 1
+      if(current<0){
+        current = current + this.data.suffixs.length
       }
+      this.isSwitchSuffix = true
+      this.suffixChange({detail:{current}})
+    },
+
+    suffixeRight() {
+      let current = (this.data.suffixObj.current + 1) % this.data.suffixs.length
+      this.isSwitchSuffix = true
+      this.suffixChange({detail:{current}})
     }
   }
 })

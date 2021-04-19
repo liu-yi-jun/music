@@ -4,15 +4,18 @@ const tool = require('../../../assets/tool/tool.js')
 const common = require('../../../assets/tool/common')
 const upload = require('../../../assets/request/upload')
 const core = require('../../../assets/tool/core')
+const authorize = require('../../../assets/tool/authorize')
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
+    qiniuUrl: app.qiniuUrl,
     // 去除上面导航栏，剩余的高度
     excludeHeight: 0,
     // 表示现在状态
+    swiperCurrent: 0,
     // 0未开始、1录音中、2等待播放、3播放中
     current: 0,
     // 录音时长，单位s
@@ -42,7 +45,8 @@ Page({
     // 没有卡片了
     pagingGroupCardIsNoData: false,
     // 是否是自己的小组
-    isMyGroup: false
+    isMyGroup: false,
+    puchCardGuide: false
   },
 
   /**
@@ -55,22 +59,20 @@ Page({
     this.setData({
       groupDuty: app.userInfo.groupDuty,
       showGroupId: showGroupId,
-      isMyGroup: showGroupId == app.userInfo.groupId
+      isMyGroup: showGroupId == app.userInfo.groupId,
     })
-    this.getPagingGroupCard(showGroupId)
-    this.initialization()
-    this.getProgressBoxInfo()
-    this.initSound()
 
+    this.getPagingGroupCard(showGroupId)
+    this.initSound()
   },
   toLike(e) {
     let {
       index,
       islike
     } = e.currentTarget.dataset
-    let current = this.data.current
+    let cardCurrent = this.data.cardCurrent
     let groupCards = this.data.groupCards
-    let soundRow = groupCards[current].soundRowArr[index]
+    let soundRow = groupCards[cardCurrent].soundRowArr[index]
     soundRow.isLike = !islike
     soundRow.isLike ? ++soundRow.likes : --soundRow.likes
     this.setData({
@@ -156,15 +158,15 @@ Page({
       })
       // this.innerSoundContext && this.innerSoundContext.destroy()
       // this.initSound()
-      if(this.innerSoundContext.src !== recordurl) {
+      if (this.innerSoundContext.src !== recordurl) {
         this.innerSoundContext.src = recordurl
       }
       this.innerSoundContext.play()
-      setTimeout(()=> {
+      setTimeout(() => {
         this.i = i
         this.j = j
-      },500)
-    }else {
+      }, 500)
+    } else {
       groupCards[i].soundRowArr[j].isPlay = false;
       this.setData({
         groupCards
@@ -207,6 +209,11 @@ Page({
       }, () => {
         if (this.data.cardCurrent == 0 && res.length) {
           this.getPagingGroupCardRecord(this.data.cardCurrent)
+          if (res.length >= 2) {
+            this.setData({
+              puchCardGuide: app.globalData.guide.puchCard,
+            })
+          }
         }
         if (!this.data.groupCards.length) {
           if (!this.data.isMyGroup || this.data.groupDuty == -1) {
@@ -254,6 +261,7 @@ Page({
     const changeRange = maxWidth - minWidth
     soundRowArr.forEach((item, index) => {
       item.width = item.duration * changeRange / recordTime + minWidth
+      item.width >= maxWidth ? item.width = maxWidth : item.width
     })
     return (soundRowArr)
   },
@@ -268,6 +276,10 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    authorize.authSettingRecord().then(() => {
+      this.initialization()
+      this.getProgressBoxInfo()
+    })
     if (app.issuePuchCardBack) {
       this.setData({
         groupCards: [],
@@ -303,8 +315,8 @@ Page({
     common.previewImage(url)
   },
   switch (e) {
-    let flag = e.target.dataset.flag
-    let index = e.target.dataset.index
+    let flag = e.currentTarget.dataset.flag
+    let index = e.currentTarget.dataset.index
     let groupCards = this.data.groupCards
     console.log(e)
     if (groupCards[index].flag === flag) return
@@ -382,32 +394,33 @@ Page({
   },
   // 开始录音
   startRecord() {
-    let groupDuty = this.data.groupDuty
-    this.innerSoundContext && this.innerSoundContext.stop()
-    if (!this.data.groupCards.length) {
-      if (groupDuty === 0 || groupDuty == 1) {
-        return common.Tip('需要先发布打卡练习哦')
-      } else {
-        return common.Tip('暂时还没有打卡信息,请联系管理员或组长发布打卡吧')
+    authorize.authSettingRecord().then(() => {
+      let groupDuty = this.data.groupDuty
+      this.innerSoundContext && this.innerSoundContext.stop()
+      if (!this.data.groupCards.length) {
+        if (groupDuty === 0 || groupDuty == 1) {
+          return common.Tip('需要先发布打卡练习哦')
+        } else {
+          return common.Tip('暂时还没有打卡信息,请联系管理员或组长发布打卡吧')
+        }
       }
-    }
-    const options = {
-      duration: this.data.recordTime * 1000,
-      format: 'mp3'
-    }
-    this.setData({
-      current: 1
+      const options = {
+        duration: this.data.recordTime * 1000,
+        format: 'mp3'
+      }
+      this.setData({
+        current: 1
+      })
+      wx.showToast({
+        title: '开始录音',
+        icon: 'success',
+        mask: true,
+        duration: 2000
+      })
+      setTimeout(() => {
+        this.recorderManager.start(options)
+      }, 2000)
     })
-    wx.showToast({
-      title: '开始录音',
-      icon: 'success',
-      mask: true,
-      duration: 2000
-    })
-    setTimeout(() => {
-      this.recorderManager.start(options)
-    }, 2000)
-
   },
   // 结束录音
   endRecord() {
@@ -541,7 +554,7 @@ Page({
       let result = await this.issueGroupCardRecord(recordUrl)
       await this.setSoundRowArr(result[0])
 
-      
+
       common.Toast('已发送')
       this.drawCircle(0)
       this.setData({
@@ -620,4 +633,27 @@ Page({
       url: `/pages/my/invitation/invitation?userId=${userId}`,
     })
   },
+  moveStart(e) {
+    this.startX = e.changedTouches[0].clientX
+    this.startY = e.changedTouches[0].clientY
+  },
+  moveEnd(e) {
+    let endX = e.changedTouches[0].clientX
+    let endY = e.changedTouches[0].clientY
+    if (tool.GetSlideDirection(this.startX, this.startY, endX, endY) === 3) {
+      this.changeCard({
+        detail: {
+          current: 1
+        }
+      })
+      this.setData({
+        swiperCurrent: 1,
+        puchCardGuide: false
+      })
+      let guide = wx.getStorageSync('guide')
+      guide.puchCard = false
+      app.globalData.guide.puchCard = false
+      wx.setStorageSync('guide', guide)
+    }
+  }
 })

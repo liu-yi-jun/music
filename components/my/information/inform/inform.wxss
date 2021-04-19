@@ -13,7 +13,7 @@
 
 .row {
   box-sizing: border-box;
-  padding: 0 35rpx 60rpx 35rpx;
+  padding: 0 34rpx 60rpx 34rpx;
   display: flex;
 }
 
@@ -29,17 +29,17 @@
 
 .name {
   color: white;
-  font-size: 30rpx;
+  font-size: 32rpx;
+  font-family: 'SH-Bold';
 }
 
 .elaborate {
-  font-size: 33rpx;
+  font-size: 30rpx;
   margin-left: 20rpx;
 }
 
 .words {
   font-size: 28rpx;
-  margin-top: 20rpx;
 }
 
 .number {

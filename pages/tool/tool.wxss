@@ -1,5 +1,5 @@
 /* pages/tool/tool.wxss */
-page::before {
+.bg {
   content: ' ';
   position: fixed;
   z-index: -999;
@@ -7,8 +7,6 @@ page::before {
   left: 0;
   right: 0;
   bottom: 0;
-  background: url("http://cdn.eigene.cn/tapPractice/tapPracticeBackGround.png") no-repeat;
-  background-size: 100% 100%;
 }
 
 .tool {
@@ -38,6 +36,7 @@ page::before {
   width: 40rpx !important;
   height: 40rpx !important;
 }
+
 .barWrap {
   padding-left: 40rpx;
   box-sizing: border-box;
@@ -45,4 +44,33 @@ page::before {
   position: relative;
   top: -26rpx;
   z-index: 999999;
+}
+
+
+/* 加载中 */
+.loading>.weui-loadmore>.weui-loading {
+  width: 60rpx;
+  height: 60rpx;
+}
+
+.loading>.weui-loadmore>.weui-loadmore__tips {
+  color: white;
+}
+
+.issueDynamic {
+  width: 233rpx;
+  height: 233rpx;
+  position: fixed;
+  bottom: calc(120rpx + env(safe-area-inset-bottom));
+  right: -16rpx;
+}
+
+
+.issueDynamicInner {
+  width: 70%;
+  height: 70%;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }

@@ -38,22 +38,24 @@
   border-bottom-left-radius: 110rpx;
   border-bottom-right-radius: 110rpx;
   position: relative;
-
 }
 
 .avatar {
-  width: 157rpx;
-  height: 157rpx;
+  width: 158rpx;
+  height: 158rpx;
   border-radius: 50%;
 }
 
 .name {
-  margin-top: 10rpx;
-  font-size: 35rpx;
+  margin-top: 16rpx;
+  font-size: 36rpx;
+  font-family: 'SH-bold';
+  line-height: 50rpx;
 }
 
 .nameBotoom {
   font-size: 22rpx;
+  /* margin-top: 8rpx; */
 }
 
 .constellation {
@@ -72,6 +74,7 @@
   background-color: white;
   border-radius: 999rem;
   font-size: 22rpx;
+  line-height: 24rpx;
 }
 
 .avatarName {
@@ -83,7 +86,7 @@
   justify-content: center;
   align-items: center;
   position: absolute;
-  top: 270rpx;
+  top: 251rpx;
   left: 0;
   right: 0;
   margin: 0 auto;
@@ -96,22 +99,65 @@
 
 .editData {
   position: absolute;
-  width: 65rpx;
-  height: 65rpx;
+  width: 54rpx;
+  height: 54rpx;
   right: 67rpx;
-  bottom: 46rpx;
+  bottom: 45rpx;
 }
 
 .hideBar {
   position: absolute;
-  background-image: url('http://cdn.eigene.cn/square/hideBar.png');
-  background-size: 100%;
-  bottom: 26rpx;
-  left: 44rpx;
-  width: 100rpx;
-  height: 100rpx;
-  z-index: 999999;
+  bottom: 25rpx;
+  left: 45rpx;
+  width: 95rpx;
+  height: 95rpx;
+  z-index: 10;
+  overflow: visible;
+  background-repeat: no-repeat;
 }
+
+.hideHideBar {
+  height: 0rpx;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.showHideBar {
+  height: 422rpx;
+  opacity: 1;
+  visibility: 1;
+}
+
+.hideBarBg {
+  top: 516rpx;
+  width: 191rpx;
+  position: absolute;
+  background-repeat: no-repeat;
+  color: white;
+  font-size: 26rpx;
+  box-sizing: border-box;
+  /* padding: 56rpx 0rpx 30rpx 0rpx; */
+  display: flex;
+  flex-direction: column;
+  z-index: 10;
+  align-items: center;
+  /* justify-content: space-between; */
+  transition: all .3s;
+}
+
+.aboutWrap {
+  /* margin-top: 26rpx; */
+}
+
+
+
+
+.feedback,
+.about {
+  width: 112rpx;
+  height: 112rpx;
+}
+
 .menu {
   display: flex;
   align-items: center;
@@ -131,53 +177,186 @@
   align-items: center;
   color: white;
   font-size: 27rpx;
+  text-align: center;
 }
 
-.song,
-.feedback,
-.aboutUs {
+.feedAboutWrap {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   position: absolute;
+  transition: all .3s;
+  top: 40rpx;
 }
 
-.song {
-  width: 208rpx;
-  height: 208rpx;
-  top: 775rpx;
-  left: 178rpx;
-}
 
-.feedback {
-  width: 465rpx;
-  height: 465rpx;
-  top: 871rpx;
-  left: 347rpx;
-}
-
-.aboutUs {
-  width: 398rpx;
-  height: 398rpx;
-  top: 989rpx;
-  right: 446rpx;
-}
 
 .fans {
   background-color: #A87EDD;
-  padding: 6rpx 20rpx;
+  padding: 0rpx 26rpx;
+  height: 54rpx;
+  line-height: 54rpx;
   border-radius: 999rem;
   position: absolute;
-  top: 197rpx;
+  top: 13.49vh;
   right: 48rpx;
   color: white;
-  font-size: 30rpx;
+  font-size: 28rpx;
 }
 
 .list {
   box-sizing: border-box;
-  /* padding-top: 60rpx; */
+  padding-top: 20rpx;
 }
 
 .barWrap {
-  padding: 40rpx 0rpx 0rpx 40rpx;
+  padding: 32rpx 0rpx 0rpx 32rpx;
   box-sizing: border-box;
   width: 100%;
+}
+
+.feedWrap,
+.aboutWrap {
+  opacity: 1;
+  visibility: visible;
+}
+
+.feedWrap {
+  transform: translateY(16rpx);
+}
+
+.aboutWrap {
+  transform: translateY(194rpx);
+}
+
+.groupName {
+  font-family: 'SH-bold';
+}
+
+.miniLogo-musicmonster {
+  left: 0;
+  top: 32%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: fixed;
+}
+.miniLogo {
+  width: 140rpx;
+  height: 140rpx;
+}
+.musicmonster {
+  width: 350rpx;
+  height: 30rpx;
+  margin-top: 60rpx;
+}
+.btn {
+  text-align: center;
+  line-height: 64rpx !important;
+  width: 400rpx !important;
+  color: white;
+  height: 64rpx !important;
+  border-radius: 999rem;
+  font-size: 28rpx !important;
+  background: #B37AE5;
+  box-shadow: 0rpx 0rpx 10rpx 4rpx rgba(0, 0, 0, .1);
+  letter-spacing: 8rpx;
+  text-indent: 8rpx;
+  margin-top: 70rpx !important;
+}
+.loginText {
+  color: white;
+  margin-top: 20rpx;
+}
+
+
+
+.shade {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 9999;
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.4s all;
+}
+
+.shadeShow {
+  opacity: 1;
+  visibility: visible;
+}
+
+.dialog,
+.applyDialog {
+  width: 549rpx;
+  height: 481rpx;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  background: linear-gradient(to bottom, rgba(226, 145, 227, 0.8), rgba(0, 69, 207, 0.8));
+  border-radius: 40rpx;
+  box-sizing: border-box;
+  color: white;
+  font-size: 38rpx;
+  display: flex;
+}
+
+.dialog {
+  font-family: 'SH-Normal';
+  padding: 100rpx 38rpx 30rpx;
+  justify-content: space-between;
+  flex-flow: column;
+  text-align: center;
+}
+.groupApply {
+  font-family: 'SH-Normal';
+}
+.applyDialog {
+  padding: 56rpx 52rpx 30rpx;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.applyContent {
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.2);
+  padding: 10rpx 15rpx;
+  /* margin-top: 35rpx; */
+  border-radius: 20rpx;
+  box-sizing: border-box;
+  height: 220rpx;
+  font-size: 26rpx;
+  color: white;
+}
+
+.choose {
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+  box-sizing: border-box;
+  padding: 0 62rpx;
+
+}
+
+.choose>image:first-child {
+  width: 55rpx;
+  height: 55rpx;
+}
+
+.choose>image:last-child {
+  width: 72rpx;
+  height: 56rpx;
+}
+
+.applyPlaceholder {
+  font-size: 26rpx;
+  color: white;
 }

@@ -8,6 +8,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    qiniuUrl: app.qiniuUrl,
     // 去除上面导航栏，剩余的高度
     excludeHeight: 0,
     tempFilePaths: [],
@@ -16,7 +17,9 @@ Page({
     privates: 0,
     examine: 0,
     groupDuty: 0,
-    newNumber: 0
+    newNumber: 0,
+    QRcode: '',
+    showQRcode: false
   },
 
   /**
@@ -25,7 +28,7 @@ Page({
   onLoad: function (options) {
     // 获取去除上面导航栏，剩余的高度
     tool.navExcludeHeight(this)
-    this.getNewNumber()
+    // this.getNewNumber()
     // 将小组信息存储到data
     this.setData({
       groupInfo: app.groupInfo,
@@ -36,7 +39,29 @@ Page({
       groupDuty: app.userInfo.groupDuty
     })
   },
-
+  getUnlimited() {
+    app.get(app.Api.getUnlimited,{
+      groupId:this.data.groupInfo.id
+    },{
+      loading:['生成中...']
+    }).then(res => {
+      this.setData({
+        QRcode: res,
+        showQRcode:true
+      })
+    })
+  },
+  cancel() {
+    this.setData({
+      showQRcode:false
+    })
+  },
+  previewQR() {
+    common.previewImage([this.data.QRcode])
+  },
+  generate() {
+    this.getUnlimited()
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -44,13 +69,15 @@ Page({
 
   },
   getNewNumber() {
-    app.get(app.Api.newNumber,{
-      groupId:app.groupInfo.id
-    },{loading:false}).then(res=> {
-    console.log(res);
-    this.setData({
-      newNumber: res.newNumber
-    })
+    app.get(app.Api.newNumber, {
+      groupId: app.groupInfo.id
+    }, {
+      loading: false
+    }).then(res => {
+      console.log(res);
+      this.setData({
+        newNumber: res.newNumber
+      })
     })
   },
   /**
@@ -70,33 +97,33 @@ Page({
   /**
    * 生命周期函数--监听页面卸载
    */
-  save: async function() {
+  save: async function () {
     console.log(1);
     const params = await this.validate()
     if (params) {
       let modifyResult = await this.modifyGroup(params)
       modifyResult.myGrouList = app.groupInfo.myGrouList
       app.groupInfo = modifyResult
-      if(modifyResult) {
-        common.Toast('已保存',1500,'success')
-        setTimeout(()=> {
+      if (modifyResult) {
+        common.Toast('已保存', 1500, 'success')
+        setTimeout(() => {
           wx.navigateBack()
-        },1500)
-        
-      }else {
+        }, 1500)
+
+      } else {
         common.Toast('保存失败,请稍后重试')
-    }
-    }else {
-      common.Toast('已保存',1500,'success')
-      setTimeout(()=> {
+      }
+    } else {
+      common.Toast('已保存', 1500, 'success')
+      setTimeout(() => {
         wx.navigateBack()
-      },1500)
+      }, 1500)
     }
 
   },
   onUnload: async function () {
     console.log('onUnload')
-  
+
   },
   // 修改小组
   modifyGroup(data) {
@@ -197,7 +224,7 @@ Page({
         }).then(res => {
           if (res.result.affectedRows) {
             // common.Tip('小组已解散，请选择要加入的小组或重建小组').then(res => {
-              this.goIndex()
+            this.goIndex()
             // })
           }
         }).catch(err => console.log(err))
@@ -211,7 +238,7 @@ Page({
           groupId: app.groupInfo.id,
           userId: app.userInfo.id
         }).then(res => {
-          if (res.result.changedRows) {
+          if (res.result === 'ok') {
             app.groupInfo.myGrouList = res.myGrouList
             // common.Tip('已退出小组，请选择要加入的小组或重建小组').then(res => {
             this.goIndex()

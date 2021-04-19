@@ -7,11 +7,11 @@
   <form bindsubmit="formSubmit">
     <issueHead avatarUrl="{{avatarUrl}}" nickName="{{nickName}}">
     </issueHead>
-    <scroll-view  scroll-y style="height: calc({{excludeHeight}}px - 160rpx);" >
+    <scroll-view scroll-y style="height: calc({{excludeHeight}}px - 8.99vh);">
       <view class="Wrap">
         <view class="addImg-poster">
           <view class="addImg-limit" wx:if="{{!posterUrl}}">
-            <image catchtap="addImg" mode="aspectFill" class="addImg" src="http://use.eigene.cn/bigAdd.png"></image>
+            <image catchtap="addImg" mode="aspectFill" class="addImg" src="{{qiniuUrl}}/addCourse/bigAdd.png"></image>
             <text class="limit">上传课程封面海报，图需小于2M</text>
           </view>
           <image wx:else class="poster" src="{{posterUrl}}" mode="aspectFill">
@@ -20,32 +20,21 @@
         </view>
         <view class="courseNameWrap">
           <text class="courseName">课程名称：</text>
-          <input class="courseNameInput" name="courseName"></input>
+          <input maxlength="100" class="courseNameInput" name="courseName"></input>
         </view>
         <view class="courseIntroduceWrap">
           <text class="courseIntroduce">课程介绍：</text>
-          <textarea class="courseIntroduceTextarea" name="introduce" placeholder="请添加课程描述……"
+          <textarea maxlength="1000" class="courseIntroduceTextarea" name="introduce" placeholder="请添加课程描述……"
             placeholder-class="placeholder"></textarea>
         </view>
         <view class="media">
-          <!-- <view class="audioWrap">
-            <image class="deleteData" src="http://cdn.eigene.cn/addCourse/deleteData.png" data-type="1"
-              catchtap="deleteData" wx:if="{{tempRecordPath}}"></image>
-            <text>音频示范:</text>
-            <view class="btnWrap">
-              <view class="btn" catchtap="audioSheet" wx:if="{{!tempRecordPath}}">上传音频</view>
-              <view class="recordWrap" wx:else>
-                <view class="playRecord" catchtap="playRecord" style="width:{{soundWidth}}rpx">
-                  <image class="recordImg" src="http://cdn.eigene.cn/play{{isPlay?'ing':''}}.gif"></image>
-                  <text wx:if="{{duration}}" class="recordTime">{{duration}}s</text>
-                </view>
-              </view>
-            </view>
-          </view> -->
           <view class="videoWrap">
             <image wx:if="{{tempVideoPath}}" class="deleteData" src="http://cdn.eigene.cn/addCourse/deleteData.png"
               data-type="2" catchtap="deleteData"></image>
-            <text>课程视频:</text>
+            <view class="title-delete">
+              <text>课程视频:</text>
+              <image class="delete" src="{{qiniuUrl}}/addCourse/delete.png" wx:if="{{tempVideoPath}}"  catchtap="deleteVideo"></image>
+            </view>
             <view class="btnWrap">
               <view wx:if="{{!tempVideoPath}}" class="btn" catchtap="videoSheet">上传视频</view>
               <video class="video" wx:else src="{{tempVideoPath}}" object-fit="cover"></video>
@@ -54,7 +43,11 @@
           <view class="pictureurlWrap">
             <image wx:if="{{tempPicturePaths.length}}" class="deleteData"
               src="http://cdn.eigene.cn/addCourse/deleteData.png" data-type="3" catchtap="deleteData"></image>
-            <text>课程资料:</text>
+            <view class="title-delete">
+              <text>课程资料:</text>
+              <image class="delete" src="{{qiniuUrl}}/addCourse/delete.png" wx:if="{{tempPicturePaths.length}}"   catchtap="deleteAllImg"></image>
+            </view>
+
             <view class="btnWrap">
               <view wx:if="{{!tempPicturePaths.length}}" class="btn" catchtap="pictureurlSheet">上传资料</view>
               <view class="imgWrap" wx:else>

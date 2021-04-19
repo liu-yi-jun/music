@@ -11,36 +11,35 @@
 }
 
 .signInBackground {
-  background-image: url('http://cdn.eigene.cn/square/signInBackground2.png');
   width: 630rpx;
   height: 414rpx;
-  background-size: 100% 100%;
   position: relative;
   margin-left: -10rpx;
+  background-repeat: no-repeat;
 }
 
 .recommendBackground {
   position: relative;
-  background-image: url('http://cdn.eigene.cn/square/recommendBackground3.png');
   width: 206rpx;
   height: 414rpx;
-  background-size: 100% 100%;
   overflow: hidden;
   margin-left: -40rpx;
   margin-right: -10rpx;
   position: relative;
 }
+
 .recommendBackgroundItem {
-  width:68%;
+  width: 68%;
   height: 85%;
   position: absolute;
-  left:33rpx;
+  left: 33rpx;
   top: 35rpx;
   border-radius: 20rpx;
 }
-.recommendBackgroundItem> view{
-width: 100%;
-height: 33.3%;
+
+.recommendBackgroundItem>view {
+  width: 100%;
+  height: 33.3%;
 }
 
 .everyday {
@@ -49,6 +48,7 @@ height: 33.3%;
   left: 68rpx;
   font-size: 33rpx;
   color: white;
+  font-family: 'SH-Bold';
 }
 
 .date {
@@ -85,11 +85,13 @@ height: 33.3%;
 .date .yearMonth {
   font-size: 20rpx;
   /* margin-right: 10rpx; */
+  font-family: 'SH-Normal';
 }
 
 .date .day {
-  font-size: 75rpx;
+  font-size: 65rpx;
   line-height: 65rpx;
+  font-family: 'SH-Bold';
 }
 
 .signIn {
@@ -126,18 +128,21 @@ height: 33.3%;
   background-size: 100% 100%;
   box-sizing: border-box;
   padding: 8rpx 25rpx;
-  font-size: 23rpx;
+  font-size: 22rpx;
+  color: white;
   /* display: inline-block;
    */
-   border-radius: 999rem;
-   display:flex;
-   align-items: center;
-   justify-content: center;
+  border-radius: 999rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .topicWrap {
   margin-bottom: 25rpx;
-  height: 60rpx;
+  height: 54rpx;
+  box-sizing: border-box;
+  padding: 0 10rpx;
 }
 
 swiper-item {
@@ -308,11 +313,12 @@ swiper-item {
   transition: 2s all;
   background: rgba(0, 0, 0, 1);
 }
+
 .issueDynamicInner {
   width: 70%;
   height: 70%;
   position: absolute;
   left: 50%;
   top: 50%;
-  transform: translate(-50%,-50%);
+  transform: translate(-50%, -50%);
 }

@@ -45,20 +45,20 @@
 }
 
 .logo {
-  width: 100rpx;
-  height: 100rpx;
+  width: 104rpx;
+  height: 104rpx;
   position: absolute;
 }
 
 .search {
-  width: 313rpx;
-  height: 60rpx;
+  width: 400rpx;
+  height: 54rpx;
   box-sizing: border-box;
-  color: black !important;
   padding: 0 30rpx 0 30rpx;
   border-radius: 999rem;
   border: 1rpx solid white;
   color: white !important;
+  font-size: 28rpx;
 }
 
 
@@ -70,20 +70,21 @@
 
 
 .searchPlaceholder {
-  font-size: 24rpx;
+  font-size: 28rpx;
   color: #B4B4B5;
 }
 
 .searchText {
-  width: 120rpx;
-  height: 60rpx;
+  width: 106rpx;
+  height: 56rpx;
+  line-height:56rpx;
   margin-left: 20rpx;
+  text-align: center;
   color: white;
-  font-size: 24rpx;
+  font-size: 26rpx;
   background-color: #AD7AE0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   border-radius: 999rem;
-  box-shadow: 6rpx 8rpx 6rpx 4rpx rgba(0, 0, 0, .1);
+  box-shadow: 0rpx 0rpx 10rpx 4rpx rgba(0, 0, 0, .1);
+  letter-spacing: 8rpx;
+  text-indent: 8rpx;
 }

@@ -9,6 +9,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    qiniuUrl: app.qiniuUrl,
     // 去除上面导航栏，剩余的高度
     excludeHeight: 0,
     commentArr: [],
@@ -20,22 +21,34 @@ Page({
     indexObject: {},
     IsNoData: false,
     // 评论或回复的参数
-    param:{},
-    commenetBarData:{},
-    detail:{},
+    param: {},
+    commenetBarData: {},
+    detail: {},
     list: [{
-      name: '分享',
-      open_type: 'share',
-      functionName: ''
-    }, {
-      name: '收藏',
-      open_type: '',
-      functionName: 'handleStore'
-    }, {
-      name: '投诉',
+      name: '举报',
       open_type: '',
       functionName: 'handleReport'
-    }]
+    }],
+    // 总录音时长
+    recordTime: 60,
+    // 录音长度
+    voiceBar: {
+      minWidth: 130,
+      maxWidth: 400,
+    },
+    // list: [{
+    //   name: '分享',
+    //   open_type: 'share',
+    //   functionName: ''
+    // }, {
+    //   name: '收藏',
+    //   open_type: '',
+    //   functionName: 'handleStore'
+    // }, {
+    //   name: '举报',
+    //   open_type: '',
+    //   functionName: 'handleReport'
+    // }]
   },
 
   /**
@@ -43,6 +56,7 @@ Page({
    */
   onLoad: function (options) {
     let id = options.id
+    this.index = options.index
     this.table = 'alliance'
     this.getAllianceDetail(id, this.table, 'detail')
     // 获取去除上面导航栏，剩余的高度
@@ -65,6 +79,8 @@ Page({
       }
       commentPaging.pageIndex = commentPaging.pageIndex + 1
       if (res.detail) {
+        res.detail.soundWidth = this.initSoundWidth(res.detail.duration),
+          res.detail.tableName = 'alliance'
         this.setData({
           detail: res.detail,
           commenetBarData: {
@@ -85,7 +101,25 @@ Page({
         commentArr: this.data.commentArr.concat(res.commentArr),
         commentPaging
       })
+    }).catch(err => {
+      console.log(err);
+      common.Toast('该小组活动已不存在')
+      setTimeout(() => {
+        wx.navigateBack()
+      }, 1500)
     })
+  },
+  // 处理声音条的宽度
+  initSoundWidth(duration) {
+    const recordTime = this.data.recordTime
+    const {
+      minWidth,
+      maxWidth
+    } = this.data.voiceBar
+    const changeRange = maxWidth - minWidth
+    let soundWidth = duration * changeRange / recordTime + minWidth
+    soundWidth >= maxWidth ? soundWidth = maxWidth : soundWidth
+    return (soundWidth)
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -100,7 +134,60 @@ Page({
   onShow: function () {
 
   },
+  // 初始化声音条实例
+  initSound() {
+    // wx.setInnerAudioOption({
+    //   obeyMuteSwitch: false
+    // })
+    this.innerSoundContext = wx.createInnerAudioContext()
+    this.innerSoundContext.onPlay(() => {
+      console.log('开始播放录音')
+    })
+    this.innerSoundContext.onTimeUpdate(() => {
+      console.log('音频播放进度更新事件')
+      let {
+        duration,
+        currentTime
+      } = this.innerSoundContext
+      console.log(duration, currentTime)
+    })
+    this.innerSoundContext.onEnded(() => {
+      console.log('// 录音播放结束')
+      this.setData({
+        isPlay: false
+      })
+    })
+    this.innerSoundContext.onStop(() => {
+      console.log('onStop')
+      this.setData({
+        isPlay: false
+      })
+    })
+    this.innerSoundContext.onPause(() => {
+      console.log('onPause')
+      this.setData({
+        isPlay: false
+      })
+    })
+  },
+  playRecord() {
+    if (!this.innerSoundContext) {
+      this.initSound()
+      this.innerSoundContext.src = this.data.tempRecordPath
+    }
+    if (this.data.isPlay) {
+      this.innerSoundContext.pause()
+      this.setData({
+        isPlay: false
+      })
+    } else {
+      this.innerSoundContext.play()
+      this.setData({
+        isPlay: true
+      })
+    }
 
+  },
   /**
    * 生命周期函数--监听页面隐藏
    */
@@ -161,7 +248,7 @@ Page({
     let commentArr = this.data.commentArr
     param.releaseTime = '刚刚'
     console.log(param)
-    if (param.themeId) {
+    if (!param.isReply) {
       // 属于评论的，将内容插入到commentArr的第一个
       this.data.detail.comment++
       this.setData({
@@ -209,6 +296,9 @@ Page({
     this.setData({
       showTextara: true,
       param: {
+        type: '小组活动',
+        themeUserId: this.data.detail.userId,
+        themeTitle: this.data.detail.title,
         theme: this.table,
         themeId: this.data.detail.id,
         commenterId: app.userInfo.id,
@@ -218,9 +308,15 @@ Page({
     })
   },
   toReply(e) {
+    // 加入通知的一些参数
+    let param = e.detail.param
+    param.theme = this.table
+    param.themeId = this.data.detail.id
+    param.themeTitle = this.data.detail.title
+    param.isReply = true
     this.setData({
       showTextara: true,
-      param: e.detail.param,
+      param,
       indexObject: e.detail.indexObject
     })
   },
@@ -261,12 +357,11 @@ Page({
     })
   },
   handleReport() {
-    console.log('投诉');
-    common.showLoading('投诉中...')
-    setTimeout(() => {
-      wx.hideLoading()
-      common.Tip('投诉消息已发送至本平台，工作人员将进行审核')
-    }, 1200)
+    core.handleReport({
+      userId: app.userInfo.id,
+      theme: this.table,
+      themeId: this.data.detail.id
+    })
   },
   hadleDelete(e) {
     common.Tip('是否删除该动态', '提示', '确认', true).then(res => {
@@ -297,7 +392,7 @@ Page({
   showMenu(e) {
     if (app.userInfo.id === this.data.detail.userId) {
       let list = this.data.list
-      list[2] = {
+      list[0] = {
         name: '删除',
         open_type: '',
         functionName: 'hadleDelete'
@@ -327,14 +422,6 @@ Page({
       }
     })
   },
-  handleReport() {
-    console.log('投诉');
-    common.showLoading('投诉中...')
-    setTimeout(() => {
-      wx.hideLoading()
-      common.Tip('投诉消息已发送至本平台，工作人员将进行审核')
-    }, 1200)
-  },
   hadleDelete(e) {
     common.Tip('是否删除该动态', '提示', '确认', true).then(res => {
       if (res.confirm) {
@@ -346,32 +433,33 @@ Page({
     })
   },
   deleteDynamic(e) {
-    let pages = getCurrentPages();
-    let prevPage = pages[pages.length - 2]; 
-    prevPage.doItemSelect()
+    common.showLoading('删除中')
+    let detail = this.data.detail
+    let {
+      id
+    } = detail
+    app.post(app.Api[this.table + 'Delete'], {
+      tableName: this.table,
+      id
+    }, {
+      loading: false
+    }).then(res => {
+      console.log(res)
+      if (res.affectedRows) {
+        // let pages = getCurrentPages();
+        // let prevPage = pages[pages.length - 2];
+        // prevPage.doItemDelete({
+        //   index: this.index
+        // })
 
-
-    // common.showLoading('删除中')
-    // let detail = this.data.detail
-    // let {
-    //   tableName,
-    //   id
-    // } = detail
-    // console.log(tableName, id)
-    // app.post(app.Api[tableName + 'Delete'], {
-    //   tableName,
-    //   id
-    // }, {
-    //   loading: false
-    // }).then(res => {
-    //   console.log(res)
-    //   if (res.affectedRows) {
-    //     dynamics.splice(index, 1)
-    //     this.setData({
-    //       dynamics
-    //     })
-    //     common.Toast('已删除')
-    //   }
-    // })
+        common.Toast('已删除')
+        setTimeout(() => {
+          app.allianceDeleteBack = true
+          wx.navigateBack()
+        }, 1500)
+      } else {
+        common.Toast('删除失败，请稍后再试')
+      }
+    })
   },
 })

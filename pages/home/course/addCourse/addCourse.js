@@ -11,6 +11,7 @@ Page({
    */
   data: {
     // 去除上面导航栏，剩余的高度
+    qiniuUrl: app.qiniuUrl,
     excludeHeight: 0,
     tempVideoPath: "",
     tempPicturePaths: [],
@@ -58,12 +59,10 @@ Page({
       courseName: {
         required: true,
         minlength: 4,
-        maxlength: 30
+        maxlength: 100
       },
       introduce: {
         required: true,
-        // minlength: 4,
-        // maxlength: 12
       }
 
     }
@@ -72,12 +71,10 @@ Page({
       courseName: {
         required: '请填写课程名称',
         minlength: '课程名称不少于4个字符',
-        maxlength: '课程名称不大于500个字符'
+        maxlength: '课程名称不大于100个字符'
       },
       introduce: {
         required: '请填写课程介绍',
-        // minlength: '课程介绍不少于4个字符',
-        // maxlength: '课程介绍不大于500个字符'
       }
     }
     this.WxValidate = new WxValidate(rules, messages)
@@ -205,6 +202,7 @@ Page({
     } = this.data.voiceBar
     const changeRange = maxWidth - minWidth
     let soundWidth = duration * changeRange / recordTime + minWidth
+    soundWidth >= maxWidth ? soundWidth = maxWidth : soundWidth
     return (soundWidth)
   },
   playRecord() {
@@ -463,13 +461,23 @@ Page({
     } catch (err) {
       console.log(err)
       common.Tip(err)
-      // wx.hideLoading()
+      wx.hideLoading()
     }
   },
   // 跳转到课程
   goCourse() {
     app.addCourseBack = true
     wx.navigateBack()
+  },
+  deleteVideo() {
+    this.setData({
+      tempVideoPath: ''
+    })
+  },
+  deleteAllImg(){
+    this.setData({
+      tempPicturePaths: []
+    })
   },
   touchmove() {
     return

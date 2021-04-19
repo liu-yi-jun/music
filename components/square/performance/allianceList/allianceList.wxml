@@ -1,15 +1,14 @@
 <!--components/square/performance/allianceList/allianceList.wxml-->
 <view class="advance">
-
-  <view wx:for="{{alliances}}" wx:key="id" class="card" catchtap="goAllianceDetail" data-id="{{item.id}}">
+  <view wx:for="{{alliances}}" wx:key="id" class="card" catchtap="goAllianceDetail" data-id="{{item.id}}" data-index="{{index}}">
     <view class="avatarWarp" catchtap="goPersonal" data-userid="{{item.userId}}">
-      <image class="avatarBackground" src="http://use.eigene.cn/avatarBackground.png" lazy-load="{{true}}">
+      <image class="avatarBackground" src="/images/courseList/avatarBackground.png" lazy-load="{{true}}">
         <image class="avatar" src="{{item.avatarUrl}}" lazy-load="{{true}}"></image>
       </image>
     </view>
     <view class="userNameOrganization">
       <text class="userName">{{item.nickName}}</text>
-      <view class="organization">{{item.groupName}}</view>
+      <!-- <view class="organization">{{item.groupName}}</view> -->
     </view>
     <view class="img">
       <image class="wallimg" src="{{item.pictureUrls[0]}}" mode="aspectFill" lazy-load="{{true}}"></image>

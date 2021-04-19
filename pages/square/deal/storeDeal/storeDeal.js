@@ -116,6 +116,27 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    if (app.secondDeleteBack) {
+      this.setData({
+        doubleSeconds: [
+          [],
+          []
+        ],
+        brand: '',
+        'secondPaging.isNotData': false,
+        'secondPaging.pageIndex': 1
+      }, () => this.getMySeconds())
+    }
+    if (app.ticketDeleteBack) {
+      this.setData({
+        tickets: [],
+        title: '',
+        'ticketPaging.isNotData': false,
+        'ticketPaging.pageIndex': 1
+      }, () => {
+        this.getMyTickets()
+      })
+    }
   },
   scrolltolower() {
     let {

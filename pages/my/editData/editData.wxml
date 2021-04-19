@@ -8,7 +8,7 @@
     <view class="avatarImg">
       <image class="avatar" mode="aspectFill" catchtap="previewImage" src="{{tempFilePaths[0]}}">
       </image>
-      <image catchtap="chooseAvatar" class="changeAvatar" src="http://use.eigene.cn/changeBackground.png"></image>
+      <image catchtap="chooseAvatar" class="changeAvatar" src="/images/editData/changeBackground.png"></image>
     </view>
   </view>
   <form class="form" bindsubmit="formSubmit">
@@ -20,9 +20,9 @@
         </view>
         <view class="sexWarp">
           <text>性别</text>
-          <image catchtap="changeWoman" src="http://cdn.eigene.cn/editData/woman1{{userInfo.gender===2?'ed':''}}.png">
+          <image catchtap="changeWoman" src="/images/editData/woman{{userInfo.gender===2?'ed':''}}.png">
           </image>
-          <image catchtap="changeman" src="http://cdn.eigene.cn/editData/man1{{userInfo.gender===1?'ed':''}}.png">
+          <image catchtap="changeman" src="/images/editData/man{{userInfo.gender===1?'ed':''}}.png">
           </image>
         </view>
         <view class="ageWrap">

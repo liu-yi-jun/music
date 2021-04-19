@@ -25,7 +25,7 @@ Page({
       isNotData: false,
     },
     followGroups: [],
-    settleGroup:[],
+    settleGroup: [],
     joinGroup: [],
     groupName: '',
     barList: [{
@@ -38,7 +38,8 @@ Page({
         name: '关注的小组'
       },
     ],
-    actIndex: 0
+    actIndex: 0,
+    triggered: false
   },
 
   /**
@@ -52,62 +53,75 @@ Page({
       this.getJoinGroup()
       this.pagingGetFollowGroup(this.data.groupName)
 
-  
+
     }
 
   },
   getSettleGroup() {
     let settleGroupPaging = this.data.settleGroupPaging
-    app.get(app.Api.pagingGetSettleGroup, {
-      userId: app.userInfo.id,
-      ...settleGroupPaging
-    }).then(res => {
-      if (res.length < settleGroupPaging.pageSize) {
+    return new Promise((resolve, reject) => {
+      app.get(app.Api.pagingGetSettleGroup, {
+        userId: app.userInfo.id,
+        ...settleGroupPaging
+      }, {
+        loading: false
+      }).then(res => {
+        if (res.length < settleGroupPaging.pageSize) {
+          this.setData({
+            'settleGroupPaging.isNotData': true
+          })
+        }
         this.setData({
-          'settleGroupPaging.isNotData': true
+          settleGroup: this.data.settleGroup.concat(this.isJoinGroup(res)),
+          'settleGroupPaging.pageIndex': settleGroupPaging.pageIndex + 1
         })
-      }
-      this.setData({
-        settleGroup: this.data.settleGroup.concat(this.isJoinGroup(res)),
-        'settleGroupPaging.pageIndex': settleGroupPaging.pageIndex + 1
+        resolve()
       })
     })
   },
   getJoinGroup() {
     let joinGroupPaging = this.data.joinGroupPaging
-    app.get(app.Api.pagingGetJoinGroup, {
-      userId: app.userInfo.id,
-      ...joinGroupPaging
-    }).then(res => {
-      if (res.length < joinGroupPaging.pageSize) {
+    return new Promise((resolve, reject) => {
+      app.get(app.Api.pagingGetJoinGroup, {
+        userId: app.userInfo.id,
+        ...joinGroupPaging
+      }, {
+        loading: false
+      }).then(res => {
+        if (res.length < joinGroupPaging.pageSize) {
+          this.setData({
+            'joinGroupPaging.isNotData': true
+          })
+        }
         this.setData({
-          'joinGroupPaging.isNotData': true
+          joinGroup: this.data.joinGroup.concat(this.isJoinGroup(res)),
+          'joinGroupPaging.pageIndex': joinGroupPaging.pageIndex + 1
         })
-      }
-      this.setData({
-        joinGroup: this.data.joinGroup.concat(this.isJoinGroup(res)),
-        'joinGroupPaging.pageIndex': joinGroupPaging.pageIndex + 1
+        resolve()
       })
     })
   },
   // 获取所有关注的小组
   pagingGetFollowGroup(groupName) {
     let followGroupPaging = this.data.followGroupPaging
-    app.get(app.Api.pagingGetFollowGroup, {
-      groupName,
-      userId: app.userInfo.id,
-      ...followGroupPaging
-    }, {
-      loading: false
-    }).then(res => {
-      if (res.length < followGroupPaging.pageSize) {
+    return new Promise((resolve, reject) => {
+      app.get(app.Api.pagingGetFollowGroup, {
+        groupName,
+        userId: app.userInfo.id,
+        ...followGroupPaging
+      }, {
+        loading: false
+      }).then(res => {
+        if (res.length < followGroupPaging.pageSize) {
+          this.setData({
+            'followGroupPaging.isNotData': true
+          })
+        }
         this.setData({
-          'followGroupPaging.isNotData': true
+          followGroups: this.data.followGroups.concat(this.isJoinGroup(res)),
+          'followGroupPaging.pageIndex': followGroupPaging.pageIndex + 1
         })
-      }
-      this.setData({
-        followGroups: this.data.followGroups.concat(this.isJoinGroup(res)),
-        'followGroupPaging.pageIndex': followGroupPaging.pageIndex + 1
+        resolve()
       })
     })
   },
@@ -117,7 +131,6 @@ Page({
     }
     app.groupInfo.myGrouList.forEach((item, index) => {
       groups.forEach(group => {
-        console.log(group.id, item.groupId);
         if (group.id == item.groupId) {
           group.groupDuty = item.groupDuty
           if (item.groupDuty === -1) {
@@ -133,12 +146,57 @@ Page({
   },
   scrolltolower() {
     if (!this.data.settleGroupPaging.isNotData && this.data.actIndex === 0) {
-
+      this.getSettleGroup()
     } else if (!this.data.joinGroupPaging.isNotData && this.data.actIndex === 1) {
       this.getJoinGroup()
     } else if (!this.data.followGroupPaging.isNotData && this.data.actIndex === 2) {
       this.pagingGetFollowGroup(this.data.groupName)
     }
+  },
+  onRefresh() {
+    if (this._freshing) return
+    this._freshing = true
+    if (this.data.actIndex === 0) {
+      this.setData({
+        'settleGroupPaging.pageIndex': 1,
+        'settleGroupPaging.isNotData': false,
+        settleGroup: []
+      }, () => {
+        this.getSettleGroup().then(() => {
+          this._freshing = false
+          this.setData({
+            triggered: false
+          })
+        })
+      })
+    } else if (this.data.actIndex === 1) {
+      this.setData({
+        'joinGroupPaging.pageIndex': 1,
+        'joinGroupPaging.isNotData': false,
+        joinGroup: []
+      }, () => {
+        this.getJoinGroup().then(() => {
+          this._freshing = false
+          this.setData({
+            triggered: false
+          })
+        })
+      })
+    } else if (this.data.actIndex === 2) {
+      this.setData({
+        'followGroupPaging.pageIndex': 1,
+        'followGroupPaging.isNotData': false,
+        followGroups: []
+      }, () => {
+        this.pagingGetFollowGroup(this.data.groupName).then(() => {
+          this._freshing = false
+          this.setData({
+            triggered: false
+          })
+        })
+      })
+    }
+
   },
   switchBtn(e) {
     let actIndex = e.detail.actIndex

@@ -7,15 +7,17 @@
   align-items: flex-start;
   width: 100%;
   /* margin-top: 100rpx; */
- 
+
 }
 
 .active {
   border-bottom: 6rpx solid #aa7edf;
-  font-weight: bold;
-  
+  font-family: 'SH-Bold';
 }
 
+.not {
+  font-family: 'SH-Normal';
+}
 
 .portion {
   padding: 0px 6rpx 4rpx;

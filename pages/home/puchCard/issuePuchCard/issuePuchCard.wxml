@@ -14,7 +14,7 @@
       </video>
       <view wx:if="{{!isVideo}}" catchtap="chooseVideo" class="uploadVideo bottomUpload">上传</view>
     </view>
-    <image class="okLogo"  src="http://cdn.eigene.cn/issuePuchCard/okLogo2.png">
+    <image class="okLogo"  src="/images/issuePuchCard/okLogo3.png">
     <view class="okInner" catchtap="issue"></view>
     </image>
   </view>

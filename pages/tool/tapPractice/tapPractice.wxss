@@ -57,6 +57,7 @@
 .time-sound {
   overflow: scroll;
   flex-grow: 1;
+  -webkit-overflow-scrolling: touch;
 }
 
 .head {
@@ -70,6 +71,7 @@
   width: 100%;
   min-height: 616rpx;
   overflow: scroll;
+  -webkit-overflow-scrolling: touch;
 }
 
 .Musicscore {
@@ -137,8 +139,8 @@
 }
 
 .like {
-  width: 40rpx;
-  height: 40rpx;
+  width: 50rpx;
+  height: 50rpx;
   margin-right: 5rpx;
 }
 
@@ -386,6 +388,7 @@
   .time-sound {
     overflow: scroll;
     flex-grow: 1;
+    -webkit-overflow-scrolling: touch
   }
 
   .head {
@@ -398,6 +401,7 @@
     margin-top:0rpx;
     min-height: 680rpx;
     width: 100%;
+    -webkit-overflow-scrolling: touch;
   }
 
   .Musicscore {

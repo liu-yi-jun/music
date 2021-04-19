@@ -15,7 +15,7 @@
   font-size: 22rpx;
 }
 
-.nameBotoom > text {
+.nameBotoom>text {
   margin-right: 10rpx;
 }
 
@@ -51,7 +51,7 @@
 
 .information {
   box-sizing: border-box;
-  padding: 0 30rpx;
+  padding: 0 34rpx 0 30rpx;
   display: flex;
   flex-grow: 1;
   align-items: center;
@@ -59,28 +59,29 @@
 }
 
 .avatar {
-  width: 110rpx;
-  height: 110rpx;
+  width: 100rpx;
+  height: 100rpx;
   border-radius: 50%;
 }
 
 .fansFollowList {
   width: 100%;
   box-sizing: border-box;
-  padding: 0 10rpx 0 30rpx;
+  padding: 0 0rpx 0 34rpx;
   /* border-bottom: 1rpx #cacbcb solid; */
 }
 
 .name {
   font-size: 32rpx;
   color: white;
+  font-family: 'SH-Bold';
 }
 
 .nameBotoom {
   color: #b7b8b8;
-  font-size: 22rpx;
+  font-size: 24rpx;
 }
 
-.nameBotoom > text {
+.nameBotoom>text {
   margin-right: 10rpx;
 }

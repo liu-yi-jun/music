@@ -1,15 +1,15 @@
 /* pages/my/editData/editData.wxss */
 
 .avatar {
-  width: 170rpx;
-  height: 170rpx;
+  width: 159rpx;
+  height: 159rpx;
   border-radius: 50%;
 }
 
 .editDtata {
   box-sizing: border-box;
-  padding-top: 100rpx;
-}
+  padding-top: 60rpx;
+} 
 
 .avatarWarp {
   width: 100%;
@@ -29,8 +29,8 @@
 }
 
 .changeAvatar {
-  height: 60rpx;
-  width: 60rpx;
+  height: 50rpx;
+  width: 50rpx;
   position: absolute;
   right: 0;
   bottom: 0;
@@ -61,7 +61,9 @@
   justify-content: center;
 }
 
-.nickNameWrap,.ageWrap,.constellationWrap {
+.nickNameWrap,
+.ageWrap,
+.constellationWrap {
   display: flex;
   width: 440rpx;
   margin-top: 40rpx;
@@ -72,10 +74,14 @@
 .basic input {
   flex-grow: 1;
 }
-.nickNameWrap> text,.ageWrap > text,.constellationWrap > text {
+
+.nickNameWrap>text,
+.ageWrap>text,
+.constellationWrap>text {
   margin-right: 20rpx;
-} 
-.basic  text {
+}
+
+.basic text {
   flex-shrink: 0;
 }
 
@@ -87,14 +93,19 @@
   width: 100%;
   padding-bottom: 8rpx;
   border-bottom: 1rpx solid white;
+  font-size: 30rpx;
 }
 
 .subPlaceholder {
   color: #b7b8b8;
+  font-size: 30rpx;
 }
 
-.introductionWarp, .demoteWarp, .subordinate {
+.introductionWarp,
+.demoteWarp,
+.subordinate {
   margin-top: 60rpx;
+  font-size: 30rpx;
 }
 
 .demote {
@@ -105,14 +116,15 @@
   margin-top: 20rpx;
   display: flex;
   justify-content: space-between;
+  font-size: 30rpx;
 }
 
 .role view {
   border: 1rpx solid #b7b8b8;
   text-align: center;
   line-height: 60rpx;
-  width: 148rpx;
-  height: 60rpx;
+  width: 146rpx;
+  height: 59rpx;
   border-radius: 15rpx;
   color: #b7b8b8;
 }
@@ -127,7 +139,7 @@
 }
 
 .limit {
-  font-size: 22rpx;
+  font-size: 24rpx;
   color: #b7b8b8;
   margin-left: 8rpx;
 }
@@ -156,20 +168,29 @@
 }
 
 .summit {
-  border-radius: 999rem!important;
-  background: #ab7ee0!important;
-  width: 180rpx!important;
-  height: 60rpx!important;
-  line-height: 60rpx!important;
-  text-align: center!important;
-  color: white!important;
-  font-size: 32rpx!important;
-  box-shadow: 0rpx 0rpx 10rpx 2rpx rgba(0, 0, 255, .1)
+  width: 162rpx !important;
+  height: 64rpx !important;
+  background: #A77FDC !important;
+  border: 1px solid #A77FDC !important;
+  opacity: 1 !important;
+  border-radius: 999rem !important;
+  text-align: center !important;
+  line-height: 64rpx !important;
+  color: white !important;
+  font-size: 30rpx !important;
+  box-shadow: -1rpx 0rpx 10rpx 4rpx rgba(0, 0, 0, .1);
+  letter-spacing: 8rpx;
+  text-indent: 8rpx;
 }
 
 .pickerWrap {
   width: 100%;
 }
-.picker > text {
+
+.picker>text {
   margin-right: 20rpx;
+}
+
+.basic {
+  font-size: 30rpx;
 }

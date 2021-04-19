@@ -17,16 +17,20 @@
 
 
   <image wx:if="{{isMyGroup && (groupDuty === 0 || groupDuty === 1)}}" catchtap="issuePuchCard" class="issuePuchCard"
-    src="http://cdn.eigene.cn/puchCard/issuePuchCard.png"></image>
-  <swiper  style="height: {{excludeHeight}}px;" bindchange="changeCard">
+    src="/images/puchCard/issuePuchCard.png"></image>
+  <swiper wx:if="{{groupCards.length}}" style="height: {{excludeHeight}}px;" bindchange="changeCard" current="{{swiperCurrent}}">
     <swiper-item wx:for="{{groupCards}}" wx:key="inex" wx:for-index="i">
       <view class="card">
         <view class="head">
           <view class="bar">
-            <text wx:if="{{item.datumUrls.length}}" class="practice {{item.flag==='practice'?'active':''}}"
-              catchtap="switch" data-flag="practice" data-index="{{i}}">练习资料</text>
-            <text wx:if="{{item.videoUrl}}" class="demonstration  {{item.flag==='demonstration'?'active':''}}"
-              catchtap="switch" data-flag="demonstration" data-index="{{i}}">演示视频</text>
+            <view wx:if="{{item.datumUrls.length}}" class="practice {{item.flag==='practice'?'active':''}}"
+              catchtap="switch" data-flag="practice" data-index="{{i}}">
+              <text>练习资料</text>
+            </view>
+            <view wx:if="{{item.videoUrl}}" class="demonstration  {{item.flag==='demonstration'?'active':''}}"
+              catchtap="switch" data-flag="demonstration" data-index="{{i}}">
+              <text>演示视频</text>
+            </view>
           </view>
           <view class="avatar-userName" data-userid="{{item.adminId}}" catchtap="goPersonal">
             <image class="avatar" src="{{item.adminAvatar}}"></image>
@@ -36,7 +40,7 @@
         <view class="MusicscoreWrap {{item.flag==='demonstration'? 'noMinH':''}}">
           <image wx:if="{{item.flag==='practice'}}" class="Musicscore" mode="widthFix" src="{{item.datumUrls}}"
             data-preview="{{item.datumUrls}}" catchtap="previewImage"></image>
-          <video wx:else src="{{item.videoUrl}}" class="video" object-fit="fill"></video>
+          <video wx:else src="{{item.videoUrl}}" class="video" object-fit="cover"></video>
         </view>
         <view class="timeWrap">
           <text class="time">{{item.releaseTime}}</text>
@@ -47,23 +51,24 @@
               <view class="soundRow" wx:for="{{item.soundRowArr}}" wx:key="id" wx:for-item="soundRow" wx:for-index="j">
                 <view class="avatarWrap" data-userid="{{soundRow.userId}}" catchtap="goPersonal">
                   <text class="rank" wx:if="{{j===0||j===1||j===2}}">{{j+1}}</text>
-                  <image wx:if="{{j===0}}" class="avatarBackground"
-                    src="http://cdn.eigene.cn/puchCard/firstBackground.png"></image>
-                  <image wx:if="{{j===1}}" class="avatarBackground"
-                    src="http://cdn.eigene.cn/puchCard/secondBackground.png"></image>
-                  <image wx:if="{{j===2}}" class="avatarBackground"
-                    src="http://cdn.eigene.cn/puchCard/thirdBackground.png"></image>
+                  <image wx:if="{{j===0}}" class="avatarBackground" src="/images/puchCard/firstBackground.png">
+                  </image>
+                  <image wx:if="{{j===1}}" class="avatarBackground" src="/images/puchCard/secondBackground.png">
+                  </image>
+                  <image wx:if="{{j===2}}" class="avatarBackground" src="/images/puchCard/thirdBackground.png">
+                  </image>
                   <image class="avatar" src="{{soundRow.avatarUrl}}"></image>
                 </view>
                 <view class="recordingStripWrap">
-                  <view catchtap="playSound" data-i="{{i}}" data-j="{{j}}" class="recordingStrip" style="width:{{soundRow.width}}rpx" data-recordurl="{{soundRow.recordUrl}}">
-                    <image src="http://cdn.eigene.cn/play{{soundRow.isPlay?'ing':''}}.gif" class="voice"></image> 
+                  <view catchtap="playSound" data-i="{{i}}" data-j="{{j}}" class="recordingStrip"
+                    style="width:{{soundRow.width}}rpx" data-recordurl="{{soundRow.recordUrl}}">
+                    <image src="/images/puchCard/play{{soundRow.isPlay?'ing':''}}.gif" class="voice"></image>
                     <text>{{soundRow.duration}}s</text>
                   </view>
                 </view>
                 <view class="likeWrap" data-islike="{{soundRow.isLike}}" data-index="{{j}}" catchtap="toLike">
-                  <!-- <image class="like" src="http://cdn.eigene.cn/puchCard/like.png"></image> -->
-                  <image class="like" src="http://cdn.eigene.cn/dynamicLike{{soundRow.isLike?'d':''}}.png"></image>
+                  <!-- <image class="like" src="/images/puchCard/like.png"></image> -->
+                  <image class="like" src="/images/commentBar/like{{soundRow.isLike?'d':''}}.png"></image>
                   <text class="likeNumber">{{soundRow.likes}}</text>
                 </view>
               </view>
@@ -74,23 +79,29 @@
     </swiper-item>
   </swiper>
   <image wx:if="{{isMyGroup && groupDuty!=-1}}" class="soundBackground{{current!==0?'2':'1'}}"
-    src="http://cdn.eigene.cn/puchCard/soundBackground{{current!==0?'2':'1'}}.png">
+    src="/images/puchCard/soundBackground{{current!==0?'2':'1'}}.png">
     <view class='progress_box' id="progress_box">
-      <image wx:if="{{current===0}}" class="sound" src="http://cdn.eigene.cn/puchCard/sound.png" catchtap="startRecord">
+      <image wx:if="{{current===0}}" class="sound" src="/images/puchCard/sound.png" catchtap="startRecord">
       </image>
-      <image wx:elif="{{current===1}}" class="sound" src="http://cdn.eigene.cn/puchCard/recording.png"
-        catchtap="endRecord"></image>
-      <image wx:elif="{{current===2}}" class="playSound" src="http://cdn.eigene.cn/puchCard/playSound.png"
-        catchtap="startPlay"></image>
-      <image wx:elif="{{current===3}}" class="playingSound" src="http://cdn.eigene.cn/puchCard/playingSound.png"
+      <image wx:elif="{{current===1}}" class="sound" src="/images/puchCard/recording.png" catchtap="endRecord">
+      </image>
+      <image wx:elif="{{current===2}}" class="playSound" src="/images/puchCard/playSound.png" catchtap="startPlay">
+      </image>
+      <image wx:elif="{{current===3}}" class="playingSound" src="/images/puchCard/playingSound.png"
         catchtap="pausePlay"></image>
       <canvas hidden="{{current===0}}" class="progress_bg" canvas-id="canvasProgressbg"> </canvas>
       <canvas hidden="{{current===0}}" class="progress_canvas" canvas-id="canvasProgress"> </canvas>
     </view>
-    <image wx:if="{{current===2 || current===3}}" class="deleteSound"
-      src="http://cdn.eigene.cn/puchCard/deleteSound.png" catchtap="deleteSound"></image>
+    <image wx:if="{{current===2 || current===3}}" class="deleteSound" src="/images/puchCard/deleteSound.png"
+      catchtap="deleteSound"></image>
     <image catchtap="sendGroupCardRecord" wx:if="{{current===2 || current===3}}" class="completeSound"
-      src="http://cdn.eigene.cn/puchCard/completeSound.png"></image>
+      src="/images/puchCard/completeSound.png"></image>
   </image>
 
+
+  <view class="guideMask {{puchCardGuide?'showGuide': 'hideGuide'}}" catchtouchstart="moveStart" catchtouchend="moveEnd">
+    <image class="slide" src="/images/puchCard/slide.png" >
+    </image>
+    <view class="slideText" >“滑动发现更多打卡”</view>
+  </view> 
 </view>

@@ -5,7 +5,7 @@
   <view class="head">
     <text> 人员管理</text>
   </view>
-  <scroll-view  style="height: calc({{excludeHeight}}px - 104rpx);" scroll-y>
+  <scroll-view  style="height: calc({{excludeHeight}}px - 111rpx);" scroll-y>
     <view class="list">
       <view class="row" wx:for="{{admini}}" wx:key="id">
         <image class="avatar" src="{{item.avatarUrl}}"></image>

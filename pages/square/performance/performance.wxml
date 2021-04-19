@@ -11,9 +11,9 @@
     <view class="line"></view>
     <text class="{{switchBtn === 'mussic' ? 'active' : ''}}" catchtap="switchBtn" data-switchBtn="mussic">音乐节</text>
     <view class="line"></view>
-    <text class="{{switchBtn === 'advance' ? 'active' : ''}}" catchtap="switchBtn" data-switchBtn="advance">联盟活动</text>
+    <text class="{{switchBtn === 'advance' ? 'active' : ''}}" catchtap="switchBtn" data-switchBtn="advance">小组活动</text>
   </view> -->
-  <scroll-view bindscrolltolower="scrolltolower" style="height: calc({{excludeHeight}}px - 81rpx);" scroll-y>
+  <scroll-view bindscrolltolower="scrolltolower" style="height: calc({{excludeHeight}}px - 91rpx);" scroll-y>
     <view hidden="{{actIndex !== 0}}">
       <liveHouse id="LiveHouse" list="{{liveHouse}}" tableName="livehouse"></liveHouse>
     </view>
@@ -27,7 +27,7 @@
 
   </scroll-view>
   <image wx:if="{{actIndex === 2}}" catchtap="goAlliancePost" class="issueDynamic"
-    src="http://cdn.eigene.cn/square/issueDynamic2.png">
+    src="/images/square/issueDynamic2.png">
     <view class="issueDynamicInner" catchtap="goAlliancePost"></view>
   </image>
 </view>

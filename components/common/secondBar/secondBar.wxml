@@ -1,0 +1,13 @@
+<!--components/common/secondBar/secondBar.wxml-->
+<view class="secondBar">
+  <view class="firstBar">
+    <view class="part" style="margin-left: {{index!==0?gap:0}}rpx; font-size: {{size}}rpx;"
+      class="portion {{index === actIndexArr[0] ?'active':'not'}}" wx:for="{{barList}}" wx:key="*this" catchtap="switchBtn"
+      data-index="{{index}}" data-type="first">
+      {{item.name}}
+    </view>
+  </view>
+  <view class="btnWrap">
+    <view class=" btn {{index === actIndexArr[1] ?'actBtn':''}}" catchtap="switchBtn" wx:for="{{barList[actIndexArr[0]].children}}" data-type="second"  data-index="{{index}}" >{{item.name}}</view>
+  </view>
+</view>

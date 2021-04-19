@@ -3,30 +3,28 @@
   <view wx:for="{{bands}}" wx:for-item="band" wx:key="index">
     <view class="part" catchtap="toBandDetail" data-id="{{band.id}}">
       <view class="partHead">
-        <view class="groupName">{{band.groupName}}</view>
+        <view class="groupName">{{band.title}}</view>
         <view class="line"></view>
       </view>
       <view class="existWrap">现有</view>
       <view class="instrumentsRow">
         <view class="instrumentsWrap" wx:for="{{band.existArr}}">
-          <image class="instruments" src="{{item.instrumentsUrl}}"></image>
+          <image class="instruments" src="{{'/images' + item.instrumentsUrl}}"></image>
           <view class="instrumentsName">{{item.instrumentsName}}</view>
         </view>
       </view>
       <view class="recruit">招募</view>
       <view class="instrumentsRow">
         <view class="instrumentsWrap" wx:for="{{band.recruitArr}}">
-          <image class="instruments" src="{{item.instrumentsUrl}}"></image>
+          <image class="instruments" src="{{'/images'  + item.instrumentsUrl}}"></image>
           <view class="instrumentsName">{{item.instrumentsName}}</view>
         </view>
       </view>
       <view class="detailWrap">
       <view>详情</view>
-      <image src="http://cdn.eigene.cn/composeBand/detail.png" ></image>
+      <image mode="aspectFill" src="/images/composeBand/detail.png" ></image>
       </view>
     </view>
   </view>
-  <image class="issueDynamic" src="http://cdn.eigene.cn/square/issueDynamic2.png">
-    <view class="issueDynamicInner" catchtap="toIssueTeam"></view>
-  </image>
+
 </view>

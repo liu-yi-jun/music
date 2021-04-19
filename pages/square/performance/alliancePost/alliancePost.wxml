@@ -48,15 +48,16 @@
             </image>
           </view>
         </view>
-        <view class="wrapVideo" wx:if="{{tempVideoPath}}">
-          <video object-fit="cover" src="{{tempVideoPath}}"></video>
-        </view>
         <view class="recordWrap" wx:if="{{tempRecordPath}}">
           <view class="playRecord" catchtap="playRecord" style="width:{{soundWidth}}rpx">
             <image class="recordImg" src="http://cdn.eigene.cn/play{{isPlay?'ing':''}}.gif"></image>
-            <text class="recordTime">{{duration}}s</text>
+            <text class="recordTime"  wx:if="{{duration}}" >{{duration}}s</text>
           </view>
         </view>
+        <view class="wrapVideo" wx:if="{{tempVideoPath}}">
+          <video object-fit="cover" src="{{tempVideoPath}}"></video>
+        </view>
+    
       </view>
     </scroll-view>
   </form>
@@ -70,9 +71,9 @@
   <record class="record" id="record" bind:recordResult="recordResult" recordTime="{{recordTime}}"></record>
   <view class="footer" style="bottom:{{keyBoardHeight}}">
     <view class="footerInner">
-      <image src="http://use.eigene.cn/picture.png" catchtap="imgSheet"></image>
-      <image src="http://use.eigene.cn/video.png" catchtap="videoSheet"></image>
-      <image src="http://use.eigene.cn/selectRecord.png" catchtap="recordSheet"></image>
+      <image src="/images/secondIssue/picture.png" catchtap="imgSheet"></image>
+      <image src="/images/secondIssue/video.png" catchtap="videoSheet"></image>
+      <image src="/images/secondIssue/selectRecord.png" catchtap="recordSheet"></image>
     </view>
   </view>
 </view>

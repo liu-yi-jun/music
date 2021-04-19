@@ -3,18 +3,19 @@
   display: flex;
   flex-wrap: wrap;
   width: 100%;
-  padding: 0 20rpx;
+  padding: 0 16rpx 30rpx;
   box-sizing: border-box;
+  padding-top: 20rpx;
 }
 
 .part {
-  width: 323rpx;
+  width: 335rpx;
   /* height: 350rpx; */
   border-radius: 27rpx;
   background-color: white;
   box-sizing: border-box;
   padding: 10rpx 20rpx;
-  margin: 10rpx 17rpx 24rpx 17rpx;
+  margin: 10rpx 13rpx 20rpx 13rpx;
   overflow: hidden;
 }
 
@@ -34,13 +35,15 @@
   background-color: #AB85D9;
   color: #FFFFFF;
 }
-.existWrap,.recruit {
+
+.existWrap,
+.recruit {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 16rpx;
-  width: 42rpx;
-  height: 29rpx;
+  font-size: 20rpx;
+  width: 48rpx;
+  height: 30rpx;
   margin-top: 5rpx;
   border-radius: 6rpx;
 }
@@ -54,9 +57,15 @@
 }
 
 .groupName {
-  font-size: 23rpx;
+  font-size: 24rpx;
   word-break: keep-all;
-  color: #727171;
+  color: #231815;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex-shrink: 0;
+
 }
 
 .partHead {
@@ -64,14 +73,6 @@
   align-items: center;
 }
 
-.issueDynamicInner {
-  width: 70%;
-  height: 70%;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%,-50%);
-}
 
 .issueDynamic {
   width: 233rpx;
@@ -86,21 +87,27 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-right: 16rpx;
+  margin-right: 26rpx;
+  width: 80rpx;
+  flex-shrink: 0;
 }
+
 .instruments {
   width: 60rpx;
   height: 60rpx;
 }
+
 .instrumentsName {
-  font-size: 16rpx;
+  font-size: 20rpx;
   word-break: keep-all;
 }
+
 .instrumentsRow {
   display: flex;
   min-height: 80rpx;
   margin-top: 4rpx;
 }
+
 .detailWrap {
   display: flex;
   justify-content: flex-end;
@@ -108,12 +115,14 @@
   align-items: center;
   margin-top: 6rpx;
 }
-.detailWrap > view {
-  font-size: 16rpx;
+
+.detailWrap>view {
+  font-size: 18rpx;
   margin-right: 4rpx;
   color: #727171;
 }
-.detailWrap > image {
+
+.detailWrap>image {
   width: 12rpx;
   height: 13rpx;
 }

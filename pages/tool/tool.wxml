@@ -1,5 +1,7 @@
 <!--pages/tool/tool.wxml-->
 <view catchtap="tap" class="tool">
+  <view hidden="{{actIndex !== 0}}" class="bg"
+    style="background: url({{qiniuUrl}}/tool/musicScoreBg.png) no-repeat; background-size: 100% 100%;"> </view>
   <navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' iconTheme='white'></navBar>
   <view class="barWrap">
     <bar barList="{{barList}}" actIndex="{{actIndex}}" bind:switchBtn="switchBtn"></bar>
@@ -7,9 +9,12 @@
 
   <view hidden="{{actIndex !== 0}}">
     <musicScore excludeHeight="{{excludeHeight}}"></musicScore>
+    <image class="issueDynamic" src="/images/square/issueDynamic2.png">
+      <view class="issueDynamicInner" catchtap="goMusicScorePost"></view>
+    </image>
   </view>
   <analysis wx:if="{{actIndex === 1 && pageShow}}"></analysis>
-  <view hidden="{{actIndex !== 2}}">
+  <view wx:if="{{actIndex == 2}}">
     <chord excludeHeight="{{excludeHeight}}"></chord>
   </view>
   <showTabBar tabBarBtnShow="{{tabBarBtnShow}}">

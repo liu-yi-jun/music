@@ -1,0 +1,17 @@
+<!--pages/home/welcome/welcome.wxml-->
+<view>
+  <navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' iconTheme='white'></navBar>
+  <official-account></official-account>
+  <view class="logo-group">
+      <view class="logoWrap">
+        <image catchtap="previewImage" class="logo" src="{{groupInfo.groupLogo}}" mode="aspectFill">
+        </image>
+      </view>
+      <text>{{groupInfo.groupName}}</text>
+    </view>
+    <view class="introduceWarp" >
+      <view class="introduce" wx:if="{{groupInfo.introduce}}">{{groupInfo.introduce}}</view>
+    </view>
+    <view class="into" catchtap="into">进入小组</view>
+</view>
+<authorization dialogShow="{{dialogShow}}" ></authorization>

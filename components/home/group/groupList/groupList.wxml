@@ -1,6 +1,6 @@
 <!--components/home/group/groupList/groupList.wxml-->
 <view class="list">
-  <view class="card" wx:for="{{groups}}" wx:key="index">
+  <view class="card {{index==0?'first':''}}" wx:for="{{groups}}" wx:key="index">
     <view class="block" catchtap="goOtherHome" data-id="{{item.id}}" data-index="{{index}}">
       <image src="{{item.groupLogo}}" class="communityLogo" mode="aspectFill"></image>
       <view class="introduce">
@@ -16,14 +16,13 @@
           <text>{{item.introduce}}</text>
         </view>
       </view>
-      <image wx:if="{{item.isJoin === 1}}" class="success" src="http://cdn.eigene.cn/home/success.png"
+      <image wx:if="{{item.isJoin === 1}}" class="success" src="/images/groupList/success.png"
         data-index="{{index}}"></image>
-      <image wx:elif="{{item.isJoin === -1}}" class="join" src="http://cdn.eigene.cn/home/underReview.png"
+      <image wx:elif="{{item.isJoin === -1}}" class="join" src="/images/groupList/underReview1.png"
         data-index="{{index}}">
       </image>
-      <image wx:else class="join" src="http://cdn.eigene.cn/home/join.png" data-index="{{index}}" catchtap="showJoin">
+      <image wx:else class="join" src="/images/groupList/join1.png" data-index="{{index}}" catchtap="showJoin">
       </image>
-
     </view>
   </view>
 </view>
@@ -33,20 +32,20 @@
   <view class="dialog">
     <text>是否确定加入该小组？</text>
     <view class="yesOrNo">
-      <image catchtap="noJoin" src="http://cdn.eigene.cn/home/no.png"></image>
-      <image catchtap="yesJoin" src="http://cdn.eigene.cn/home/yes.png"></image>
+      <image catchtap="noJoin" src="/images/groupList/no2.png"></image>
+      <image catchtap="yesJoin" src="/images/groupList/yes1.png"></image>
     </view>
   </view>
 </view>
 
 <view class="shade {{applyShow? 'shadeShow':''}}" mark:district="shade">
   <view class="applyDialog">
-    <text>请提交您的小组申请</text>
+    <text class="groupApply">请提交您的小组申请</text>
     <textarea wx:if="{{applyShow}}" bindinput="inputApply" class="applyContent" name="applyContent" id=""
       maxlength="100" placeholder="100字以内" placeholder-class="applyPlaceholder"></textarea>
     <view class="choose">
-      <image catchtap="cancelApply" src="http://cdn.eigene.cn/home/delete.png"></image>
-      <image src="http://cdn.eigene.cn/home/success.png" catchtap="apply"></image>
+      <image catchtap="cancelApply" src="/images/groupList/delete.png" ></image>
+      <image src="/images/groupList/success.png" catchtap="apply"></image>
     </view>
   </view>
 </view>

@@ -1,0 +1,222 @@
+{
+  "setting": {},
+  "condition": {
+    "plugin": {
+      "list": []
+    },
+    "game": {
+      "list": []
+    },
+    "gamePlugin": {
+      "list": []
+    },
+    "miniprogram": {
+      "list": [
+        {
+          "name": "pages/square/band/band",
+          "pathName": "pages/square/band/band",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/my/information/information",
+          "pathName": "pages/my/information/information",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/square/band/band",
+          "pathName": "pages/square/band/band",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/square/band/bandDetail/bandDetail",
+          "pathName": "pages/square/band/bandDetail/bandDetail",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/square/band/bandDetail/bandDetail",
+          "pathName": "pages/square/band/bandDetail/bandDetail",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/square/band/bandDetail/bandDetail",
+          "pathName": "pages/square/band/bandDetail/bandDetail",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/square/deal/secondIssue/secondIssue",
+          "pathName": "pages/square/deal/secondIssue/secondIssue",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/square/performance/alliancePost/alliancePost",
+          "pathName": "pages/square/performance/alliancePost/alliancePost",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "components/common/bar/bar",
+          "pathName": "components/common/bar/bar",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/tool/tool",
+          "pathName": "pages/tool/tool",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/my/information/information",
+          "pathName": "pages/my/information/information",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/my/my",
+          "pathName": "pages/my/my",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/square/band/band",
+          "pathName": "pages/square/band/band",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/square/performance/performance",
+          "pathName": "pages/square/performance/performance",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/square/deal/deal",
+          "pathName": "pages/square/deal/deal",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/my/store/store",
+          "pathName": "pages/my/store/store",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/home/puchCard/issuePuchCard/issuePuchCard",
+          "pathName": "pages/home/puchCard/issuePuchCard/issuePuchCard",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/square/band/application/application",
+          "pathName": "pages/square/band/application/application",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/my/information/information",
+          "pathName": "pages/my/information/information",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/square/deal/ticketIssue/ticketIssue",
+          "pathName": "pages/square/deal/ticketIssue/ticketIssue",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/my/fans/fans",
+          "pathName": "pages/my/fans/fans",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/square/band/issueTeam/issueTeam",
+          "pathName": "pages/square/band/issueTeam/issueTeam",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/tool/tool",
+          "pathName": "pages/tool/tool",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/tool/tool",
+          "pathName": "components/tool/chord/myPicker/myPicker",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "components/tool/chord/myPicker/myPicker",
+          "pathName": "components/tool/chord/myPicker/myPicker",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/tool/tool",
+          "pathName": "pages/tool/tool",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/my/follow/follow",
+          "pathName": "pages/my/follow/follow",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/home/massManagement/massManagement",
+          "pathName": "pages/home/massManagement/massManagement",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/my/editData/editData",
+          "pathName": "pages/my/editData/editData",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "components/my/myRelease/myRelease",
+          "pathName": "components/my/myRelease/myRelease",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "components/common/secondBar/secondBar",
+          "pathName": "components/common/secondBar/secondBar",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/tool/musicScorePost/musicScorePost",
+          "pathName": "pages/tool/musicScorePost/musicScorePost",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/tool/musicScorePost/musicScorePost",
+          "pathName": "pages/tool/musicScorePost/musicScorePost",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/home/welcome/welcome",
+          "pathName": "pages/home/welcome/welcome",
+          "query": "scene=groupId%3D22",
+          "scene": 1011
+        }
+      ]
+    }
+  }
+}

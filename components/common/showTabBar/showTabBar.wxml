@@ -1,2 +1,2 @@
 <!--components/common/showTabBar/showTabBar.wxml-->
-<view mark:district="tabBar" catchtap="switchTabBar" class="tabBarBtn  {{!tabBarBtnShow?'tabBarBtnHide':''}}"></view>
+<view  mark:district="tabBar" catchtap="switchTabBar" class="tabBarBtn  {{!tabBarBtnShow?'tabBarBtnHide':''}}"></view>

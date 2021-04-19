@@ -9,6 +9,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    qiniuUrl: app.qiniuUrl,
     // 去除上面导航栏，剩余的高度
     excludeHeight: 0,
     switchBtn: 'together',
@@ -78,33 +79,24 @@ Page({
   },
   getSquaredynamics() {
     let squaredynamicsPaging = this.data.squaredynamicsPaging
-    app.get(app.Api.getSquaredynamics, {
-      ...squaredynamicsPaging,
-      userId: app.userInfo.id
-    }).then(res => {
-      if (res.length < squaredynamicsPaging.pageSize) {
+    return new Promise((resolve, reject) => {
+      app.get(app.Api.getSquaredynamics, {
+        ...squaredynamicsPaging,
+        userId: app.userInfo.id
+      }).then(res => {
+        if (res.length < squaredynamicsPaging.pageSize) {
+          this.setData({
+            isNotData: true
+          })
+        }
         this.setData({
-          isNotData: true
+          dynamics: this.data.dynamics.concat(res),
+          'squaredynamicsPaging.pageIndex': squaredynamicsPaging.pageIndex + 1
         })
-      }
-      // console.log('app.globalData.guide.square', app.globalData.guide.square)
-      // if (app.globalData.guide.square) {
-      //   this.getTabBar().setData({
-      //     show: false,
-      //   })
-      //   this.setData({
-      //     tabBarBtnShow: true,
-      //   }, () => {
-      //     this.setData({
-      //       squareGuide: app.globalData.guide.square,
-      //     })
-      //   })
-      // }
-      this.setData({
-        dynamics: this.data.dynamics.concat(res),
-        'squaredynamicsPaging.pageIndex': squaredynamicsPaging.pageIndex + 1
+        resolve()
       })
     })
+
   },
   add0(m) {
     return m < 10 ? '0' + m : m
@@ -179,7 +171,15 @@ Page({
       })
       // app.getNotice(this, app.userInfo.id)
     }
-    if (app.squarePostBack) {
+    if (app.userInfo && app.myGetUserInfo) {
+      this.setData({
+        dialogShow: false
+      })
+      app.myGetUserInfo = false
+      this.initSquare()
+    }
+    if (app.squarePostBack || app.dynamicDeleteBack) {
+      app.dynamicDeleteBack = false
       app.squarePostBack = false
       this.setData({
         dynamics: [],
@@ -188,6 +188,17 @@ Page({
       }, () => {
         this.getSquaredynamics()
       })
+    }
+    if (app.backGroup) {
+      app.backGroup = false
+      let e = {
+        currentTarget: {
+          dataset: {
+            path: '/pages/home/home'
+          }
+        }
+      }
+      this.getTabBar().switchTab(e)
     }
   },
 
@@ -209,7 +220,15 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
+    this.setData({
+      dynamics: [],
+      isNotData: false,
+      'squaredynamicsPaging.pageIndex': 1
+    }, () => {
+      this.getSquaredynamics().then(() => {
+        wx.stopPullDownRefresh()
+      })
+    })
   },
 
   /**
