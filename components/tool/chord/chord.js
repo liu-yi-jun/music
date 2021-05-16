@@ -271,8 +271,8 @@ Component({
       this.isSwitchSuffix = true
       this.setData({
         switchbtn,
-        key: 'D',
-        suffixe: 'minor',
+        key: 'C',
+        suffixe: 'major',
         keys: switchbtn === 'guitar' ? guitarK : ukeleleK,
         suffixs: switchbtn === 'guitar' ? guitarS : ukeleleS,
         keyObj: {

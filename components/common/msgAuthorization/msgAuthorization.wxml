@@ -1,0 +1,17 @@
+<!--components/common/msgAuthorization/msgAuthorization.wxml-->
+<view class="shade {{msgAuthorizationShow? 'shadeShow':''}}">
+  <block wx:if="{{type===0}}">
+    <view catchtap="guide" class="alwaysBox" style="top:{{alwaysTop}}px;left:{{alwaysLeft}}px"></view>
+    <image catchtap="guide" class="alwaysGuide" src="../../../images/home/leftGuide.png"
+      style="top:{{alwaysTop + 35}}px;left:{{alwaysLeft + 5}}px"></image>
+  </block>
+  <block wx:if="{{type===1}}">
+    <view catchtap="guide" class="allowBox" style="top:{{allowTop}}px;left:{{allowLeft}}px"></view>
+    <image catchtap="guide" class="allowGuide" style="top:{{allowTop + 35}}px;left:{{allowLeft + 40}}px"
+      src="../../../images/home/leftGuide.png"></image>
+  </block>
+  <image src="../../../images/msgAuthorization/msgAuthorization.png" class="msgAuthorizationImg">
+    <view class="allow" id="allow"></view>
+    <view class="always" id="always"></view>
+  </image>
+</view>

@@ -116,12 +116,12 @@ Page({
       this.urlPush()
     })
   },
-    // 视频加载完成
-    loadedmetadata(e) {
-      this.setData({
-        'showContent.videoLoad': true
-      })
-    },
+  // 视频加载完成
+  loadedmetadata(e) {
+    this.setData({
+      'showContent.videoLoad': true
+    })
+  },
   groupPagingGetGroupdynamics(groupId) {
     return new Promise((resolve, reject) => {
       console.log('groupPagingGetGroupdynamics')
@@ -159,7 +159,12 @@ Page({
     }, {
       loading: false
     }).then((res) => {
-      console.log(res)
+      if (res === null) {
+        common.Tip('很抱歉，该小组已被解散').then(() => {
+          wx.navigateBack()
+        })
+        return
+      }
       let groupNameTop, groupNamebuttom
       if (res.groupName.length > 7) {
         groupNameTop = res.groupName.substr(0, 7)
@@ -382,7 +387,7 @@ Page({
           if ((this.data.lessMember || !this.data.isLoop) && this.data.MB_Index == 0) {
             return
           }
-          this.upSilde()
+          this.upSilde().then(() => resolve())
           return
         } else if (endY - startY > 50) {
           if ((this.data.lessMember || !this.data.isLoop) && this.data.MB_Index == memberLength - 1) {
@@ -582,12 +587,11 @@ Page({
         operate: showContent.isLike,
         relation: {
           userId: app.userInfo.id,
-          themeId: showContent.id
+          themeId: showContent.id,
+          nickName: app.userInfo.nickName,
         },
         extra: {
           otherId: showContent.userId,
-          avatarUrl: app.userInfo.avatarUrl,
-          nickName: app.userInfo.nickName,
           themeTitle: showContent.introduce
         }
       })
@@ -688,5 +692,11 @@ Page({
   stopPlayRecord() {
     let playRecord = this.selectComponent('#playRecord')
     playRecord && playRecord.endSound()
-  }
+  },
+  goMassManagement() {
+    let groupInfo = JSON.stringify(this.data.groupInfo)
+    wx.navigateTo({
+      url: `/pages/home/massManagement/massManagement?groupInfo=${groupInfo}`,
+    })
+  },
 })

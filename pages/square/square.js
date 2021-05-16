@@ -36,7 +36,12 @@ Page({
     scrollTop: 0,
     cross: false,
     leftGuide: true,
-    dialogShow: false
+    dialogShow: false,
+    showSignIn: false,
+    type: 0,
+    continuity: 0,
+    continuitys: [false, false, false, false, false, false, false],
+    alliances:[]
   },
 
   /**
@@ -52,11 +57,47 @@ Page({
     tool.navExcludeHeight(this)
     if (app.userInfo) {
       this.initSquare()
+      this.getSignInInfo()
+      this.getAlliance()
     } else {
       this.setData({
         dialogShow: true
       })
     }
+  },
+  getAlliance() {
+    return new Promise((resolve, reject) => {
+      let alliancePaging = this.data.alliancePaging
+      app.get(app.Api.getAlliance, {
+        pageSize: 5,
+        pageIndex: 1
+      }, {
+        loading: false
+      }).then(res => {
+        this.setData({
+          alliances: res
+        })
+        resolve()
+      })
+    })
+
+  },
+  getSignInInfo() {
+    app.get(app.Api.signInInfo, {
+      userId: app.userInfo.id
+    }).then((res) => {
+      app.signInInfo = res
+      if (res.everyday) {
+        // this.tabBarStatus = 2
+        // this.getTabBar().setData({
+        //   show: false
+        // })
+        this.setData({
+          // tabBarBtnShow: true,
+          showSignIn: true
+        })
+      }
+    })
   },
   handleGetUserInfo() {
     this.initSquare()
@@ -124,14 +165,18 @@ Page({
   },
   singIn() {
     if (app.userInfo) {
-      app.post(app.Api.sendSingIn, {
+      app.get(app.Api.sendSingIn, {
         userId: app.userInfo.id
       }).then(res => {
         let isSignIn = res.isSignIn
         if (!isSignIn) {
-          common.Toast('签到成功', 1500, 'success')
-          this.setData({
-            signInSums: this.handleSignInSum(app.userInfo.signInSum + 1)
+          // if (this.data.tabBarBtnShow) {
+          //   this.tabBarStatus = 1
+          // } else {
+          //   this.tabBarStatus = 2
+          // }
+          wx.navigateTo({
+            url: `/pages/square/squarePost/squarePost?showSignIn=${true}`,
           })
         } else {
           common.Toast('每天只需签到一次哦~')
@@ -186,7 +231,45 @@ Page({
         isNotData: false,
         'squaredynamicsPaging.pageIndex': 1
       }, () => {
-        this.getSquaredynamics()
+        this.getSquaredynamics().then(() => {
+          if (app.signInComplete) {
+            // this.setData({
+            //   tabBarBtnShow: true,
+            // })
+            // this.getTabBar().setData({
+            //   show: false
+            // })
+            app.signInComplete = false
+            this.setData({
+              signInSums: this.handleSignInSum(app.signInInfo.signInSum)
+            })
+            if (app.signInInfo.seven) {
+              // 已完成七天，包含七天
+              if (app.signInInfo.showSeven) {
+                this.setData({
+                  type: 3,
+                  showSignIn: true
+                })
+              } else {
+                this.setData({
+                  type: 1,
+                  showSignIn: true
+                })
+              }
+            } else {
+              let continuitys = this.data.continuitys
+              for (let index = 0; index < app.signInInfo.continuity; index++) {
+                continuitys[index] = true
+              }
+              this.setData({
+                type: 2,
+                showSignIn: true,
+                continuitys,
+                continuity: app.signInInfo.continuity
+              })
+            }
+          }
+        })
       })
     }
     if (app.backGroup) {
@@ -200,6 +283,7 @@ Page({
       }
       this.getTabBar().switchTab(e)
     }
+
   },
 
   /**
@@ -220,13 +304,16 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
+    
     this.setData({
       dynamics: [],
+      alliances:[],
       isNotData: false,
       'squaredynamicsPaging.pageIndex': 1
     }, () => {
       this.getSquaredynamics().then(() => {
         wx.stopPullDownRefresh()
+        this.getAlliance()
       })
     })
   },
@@ -459,5 +546,64 @@ Page({
       }
     }
 
+  },
+  closeSignIn() {
+    this.closeEveryday()
+    // this.recovery()
+    this.setData({
+      showSignIn: false
+    })
+  },
+  recovery() {
+    if (this.tabBarStatus === 2) {
+      this.tabBarStatus = 0
+      this.setData({
+        tabBarBtnShow: false,
+      })
+      this.getTabBar().setData({
+        show: true
+      })
+    } else if (this.tabBarStatus === 1) {
+      this.tabBarStatus = 0
+      this.setData({
+        tabBarBtnShow: true,
+      })
+      this.getTabBar().setData({
+        show: false
+      })
+    }
+  },
+  closeEveryday() {
+    app.signInInfo.everyday = 0
+    app.post(app.Api.closeEveryday, {
+      userId: app.userInfo.id
+    }, {
+      loading: false
+    }).then(() => {
+
+    })
+  },
+  bulletSignIn() {
+    this.closeEveryday()
+    wx.navigateTo({
+      url: `/pages/square/squarePost/squarePost?showSignIn=${true}`,
+    })
+  },
+  determine() {
+    // this.recovery()
+    this.setData({
+      showSignIn: false
+    })
+  },
+  cancelmove() {
+    return false
+  },
+  goAllianceDetail(e) {
+    console.log(e)
+    let id = e.currentTarget.dataset.id
+    let index = e.currentTarget.dataset.index
+    wx.navigateTo({
+      url: `/pages/square/performance/allianceDetail/allianceDetail?id=${id}&index=${index}`,
+    })
   }
 })

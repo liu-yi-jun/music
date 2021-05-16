@@ -116,7 +116,9 @@ Page({
     uploadRecruits: [],
     title: '',
     introduce: '',
-    isEdit: false
+    isEdit: false,
+    msgAuthorizationShow: false,
+    requestId: [app.InfoId.band]
   },
 
   /**
@@ -341,8 +343,6 @@ Page({
         title,
         introduce,
         location,
-        avatarUrl: app.userInfo.avatarUrl,
-        nickName: app.userInfo.nickName,
         userId: app.userInfo.id,
         groupId: app.userInfo.groupId,
         groupName: app.userInfo.groupName,
@@ -374,32 +374,38 @@ Page({
       params = await this.validate(params)
       console.log(params)
       if (!this.data.isEdit) {
-        common.showLoading('发布中')
-        let result = await this.issueTeam(params)
-        if (result.affectedRows) {
-          wx.hideLoading()
-          authorize.isSubscription().then(res => {
-            if (res.mainSwitch && (!res.itemSettings || !res.itemSettings[app.InfoId.band])) {
-              common.Tip('接下来将授权"组乐队申请"通知。授权时请勾选“总是保持以上选择,不再询问”，后续有其他用户申请与您组乐队，将会第一时间通知到您', '发布成功').then(res => {
-                if (res.confirm) {
-                  authorize.alwaysSubscription([app.InfoId.band]).then(res => {
-                    this.goBand()
-                  })
-                }
-              })
-            } else {
-              common.Tip('确保您已开启相应的通知权限，“组乐队申请”将会第一时间通知到您', '发布成功').then(res => {
-                if (res.confirm) {
-                  authorize.alwaysSubscription([app.InfoId.band]).then(res => {
-                    this.goBand()
-                  })
-                }
-              })
-            }
+        // 发布
+        let subscriptionsSetting = await authorize.isSubscription()
+        if (!subscriptionsSetting.itemSettings) {
+          this.params = params
+          // 未勾选总是
+          this.setData({
+            msgAuthorizationShow: true
           })
-
+        }else {
+          this.submitTeam(params)
         }
+        // authorize.isSubscription().then(res => {
+        //   if (res.mainSwitch && (!res.itemSettings || !res.itemSettings[app.InfoId.band])) {
+        //     common.Tip('接下来将授权"组乐队申请"通知。授权时请勾选“总是保持以上选择,不再询问”，后续有其他用户申请与您组乐队，将会第一时间通知到您', '发布成功').then(res => {
+        //       if (res.confirm) {
+        //         authorize.alwaysSubscription([app.InfoId.band]).then(res => {
+        //           this.goBand()
+        //         })
+        //       }
+        //     })
+        //   } else {
+        //     common.Tip('确保您已开启相应的通知权限，“组乐队申请”将会第一时间通知到您', '发布成功').then(res => {
+        //       if (res.confirm) {
+        //         authorize.alwaysSubscription([app.InfoId.band]).then(res => {
+        //           this.goBand()
+        //         })
+        //       }
+        //     })
+        //   }
+        // })
       } else {
+        // 编辑
         common.showLoading('保存中')
         params.themeId = this.themeId
         let result = await this.saveTeam(params)
@@ -415,6 +421,18 @@ Page({
       wx.hideLoading()
     }
   },
+  completeMsgAuthorization() {
+    this.submitTeam(this.params)
+  },
+  async submitTeam(params) {
+    common.showLoading('发布中')
+    let result = await this.issueTeam(params)
+    if (result.affectedRows) {
+      wx.hideLoading()
+      this.goBand()
+    }
+  },
+
   goBand() {
     app.bandBack = true
     wx.navigateBack()

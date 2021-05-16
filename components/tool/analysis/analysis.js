@@ -49,35 +49,44 @@ Component({
    */
   data: {
     qiniuUrl: app.qiniuUrl,
+    // options: [{
+    //   id: 0,
+    //   name: 'Standard',
+    //   piece: ['E2', 'A2', 'D3', 'G3', 'B3', 'E4']
+    // }, {
+    //   id: 1,
+    //   name: 'New Standard',
+    //   piece: ['C2', 'G2', 'D3', 'A3', 'E3', 'G4']
+    // }, {
+    //   id: 2,
+    //   name: 'D tuning',
+    //   piece: ['D2', 'G2', 'C3', 'F3', 'A3', 'D4']
+    // }, {
+    //   id: 3,
+    //   name: 'Drop F# Tuning',
+    //   piece: ['F#1', 'C#2', 'F#2', 'B2', 'Eb3', 'Ab3']
+    // }, {
+    //   id: 4,
+    //   name: 'C Tuning',
+    //   piece: ['G4', 'C4', 'E4', 'A4']
+    // }, {
+    //   id: 5,
+    //   name: 'Tenor Violin',
+    //   piece: ['G2', 'D3', 'A3', 'E4']
+    // }, {
+    //   id: 5,
+    //   name: 'Calico(Vlolin)',
+    //   piece: ['A3', 'E4', 'A4', 'C#5']
+    // }, ],
     options: [{
       id: 0,
-      name: 'Standard',
+      name: '吉他',
       piece: ['E2', 'A2', 'D3', 'G3', 'B3', 'E4']
     }, {
-      id: 1,
-      name: 'New Standard',
-      piece: ['C2', 'G2', 'D3', 'A3', 'E3', 'G4']
-    }, {
-      id: 2,
-      name: 'D tuning',
-      piece: ['D2', 'G2', 'C3', 'F3', 'A3', 'D4']
-    }, {
-      id: 3,
-      name: 'Drop F# Tuning',
-      piece: ['F#1', 'C#2', 'F#2', 'B2', 'Eb3', 'Ab3']
-    }, {
       id: 4,
-      name: 'C Tuning',
+      name: '尤克里里',
       piece: ['G4', 'C4', 'E4', 'A4']
-    }, {
-      id: 5,
-      name: 'Tenor Violin',
-      piece: ['G2', 'D3', 'A3', 'E4']
-    }, {
-      id: 5,
-      name: 'Calico(Vlolin)',
-      piece: ['A3', 'E4', 'A4', 'C#5']
-    }, ],
+    }],
     current: {},
     v0: 0.025,
     a: 0.3,
@@ -95,7 +104,7 @@ Component({
     // 轨迹点的密集程度（值越大越稀疏）
     dense: 4,
     // 轨迹点最多的数量
-    pointCount: 100,
+    pointCount: 70,
     // 整体颜色
     color: '#FF5791',
     letter: 'D#',
@@ -142,7 +151,8 @@ Component({
       // 三角形
       tH: 8,
       tD: 3
-    }
+    },
+    top: 0
   },
   lifetimes: {
     created: function () {
@@ -150,13 +160,16 @@ Component({
       authorize.authSettingRecord().then(() => {
         that.can = true
         that.canPonit = true
+        // 初始化录音设备
         that.initrecorderManager()
+        // 初始化socket
         that.initSocket()
-        that.initCentBox()
+        // 开始录音
         that.start()
       })
     },
     ready: function () {
+      this.getTop()
       this.initSelect()
       this.initStringWidt()
       wx.createSelectorQuery().in(this)
@@ -166,10 +179,15 @@ Component({
           size: true,
         })
         .exec(this.initCanvas.bind(this))
-    },
 
-    attached: function () {
-      // 在组件实例进入页面节点树时执行
+      wx.createSelectorQuery().in(this)
+        .select('#canvas')
+        .fields({
+          node: true,
+          size: true,
+        })
+        .exec(this.initCanvas2.bind(this))
+      console.log(this.drawLine, 11111);
     },
     detached: function () {
       // 在组件实例被从页面节点树移除时执行
@@ -181,81 +199,39 @@ Component({
    * 组件的方法列表
    */
   methods: {
-    initSelect() {
-      let current = this.data.options[0]
-      this.setData({
-        current
-      })
-    },
-    optionTap(e) {
-      let index = e.target.dataset.index
-      let current = this.data.options[index]
-      this.writeStandard(current.piece)
-      this.setData({
-        current,
-        isShow: false
-      });
-    },
-    openClose() {
-      this.setData({
-        isShow: !this.data.isShow
-      })
-    },
-    writeStandard(piece) {
-      let standard = []
-      piece.forEach((item, index) => {
-        standard.push({
-          name: item,
-          frequency: this.split(item)
-        })
-      })
-      this.setData({
-        standard,
-        standardCurrent: 0,
-        line: this.data.standard[0].frequency,
-      }, () => {
-        this.initStringWidt()
-      })
-    },
-    split(str) {
-      let letter = str.slice(0, str.length - 1)
-      let group = str.slice(str.length - 1)
-      let letterIndex
-      tone.forEach((item, index) => {
-        if (letter === item) {
-          letterIndex = index
-          return
-        }
-      })
-      if (letterIndex == undefined) {
-        return undefined
-      }
-      return pitchs[group][letterIndex]
-    },
-    initCentBox() {
-      // canvas绘制网络图片需保存至本地
-      wx.getImageInfo({
-        src: 'http://cdn.eigene.cn/analysis/dialogRed.png', //服务器返回的图片地址，需加入downloadFile白名单
-        success: res => {
-          this.redCentBoxPath = res.path
-        },
-      });
-      wx.getImageInfo({
-        src: 'http://cdn.eigene.cn/analysis/dialogGreen.png', //服务器返回的图片地址，需加入downloadFile白名单
-        success: res => {
-          this.GreenCentBoxPath = res.path
-        },
-      });
-    },
-    initStringWidt() {
-      let query = wx.createSelectorQuery().in(this)
-      let standard = this.data.standard
-      query.select('#column').boundingClientRect(rect => {
+    getTop() {
+      this.createSelectorQuery().select('#select-box').boundingClientRect(rect => {
+        console.log(rect);
         this.setData({
-          stringWidt: rect.width / (standard.length - 1)
+          top: rect.top
         })
-      }).exec();
+      }).exec()
+
     },
+    // 初始化canvas
+    initCanvas2(res) {
+      this.width = res[0].width
+      this.height = res[0].height
+      this.rpx = wx.getSystemInfoSync().windowWidth / 375
+      this.ctx = wx.createCanvasContext('canvas', this)
+    },
+    // 开始录音
+    start() {
+      this.isStop = false
+      const options = {
+        duration: 600000, //指定录音采样时间100ms
+        sampleRate: 8000, //采样率最低8k
+        numberOfChannels: 1, //录音通道数
+        encodeBitRate: 32000, //8k采样率对应16k~48k
+        format: 'pcm', //音频格式，有效值acc/mp3/wav/pcm
+        // frameSize: 3.2,          //指定帧大小，单位KB
+        frameSize: 1.6, //指定帧大小，单位KB
+        // frameSize: 0.8, //指定帧大小，单位KB
+        audioSource: 'auto',
+      };
+      this.recorderManager.start(options)
+    },
+    // 初始化canvas
     initCanvas(res) {
       const width = res[0].width
       const height = res[0].height
@@ -272,266 +248,67 @@ Component({
       let img = canvas.createImage()
       img.src = '../../../images/success.png'
       this.img = img
-      // this.setData({
-
-      // })
-      // this.test()
     },
-    drawCentBox(oldCent) {
-      let width = this.width
-      let height = this.height
-      let ctx = this.ctx
-      let {
-        seat,
-        radius,
-        centRange,
-        box,
-        color,
-        analysis
-      } = this.data
-      let y = ((oldCent + centRange / 2) * (height - 2 * radius)) / centRange
-      let circleCenterX = width / seat
-      let circleCenterY = height - radius - y
-
-      let A = {
-        x: circleCenterX,
-        y: circleCenterY - (radius * 2)
-      }
-      let B = {
-        x: A.x - box.tD,
-        y: A.y - box.tH
-      }
-      let C = {
-        x: A.x + box.tD,
-        y: A.y - box.tH
-      }
-
-      let E1 = {
-        x: A.x - box.rectW / 2,
-        y: A.y - box.tH
-      }
-      let p1 = {
-        x: A.x - box.rectW / 2 + box.rectR,
-        y: A.y - box.tH
-      }
-      let p2 = {
-        x: A.x - box.rectW / 2,
-        y: A.y - box.tH - box.rectR
-      }
-      let E2 = {
-        x: A.x - box.rectW / 2,
-        y: A.y - box.tH - box.rectH
-      }
-      let p3 = {
-        x: A.x - box.rectW / 2,
-        y: A.y - box.tH - box.rectH + box.rectR
-      }
-      let p4 = {
-        x: A.x - box.rectW / 2 + box.rectR,
-        y: A.y - box.tH - box.rectH
-      }
-      let E3 = {
-        x: A.x + box.rectW / 2,
-        y: A.y - box.tH - box.rectH
-      }
-      let p5 = {
-        x: A.x + box.rectW / 2 - box.rectR,
-        y: A.y - box.tH - box.rectH
-      }
-      let p6 = {
-        x: A.x + box.rectW / 2,
-        y: A.y - box.tH - box.rectH + box.rectR
-      }
-      let E4 = {
-        x: A.x + box.rectW / 2,
-        y: A.y - box.tH
-      }
-      let p7 = {
-        x: A.x + box.rectW / 2,
-        y: A.y - box.tH - box.rectR
-      }
-      let p8 = {
-        x: A.x + box.rectW / 2 - box.rectR,
-        y: A.y - box.tH
-      }
-      ctx.beginPath();
-      ctx.lineWidth = 1;
-      ctx.strokeStyle = color;
-      ctx.fillStyle = color
-      ctx.moveTo(A.x, A.y);
-      ctx.lineTo(B.x, B.y);
-      ctx.lineTo(p1.x, p1.y);
-      ctx.arcTo(E1.x, E1.y, p2.x, p2.y, box.rectR)
-      ctx.lineTo(p3.x, p3.y);
-      ctx.arcTo(E2.x, E2.y, p4.x, p4.y, box.rectR)
-      ctx.lineTo(p5.x, p5.y);
-      ctx.arcTo(E3.x, E3.y, p6.x, p6.y, box.rectR)
-      ctx.lineTo(p7.x, p7.y);
-      ctx.arcTo(E4.x, E4.y, p8.x, p8.y, box.rectR)
-      ctx.lineTo(C.x, C.y);
-      ctx.closePath();
-      ctx.fill()
-      ctx.stroke();
-
-      if (analysis.cent) {
-        if (color === '#3DDB62') {
-          // 已完成矫正
-          let sc_x = E2.x + ((box.rectW - 21) / 2)
-          let sc_Y = E2.y + ((box.rectH - 16) / 2)
-          // img.onload = ()=> {
-          ctx.drawImage(this.img, sc_x, sc_Y, 21, 16);
-          // }
-        } else {
-          // 画字体
-          // ctx.font = "12px";
-          ctx.font = "normal bold 12px sans-serif";
-          // ctx.textAlign = "center";
-          // ctx.textBaseline = "middle";
-          ctx.fillStyle = "#FFFFFF"
-          ctx.fillText(analysis.cent, A.x, A.y - box.tH - box.rectH / 2);
-        }
-      }
-
+    // 开始录音
+    start() {
+      this.isStop = false
+      const options = {
+        duration: 600000, //指定录音采样时间100ms
+        sampleRate: 8000, //采样率最低8k
+        numberOfChannels: 1, //录音通道数
+        encodeBitRate: 32000, //8k采样率对应16k~48k
+        format: 'pcm', //音频格式，有效值acc/mp3/wav/pcm
+        // frameSize: 3.2,          //指定帧大小，单位KB
+        frameSize: 1.6, //指定帧大小，单位KB
+        // frameSize: 0.8, //指定帧大小，单位KB
+        audioSource: 'auto',
+      };
+      this.recorderManager.start(options)
     },
-    drawLine() {
-      let width = this.width
-      let height = this.height
-      let ctx = this.ctx
-      let color = this.data.color
-      ctx.beginPath();
-      ctx.strokeStyle = color;
-      ctx.lineWidth = 1;
-      ctx.moveTo(0, height / 2);
-      ctx.lineTo(width, height / 2);
-      ctx.stroke();
-    },
-    drawBall(oldCent) {
-      let width = this.width
-      let height = this.height
-      let ctx = this.ctx
-      let {
-        seat,
-        radius,
-        centRange
-      } = this.data
-      let y = ((oldCent + centRange / 2) * (height - 2 * radius)) / centRange
-      ctx.beginPath();
-      ctx.arc(width / seat, height - radius - y, radius, 0, Math.PI * 2);
-      // ctx.shadowBlur = 5;
-      // ctx.shadowColor = "white";
-      ctx.fillStyle = "#FFFFFF"
-      ctx.strokeStyle = "#FFFFFF"
-      ctx.fill();
-      ctx.stroke();
-      // this.setData({
-      //   circleCenterX: width / seat,
-      //   circleCenterY: height - radius - y
-      // })
-    },
-    drawTrajectory(oldCent, newCent) {
-      let ctx = this.ctx
-      let width = this.width
-      let height = this.height
-      let {
-        spots,
-        radius,
-        seat,
-        dense,
-        pointCount,
-        centRange
-      } = this.data
-      let y = ((oldCent + centRange / 2) * (height - 2 * radius)) / centRange
-      ctx.beginPath();
-      ctx.lineWidth = 3;
-      // ctx.shadowBlur = 5;
-      // ctx.shadowColor = "white";
-      var gradient = ctx.createLinearGradient(0, 0, width / seat, 0);
-      gradient.addColorStop(0, 'rgba(255,255,255,0)');
-      gradient.addColorStop(1, "#FFFFFF");
-      ctx.strokeStyle = gradient;
-      // ctx.moveTo(width / seat, height - radius - y);
-      spots.unshift({
-        x: width / seat,
-        y: height - radius - y,
+    // 初始化录音设备
+    initrecorderManager() {
+      this.recorderManager = wx.getRecorderManager()
+      this.innerAudioContext = wx.createInnerAudioContext()
+      this.innerAudioContext.onPlay(() => {
+        console.log('开始播放录音')
       })
-      if (spots.length >= 3) {
-        ctx.moveTo(spots[0].x, spots[0].y);
-        let i
-        for (i = 1; i < spots.length - 2; i++) {
-          var xc = (spots[i].x + spots[i + 1].x) / 2;
-          var yc = (spots[i].y + spots[i + 1].y) / 2;
-          ctx.quadraticCurveTo(spots[i].x, spots[i].y, xc, yc);
-        }
-        ctx.quadraticCurveTo(spots[i].x, spots[i].y, spots[i + 1].x, spots[i + 1].y);
-        ctx.stroke();
-      }
-
-      // for (var i = 0; i < spots.length - 1; i++) {
-      //   var x_mid = (spots[i].x + spots[i + 1].x) / 2;
-      //   var y_mid = (spots[i].y + spots[i + 1].y) / 2;
-      //   var cp_x1 = (x_mid + spots[i].x) / 2;
-      //   var cp_x2 = (x_mid + spots[i + 1].x) / 2;
-      //   ctx.quadraticCurveTo(cp_x1, spots[i].y, x_mid, y_mid);
-      //   ctx.quadraticCurveTo(cp_x2, spots[i + 1].y, spots[i + 1].x, spots[i + 1].y);
-      // }
-      // ctx.stroke();
-      if (spots.length > pointCount) {
-        spots.pop()
-      }
-      spots.forEach((item, index) => {
-        item.x = item.x - dense
+      this.innerAudioContext.onEnded(() => {
+        console.log('// 录音播放结束')
       })
-      // if (spots.length == 0) {
-      //   spots.push({
-      //     x: width / seat,
-      //     y: height - radius - y,
-      //   })
-      // } else {
-      // if (oldCent === newCent || (newCent - oldCent > 10 && newCent - oldCent < 20)) {
-      // console.log('关键点')
-      // if (this.canPonit) {
-      //   this.canPonit = false
-      //   setTimeout(() => {
-      //     // 关键的点
-      //     spots.splice(1, 0, {
-      //       x: width / seat,
-      //       y: height - radius - y,
-      //     })
-      //     if (spots.length > pointCount) {
-      //       spots.pop()
-      //     }
-      //     this.canPonit = true
-      //   }, 200)
-      // }
-
-
-      // }
-      // spots[0] = {
-      //   x: width / seat,
-      //   y: height - radius - y,
-      // }
-      // }
+      this.recorderManager.onError((err) => {
+        console.log(err, '// 录音失败的回调处理');
+      });
+      this.recorderManager.onStart(() => {
+        console.log('// 录音开始')
+      })
+      this.recorderManager.onStop((res) => {
+        console.log('// 录音结束')
+        const tempFilePath = res.tempFilePath
+        this.innerAudioContext.src = tempFilePath
+        if (!this.isStop) {
+          console.log('开始新一轮录音')
+          this.start()
+        }
+      })
+      this.recorderManager.onFrameRecorded((res) => {
+        let array = new Int16Array(res.frameBuffer)
+        // window
+        // let array = new Int16Array(res.frameBuffer.slice(0, 800))
+        // if (array.length >= 800) {
+        //   // 切
+        //   array = array.subarray(0, 800)
+        // } else {
+        //   // 加
+        //   array = this.concatenate(Int16Array, array, new Int16Array(800 - array.length))
+        // }
+        this.analysis(Array.prototype.slice.call(array))
+      })
     },
-    motionBall(oldCent, newCent) {
-      let ctx = this.ctx
-      let canvas = this.canvas
-      // let line = this.data.line
-      // if (frequency >= line * 2) {
-      //   frequency = line * 2
-      // }
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      this.drawLine()
-      this.drawBall(oldCent)
-      this.drawCentBox(oldCent)
-      this.drawTrajectory(oldCent, newCent)
-      // setTimeout(()=>{
-
-      // },200)
+    // 发送到后端解析
+    analysis(endArry) {
+      app.socket.emit('analysis2', endArry);
     },
-    initSocket() {
-      // app.socket.on('completeAnalysis', (data) => {
-      // })
-    },
+    // 初始化socket
     initSocket() {
       app.socket.on('completeAnalysis2', (data) => {
         if (this.can) {
@@ -545,33 +322,26 @@ Component({
           this.baseCent = this.data.oldCent
           if (data.cent > this.data.oldCent) {
             this.direction = 'up'
-            this.realizationPainting(data)
+            this.upPint = setInterval(() => {
+              this.realizationPainting(data)
+            }, 20)
           } else if (data.cent < this.data.oldCent) {
             this.direction = 'down'
-            this.realizationPainting(data)
+            this.downPint = setInterval(() => {
+              this.realizationPainting(data)
+            }, 20)
           } else {
             this.can = true
           }
         }
       })
     },
-    // test() {
-    //   oldCent++
-    //   this.motionBall(oldCent)
-
-    //   this.point = this.canvas.requestAnimationFrame(this.test.bind(this))
-
-    //   if (oldCent >= 100) {
-    //     this.canvas.cancelAnimationFrame(this.point)
-    //   }
-    // },
+    // 实现
     realizationPainting(data) {
       let color;
       let analysis = data
       let disparity = this.data.disparity
       let line = this.data.line
-
-
       analysis.pitchFirst = data.pitch ? data.pitch.charAt(0) : ''
       analysis.pitchTwo = data.pitch ? data.pitch.charAt(1) : ''
       if (this.direction == 'up') {
@@ -604,11 +374,10 @@ Component({
             this.setData({
               analysis
             })
-            this.canvas.cancelAnimationFrame(this.point)
+            clearInterval(this.upPint)
             this.can = true
             return
           }
-
         }
       } else {
         if (data.cent >= this.data.oldCent) {
@@ -619,7 +388,7 @@ Component({
             this.setData({
               analysis
             })
-            this.canvas.cancelAnimationFrame(this.point)
+            clearInterval(this.downPint)
             this.can = true
             return
           }
@@ -638,9 +407,207 @@ Component({
           this.v0 = (this.v0 - this.data.a <= 2) ? 2 : this.v0 - this.data.a
         }
       }
-
-      this.point = this.canvas.requestAnimationFrame(this.realizationPainting.bind(this, data))
     },
+    // 运动的球
+    motionBall(oldCent, newCent) {
+      let ctx = this.ctx
+      ctx.clearRect(0, 0, this.width, this.height);
+      this.drawLine()
+      this.drawCentBox(oldCent)
+      this.drawBall(oldCent)
+      this.drawTrajectory(oldCent, newCent)
+      ctx.draw()
+    },
+    // 画线
+    drawLine() {
+      let width = this.width
+      let height = this.height
+      let ctx = this.ctx
+      let color = this.data.color
+      ctx.beginPath();
+      ctx.setStrokeStyle(color)
+      ctx.setLineWidth(1)
+      ctx.moveTo(0, height / 2);
+      ctx.lineTo(width, height / 2);
+      ctx.stroke()
+    },
+    // 画box
+    drawCentBox(oldCent) {
+      let width = this.width
+      let height = this.height
+      let ctx = this.ctx
+      let {
+        seat,
+        radius,
+        centRange,
+        box,
+        color,
+        analysis
+      } = this.data
+      let y = ((oldCent + centRange / 2) * (height - 2 * radius)) / centRange
+      let circleCenterX = width / seat
+      let circleCenterY = height - radius - y
+
+      let A = {
+        x: circleCenterX,
+        y: circleCenterY - (radius * 2)
+      }
+      // let B = {
+      //   x: A.x - box.tD,
+      //   y: A.y - box.tH
+      // }
+      // let C = {
+      //   x: A.x + box.tD,
+      //   y: A.y - box.tH
+      // }
+
+      // let E1 = {
+      //   x: A.x - box.rectW / 2,
+      //   y: A.y - box.tH
+      // }
+      // let p1 = {
+      //   x: A.x - box.rectW / 2 + box.rectR,
+      //   y: A.y - box.tH
+      // }
+      // let p2 = {
+      //   x: A.x - box.rectW / 2,
+      //   y: A.y - box.tH - box.rectR
+      // }
+      let E2 = {
+        x: A.x - box.rectW / 2,
+        y: A.y - box.tH - box.rectH
+      }
+      // let p3 = {
+      //   x: A.x - box.rectW / 2,
+      //   y: A.y - box.tH - box.rectH + box.rectR
+      // }
+      // let p4 = {
+      //   x: A.x - box.rectW / 2 + box.rectR,
+      //   y: A.y - box.tH - box.rectH
+      // }
+      // let E3 = {
+      //   x: A.x + box.rectW / 2,
+      //   y: A.y - box.tH - box.rectH
+      // }
+      // let p5 = {
+      //   x: A.x + box.rectW / 2 - box.rectR,
+      //   y: A.y - box.tH - box.rectH
+      // }
+      // let p6 = {
+      //   x: A.x + box.rectW / 2,
+      //   y: A.y - box.tH - box.rectH + box.rectR
+      // }
+      // let E4 = {
+      //   x: A.x + box.rectW / 2,
+      //   y: A.y - box.tH
+      // }
+      // let p7 = {
+      //   x: A.x + box.rectW / 2,
+      //   y: A.y - box.tH - box.rectR
+      // }
+      // let p8 = {
+      //   x: A.x + box.rectW / 2 - box.rectR,
+      //   y: A.y - box.tH
+      // }
+      // ctx.beginPath();
+      // ctx.setLineWidth(1)
+      // ctx.setStrokeStyle(color)
+      // ctx.setFillStyle(color)
+      // ctx.moveTo(A.x, A.y);
+      // ctx.lineTo(B.x, B.y);
+      // ctx.lineTo(p1.x, p1.y);
+      // ctx.arcTo(E1.x, E1.y, p2.x, p2.y, box.rectR)
+      // ctx.lineTo(p3.x, p3.y);
+      // ctx.arcTo(E2.x, E2.y, p4.x, p4.y, box.rectR)
+      // ctx.lineTo(p5.x, p5.y);
+      // ctx.arcTo(E3.x, E3.y, p6.x, p6.y, box.rectR)
+      // ctx.lineTo(p7.x, p7.y);
+      // ctx.arcTo(E4.x, E4.y, p8.x, p8.y, box.rectR)
+      // ctx.lineTo(C.x, C.y);
+      // ctx.closePath();
+      // ctx.fill()
+      // ctx.stroke();
+      this.ctx.drawImage('../../../images/red.png', E2.x, E2.y, box.rectW, box.tH + box.rectH)
+      if (analysis.cent) {
+        if (color === '#3DDB62') {
+          // 已完成矫正
+          let sc_x = E2.x + ((box.rectW - 21) / 2)
+          let sc_Y = E2.y + ((box.rectH - 16) / 2)
+          // 需修改
+          this.ctx.drawImage('../../../images/green.png', E2.x, E2.y, box.rectW, box.tH + box.rectH)
+          this.ctx.drawImage('../../../images/success.png', sc_x, sc_Y, 21, 16)
+        } else {
+          // 画字体
+          ctx.setTextAlign('center')
+          ctx.setTextBaseline('middle')
+          ctx.setFontSize(12)
+          ctx.setFillStyle('#FFFFFF')
+          ctx.fillText(analysis.cent, A.x, A.y - box.tH - box.rectH / 2);
+        }
+      }
+    },
+    // 画球
+    drawBall(oldCent) {
+      let width = this.width
+      let height = this.height
+      let ctx = this.ctx
+      let {
+        seat,
+        radius,
+        centRange
+      } = this.data
+      let y = ((oldCent + centRange / 2) * (height - 2 * radius)) / centRange
+      ctx.beginPath();
+      ctx.arc(width / seat, height - radius - y, radius, 0, Math.PI * 2);
+      ctx.setFillStyle('#FFFFFF')
+      ctx.setStrokeStyle('#FFFFFF')
+      ctx.setShadow(0, 0, 10, '#FFFFFF')
+      ctx.fill();
+      ctx.stroke();
+    },
+    //  画轨迹
+    drawTrajectory(oldCent, newCent) {
+      let ctx = this.ctx
+      let width = this.width
+      let height = this.height
+      let {
+        spots,
+        radius,
+        seat,
+        dense,
+        pointCount,
+        centRange
+      } = this.data
+      let y = ((oldCent + centRange / 2) * (height - 2 * radius)) / centRange
+      ctx.beginPath();
+      ctx.lineWidth = 3;
+      var gradient = ctx.createLinearGradient(0, 0, width / seat, 0);
+      gradient.addColorStop(0, 'rgba(255,255,255,0)');
+      gradient.addColorStop(1, "#FFFFFF");
+      ctx.setStrokeStyle(gradient)
+      spots.unshift({
+        x: width / seat,
+        y: height - radius - y,
+      })
+      if (spots.length >= 3) {
+        ctx.moveTo(spots[0].x, spots[0].y);
+        let i
+        for (i = 1; i < spots.length - 2; i++) {
+          var xc = (spots[i].x + spots[i + 1].x) / 2;
+          var yc = (spots[i].y + spots[i + 1].y) / 2;
+          ctx.quadraticCurveTo(spots[i].x, spots[i].y, xc, yc);
+        }
+        ctx.quadraticCurveTo(spots[i].x, spots[i].y, spots[i + 1].x, spots[i + 1].y);
+        ctx.stroke();
+      }
+      if (spots.length > pointCount) {
+        spots.pop()
+      }
+      spots.forEach((item, index) => {
+        item.x = item.x - dense
+      })
+    },
+    // 矫正logo
     calibration(frequency) {
       let {
         isAuto,
@@ -649,54 +616,7 @@ Component({
         stringWidt
       } = this.data
       let logoTranslateX = 0
-
-
-      // if (standard.length === 6) {
-      //   if (frequency >= standard[standard.length - 1].frequency) {
-      //     standardCurrent = standard.length - 1
-      //     logoTranslateX = stringWidt * (standard.length - 1) + 8
-      //   } else if (frequency >= standard[4].frequency) {
-      //     standardCurrent = ((frequency - standard[4].frequency) - (standard[standard.length - 1].frequency - frequency) > 0) ? standard.length - 1 : 4
-      //     logoTranslateX = (stringWidt * 4) + stringWidt * (frequency - standard[4].frequency) / (standard[standard.length - 1].frequency - standard[4].frequency)
-      //   } else if (frequency >= standard[3].frequency) {
-      //     standardCurrent = ((frequency - standard[3].frequency) - (standard[4].frequency - frequency) > 0) ? 4 : 3
-      //     logoTranslateX = (stringWidt * 3) + stringWidt * (frequency - standard[3].frequency) / (standard[4].frequency - standard[3].frequency)
-      //   } else if (frequency >= standard[2].frequency) {
-      //     standardCurrent = ((frequency - standard[2].frequency) - (standard[3].frequency - frequency) > 0) ? 3 : 2
-      //     logoTranslateX = (stringWidt * 2) + stringWidt * (frequency - standard[2].frequency) / (standard[3].frequency - standard[2].frequency)
-      //   } else if (frequency >= standard[1].frequency) {
-      //     standardCurrent = ((frequency - standard[1].frequency) - (standard[2].frequency - frequency) > 0) ? 2 : 1
-      //     logoTranslateX = (stringWidt * 1) + stringWidt * (frequency - standard[1].frequency) / (standard[2].frequency - standard[1].frequency)
-      //   } else if (frequency >= standard[0].frequency) {
-      //     standardCurrent = ((frequency - standard[0].frequency) - (standard[1].frequency - frequency) > 0) ? 1 : 0
-      //     logoTranslateX = (stringWidt * 0) + stringWidt * (frequency - standard[0].frequency) / (standard[1].frequency - standard[0].frequency)
-      //   } else {
-      //     standardCurrent = 0
-      //     logoTranslateX = -8
-      //   }
-      // } else if (standard.length === 4) {
-      //   if (frequency >= standard[standard.length - 1].frequency) {
-      //     standardCurrent = standard.length - 1
-      //     logoTranslateX = stringWidt * (standard.length - 1) + 8
-      //   } else if (frequency >= standard[2].frequency) {
-      //     standardCurrent = ((frequency - standard[2].frequency) - (standard[3].frequency - frequency) > 0) ? 3 : 2
-      //     logoTranslateX = (stringWidt * 2) + stringWidt * (frequency - standard[2].frequency) / (standard[3].frequency - standard[2].frequency)
-      //   } else if (frequency >= standard[1].frequency) {
-      //     standardCurrent = ((frequency - standard[1].frequency) - (standard[2].frequency - frequency) > 0) ? 2 : 1
-      //     logoTranslateX = (stringWidt * 1) + stringWidt * (frequency - standard[1].frequency) / (standard[2].frequency - standard[1].frequency)
-      //   } else if (frequency >= standard[0].frequency) {
-      //     standardCurrent = ((frequency - standard[0].frequency) - (standard[1].frequency - frequency) > 0) ? 1 : 0
-      //     logoTranslateX = (stringWidt * 0) + stringWidt * (frequency - standard[0].frequency) / (standard[1].frequency - standard[0].frequency)
-      //   } else {
-      //     standardCurrent = 0
-      //     logoTranslateX = -8
-      //   }
-      // }
-
-
-      // 
       let minIndex = 0
-
       for (let i = 1; i < standard.length; i++) {
         if (Math.abs(frequency - standard[i].frequency) < Math.abs(frequency - standard[minIndex].frequency)) {
           minIndex = i
@@ -743,16 +663,15 @@ Component({
           }
         }
       } else {
-
         logoTranslateX = stringWidt * minIndex
       }
       standardCurrent = minIndex
 
 
       if (isAuto) {
+        this.data.line = this.data.standard[standardCurrent].frequency
         this.setData({
           standardCurrent,
-          line: this.data.standard[standardCurrent].frequency,
           logoTranslateX
         })
       } else {
@@ -761,54 +680,76 @@ Component({
         })
       }
     },
+    // 初始化选择
+    initSelect() {
+      let current = this.data.options[0]
+      this.setData({
+        current
+      })
+    },
+    // 选择调音方式
+    optionTap(e) {
+      let index = e.target.dataset.index
+      let current = this.data.options[index]
+      this.writeStandard(current.piece)
+      this.setData({
+        current,
+        isShow: false
+      });
+    },
+    // 标准调音
+    writeStandard(piece) {
+      let standard = []
+      piece.forEach((item, index) => {
+        standard.push({
+          name: item,
+          frequency: this.split(item)
+        })
+      })
+      this.data.line = this.data.standard[0].frequency
+      console.log(standard, 113);
+      this.setData({
+        standard,
+        standardCurrent: 0
+      }, () => {
+        this.initStringWidt()
+      })
+    },
+    split(str) {
+      let letter = str.slice(0, str.length - 1)
+      let group = str.slice(str.length - 1)
+      let letterIndex
+      tone.forEach((item, index) => {
+        if (letter === item) {
+          letterIndex = index
+          return
+        }
+      })
+      if (letterIndex == undefined) {
+        return undefined
+      }
+      return pitchs[group][letterIndex]
+    },
+    // 初始化铉的宽度
+    initStringWidt() {
+      let query = wx.createSelectorQuery().in(this)
+      let standard = this.data.standard
+      query.select('#column').boundingClientRect(rect => {
+        this.setData({
+          stringWidt: rect.width / (standard.length - 1)
+        })
+      }).exec();
+    },
+
+
+    // 自动调音
     changeAuto() {
       this.setData({
         isAuto: !this.data.isAuto,
         standardCurrent: -1
       })
     },
-    initrecorderManager() {
-      this.recorderManager = wx.getRecorderManager()
-      this.innerAudioContext = wx.createInnerAudioContext()
-      this.innerAudioContext.onPlay(() => {
-        console.log('开始播放录音')
-      })
-      this.innerAudioContext.onEnded(() => {
-        console.log('// 录音播放结束')
-      })
-      this.recorderManager.onError((err) => {
-        console.log(err, '// 录音失败的回调处理');
-      });
-      this.recorderManager.onStart(() => {
-        console.log('// 录音开始')
-      })
-      this.recorderManager.onStop((res) => {
-        console.log('// 录音结束')
-        const tempFilePath = res.tempFilePath
-        this.innerAudioContext.src = tempFilePath
-        if (!this.isStop) {
-          console.log('开始新一轮录音')
-          this.start()
-        }
-      })
-      this.recorderManager.onFrameRecorded((res) => {
-        // let array = new Int16Array(res.frameBuffer)
-        // window
-        let array = new Int16Array(res.frameBuffer.slice(0, 800))
-        // if (array.length >= 800) {
-        //   // 切
-        //   array = array.subarray(0, 800)
-        // } else {
-        //   // 加
-        //   array = this.concatenate(Int16Array, array, new Int16Array(800 - array.length))
-        // }
-        this.analysis(Array.prototype.slice.call(array))
-      })
-    },
-
-    analysis(endArry) {
-      app.socket.emit('analysis2', endArry);
-    },
+    // 处理帧
     concatenate(resultConstructor, ...arrays) {
       let totalLength = 0;
       for (let arr of arrays) {
@@ -822,37 +763,25 @@ Component({
       }
       return result;
     },
-
+    // 点击铉
+    string(e) {
+      if (!this.data.isAuto) {
+        let index = e.currentTarget.dataset.index
+        this.data.line = this.data.standard[index].frequency
+        this.setData({
+          standardCurrent: index
+        })
+      }
+    },
+    // 停止录音
     stop() {
       this.recorderManager.stop()
       this.isStop = true
     },
-
-    start() {
-      this.isStop = false
-      const options = {
-        duration: 600000, //指定录音采样时间100ms
-        sampleRate: 8000, //采样率最低8k
-        numberOfChannels: 1, //录音通道数
-        encodeBitRate: 32000, //8k采样率对应16k~48k
-        format: 'pcm', //音频格式，有效值acc/mp3/wav/pcm
-        // frameSize: 3.2,          //指定帧大小，单位KB
-        frameSize: 1.6, //指定帧大小，单位KB
-        // frameSize: 0.8, //指定帧大小，单位KB
-        audioSource: 'auto',
-      };
-
-      this.recorderManager.start(options)
-
-    },
-    string(e) {
-      if (!this.data.isAuto) {
-        let index = e.currentTarget.dataset.index
-        this.setData({
-          standardCurrent: index,
-          line: this.data.standard[index].frequency
-        })
-      }
+    openClose() {
+      this.setData({
+        isShow: !this.data.isShow
+      })
     },
   }
 })

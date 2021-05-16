@@ -43,11 +43,7 @@ Component({
         tickets
       })
     },
-    goTicketIssue() {
-      wx.navigateTo({
-        url: '/pages/square/deal/ticketIssue/ticketIssue',
-      })
-    },
+
     switchTicketStore(e) {
       let index = e.currentTarget.dataset.index
       let tickets = this.data.tickets

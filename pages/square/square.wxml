@@ -46,7 +46,7 @@
         <image catchtap="singIn" class="signIn" src="{{qiniuUrl}}/square/signIn.png"></image>
       </view>
       <view class="recommendBackground" id="recommendBackground"
-        style="background-image: url({{qiniuUrl}}/square/recommendBackground.png); background-size: 100% 100%;">
+        style="background-image: url({{qiniuUrl}}/square/recommendBackground2.png); background-size: 100% 100%;">
         <view class="recommendBackgroundItem">
           <view catchtap="goBand"></view>
           <view catchtap="goPerformance"></view>
@@ -62,6 +62,19 @@
         <view wx:for="{{topic}}" class="topic" catchtap="goTopic" data-topicid="{{item.id}}">
           #{{item.topicName}}#
         </view>
+      </swiper-item>
+    </swiper>
+    <swiper class="activitySwiper" indicator-dots="{{true}}" indicator-color="rgba(255, 255, 255, .3)"
+      indicator-active-color="#ffffff" autoplay="{{true}}" circular="{{true}}">
+      <swiper-item wx:for="{{alliances}}" catchtap="goAllianceDetail" data-id="{{item.id}}" data-index="{{index}}">
+        <image mode="aspectFill" class="activityBox" src="{{item.pictureUrls[0]}}">
+          <view class="activityContent">
+            <view class="strong">{{item.title}}</view>
+            <view class="middle">演出地点：{{detail.activityLocation}}</view>
+            <view class="small">演出时间：{{item.activityTime}}</view>
+            <view class="small">组织者：{{item.organization}}</view>
+          </view>
+        </image>
       </swiper-item>
     </swiper>
     <dynamicList bind:fullscreenchange="fullscreenchange" id="dynamicList" dynamics="{{dynamics}}"></dynamicList>
@@ -80,3 +93,102 @@
   </view>
 </view>
 <authorization dialogShow="{{dialogShow}}" bind:handleGetUserInfo="handleGetUserInfo"></authorization>
+<!-- 签到 -->
+
+<view class="shade {{showSignIn? 'shadeShow':''}}" catchtouchmove="cancelmove">
+  <block wx:if="{{type === 0}}">
+    <view class="dialog d-introduce">
+      <image class="meteor meteor1" src="../../images/square/meteor.png"></image>
+      <image class="meteor meteor2" src="../../images/square/meteor.png"></image>
+      <image class="meteor meteor3" src="../../images/square/meteor.png"></image>
+      <image class="meteor meteor4" src="../../images/square/meteor.png"></image>
+      <image class="everyDay" src="../../images/square/everyDay.png"></image>
+      <image class="close" catchtap="closeSignIn" src="../../images/square/close.png"></image>
+      <view class="frame" style="background-image: url({{qiniuUrl}}/square/frame.png);background-size:100% 100%">
+        <view class="content"> 连续签到<text>7</text>天用户，抽取<text>30</text>
+          人，每人赠送一个小怪兽镭射袋/
+          杜邦纸袋+精美小怪兽徽章</view>
+        <image class="bag" src="../../images/square/bag.png"></image>
+      </view>
+      <view class="introduce">签到领取奖品，还有更多惊喜等着你哟~</view>
+      <view class="prizeBg">
+        <view class="content">
+          <view>打卡签到<text>30</text>天用户</view>
+          <view>抽取<text>6</text>人赠送礼品</view>
+        </view>
+        <view class="prizeList">
+          <view class="prize">
+            <image class="prizeImg" src="../../images/square/first.png"></image>
+            <view class="prizeIntroduce">
+              <view class="order">·一等奖·（一名）</view>
+              <view class="prizeName">worlde Midi键盘</view>
+            </view>
+          </view>
+          <view class="prize">
+            <image class="prizeImg" src="../../images/square/second.png"></image>
+            <view class="prizeIntroduce">
+              <view class="order">·二等奖·（一名）</view>
+              <view class="prizeName">恩雅智能尤克里里</view>
+            </view>
+          </view>
+          <view class="prize">
+            <image class="prizeImg" src="../../images/square/third.png"></image>
+            <view class="prizeIntroduce">
+              <view class="order">·三等奖·（两名）</view>
+              <view class="prizeName">东方鼎T008K口琴</view>
+            </view>
+          </view>
+          <view class="prize">
+            <image class="prizeImg" src="../../images/square/fourth.png"></image>
+            <view class="prizeIntroduce">
+              <view class="order">·四等奖·（两名）</view>
+              <view class="prizeName">卡巴林</view>
+            </view>
+          </view>
+          <image catchtap="bulletSignIn" class="bulletSignIn" src="../../images/square/bulletSignIn.png"></image>
+        </view>
+      </view>
+    </view>
+  </block>
+  <block wx:elif="{{type === 1}}">
+    <view class="dialog d-success">
+      <view class="singInSuccess">签到成功!</view>
+      <view class="createWarp">
+        <button class="create" catchtap="determine">确定</button>
+      </view>
+    </view>
+  </block>
+  <block wx:elif="{{type === 2}}">
+    <view class="dialog d-continuity">
+      <view class="continuityText">连续签到<text class="stress">{{continuity}}</text>天!</view>
+      <view class="logoWrap">
+        <view class="logoRow logoRow1">
+          <image class="logo" src="../../images/square/signInLogo{{continuitys[0]?'ed':''}}.png"></image>
+          <image class="logo" src="../../images/square/signInLogo{{continuitys[1]?'ed':''}}.png"></image>
+          <image class="logo" src="../../images/square/signInLogo{{continuitys[2]?'ed':''}}.png"></image>
+        </view>
+        <view class="logoRow">
+          <image class="logo" src="../../images/square/signInLogo{{continuitys[3]?'ed':''}}.png"></image>
+          <image class="logo" src="../../images/square/signInLogo{{continuitys[4]?'ed':''}}.png"></image>
+          <image class="logo" src="../../images/square/signInLogo{{continuitys[5]?'ed':''}}.png"></image>
+          <image class="logo" src="../../images/square/signInLogo{{continuitys[6]?'ed':''}}.png"></image>
+        </view>
+      </view>
+      <view class="createWarp">
+        <button class="create" catchtap="determine">确定</button>
+      </view>
+    </view>
+  </block>
+  <block wx:elif="{{type === 3}}">
+    <view class="dialog d-medal">
+      <image class="medalLogo" src="../../images/square/medalLogo.png"></image>
+      <view class="congratulationsWrap">
+        <view>恭喜您在音乐小怪兽连续签到<text class="stress">7</text>天</view>
+        <view>留意公众号抽奖活动，有精美礼品等着你哦~</view>
+      </view>
+      <view class="createWarp">
+        <button class="create" catchtap="determine">知道了</button>
+      </view>
+    </view>
+  </block>
+</view>

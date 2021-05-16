@@ -435,6 +435,10 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    if(app.switchData.isModifyGroup) {
+      app.switchData.isModifyGroup = false
+      this.getGroupInfo(app.userInfo.groupId)
+    }
     if (!this.data.isShowGroup) {
       this.getTabBar().setData({
         show: false
@@ -636,7 +640,7 @@ Page({
           if ((this.data.lessMember || !this.data.isLoop) && this.data.MB_Index == 0) {
             return
           }
-          this.upSilde()
+          this.upSilde().then(() => resolve())
           return
         } else if (endY - startY > 50) {
           if ((this.data.lessMember || !this.data.isLoop) && this.data.MB_Index == memberLength - 1) {
@@ -788,7 +792,7 @@ Page({
   // 发布按钮切换
   switchIssue() {
     if (app.userInfo.groupDuty === -1) {
-      common.Tip('你还未成为该小组成员，暂不能发布动态')
+      common.Tip('您还未成为该小组成员，暂不能发布动态')
     } else {
       this.setData({
         switchIssue: !this.data.switchIssue,
@@ -1004,12 +1008,11 @@ Page({
         operate: showContent.isLike,
         relation: {
           userId: app.userInfo.id,
-          themeId: showContent.id
+          themeId: showContent.id,
+          nickName: app.userInfo.nickName,
         },
         extra: {
           otherId: showContent.userId,
-          avatarUrl: app.userInfo.avatarUrl,
-          nickName: app.userInfo.nickName,
           themeTitle: showContent.introduce
         }
       })

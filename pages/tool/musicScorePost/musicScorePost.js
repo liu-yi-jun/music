@@ -1,5 +1,6 @@
 // pages/tool/musicScorePost/musicScorePost.js
 const common = require('../../../assets/tool/common')
+const upload = require('../../../assets/request/upload')
 import WxValidate from '../../../assets/tool/WxValidate'
 const app = getApp()
 Page({
@@ -10,7 +11,14 @@ Page({
   data: {
     qiniuUrl: app.qiniuUrl,
     tempImgPaths: [],
-    tempVideoPath: ''
+    tempVideoPath: '',
+    isData: false,
+    // 控制连接弹窗
+    linkDialogShow: false,
+    // 链接路径
+    linkUrl: '',
+    // 标注视频链接类型
+    isVid: false
   },
 
   /**
@@ -97,6 +105,20 @@ Page({
   previewImage() {
     common.previewImage(this.data.tempDataPaths)
   },
+  // 完成输入链接
+  completeInput(e) {
+    let {
+      linkUrl,
+      isVid
+    } = e.detail
+    console.log('完成', e.detail);
+    this.setData({
+      linkUrl,
+      tempVideoPath: '',
+      isVid,
+      linkDialogShow: false
+    })
+  },
   chooseData() {
     common.chooseImage(6, {
       isCompress: false
@@ -108,11 +130,26 @@ Page({
       })
     })
   },
+  videoSheet() {
+    wx.showActionSheet({
+      itemList: ['添加网络链接', '从手机选择视频'],
+      success: res => {
+        console.log(res)
+        if (res.tapIndex === 1) {
+          this.chooseVideo()
+        } else if (res.tapIndex === 0) {
+          this.setData({
+            linkDialogShow:true
+          })
+        }
+      }
+    })
+  },
   chooseVideo() {
     common.chooseVideo().then(res => {
       this.setData({
         tempVideoPath: res.tempFilePath,
-        isVideo: true
+        linkUrl:''
       })
     })
   },
@@ -120,7 +157,8 @@ Page({
   validate(params) {
     let {
       tempImgPaths,
-      tempVideoPath
+      tempVideoPath,
+      linkUrl
     } = this.data
     return new Promise((resolve, reject) => {
       if (!tempImgPaths.length) reject('请添加曲谱资料')
@@ -129,11 +167,12 @@ Page({
         const error = this.WxValidate.errorList[0].msg
         return reject(error)
       }
-
+      params.author = '词曲:' + params.author
+      params.source = '来源/编配：' + params.source
       return resolve({
-      ...params, 
-      tapPicLink: tempImgPaths,
-      tapVideoLink: tempVideoPath
+        ...params,
+        tapPicLink: tempImgPaths,
+        tapVideoLink: tempVideoPath || linkUrl
       })
     })
   },
@@ -152,24 +191,78 @@ Page({
       }).then(res => resolve(res)).catch(err => reject(err))
     })
   },
+    // 上传视频
+    uploadVideo(tempImgParh) {
+      return new Promise((resolve, reject) => {
+        // app.userInfo.id
+        let option = {
+            userId: app.userInfo.id,
+            type: 'video',
+            module: 'tap'
+          },
+          conf = {
+            loading: false,
+            toast: false
+          }
+        upload.uploadFile(app.Api.uploadImg, tempImgParh, option, conf).then(res => resolve(res)).catch(err => reject(err))
+      })
+    },
+    // 上传图片
+    uploadImg(tempImgParhs) {
+      return new Promise((resolve, reject) => {
+        // app.userInfo.id
+        let option = {
+            userId: app.userInfo.id,
+            type: 'image',
+            module: 'tap'
+          },
+          conf = {
+            loading: false,
+            toast: false
+          }
+        upload.uploadManyImg(app.Api.uploadImg, tempImgParhs, option, conf).then(res => resolve(res)).catch(err => reject(err))
+      })
+    },
   // 提交表单
   async formSubmit(e) {
     console.log('form发生了submit事件，携带的数据为：', e.detail.value)
     let params = e.detail.value
+    let {
+      tempImgPaths,
+      tempVideoPath,
+      linkUrl
+    } = this.data
     try {
       params = await this.validate(params)
-        common.showLoading('发布中')
-        let result = await this.issueTap(params)
-        if (result.affectedRows) {
-          common.Toast('已发布')
-          setTimeout(()=> {
-            wx.navigateBack()
-          },1500)
-        }
+      common.showLoading('发布中')
+      if (tempImgPaths.length ) params.tapPicLink = await this.uploadImg(tempImgPaths)
+      if (tempVideoPath && !linkUrl) params.tapVideoLink = await this.uploadVideo(tempVideoPath)
+
+      let result = await this.issueTap(params)
+      if (result.affectedRows) {
+        common.Toast('已发布')
+        setTimeout(() => {
+          wx.navigateBack()
+        }, 1500)
+      }
     } catch (err) {
       console.log(err)
       common.Tip(err)
       wx.hideLoading()
     }
   },
+  toDelete(e) {
+    let type = e.currentTarget.dataset.type
+    if (type === "image") {
+      this.setData({
+        tempImgPaths: [],
+        isData: false
+      })
+    } else if (type === "video") {
+      this.setData({
+        tempVideoPath: '',
+        linkUrl:''
+      })
+    }
+  }
 })

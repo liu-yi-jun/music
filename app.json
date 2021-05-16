@@ -66,7 +66,14 @@
     "pages/my/follow/follow",
     "components/my/myRelease/myRelease",
     "pages/tool/musicScorePost/musicScorePost",
-    "pages/home/welcome/welcome"
+    "pages/home/welcome/welcome",
+    "pages/my/agreement/agreement",
+    "pages/my/about/about",
+    "pages/common/howObtainVid/howObtainVid",
+    "pages/square/band/IssueMoment/IssueMoment",
+    "pages/square/band/momentDetail/momentDetail",
+    "pages/square/squarePost/standard/standard",
+    "components/common/msgAuthorization/msgAuthorization"
   ],
   "permission": {
     "scope.userLocation": {

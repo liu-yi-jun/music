@@ -77,11 +77,7 @@ Component({
         seconds
       })
     },
-    goSecondIssue() {
-      wx.navigateTo({
-        url: '/pages/square/deal/secondIssue/secondIssue',
-      })
-    },
+
 
     switchSecondStore(e) {
       let {
@@ -112,6 +108,14 @@ Component({
       let url = e.currentTarget.dataset.url
       let urls = e.currentTarget.dataset.urls
       tool.previewImage(urls,url)
+    },
+    startPlay(e) {
+      let id = e.currentTarget.dataset.id
+      if (this.videoId && (this.videoId !== id)) {
+        let videoContext = wx.createVideoContext(`video${this.videoId}`, this)
+        videoContext.pause()
+      }
+      this.videoId = id
     }
   }
 })

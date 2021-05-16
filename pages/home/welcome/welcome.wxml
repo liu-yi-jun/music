@@ -14,4 +14,15 @@
     </view>
     <view class="into" catchtap="into">进入小组</view>
 </view>
+<view class="shade {{applyShow? 'shadeShow':''}}" mark:district="shade">
+  <view class="applyDialog">
+    <text class="groupApply">请提交您的小组申请</text>
+    <textarea wx:if="{{applyShow}}" bindinput="inputApply" class="applyContent" name="applyContent" id=""
+      maxlength="100" placeholder="100字以内" placeholder-class="applyPlaceholder"></textarea>
+    <view class="choose">
+      <image catchtap="cancelApply" src="/images/groupList/delete.png" ></image>
+      <image src="/images/groupList/success.png" catchtap="apply"></image>
+    </view>
+  </view>
+</view>
 <authorization dialogShow="{{dialogShow}}" ></authorization>

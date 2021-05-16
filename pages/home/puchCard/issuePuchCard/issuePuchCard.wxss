@@ -39,7 +39,7 @@
   margin-bottom: 350rpx;
 }
 
-.part view {
+.part .btn {
   background: white;
   color: #727171;
   border-radius: 10rpx;
@@ -60,6 +60,7 @@
   position: absolute;
   right: -26rpx;
   bottom: -20rpx;
+  z-index: 99;
 }
 
 .dataImg {

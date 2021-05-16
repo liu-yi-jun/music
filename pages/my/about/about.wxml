@@ -1,0 +1,23 @@
+<!--pages/my/about/about.wxml-->
+<view class="about">
+  <navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' color="#FFF" back="{{true}}" iconTheme='white'
+    bindback="handlerGobackClick" ></navBar>
+  <scroll-view style="height: calc({{excludeHeight}}px);" scroll-y>
+    <view class="wrap">
+      <view class="title">加入我们</view>
+    <text space="nbsp">
+    互联网浪潮下，人与人之间的联系越来越紧密，生活变得屏幕化、碎片化。但是紧密的联系逐渐停留在表层。我们希望从“音乐”为切入点寻找人们内心深处的契合与联系。
+    Music Monster希望用音乐连接用户， 让音乐融入生活，让音乐创造价值,，让音乐产生更多可能。
+基于音乐，但是不止音乐，我们希望和您一起产生更多有趣有价值的内容，共同守护这个小小的音乐乌托邦~
+如果你：
+    1、对音乐文化有独特的见解，对音乐内容的运营有创造性的思考，欢迎加入我们，开启你的音乐“实验”之旅
+    2、既是Programmer，又是Musician，欢迎加入我们，Coding Your Musical Life！
+    3、有组织经验，擅长筹备一些活动（线上线下音乐讲座、小型音乐会），欢迎加入我们，一同普及音乐文化，让音乐疗愈更多的灵魂~
+
+    联系方式
+    微信公众号：声若文化
+    Email：shengruohz@163.com
+    </text>
+  </view>
+  </scroll-view>
+</view>

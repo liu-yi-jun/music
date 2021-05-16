@@ -134,6 +134,7 @@ swiper-item,
 .info {
   display: flex;
   flex-direction: column;
+  word-break: break-all;
   color: white;
   font-size: 28rpx;
   /* align-items: center; */

@@ -3,7 +3,7 @@
 .second {
   box-sizing: border-box;
   width: 100%;
-  padding: 20rpx 25rpx;
+  padding: 20rpx 25rpx 100rpx;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -48,6 +48,7 @@
 .video {
   border-top-left-radius: 40rpx !important;
   border-top-right-radius: 40rpx !important;
+  display: block;
 }
 
 swiper {
@@ -124,23 +125,7 @@ swiper {
   font-size: 20rpx;
 }
 
-.issueDynamic {
-  width: 233rpx;
-  height: 233rpx;
-  position: fixed;
-  bottom: calc(0rpx + env(safe-area-inset-bottom));
-  right: -16rpx;
-  z-index: 9999;
-}
 
-.issueDynamicInner {
-  width: 70%;
-  height: 70%;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-}
 
 .bottomBar {
   display: flex;

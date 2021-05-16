@@ -7,9 +7,17 @@
   </view>
   <scroll-view refresher-enabled="{{true}}" refresher-triggered="{{triggered}}" bindrefresherrefresh="onRefresh"
     bindscrolltolower="scrolltolower" scroll-y style="height: calc({{excludeHeight}}px - 91rpx);">
-    <composeBand bands="{{bands}}"></composeBand>
+    <view hidden="{{actIndex !== 0}}">
+      <bandMoment moments="{{doubleMoment}}"></bandMoment>
+    </view>
+    <view hidden="{{actIndex !== 1}}">
+      <composeBand bands="{{bands}}"></composeBand>
+    </view>
   </scroll-view>
-  <image class="issueDynamic" src="/images/square/issueDynamic2.png">
+  <image hidden="{{actIndex !== 0}}" class="issueDynamic" src="/images/square/issueDynamic2.png">
+    <view class="issueDynamicInner" catchtap="toIssueMoment"></view>
+  </image>
+  <image hidden="{{actIndex !== 1}}" class="issueDynamic" src="/images/square/issueDynamic2.png">
     <view class="issueDynamicInner" catchtap="toIssueTeam"></view>
   </image>
 </view>

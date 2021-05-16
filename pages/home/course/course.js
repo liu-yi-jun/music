@@ -1,6 +1,7 @@
 // pages/home/course/course.js
 const app = getApp()
 const tool = require('../../../assets/tool/tool.js')
+const common =require('../../../assets/tool/common')
 Page({
 
   /**
@@ -24,13 +25,26 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let showGroupId = options.showGroupId
+    this.showGroupId = options.showGroupId
     // 获取去除上面导航栏，剩余的高度
     tool.navExcludeHeight(this)
-    this.getCourses()
+    let isMyGroup = options.showGroupId == app.userInfo.groupId
+    this.getCourses().then(() => {
+      if (!this.data.courses.length) {
+        if (!isMyGroup) {
+          return common.Tip('该小组暂无发布课程')
+        } else {
+          if (app.userInfo.groupDuty == -1) {
+            return common.Tip('该小组暂无发布课程')
+          } else if (app.userInfo.groupDuty == 2) {
+            return common.Tip('暂时还没有课程信息,请联系管理员或组长发布课程吧')
+          }
+        }
+      }
+    })
     this.setData({
       groupDuty: app.userInfo.groupDuty,
-      isMyGroup: showGroupId == app.userInfo.groupId
+      isMyGroup
     })
   },
   // 获取分页课程信息
@@ -43,7 +57,7 @@ Page({
       app.get(app.Api.getCourses, {
         pageSize,
         pageIndex,
-        groupId: app.userInfo.groupId
+        groupId: this.showGroupId
       }, {
         loading: false
       }).then(res => {

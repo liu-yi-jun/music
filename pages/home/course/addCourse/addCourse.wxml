@@ -29,23 +29,27 @@
         </view>
         <view class="media">
           <view class="videoWrap">
-            <image wx:if="{{tempVideoPath}}" class="deleteData" src="http://cdn.eigene.cn/addCourse/deleteData.png"
-              data-type="2" catchtap="deleteData"></image>
             <view class="title-delete">
               <text>课程视频:</text>
-              <image class="delete" src="{{qiniuUrl}}/addCourse/delete.png" wx:if="{{tempVideoPath}}"  catchtap="deleteVideo"></image>
+              <image class="delete" src="{{qiniuUrl}}/addCourse/delete.png" wx:if="{{tempVideoPath || linkUrl}}"
+                catchtap="deleteVideo"></image>
             </view>
             <view class="btnWrap">
-              <view wx:if="{{!tempVideoPath}}" class="btn" catchtap="videoSheet">上传视频</view>
-              <video class="video" wx:else src="{{tempVideoPath}}" object-fit="cover"></video>
+              <view wx:if="{{!tempVideoPath && !linkUrl}}" class="btn" catchtap="videoSheet">上传视频</view>
+              <block  wx:if="{{tempVideoPath || (linkUrl && !isVid)}}">
+                <video class="video" object-fit="cover" src="{{tempVideoPath}}"></video>
+              </block>
+              <block wx:if="{{linkUrl && isVid}}">
+                <txv-video class="video" height="380" vid="{{linkUrl}}" playerid="txv3"></txv-video>
+              </block>
+              <!-- <video class="video" wx:else src="{{tempVideoPath}}" object-fit="cover"></video> -->
             </view>
           </view>
           <view class="pictureurlWrap">
-            <image wx:if="{{tempPicturePaths.length}}" class="deleteData"
-              src="http://cdn.eigene.cn/addCourse/deleteData.png" data-type="3" catchtap="deleteData"></image>
             <view class="title-delete">
               <text>课程资料:</text>
-              <image class="delete" src="{{qiniuUrl}}/addCourse/delete.png" wx:if="{{tempPicturePaths.length}}"   catchtap="deleteAllImg"></image>
+              <image class="delete" src="{{qiniuUrl}}/addCourse/delete.png" wx:if="{{tempPicturePaths.length}}"
+                catchtap="deleteAllImg"></image>
             </view>
 
             <view class="btnWrap">
@@ -65,13 +69,9 @@
         </view>
       </view>
     </scroll-view>
-    <view catchtap="cancelPopup" catchtouchmove="touchmove" class="mask {{dialogShow? 'shadeShow':''}}">
-      <view class="popup" catchtap="return">
-        <textarea wx:if="{{dialogShow}}" value="{{linkUrl}}" bindinput="inputLinkUrl" class="popupTextarea"
-          placeholder="请输入{{currentType==1?'音频':(currentType==2?'视频':'资料')}}链接" cursor-spacing="120"></textarea>
-        <view class="complete" catchtap="complete">完成</view>
-      </view>
-    </view>
     <record id="record" bind:recordResult="recordResult"></record>
   </form>
 </view>
+
+<linkDialog linkDialogShow="{{linkDialogShow}}" bind:completeInput="completeInput"></linkDialog>
+<msgAuthorization wx:if="{{msgAuthorizationShow}}" bind:completeMsgAuthorization="completeMsgAuthorization"  msgAuthorizationShow="{{msgAuthorizationShow}}" requestId="{{requestId}}"></msgAuthorization>

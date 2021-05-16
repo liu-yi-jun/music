@@ -35,7 +35,8 @@
         </swiper-item>
       </swiper>
       <view hidden="{{flag !== 'demonstration'}}">
-      <txv-video class="video" height="380" vid="{{tapDetail.tapVideoLink}}" playerid="txv1"></txv-video>
+      <txv-video wx:if="{{!mp4Video}}" class="video" height="380" vid="{{tapDetail.tapVideoLink}}" playerid="txv1"></txv-video>
+      <video style="height:300rpx;width:100%" object-fit="cover" wx:else src="{{tapDetail.tapVideoLink}}"></video>
     </view>
       <!-- <video wx:else src="{{tapDetail.tapVideoLink}}" class="video" object-fit="cover"></video> -->
     </view>

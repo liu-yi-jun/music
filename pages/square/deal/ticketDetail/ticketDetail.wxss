@@ -126,6 +126,7 @@ swiper-item,
 }
 
 .info {
+  word-break: break-all;
   display: flex;
   flex-direction: column;
   color: white;

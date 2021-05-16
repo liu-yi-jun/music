@@ -40,7 +40,9 @@ Page({
     limitTime: 300000,
     // 附近位置,
     index:0,
-    mks:[]
+    mks:[],
+    msgAuthorizationShow: false,
+    requestId: [app.InfoId.like, app.InfoId.content, app.InfoId.reply]
   },
 
   /**
@@ -334,8 +336,7 @@ Page({
         introduce: describe,
         voiceUrl: tempFilePath,
         location,
-        avatarUrl: app.userInfo.avatarUrl,
-        nickName:  app.userInfo.nickName,
+        groupName: app.userInfo.groupName,
         mold: 2
       })
     })
@@ -371,29 +372,37 @@ Page({
     let params = e.detail.value
     console.log(params)
     try {
-      let imgUrls = []
       params = await this.validate(params)
-      console.log(params)
-      common.showLoading('发布中')
-      params.voiceUrl = await this.uploadVoice(params.voiceUrl)
-      // app.userInfo.id
-      // app.userInfo.groupId
-      const result = await this.voiceIssue({
-        ...params,
-        userId: app.userInfo.id,
-        groupId: app.userInfo.groupId,
-        gender:app.userInfo.gender,
-        constellation:app.userInfo.constellation,
-        age:app.userInfo.age,
-        groupName: app.userInfo.groupName,
-      })
-      common.Toast('已发布')
-      this.goHome()
+      let subscriptionsSetting = await authorize.isSubscription()
+      if (!subscriptionsSetting.itemSettings) {
+        this.params = params
+        // 未勾选总是
+        this.setData({
+          msgAuthorizationShow: true
+        })
+      } else {
+        this.submitTeam(params)
+      }
     } catch (err) {
       console.log(err)
       common.Tip(err)
       wx.hideLoading()
     }
+  },
+  completeMsgAuthorization() {
+    this.submitTeam(this.params)
+  },
+  async submitTeam(params) {
+    common.showLoading('发布中')
+    params.voiceUrl = await this.uploadVoice(params.voiceUrl)
+    const result = await this.voiceIssue({
+      ...params,
+      userId: app.userInfo.id,
+      groupId: app.userInfo.groupId,
+      groupName: app.userInfo.groupName,
+    })
+    common.Toast('已发布')
+    this.goHome()
   },
   goHome() {
     app.switchData.refresh = true

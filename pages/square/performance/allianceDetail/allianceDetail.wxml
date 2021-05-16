@@ -38,7 +38,12 @@
         </view>
       </view>
       <view class="wrapVideo" wx:if="{{detail.videoUrl}}">
-        <video object-fit="cover" src="{{detail.videoUrl}}"></video>
+        <block wx:if="{{mp4Video}}">
+          <video object-fit="cover" src="{{detail.videoUrl}}"></video>
+        </block>
+        <block wx:else>
+          <txv-video class="video" height="380" vid="{{detail.videoUrl}}" playerid="txv3"></txv-video>
+        </block>
       </view>
 
     </view>

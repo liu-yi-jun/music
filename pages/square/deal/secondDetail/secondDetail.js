@@ -93,7 +93,7 @@ Page({
         commentPaging
       })
     }).catch(err => {
-      common.Toast('该二手乐已不存在')
+      common.Toast('该二手乐器已不存在')
       setTimeout(() => {
         wx.navigateBack()
       }, 1500)
@@ -318,6 +318,12 @@ Page({
       } else {
         common.Toast('该器乐已不存在')
       }
+    })
+  },
+  goPersonal(e) {
+    let userId = this.data.detail.userId
+    wx.navigateTo({
+      url: `/pages/my/invitation/invitation?userId=${userId}`,
     })
   },
 })

@@ -52,3 +52,5 @@
 
 
 <authorization dialogShow="{{dialogShow}}"></authorization>
+
+<msgAuthorization wx:if="{{msgAuthorizationShow}}" bind:completeMsgAuthorization="completeMsgAuthorization"  msgAuthorizationShow="{{msgAuthorizationShow}}" requestId="{{requestId}}"></msgAuthorization>

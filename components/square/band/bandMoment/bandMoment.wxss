@@ -1,0 +1,175 @@
+/* components/square/band/bandMoment/bandMoment.wxss */
+
+.bandMoment {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 20rpx 25rpx 100rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+}
+
+.img0 {
+  height: 436rpx;
+}
+
+.img1 {
+  height: 380rpx;
+}
+
+.img2 {
+  height: 300rpx;
+}
+
+.img3 {
+  height: 350rpx;
+}
+
+.img {
+  width: 340rpx;
+  font-size: 0;
+  position: relative;
+}
+
+.secondStore {
+  position: absolute;
+  right: 17rpx;
+  top: 20rpx;
+  width: 45rpx;
+  height: 45rpx;
+  z-index: 999;
+}
+
+.video {
+  border-top-left-radius: 40rpx !important;
+  border-top-right-radius: 40rpx !important;
+  display: block;
+}
+
+swiper {
+  border-top-left-radius: 40rpx !important;
+  border-top-right-radius: 40rpx !important;
+  overflow: hidden;
+  transform: translateY(0);
+}
+
+.card {
+  overflow: hidden;
+  border-radius: 40rpx;
+  background: white;
+  margin: 10rpx 0rpx;
+  position: relative;
+}
+
+.bottomContent {
+  background: white;
+  box-sizing: border-box;
+  padding: 20rpx;
+  width: 340rpx;
+}
+
+.goods {
+  font-size: 25rpx;
+  word-break: break-all
+}
+
+.left {
+  display: flex;
+  flex-direction: column;
+}
+
+.left .name {
+  color: black;
+  font-size: 22rpx;
+}
+
+.left .degree {
+  color: #808080;
+  font-size: 17rpx;
+}
+
+.right {
+  color: #ce4646;
+  font-size: 34rpx;
+  font-family: 'SH-Bold';
+}
+
+.wx {
+  margin-top: 10rpx;
+  font-size: 20rpx;
+  color: #808080;
+}
+
+.avatar {
+  width: 62rpx;
+  height: 62rpx;
+  border-radius: 50%;
+  display: block;
+  flex-shrink: 0;
+}
+
+.avatar-username {
+  display: flex;
+  align-items: flex-end;
+}
+
+.username {
+  margin-left: 10rpx;
+  color: #808080;
+  font-size: 20rpx;
+}
+
+.issueDynamic {
+  width: 233rpx;
+  height: 233rpx;
+  position: fixed;
+  bottom: calc(0rpx + env(safe-area-inset-bottom));
+  right: -16rpx;
+  z-index: 9999;
+}
+
+.issueDynamicInner {
+  width: 70%;
+  height: 70%;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.bottomBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20rpx;
+}
+
+.goods>view>text:first-child {
+  font-family: 'SH-Bold';
+}
+
+.wx-swiper-dots {
+  position: relative;
+  left: unset !important;
+  right: -10rpx;
+}
+
+.wx-swiper-dots.wx-swiper-dots-horizontal {
+  margin-bottom: -5rpx;
+}
+
+.title {
+  font-weight: bold;
+}
+.time {
+  color: white;
+  font-size: 20rpx;
+  text-align: end;
+  margin-right: 10rpx;
+  margin-bottom: 10rpx;
+}

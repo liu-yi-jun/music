@@ -13,7 +13,12 @@ Page({
     tempDataPaths: [],
     tempVideoPath: '',
     isData: false,
-    isVideo: false
+    // 控制连接弹窗
+    linkDialogShow: false,
+    // 链接路径
+    linkUrl: '',
+    // 标注视频链接类型
+    isVid: false
   },
 
   /**
@@ -87,54 +92,84 @@ Page({
       })
     })
   },
+  // 完成输入链接
+  completeInput(e) {
+    let {
+      linkUrl,
+      isVid
+    } = e.detail
+    console.log('完成', e.detail);
+    this.setData({
+      linkUrl,
+      tempVideoPath: '',
+      isVid,
+      linkDialogShow: false
+    })
+  },
+  videoSheet() {
+    wx.showActionSheet({
+      itemList: ['添加网络链接', '从手机选择视频'],
+      success: res => {
+        console.log(res)
+        if (res.tapIndex === 1) {
+          this.chooseVideo()
+        } else if (res.tapIndex === 0) {
+          this.setData({
+            linkDialogShow: true
+          })
+        }
+      }
+    })
+  },
   chooseVideo() {
     common.chooseVideo().then(res => {
       this.setData({
         tempVideoPath: res.tempFilePath,
-        isVideo: true
+        linkUrl: ''
       })
     })
   },
-    // 上传视频
-    uploadVideo(tempImgParh) {
-      return new Promise((resolve, reject) => {
-        // app.userInfo.id
-        let option = {
-            userId:  app.userInfo.id,
-            type: 'video',
-            module: 'groupcard'
-          },
-          conf = {
-            loading: false,
-            toast: false
-          }
-        upload.uploadFile(app.Api.uploadImg, tempImgParh, option, conf).then(res => resolve(res)).catch(err => reject(err))
-      })
-    },
-    // 上传图片
-    uploadImg(tempImgParhs) {
-      return new Promise((resolve, reject) => {
-        // app.userInfo.id
-        let option = {
-            userId: app.userInfo.id,
-            type: 'image',
-            module: 'groupcard'
-          },
-          conf = {
-            loading: false,
-            toast: false
-          }
-        upload.uploadManyImg(app.Api.uploadImg, tempImgParhs, option, conf).then(res => resolve(res)).catch(err => reject(err))
-      })
-    },
+  // 上传视频
+  uploadVideo(tempImgParh) {
+    return new Promise((resolve, reject) => {
+      // app.userInfo.id
+      let option = {
+          userId: app.userInfo.id,
+          type: 'video',
+          module: 'groupcard'
+        },
+        conf = {
+          loading: false,
+          toast: false
+        }
+      upload.uploadFile(app.Api.uploadImg, tempImgParh, option, conf).then(res => resolve(res)).catch(err => reject(err))
+    })
+  },
+  // 上传图片
+  uploadImg(tempImgParhs) {
+    return new Promise((resolve, reject) => {
+      // app.userInfo.id
+      let option = {
+          userId: app.userInfo.id,
+          type: 'image',
+          module: 'groupcard'
+        },
+        conf = {
+          loading: false,
+          toast: false
+        }
+      upload.uploadManyImg(app.Api.uploadImg, tempImgParhs, option, conf).then(res => resolve(res)).catch(err => reject(err))
+    })
+  },
   async issue() {
     try {
+      let linkUrl = this.data.linkUrl
       let params = await this.validate()
       common.showLoading('创建中')
       if (params.datumUrls.length) {
         params.datumUrls = await this.uploadImg(params.datumUrls)
       }
-      if (params.videoUrl) {
+      if (params.videoUrl && !linkUrl) {
         params.videoUrl = await this.uploadVideo(params.videoUrl)
       }
       const result = await this.issueGroupCard(params)
@@ -164,13 +199,12 @@ Page({
     return new Promise((resolve, reject) => {
       let tempDataPaths = this.data.tempDataPaths
       let tempVideoPath = this.data.tempVideoPath
-      if (!tempDataPaths.length && !tempVideoPath) return reject('请添加资料或者视频')
+      let linkUrl = this.data.linkUrl
+      if (!tempDataPaths.length && !tempVideoPath && !linkUrl) return reject('请添加资料或者视频')
       resolve({
         datumUrls: tempDataPaths,
-        videoUrl: tempVideoPath,
+        videoUrl: tempVideoPath || linkUrl,
         adminId: app.userInfo.id,
-        adminName: app.userInfo.nickName,
-        adminAvatar: app.userInfo.avatarUrl,
         groupId: app.userInfo.groupId
       })
     })

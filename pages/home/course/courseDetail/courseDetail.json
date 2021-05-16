@@ -6,7 +6,8 @@
     "commentList": "/components/common/commentList/commentList",
     "courseDatum": "/components/home/course/courseDatum/courseDatum",
     "menu": "/components/common/menu/menu",
-    "bar":"/components/common/bar/bar"
+    "bar":"/components/common/bar/bar",
+    "txv-video": "plugin://tencentvideo/video"
   },
     "disableScroll": true
 }

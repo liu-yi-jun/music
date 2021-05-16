@@ -17,9 +17,10 @@ Page({
     tempFilePaths: [],
     // 附近位置,
     index: 0,
-    mks: []
+    mks: [],
+    msgAuthorizationShow: false,
+    requestId: [app.InfoId.like, app.InfoId.content, app.InfoId.reply]
   },
-
   /**
    * 生命周期函数--监听页面加载
    */
@@ -154,11 +155,6 @@ Page({
         introduce: describe,
         pictureUrls: tempFilePaths,
         location,
-        avatarUrl: app.userInfo.avatarUrl,
-        nickName: app.userInfo.nickName,
-        gender: app.userInfo.gender,
-        constellation: app.userInfo.constellation,
-        age: app.userInfo.age,
         groupName: app.userInfo.groupName,
         mold: 0
       })
@@ -195,27 +191,38 @@ Page({
     let params = e.detail.value
     console.log(params)
     try {
-      let imgUrls = []
       params = await this.validate(params)
-      console.log(params)
-      common.showLoading('发布中')
-      if (params.pictureUrls.length) {
-        params.pictureUrls = await this.uploadImg(params.pictureUrls)
+      let subscriptionsSetting = await authorize.isSubscription()
+      if (!subscriptionsSetting.itemSettings) {
+        this.params = params
+        // 未勾选总是
+        this.setData({
+          msgAuthorizationShow: true
+        })
+      } else {
+        this.submitTeam(params)
       }
-      // app.userInfo.id
-      // app.userInfo.groupId
-      const result = await this.pictureIssue({
-        ...params,
-        userId: app.userInfo.id,
-        groupId: app.userInfo.groupId
-      })
-      common.Toast('已发布')
-      this.goHome()
     } catch (err) {
       console.log(err)
       common.Tip(err)
       wx.hideLoading()
     }
+  },
+  completeMsgAuthorization() {
+    this.submitTeam(this.params)
+  },
+  async submitTeam(params) {
+    common.showLoading('发布中')
+    if (params.pictureUrls.length) {
+      params.pictureUrls = await this.uploadImg(params.pictureUrls)
+    }
+    const result = await this.pictureIssue({
+      ...params,
+      userId: app.userInfo.id,
+      groupId: app.userInfo.groupId
+    })
+    common.Toast('已发布')
+    this.goHome()
   },
   goHome() {
     app.switchData.refresh = true

@@ -1,13 +1,21 @@
 <!--components/common/authorization/authorization.wxml-->
-<view class="shade {{dialogShow? 'shadeShow':''}}" mark:district="shade">
-    <view class="dialog">
-      <view class="miniLogo-musicmonster">
-        <image class="miniLogo" src="/images/index/miniLogo.png"></image>
-        <image class="musicmonster" src="/images/index/musicmonster.png"></image>
+<view class="shade {{dialogShow? 'shadeShow':''}}" mark:district="shade" >
+  <view class="dialog">
+    <view class="miniLogo-musicmonster">
+      <image class="miniLogo" src="/images/index/miniLogo.png"></image>
+      <image class="musicmonster" src="/images/index/musicmonster.png"></image>
+    </view>
+    <checkbox-group class="checkbox-group" bindchange="checkboxChange">
+      <checkbox value="cb" />
+      <view>
+        <text>我已阅读并同意</text>
+        <text class="stress" catchtap="goUserNotice">《Music Monster用户须知》</text>
       </view>
-      <view class="buttonWrap">
-        <button class="btn cancel" catchtap="cancel">取消</button>
-        <button class="btn confirm"  catchtap="handleGetUserInfo">微信授权</button>
-      </view>
+
+    </checkbox-group>
+    <view class="buttonWrap">
+      <button class="btn cancel" catchtap="cancel">取消</button>
+      <button class="btn  {{check?'confirm':'cancel'}}" catchtap="handleGetUserInfo">微信授权</button>
     </view>
   </view>
+</view>

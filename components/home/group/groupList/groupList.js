@@ -23,7 +23,9 @@ Component({
     // 控制弹出框
     joinShow: false,
     applyShow: false,
-    applyContent: ''
+    applyContent: '',
+    msgAuthorizationShow: false,
+    requestId: [app.InfoId.examine]
   },
 
   /**
@@ -93,13 +95,21 @@ Component({
         })
       }
     },
-    yesJoin() {
+    async yesJoin() {
       let groupInfo = this.groupInfo
       if (groupInfo.examine) {
-        this.setData({
-          applyShow: true,
-          joinShow: false
-        })
+        let subscriptionsSetting = await authorize.isSubscription()
+        if (!subscriptionsSetting.itemSettings) {
+          // 未勾选总是
+          this.setData({
+            msgAuthorizationShow: true
+          })
+        }else {
+          this.setData({
+            applyShow: true,
+            joinShow: false
+          })
+        }
       } else {
         this.setData({
           joinShow: false
@@ -137,13 +147,25 @@ Component({
         applyContent
       })
     },
-    apply() {
+
+     apply() {
       let applyContent = this.data.applyContent
-      let groupInfo = this.groupInfo
       if (!applyContent) {
         common.Tip('请输入内容')
         return
       }
+      this.applyJoinGrop()
+    },
+    completeMsgAuthorization() {
+      // this.applyJoinGrop()
+      this.setData({
+        applyShow: true,
+        joinShow: false
+      })
+    },
+    applyJoinGrop() {
+      let applyContent = this.data.applyContent
+      let groupInfo = this.groupInfo
       this.joinGroup(groupInfo).then(res => {
         groupInfo.isJoin = -1 //审核中
         groupInfo.groupDuty = -1 //审核中
@@ -172,7 +194,7 @@ Component({
               "value": tool.cutstr(groupInfo.groupName, 16)
             },
             "name2": {
-              "value": tool.cutstr(app.userInfo.nickName, 16)
+              "value": tool.cutstr(app.userInfo.nickName, 6).replace(/[\d]+/g, '*')
             },
             "thing6": {
               "value": tool.cutstr(applyContent, 16)
@@ -186,22 +208,22 @@ Component({
           groups: this.data.groups,
           applyShow: false
         })
-        authorize.isSubscription().then(res => {
-          if (res.mainSwitch && (!res.itemSettings || !res.itemSettings[app.InfoId.examine])) {
-            common.Tip('接下来将授权"审核结果"通知。授权时请勾选“总是保持以上选择,不再询问”，后续将第一时间通知到您', '申请信息已发送').then(res => {
-              if (res.confirm) {
-                authorize.alwaysSubscription([app.InfoId.examine]).then(res => {})
-              }
-            })
-          } else {
-            common.Tip('确保您已开启相应的通知权限，“审核结果”将会第一时间通知到您', '申请信息已发送').then(res => {
-              if (res.confirm) {
-                authorize.alwaysSubscription([app.InfoId.examine]).then(res => {})
-              }
-            })
-          }
-        })
+        // authorize.isSubscription().then(res => {
+        //   if (res.mainSwitch && (!res.itemSettings || !res.itemSettings[app.InfoId.examine])) {
+        //     common.Tip('接下来将授权"审核结果"通知。授权时请勾选“总是保持以上选择,不再询问”，后续将第一时间通知到您', '申请信息已发送').then(res => {
+        //       if (res.confirm) {
+        //         authorize.alwaysSubscription([app.InfoId.examine]).then(res => {})
+        //       }
+        //     })
+        //   } else {
+        //     common.Tip('确保您已开启相应的通知权限，“审核结果”将会第一时间通知到您', '申请信息已发送').then(res => {
+        //       if (res.confirm) {
+        //         authorize.alwaysSubscription([app.InfoId.examine]).then(res => {})
+        //       }
+        //     })
+        //   }
+        // })
       })
-    },
+    }
   }
 })

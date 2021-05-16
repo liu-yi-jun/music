@@ -1,0 +1,19 @@
+/* pages/my/about/about.wxss */
+.about {
+  color: white;
+  font-size: 24rpx;
+  word-break: break-all;
+  text-align: justify;
+}
+.wrap {
+  padding:0 30rpx ;
+}
+.bold {
+  font-weight: bold;
+  font-size: 28rpx;
+}
+.title {
+  text-align: center;
+  font-size: 30rpx;
+  font-weight: bold;
+}

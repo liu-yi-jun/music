@@ -14,7 +14,7 @@ Page({
     festivals: [],
     liveHouse: [],
     alliancePaging: {
-      pageSize: 10,
+      pageSize: 20,
       pageIndex: 1,
       isNotData: false
     },
@@ -28,12 +28,13 @@ Page({
       pageIndex: 1,
       isNotData: false
     },
-    barList: [{
-        name: 'LiveHouse',
-      },
-      {
-        name: '音乐节'
-      },
+    barList: [
+      // {
+      //   name: 'LiveHouse',
+      // },
+      // {
+      //   name: '音乐节'
+      // },
       {
         name: '小组活动'
       }
@@ -49,8 +50,8 @@ Page({
   onLoad: function (options) {
     // 获取去除上面导航栏，剩余的高度
     tool.navExcludeHeight(this)
-    this.getLiveHouse()
-    this.getMusicFestival()
+    // this.getLiveHouse()
+    // this.getMusicFestival()
     this.getAlliance()
   },
   getLiveHouse() {
@@ -90,22 +91,24 @@ Page({
     })
   },
   getAlliance() {
-    let alliancePaging = this.data.alliancePaging
-    app.get(app.Api.getAlliance, {
-      ...alliancePaging,
-    }, {
-      loading: false
-    }).then(res => {
-      if (res.length < alliancePaging.pageSize) {
+    return new Promise((resolve, reject) => {
+      let alliancePaging = this.data.alliancePaging
+      app.get(app.Api.getAlliance, {
+        ...alliancePaging,
+      }, {
+        loading: false
+      }).then(res => {
+        if (res.length < alliancePaging.pageSize) {
+          alliancePaging.isNotData = true
+        }
+        alliancePaging.pageIndex = alliancePaging.pageIndex + 1
         this.setData({
-          'alliancePaging.isNotData': true
+          alliances: this.data.alliances.concat(res),
         })
-      }
-      this.setData({
-        alliances: this.data.alliances.concat(res),
-        'alliancePaging.pageIndex': alliancePaging.pageIndex + 1
+        resolve()
       })
     })
+
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -121,13 +124,10 @@ Page({
     if (app.alliancePostBack || app.allianceDeleteBack) {
       app.alliancePostBack = false
       app.allianceDeleteBack = false
-      this.setData({
-        alliances: [],
-        'alliancePaging.isNotData': false,
-        'alliancePaging.pageIndex': 1
-      }, () => {
-        this.getAlliance()
-      })
+      this.data.alliancePaging.isNotData = false
+      this.data.alliancePaging.pageIndex = 1
+      this.data.alliances = []
+      this.getAlliance()
     }
   },
 
@@ -174,19 +174,40 @@ Page({
       actIndex
     })
   },
+  onRefresh() {
+    if (this._freshing) return
+    this._freshing = true
+    let {
+      alliancePaging,
+      actIndex
+    } = this.data
+    if (actIndex === 0) {
+      alliancePaging.isNotData = false
+      alliancePaging.pageIndex = 1
+      this.data.alliances = []
+      this.getAlliance().then(() => {
+        this._freshing = false
+        this.setData({
+          triggered: false
+        })
+      })
+    }
+
+  },
   scrolltolower() {
     let {
       alliancePaging,
       festivalPaging,
       actIndex
     } = this.data
-    if (actIndex === 2 && !alliancePaging.isNotData) {
+    if (actIndex === 0 && !alliancePaging.isNotData) {
       this.getAlliance()
-    } else if (actIndex === 1 && !festivalPaging.isNotData) {
-      this.getMusicFestival()
-    } else if (actIndex === 0) {
-      this.getLiveHouse()
     }
+    // } else if (actIndex === 1 && !festivalPaging.isNotData) {
+    //   this.getMusicFestival()
+    // } else if (actIndex === 0) {
+    //      this.getAlliance()
+    // }
   },
   goAlliancePost() {
 
@@ -218,7 +239,7 @@ Page({
     }
   },
   doItemDelete(data) {
-    let index = parseInt(data.index) 
+    let index = parseInt(data.index)
     this.data.alliances.splice(index, 1)
     this.setData({
       alliances: this.data.alliances

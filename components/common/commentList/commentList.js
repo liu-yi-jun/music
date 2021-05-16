@@ -1,5 +1,7 @@
 // components/common/commentList/commentList.js
 const app = getApp()
+const core = require('../../../assets/tool/core')
+const common = require('../../../assets/tool/common')
 Component({
   /**
    * 组件的属性列表
@@ -37,13 +39,13 @@ Component({
       if (replyindex !== undefined) {
         reply = comment.replyArr[replyindex]
       }
-      console.log(comment,111111111111111111111);
+      console.log(comment, 111111111111111111111);
       this.triggerEvent('toReply', {
         indexObject: {
           commentindex,
           replyindex
         },
-  
+
         param: {
           noticeUserId: reply ? reply.replyPersonId : comment.commenterId,
           originContent: reply ? reply.replyContent : comment.commentContent,
@@ -63,6 +65,59 @@ Component({
       wx.navigateTo({
         url: `/pages/my/invitation/invitation?userId=${userId}`,
       })
+    },
+    longpress(e) {
+      let {
+        commentindex,
+        replyindex
+      } = e.currentTarget.dataset
+      let commentArr = this.data.commentArr
+      let userId, table, id
+      if (replyindex !== undefined) {
+        table = 'reply'
+        userId = commentArr[commentindex].replyArr[replyindex].replyPersonId
+        id = commentArr[commentindex].replyArr[replyindex].id
+      } else {
+        userId = commentArr[commentindex].commenterId
+        table = 'comment'
+        id = commentArr[commentindex].id
+      }
+      if (app.userInfo.id === userId) {
+        wx.showActionSheet({
+          itemList: ['删除'],
+          success: res => {
+            app.post(app.Api['delete' + table], {
+              id
+            }).then(data => {
+              if (data.affectedRows) {
+                if (replyindex !== undefined) { 
+                  commentArr[commentindex].replyArr.splice(replyindex, 1)
+                 
+                }else {
+                  commentArr.splice(commentindex, 1)
+                }
+                common.Toast('已删除')
+                this.setData({
+                  commentArr
+                })
+              } else {
+                common.Toast('删除失败，请稍后重试')
+              }
+            })
+          }
+        })
+      } else {
+        wx.showActionSheet({
+          itemList: ['举报'],
+          success: res => {
+            core.handleReport({
+              userId: app.userInfo.id,
+              theme: table,
+              themeId: id
+            })
+          }
+        })
+      }
     },
   }
 })

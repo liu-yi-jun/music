@@ -1,0 +1,20 @@
+<!--components/common/linkDialog/linkDialog.wxml-->
+<!-- <view class="shade {{dialogShow? 'shadeShow':''}}" mark:district="shade"> -->
+
+<view catchtap="cancelPopup" catchtouchmove="touchmove" class="mask {{linkDialogShow? 'shadeShow':''}}">
+  <view class="popup" catchtap="return">
+    <view class="title">添加网络链接</view>
+    <view class="content">
+      <view class="format">格式如下，其他格式暂不支持</view>
+      <view>1、带mp4后缀的有效链接</view>
+      <view class="eg">例：https://www.xxxx.mp4</view>
+      <view>2、腾讯视频vid <text class="obtain" catchtap="howObtainVid">如何获取vid？</text></view> 
+      <view  class="eg">例：vid=w3230bugtoy</view>
+      <input wx:if="{{linkDialogShow}}" cursor-spacing="120" bindinput="inputLinkUrl" class="popupTextarea" 
+        value="{{linkUrl}}" type="text" placeholder="请输入链接或腾讯视频vid"></input>
+        <view class="notes">注：切勿随意复用他人创作的视频，若涉嫌侵权内容，发布者应承担相应法律责任</view>
+    </view>
+
+    <view hover-stay-time="{{100}}" hover-class="hoverComplete" class="complete" catchtap="complete">完成</view>
+  </view>
+</view>

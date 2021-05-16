@@ -6,10 +6,10 @@
   <form bindsubmit="formSubmit">
     <issueHead avatarUrl="{{avatarUrl}}" nickName="{{nickName}}">
     </issueHead>
-    <scroll-view  style="height: calc({{excludeHeight}}px - 120rpx);" scroll-y>
+    <scroll-view style="height: calc({{excludeHeight}}px - 120rpx);" scroll-y>
       <view class="wrap">
-        <textarea class="introduce" name="introduce" maxlength="1000" placeholder="说点什么吧……" placeholder-class="placeholder"
-          auto-height></textarea>
+        <textarea class="introduce" name="introduce" maxlength="1000" placeholder="说点什么吧……"
+          placeholder-class="placeholder" auto-height></textarea>
         <view class="imgWrap" wx:if="{{tempImagePaths.length}}">
           <view class="imgArea">
             <image mode="aspectFill" catchtap="previewImage" data-id="{{index}}" wx:key="index" src="{{item}}"
@@ -24,7 +24,7 @@
         <view class="recordWrap" wx:if="{{tempRecordPath}}">
           <view class="playRecord" catchtap="playRecord" style="width:{{soundWidth}}rpx">
             <image class="recordImg" src="/images/puchCard/play{{isPlay?'ing':''}}.gif"></image>
-            <text class="recordTime" wx:if="{{duration}}" >{{duration}}s</text>
+            <text class="recordTime" wx:if="{{duration}}">{{duration}}s</text>
           </view>
         </view>
         <view class="topicWrap" wx:if="{{topicIndex !== undefine}}">
@@ -49,7 +49,7 @@
   <view catchtap="cancelPopup" catchtouchmove="touchmove" class="mask {{dialogShow? 'shadeShow':''}}">
     <view class="popup" catchtap="return">
       <textarea wx:if="{{dialogShow}}" value="{{linkUrl}}" bindinput="inputLinkUrl" class="popupTextarea"
-        placeholder="请输入{{currentType==1?'音频':(currentType==2?'视频':'资料')}}链接" cursor-spacing="120" ></textarea>
+        placeholder="请输入{{currentType==1?'音频':(currentType==2?'视频':'资料')}}链接" cursor-spacing="120"></textarea>
       <view class="complete" catchtap="complete">完成</view>
     </view>
   </view>
@@ -73,3 +73,21 @@
   </view>
 
 </view>
+
+<view class="mask {{showSignIn? 'shadeShow':''}}">
+  <view class="signInBox">
+    <view>
+      <view class="title">· 签到规范 ·</view>
+      <view class="item"><text class="shallow">凡发表以下内容视为一次</text><text class="emphasize">有效签到</text> </view>
+      <view class="item"><text class="shallow">内容一：分享与</text><text class="emphasize">音乐相关</text><text class="shallow">的内容（包括但不仅限于乐评、提问、活动体验、乐器演奏音视频等，请勿搬运网络现有内容）</text></view>
+      <view class="item"><text class="shallow">内容二：分享</text><text class="emphasize">生活向的心情和动态</text></view>
+      <view class="item"><text class="shallow">内容三：参与</text><text class="emphasize">话题互动</text></view>
+      <view class="item"><text class="shallow">*请遵循</text><text class="underline" catchtap="standard" >MUSIC MONSTER用户行为规范</text></view>
+    </view>
+    <view class="createWarp">
+      <button class="create"  catchtap="close">我已了解</button>
+    </view>
+  </view>
+</view>
+
+<msgAuthorization wx:if="{{msgAuthorizationShow}}" bind:completeMsgAuthorization="completeMsgAuthorization"  msgAuthorizationShow="{{msgAuthorizationShow}}" requestId="{{requestId}}"></msgAuthorization>

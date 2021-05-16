@@ -4,7 +4,7 @@
     <view class="card" wx:for="{{second}}" wx:for-index="j" wx:key="*this" catchtap="toSecondDetail" data-id="{{item.id}}" data-i="{{i}}"  data-j="{{j}}">
       <image class="secondStore" data-i="{{i}}" data-j="{{j}}" catchtap="switchSecondStore"
         src="/images/second/secondStore{{item.isStore?'d':''}}.png"></image>
-      <video object-fit="cover" class="img img{{item.id % 4}} video" wx:if="{{item.videoUrl}}" src="{{item.videoUrl}}"></video>
+      <video catchtap="cancelPop" object-fit="cover" class="img img{{item.id % 4}} video" wx:if="{{item.videoUrl}}" src="{{item.videoUrl}}" id='video{{item.id}}' data-id="{{item.id}}" bindplay="startPlay"></video>
       <swiper wx:else class="img img{{item.id % 4}} swiper" indicator-dots>
         <swiper-item wx:for="{{item.pictureUrls}}" wx:for-item="url">
           <image class="img img{{item.id % 4}}" mode="aspectFill" src="{{url}}" data-url="{{url}}"
@@ -40,7 +40,4 @@
       </view>
     </view>
   </view>
-  <image wx:if="{{isShowAdd}}" class="issueDynamic" src="/images/square/issueDynamic2.png">
-    <view class="issueDynamicInner" catchtap="goSecondIssue"></view>
-  </image>
 </view>

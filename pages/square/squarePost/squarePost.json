@@ -2,7 +2,8 @@
   "usingComponents": {
     "issueHead": "/components/common/issueHead/issueHead",
     "navBar": "/components/navBar/navBar",
-    "record": "/components/common/record/record"
+    "record": "/components/common/record/record",
+    "msgAuthorization":"/components/common/msgAuthorization/msgAuthorization"
   },
   "disableScroll": true
 }

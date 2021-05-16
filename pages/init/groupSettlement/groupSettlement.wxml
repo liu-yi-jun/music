@@ -1,28 +1,36 @@
 <!--pages/init/groupSettlement/groupSettlement.wxml-->
 <view class="groupSettlement">
-  
+
   <canvas canvas-id='canvas' class='canvas'></canvas>
-  <canvas type="2d" id="canvasLogo"  class='canvasLogo' ></canvas>
+  <canvas type="2d" id="canvasLogo" class='canvasLogo'></canvas>
   <!-- <canvas canvas-id='canvas' class='canvas'></canvas> -->
 
   <navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' back="{{true}}" iconTheme='white'
     bindback="handlerGobackClick"></navBar>
   <!-- <scroll-view scroll-y style="height:{{height}}px"> -->
-  
+
   <form bindsubmit="create">
     <view class="title">小组入驻</view>
     <view class="imgWarp">
-     
-      <image wx:if="{{tempFilePaths.length}}" class="logo" src="{{tempUrls[0]}}" mode="aspectFill"
-        catchtap="previewImage" catchlongpress="deleteImg"></image>
-      <image wx:else catchtap="chooseGroupLogo" class="img" src="/images/groupSettlement/bigAdd.png"></image>
+      <view wx:if="{{tempFilePaths.length}}" class="logoWrap">
+        <image  class="logo" src="{{tempUrls[0]}}" mode="aspectFill"
+          catchtap="previewImage" catchlongpress="deleteImg">
+        </image>
+        <image catchtap="chooseGroupLogo" class="newLogo" src="/images/massManagement/newLogo.png"></image>
+      </view>
+
+      <image wx:else catchtap="chooseGroupLogo" class="img" src="/images/groupSettlement/bigAdd.png">
+
+      </image>
     </view>
 
     <view class="inputWarp">
-      <input placeholder="小组名称："name="groupName" value="{{form.groupName}}" class="input" placeholder-class="placeholder"></input>
+      <input placeholder="小组名称：" name="groupName" value="{{form.groupName}}" class="input"
+        placeholder-class="placeholder"></input>
     </view>
     <view class="textareaWarp">
-      <textarea maxlength="-1"  class="textarea" placeholder="小组描述：" placeholder-class="placeholder" name="introduce" value='{{form.introduce}}' ></textarea>
+      <textarea maxlength="-1" class="textarea" placeholder="小组描述：" placeholder-class="placeholder" name="introduce"
+        value='{{form.introduce}}'></textarea>
     </view>
 
     <view class="typeWrap">
@@ -33,8 +41,8 @@
             <switch name="privates" checked="{{form.privates}}" bindchange="changePrivate"></switch>
             <text>设为私密</text>
           </view>
-          <view class="selectWrap">   
-            <switch  name="examine" checked="{{form.examine}}" bindchange="changeExamine" ></switch>
+          <view class="selectWrap">
+            <switch name="examine" checked="{{form.examine}}" bindchange="changeExamine"></switch>
             <text>小组审批</text>
           </view>
         </view>
@@ -47,4 +55,5 @@
   <!-- </scroll-view> -->
 </view>
 
-<authorization dialogShow="{{dialogShow}}" ></authorization>
+<authorization dialogShow="{{dialogShow}}"></authorization>
+<msgAuthorization wx:if="{{msgAuthorizationShow}}" bind:completeMsgAuthorization="completeMsgAuthorization"  msgAuthorizationShow="{{msgAuthorizationShow}}" requestId="{{requestId}}"></msgAuthorization>

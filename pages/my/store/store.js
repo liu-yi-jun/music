@@ -48,9 +48,9 @@ Page({
       {
         name: '小组活动'
       },
-      {
-        name: '演出咨讯'
-      },
+      // {
+      //   name: '演出咨讯'
+      // },
       {
         name: '一起组乐队'
       }
@@ -66,7 +66,7 @@ Page({
     this.getmyStoreAlliance()
     this.getMyStoreDynamic()
     this.getStoreBand()
-    this.getStorePerformance()
+    // this.getStorePerformance()
   },
   getStorePerformance() {
     let performancePagin = this.data.performancePagin
@@ -170,12 +170,12 @@ Page({
       this.getMyStoreCourse()
     } else if (actIndex === 2 && !alliancePaging.isNotData) {
       this.getmyStoreAlliance()
-    } else if (actIndex === 3 && !performancePagin.isNotData) {
-      this.getStorePerformance()
-    } else if (actIndex === 4 && !bandPagin.isNotData) {
+    } else if (actIndex === 3 && !bandPagin.isNotData) {
       this.getStoreBand()
     }
-
+    // else if (actIndex === 3 && !performancePagin.isNotData) {
+    // this.getStorePerformance()
+    // }
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -189,7 +189,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    if(app.dynamicDeleteBack) {
+    if (app.dynamicDeleteBack) {
       app.dynamicDeleteBack = false
       this.setData({
         dynamics: [],

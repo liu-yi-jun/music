@@ -24,17 +24,17 @@ Page({
       pageIndex: 1,
       isNotData: false
     },
-    pageShow: true,
+    pageShow: false,
     dialogShow: false,
     barList: [{
-        name: '曲谱库',
-      },
-      {
         name: '调音器'
       },
       {
         name: '和弦库'
       }
+      // {
+      //   name: '曲谱库',
+      // },
     ],
     actIndex: 0
   },
@@ -50,16 +50,11 @@ Page({
   //切换btn 
   switchBtn(e) {
     let actIndex = e.detail.actIndex
-    if (app.userInfo) {
-      if (actIndex === this.data.actIndex) return
-      this.setData({
-        actIndex
-      })
-    } else {
-      this.setData({
-        dialogShow: true
-      })
-    }
+    if (actIndex === this.data.actIndex) return
+    this.setData({
+      actIndex
+    })
+
   },
   onHide: function () {
     console.log('onHide')
@@ -85,7 +80,7 @@ Page({
       tapTitle,
       ...taPPaging
     }).then(res => {
-    
+
       if (res.length < taPPaging.pageSize) {
         this.setData({
           'taPPaging.isNotData': true
@@ -142,8 +137,8 @@ Page({
     transform: translateX(${translate}%);
     `
       }),
-      
- 
+
+
       this.setData({
         circulars: this.data.circulars.concat(circulars)
       })
@@ -160,15 +155,22 @@ Page({
    */
   onShow: function () {
     console.log('onshow')
+    if (app.userInfo) {
+      this.setData({
+        pageShow: true
+      })
+    } else {
+      this.setData({
+        dialogShow: true
+      })
+    }
     if (typeof this.getTabBar === 'function' && this.getTabBar()) {
       this.getTabBar().setData({
         selected: 1
       })
       // app.getNotice(this, app.userInfo.id)
     }
-    this.setData({
-      pageShow: true
-    })
+
   },
 
   /**

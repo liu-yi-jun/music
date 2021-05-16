@@ -1,0 +1,69 @@
+/* components/common/msgAuthorization/msgAuthorization.wxss */
+.shade {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  /* background: rgba(0, 0, 0, 0.3); */
+  z-index: 9999999;
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.4s all;
+}
+
+.shadeShow {
+  opacity: 1;
+  visibility: visible;
+}
+
+.allowBox {
+  width: 197rpx;
+  height: 85rpx;
+  position: absolute;
+  z-index: 99999;
+  box-shadow: 0 0 0 9999em rgba(0, 0, 0, 0.5);
+}
+
+.alwaysBox {
+  width: 328rpx;
+  height: 55rpx;
+  position: absolute;
+  z-index: 99999;
+  box-shadow: 0 0 0 9999em rgba(0, 0, 0, 0.5);
+}
+
+.msgAuthorizationImg {
+  width: 591rpx;
+  height: 405rpx;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.allow {
+  width: 1rpx;
+  height: 1rpx;
+  position: absolute;
+  top: 226rpx;
+  left: 286rpx;
+}
+
+.always {
+  width: 1rpx;
+  height: 1rpx;
+  position: absolute;
+  top: 315rpx;
+  left: 132rpx;
+}
+
+.allowGuide,
+.alwaysGuide {
+  left: -100%;
+  top: -100%;
+  width: 176rpx;
+  height: 134rpx;
+  position: absolute;
+  z-index: 99999999999;
+}

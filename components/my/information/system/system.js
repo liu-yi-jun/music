@@ -99,7 +99,7 @@ Component({
                 "value": "通过"
               },
               "name7": {
-                "value": tool.cutstr(app.userInfo.nickName, 16)
+                "value": tool.cutstr(app.userInfo.nickName, 6).replace(/[\d]+/g,'*')
               },
               "thing2": {
                 "value": '无'
@@ -128,7 +128,7 @@ Component({
                 "value": "通过"
               },
               "name7": {
-                "value": tool.cutstr(app.userInfo.nickName, 16)
+                "value": tool.cutstr(app.userInfo.nickName, 6).replace(/[\d]+/g,'*')
               },
               "thing2": {
                 "value": '无'
@@ -192,7 +192,7 @@ Component({
                 "value": "未通过"
               },
               "name7": {
-                "value": tool.cutstr(app.userInfo.nickName, 16)
+                "value": tool.cutstr(app.userInfo.nickName, 6).replace(/[\d]+/g,'*')
               },
               "thing2": {
                 "value": '无'
@@ -222,7 +222,7 @@ Component({
                 "value": "未通过"
               },
               "name7": {
-                "value": tool.cutstr(app.userInfo.nickName, 16)
+                "value": tool.cutstr(app.userInfo.nickName, 6).replace(/[\d]+/g,'*')
               },
               "2": {
                 "value": '无'

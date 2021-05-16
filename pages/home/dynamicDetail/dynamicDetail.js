@@ -143,6 +143,11 @@ Page({
             storeUrl: `${this.table}Store`
           }
         })
+        app.groupInfo.myGrouList.forEach((item, index) => {
+          if (item.groupId === res.detail.groupId && item.groupDuty !== -1) {
+            return this.flag = true
+          }
+        })
       }
       this.setData({
         commentArr: this.data.commentArr.concat(res.commentArr),
@@ -287,32 +292,42 @@ Page({
     beforePage.completeStore(commenetBarData)
   },
   toComment(e) {
-    this.setData({
-      showTextara: true,
-      param: {
-        type: '小组动态',
-        themeUserId: this.data.detail.userId,
-        themeTitle: this.data.detail.introduce,
-        theme: this.table,
-        themeId: this.data.detail.id,
-        commenterId: app.userInfo.id,
-        commenterAvatar: app.userInfo.avatarUrl,
-        commenterName: app.userInfo.nickName
-      }
-    })
+
+    if (this.flag) {
+      this.setData({
+        showTextara: true,
+        param: {
+          type: '小组动态',
+          themeUserId: this.data.detail.userId,
+          themeTitle: this.data.detail.introduce,
+          theme: this.table,
+          themeId: this.data.detail.id,
+          commenterId: app.userInfo.id,
+          commenterAvatar: app.userInfo.avatarUrl,
+          commenterName: app.userInfo.nickName
+        }
+      })
+    } else {
+      common.Tip('您还未成为该小组成员，暂不能发表评论')
+    }
+
   },
   toReply(e) {
-    // 加入通知的一些参数
-    let param = e.detail.param
-    param.theme = this.table
-    param.themeId = this.data.detail.id
-    param.themeTitle = this.data.detail.introduce
-    param.isReply = true
-    this.setData({
-      showTextara: true,
-      param,
-      indexObject: e.detail.indexObject
-    })
+    if (this.flag) {
+      // 加入通知的一些参数
+      let param = e.detail.param
+      param.theme = this.table
+      param.themeId = this.data.detail.id
+      param.themeTitle = this.data.detail.introduce
+      param.isReply = true
+      this.setData({
+        showTextara: true,
+        param,
+        indexObject: e.detail.indexObject
+      })
+    } else {
+      common.Tip('您还未成为该小组成员，暂不能回复评论')
+    }
   },
   scrolltolower() {
     if (!this.data.IsNoData) this.dynamicDetailAndCommont(this.data.detail.id, this.table)

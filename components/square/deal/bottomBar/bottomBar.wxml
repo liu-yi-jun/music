@@ -3,7 +3,7 @@
   <view catchtap="cancelPopup" catchtouchmove="touchmove" class="mask {{dialogShow? 'shadeShow':''}}">
     <view class="popup" mark:popup="true">
       <text>输入金额</text>
-      <input bindinput="bindinput" type="number" class="moneyInput"> </input>
+      <input bindinput="bindinput" type="number" class="moneyInput" maxlength="5"> </input>
       <view class="btnButtom">
         <button class="btn_no" catchtap="cancel">取消</button>
         <button class="btn_yes" catchtap="confirm">确定</button>

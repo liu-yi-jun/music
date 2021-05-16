@@ -29,10 +29,10 @@ Page({
     joinGroup: [],
     groupName: '',
     barList: [{
-        name: '入驻的小组'
+        name: '加入的小组',
       },
       {
-        name: '加入的小组',
+        name: '入驻的小组'
       },
       {
         name: '关注的小组'
@@ -52,10 +52,7 @@ Page({
       this.getSettleGroup()
       this.getJoinGroup()
       this.pagingGetFollowGroup(this.data.groupName)
-
-
     }
-
   },
   getSettleGroup() {
     let settleGroupPaging = this.data.settleGroupPaging
@@ -145,10 +142,10 @@ Page({
     return groups
   },
   scrolltolower() {
-    if (!this.data.settleGroupPaging.isNotData && this.data.actIndex === 0) {
-      this.getSettleGroup()
-    } else if (!this.data.joinGroupPaging.isNotData && this.data.actIndex === 1) {
+    if (!this.data.joinGroupPaging.isNotData && this.data.actIndex === 0) {
       this.getJoinGroup()
+    } else if (!this.data.settleGroupPaging.isNotData && this.data.actIndex === 1) {
+      this.getSettleGroup()
     } else if (!this.data.followGroupPaging.isNotData && this.data.actIndex === 2) {
       this.pagingGetFollowGroup(this.data.groupName)
     }
@@ -158,11 +155,11 @@ Page({
     this._freshing = true
     if (this.data.actIndex === 0) {
       this.setData({
-        'settleGroupPaging.pageIndex': 1,
-        'settleGroupPaging.isNotData': false,
-        settleGroup: []
+        'joinGroupPaging.pageIndex': 1,
+        'joinGroupPaging.isNotData': false,
+        joinGroup: []
       }, () => {
-        this.getSettleGroup().then(() => {
+        this.getJoinGroup().then(() => {
           this._freshing = false
           this.setData({
             triggered: false
@@ -171,11 +168,11 @@ Page({
       })
     } else if (this.data.actIndex === 1) {
       this.setData({
-        'joinGroupPaging.pageIndex': 1,
-        'joinGroupPaging.isNotData': false,
-        joinGroup: []
+        'settleGroupPaging.pageIndex': 1,
+        'settleGroupPaging.isNotData': false,
+        settleGroup: []
       }, () => {
-        this.getJoinGroup().then(() => {
+        this.getSettleGroup().then(() => {
           this._freshing = false
           this.setData({
             triggered: false

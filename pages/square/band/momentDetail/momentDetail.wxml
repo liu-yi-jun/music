@@ -1,0 +1,46 @@
+<!--pages/square/band/momentDetail/momentDetail.wxml-->
+<view>
+  <navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' back="{{true}}" iconTheme='white'
+    bindback="handlerGobackClick"></navBar>
+  <view class="head">
+    <view class="avatarWrap">
+      <image catchtap="goPersonal" class="avatar" src="{{detail.avatarUrl}}"></image>
+      <text class="userName">{{detail.nickName}}</text>
+    </view>
+    <view catchtap="showMenu" class="delete iconfont iconshenglve"></view>
+  </view>
+  <scroll-view style="height: calc({{excludeHeight}}px - 130rpx);" scroll-y bindscrolltolower="scrolltolower">
+    <video class="video" object-fit="cover" wx:if="{{detail.videoUrl}}" src="{{detail.videoUrl}}"></video>
+    <swiper class="swiper" indicator-dots duration="400" wx:else>
+      <swiper-item wx:for="{{detail.pictureUrls}}" wx:key="*this">
+        <image class="dynamicImg" mode="aspectFill" src="{{item}}" catchtap="preview" data-src="{{item}}"></image>
+      </swiper-item>
+    </swiper>
+    <view class="icon-time">
+      <text class="time">{{detail.releaseTime}}</text>
+    </view>
+    <view class="info">
+      <view class="brand-newOld-contact">
+        <block wx:if="{{detail.introduce}}">
+          <text>{{detail.introduce}}</text>
+        </block>
+      </view>
+
+    </view>
+    <view class="commentWrap">
+      <image src="/images/home/dynamicComment.png"></image>
+      <text>评论</text>
+    </view>
+    <commentList bind:toReply="toReply" commentArr="{{commentArr}}">
+    </commentList>
+    <inputBox showTextara="{{showTextara}}" param="{{param}}" bind:completeCommentOrReply="completeCommentOrReply">
+    </inputBox>
+    <commentBar class="footerComment" bind:toComment="toComment" commenetBarData="{{commenetBarData}}"
+      bind:completeLike="completeLike" bind:completeStore="completeStore">
+    </commentBar>
+  </scroll-view>
+</view>
+
+
+<menu id="menu" list="{{list}}" bind:handleStore="handleStore" bind:handleReport="handleReport"
+  bind:hadleDelete="hadleDelete" bind:cancelMenu="cancelMenu"></menu>

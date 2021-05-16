@@ -21,6 +21,7 @@
   height: 280rpx;
 }
 
+
 .input {
   margin: auto;
   width: 260rpx;
@@ -100,7 +101,7 @@
 
 .wx-switch-input::after {
   width: 50rpx !important;
-  height:50rpx !important;
+  height: 50rpx !important;
 }
 
 .switchWarp {
@@ -131,10 +132,17 @@
   justify-content: center;
 }
 
+.logoWrap {
+  width: 200rpx;
+  height: 200rpx;
+  position: relative;
+}
+
 .logo {
   width: 200rpx;
   height: 200rpx;
   border-radius: 50%;
+
 }
 
 /* .pageBackground {
@@ -156,11 +164,20 @@
   top: 0rpx;
   left: 0rpx; */
   border: 1rpx solid black;
-  width: 285rpx;
-  height: 285rpx;
+  width: 750rpx;
+  height: 750rpx;
 
 }
+
 .selectWrap {
   display: flex;
   align-items: center;
+}
+
+.newLogo {
+  width: 47rpx;
+  height: 47rpx;
+  position: absolute;
+  right: 0;
+  bottom: 9rpx;
 }

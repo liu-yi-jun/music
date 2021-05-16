@@ -213,8 +213,86 @@
         {
           "name": "pages/home/welcome/welcome",
           "pathName": "pages/home/welcome/welcome",
-          "query": "scene=groupId%3D22",
+          "query": "scene=groupId%3D115",
           "scene": 1011
+        },
+        {
+          "name": "pages/init/groupSettlement/groupSettlement",
+          "pathName": "pages/init/groupSettlement/groupSettlement",
+          "query": "scene=groupId%3D22",
+          "scene": null
+        },
+        {
+          "name": "pages/my/agreement/agreement",
+          "pathName": "pages/my/agreement/agreement",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/my/about/about",
+          "pathName": "pages/my/about/about",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/my/my",
+          "pathName": "pages/my/my",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/tool/musicScorePost/musicScorePost",
+          "pathName": "pages/tool/musicScorePost/musicScorePost",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/square/performance/alliancePost/alliancePost",
+          "pathName": "pages/square/performance/alliancePost/alliancePost",
+          "query": "scene=groupId%3D115",
+          "scene": null
+        },
+        {
+          "name": "components/common/link/link",
+          "pathName": "components/common/link/link",
+          "query": "scene=groupId%3D115",
+          "scene": null
+        },
+        {
+          "name": "pages/common/howObtainVid/howObtainVid",
+          "pathName": "pages/common/howObtainVid/howObtainVid",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/common/howObtainVid/howObtainVid",
+          "pathName": "pages/common/howObtainVid/howObtainVid",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/square/square",
+          "pathName": "pages/square/square",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/square/squarePost/standard/standard",
+          "pathName": "pages/square/squarePost/standard/standard",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/home/massManagement/massManagement",
+          "pathName": "pages/home/massManagement/massManagement",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "components/common/msgAuthorization/msgAuthorization",
+          "pathName": "components/common/msgAuthorization/msgAuthorization",
+          "query": "",
+          "scene": null
         }
       ]
     }

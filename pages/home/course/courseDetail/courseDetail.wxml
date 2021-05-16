@@ -17,7 +17,12 @@
 
   </view>
   <scroll-view style="height: calc({{excludeHeight}}px - 152rpx);" scroll-y bindscrolltolower="scrolltolower">
-    <video class="video" src="{{detail.videoUrl}}" enable-auto-rotation show-mute-btn object-fit="cover"> </video>
+    <block wx:if="{{mp4Video}}">
+      <video class="video" object-fit="cover" src="{{detail.videoUrl}}" enable-auto-rotation show-mute-btn></video>
+    </block>
+    <block wx:else>
+      <txv-video class="video" height="380" vid="{{detail.videoUrl}}" playerid="txv3"></txv-video>
+    </block>
     <!-- <view class="fontWrap">
       <view class="img-number">
         <image class="img" src="http://cdn.eigene.cn/courseDetail/like.png"></image>

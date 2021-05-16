@@ -21,20 +21,20 @@ Page({
   onLoad: function (options) {
     // 获取去除上面导航栏，剩余的高度
     tool.navExcludeHeight(this)
-    // this.getGroupMember()
+    this.getGroupMember()
   },
-  // getGroupMember() {
-  //   app.get(app.Api.groupMember, {
-  //     groupId: app.groupInfo.id
-  //   }, {
-  //     loading: false
-  //   }).then((res) => {
-  //     console.log(res)
-  //     this.setData({
-  //       member: res
-  //     })
-  //   })
-  // },
+  getGroupMember() {
+    app.get(app.Api.groupMember, {
+      groupId: app.groupInfo.id
+    }, {
+      loading: false
+    }).then((res) => {
+      console.log(res)
+      this.setData({
+        member: res
+      })
+    })
+  },
   searchInput(event){
     this.setData({
       tempValue: event.detail.value,

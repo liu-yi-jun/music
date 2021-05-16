@@ -16,7 +16,9 @@ Page({
     // 附近位置,
     index: 0,
     mks: [],
-    tempFilePath: ''
+    tempFilePath: '',
+    msgAuthorizationShow: false,
+    requestId: [app.InfoId.like, app.InfoId.content, app.InfoId.reply]
   },
 
   /**
@@ -146,11 +148,6 @@ Page({
         introduce: describe,
         videoUrl: tempFilePath,
         location,
-        avatarUrl: app.userInfo.avatarUrl,
-        nickName: app.userInfo.nickName,
-        gender:app.userInfo.gender,
-        constellation:app.userInfo.constellation,
-        age:app.userInfo.age,
         groupName: app.userInfo.groupName,
         mold: 1
       })
@@ -187,25 +184,36 @@ Page({
     let params = e.detail.value
     console.log(params)
     try {
-      let imgUrls = []
       params = await this.validate(params)
-      console.log(params)
-      common.showLoading('发布中')
-      params.videoUrl = await this.uploadVideo(params.videoUrl)
-      // app.userInfo.id
-      // app.userInfo.groupId
-      const result = await this.videoIssue({
-        ...params,
-        userId: app.userInfo.id,
-        groupId: app.userInfo.groupId
-      })
-      common.Toast('已发布')
-      this.goHome()
+      let subscriptionsSetting = await authorize.isSubscription()
+      if (!subscriptionsSetting.itemSettings) {
+        this.params = params
+        // 未勾选总是
+        this.setData({
+          msgAuthorizationShow: true
+        })
+      } else {
+        this.submitTeam(params)
+      }
     } catch (err) {
       console.log(err)
       common.Tip(err)
       wx.hideLoading()
     }
+  },
+  completeMsgAuthorization() {
+    this.submitTeam(this.params)
+  },
+  async submitTeam(params) {
+    common.showLoading('发布中')
+    params.videoUrl = await this.uploadVideo(params.videoUrl)
+    const result = await this.videoIssue({
+      ...params,
+      userId: app.userInfo.id,
+      groupId: app.userInfo.groupId
+    })
+    common.Toast('已发布')
+    this.goHome()
   },
   goHome() {
     app.switchData.refresh = true

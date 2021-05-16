@@ -251,7 +251,7 @@ canvas {
 }
 
 .container {
-  width: 250rpx;
+  width: 180rpx;
   height: 50rpx;
 }
 
@@ -265,8 +265,9 @@ canvas {
   position: relative;
   width: 100%;
   padding: 0 10rpx;
-  line-height: 70rpx;
-  border: 1rpx solid #ddd;
+  line-height: 50rpx;
+  height: 50rpx;
+  border: 1rpx solid white;
   border-radius: 6rpx;
   box-sizing: border-box;
 }
@@ -275,27 +276,28 @@ canvas {
   position: absolute;
   display: block;
   right: 16rpx;
-  top: 30rpx;
+  top: 60%;
+  transform: translateY(-50%);
   content: '';
-  width: 0;
-  height: 0;
   border: 10rpx solid transparent;
-  border-top: 10rpx solid #999;
+  border-top: 10rpx solid white;
 }
 
 .current-name {
   display: block;
   width: 85%;
   height: 100%;
+  line-height: 50rpx;
   word-wrap: normal;
+  font-size: 28rpx;
   overflow: hidden;
 }
 
 .option-list {
-  position: absolute;
-  left: 0;
-  top: 76rpx;
-  width: 100%;
+  position: fixed;
+  left: 16px;
+  top: 382rpx;
+  width: 180rpx;
   padding: 12rpx 20rpx 10rpx 20rpx;
   border-radius: 6rpx;
   box-sizing: border-box;

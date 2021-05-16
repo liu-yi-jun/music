@@ -61,3 +61,5 @@
 <bottomBar bind:chooseImage="chooseImage" bind:chooseVideo="chooseVideo" bind:inputMoney="inputMoney">
   </bottomBar>
 </view>
+
+<msgAuthorization wx:if="{{msgAuthorizationShow}}" bind:completeMsgAuthorization="completeMsgAuthorization"  msgAuthorizationShow="{{msgAuthorizationShow}}" requestId="{{requestId}}"></msgAuthorization>

@@ -1,0 +1,25 @@
+/* pages/common/howObtainVid/howObtainVid.wxss */
+.howObtainVid {
+  color: white;
+  font-size: 28rpx;
+  word-break: break-all;
+  text-align: justify;
+}
+.wrap {
+  padding:0 50rpx ;
+}
+.wrap>view {
+  margin-top: 32rpx;
+}
+
+.title {
+  text-align: center;
+  font-size: 32rpx;
+  font-weight: bold;
+  padding-bottom: 40rpx;
+}
+.code {
+  box-sizing: border-box;
+  padding-left: 32rpx;
+  display: block;
+}

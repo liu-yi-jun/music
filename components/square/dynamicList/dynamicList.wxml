@@ -10,26 +10,21 @@
           <view class="time">{{item.releaseTime}}</view>
         </view>
         <block wx:if="{{!isSquare}}">
-          <view class="right" wx:if="{{item.tableName==='groupdynamics'}}" catchtap="goOtherHome"
-            data-id="{{item.groupId}}" data-groupname="{{item.groupName}}">
-            <block wx:if="{{item.groupName}}">
+          <block wx:if="{{item.tableName==='groupdynamics'}}">
+            <view wx:if="{{item.groupName}}" class="right" catchtap="goOtherHome" data-id="{{item.groupId}}"
+              data-groupname="{{item.groupName}}">
               {{item.groupName}}
-            </block>
-            <block wx:else>
-              游客
-            </block>
-          </view>
-          <view class="right" wx:elif="{{item.tableName==='squaredynamics' && !isInvitation}}" catchtap="goOtherHome"
-            data-id="{{item.groupId}}" data-groupname="{{item.groupName}}">
-            <block wx:if="{{item.groupName}}">{{item.groupName}}
-            </block>
-            <block wx:else>
-              游客
-            </block>
-          </view>
-
+            </view>
+            <view wx:else class="right"> 游客</view>
+          </block>
+          <block wx:elif="{{item.tableName==='squaredynamics' && !isInvitation}}">
+            <view wx:if="{{item.groupName}}" class="right" catchtap="goOtherHome" data-id="{{item.groupId}}"
+              data-groupname="{{item.groupName}}">
+              {{item.groupName}}
+            </view>
+            <view wx:else class="right"> 游客</view>
+          </block>
           <view class="right" wx:else>广场动态</view>
-
         </block>
       </view>
       <view class="content" catchtap="dynamicDetail" data-index="{{i}}">

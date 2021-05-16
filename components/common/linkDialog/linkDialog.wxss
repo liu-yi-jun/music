@@ -1,0 +1,84 @@
+/* components/common/linkDialog/linkDialog.wxss */
+
+.mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 99999;
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.4s all;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.popup {
+  background: white;
+  width: 650rpx;
+  border-radius: 20rpx;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  overflow: hidden;
+}
+
+.shadeShow {
+  opacity: 1;
+  visibility: visible;
+}
+
+.popupTextarea {
+  padding: 0rpx 10rpx;
+  height: 66rpx;
+  /* background-color: #ECE4FC; */
+  border: 1rpx solid #d6d6d6;
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 32rpx;
+}
+
+.complete {
+  height: 100rpx;
+  text-align: center;
+  line-height: 100rpx;
+  color: #5CB372;
+  font-size: 34rpx;
+  font-weight: bold;
+  border-top: 1rpx solid #E9E9E9;
+}
+.hoverComplete {
+  background-color: #E4E4E4;
+}
+
+
+.title {
+  font-size: 36rpx;
+  font-weight: bold;
+  text-align: center;
+  padding:40rpx 0rpx;
+}
+.content {
+  box-sizing: border-box;
+  word-wrap: break-word;
+  padding: 0rpx 40rpx 60rpx;
+}
+.format {
+  margin-bottom: 10rpx;
+}
+.eg {
+  font-size: 30rpx;
+  color: #8B919D;
+  margin-bottom: 10rpx;
+}
+.obtain {
+  margin-left: 20rpx;
+  font-size: 30rpx;
+  color: #4395FF;
+}
+.notes {
+  margin-top: 16px;
+  font-size: 26rpx;
+  color: red;
+}

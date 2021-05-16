@@ -57,7 +57,7 @@
     </view>
     <view class="commentWrap">
       <image src="/images/home/dynamicComment.png"></image>
-      <text>共 {{detail.comment}} 条评论</text>
+      <text>评论</text>
     </view>
     <commentList bind:toReply="toReply" commentArr="{{commentArr}}">
     </commentList>

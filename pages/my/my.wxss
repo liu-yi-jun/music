@@ -264,7 +264,7 @@
   box-shadow: 0rpx 0rpx 10rpx 4rpx rgba(0, 0, 0, .1);
   letter-spacing: 8rpx;
   text-indent: 8rpx;
-  margin-top: 70rpx !important;
+  margin-top: 30rpx !important;
 }
 .loginText {
   color: white;
@@ -279,7 +279,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.3);
+  /* background: rgba(0, 0, 0, 0.3); */
   z-index: 9999;
   opacity: 0;
   visibility: hidden;
@@ -359,4 +359,39 @@
 .applyPlaceholder {
   font-size: 26rpx;
   color: white;
+}
+
+.showBarWrap {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index:10;
+  opacity: 1;
+  visibility: visible;
+  transition: 0.4s all;
+}
+
+.checkbox-group {
+  color: white;
+  font-size: 26rpx;
+  margin-top: 60rpx;
+  display: flex;
+  /* width: 00rpx; */
+align-items: flex-start;
+}
+.checkbox-group text {
+  vertical-align: middle;
+  word-break: break-all;
+}
+
+.checkbox-group checkbox {
+  transform: scale(0.8,0.8);
+  margin-right: 5rpx;
+  vertical-align: middle;
+}
+
+.stress {
+  color:rgb(219, 15, 15);
 }

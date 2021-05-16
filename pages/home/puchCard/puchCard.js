@@ -46,7 +46,8 @@ Page({
     pagingGroupCardIsNoData: false,
     // 是否是自己的小组
     isMyGroup: false,
-    puchCardGuide: false
+    puchCardGuide: false,
+    longpressIndex: -1
   },
 
   /**
@@ -191,6 +192,9 @@ Page({
         })
       }
       res.forEach((item, index) => {
+        if (item.videoUrl && item.videoUrl.includes('mp4')) {
+          item.mp4Video = true
+        }
         item.pageSize = 10
         item.pageIndex = 1
         item.soundRowArr = []
@@ -217,7 +221,7 @@ Page({
         }
         if (!this.data.groupCards.length) {
           if (!this.data.isMyGroup || this.data.groupDuty == -1) {
-            return common.Tip('小组管理员暂无发布打卡')
+            return common.Tip('该小组暂无发布打卡')
           }
         }
       })
@@ -552,9 +556,8 @@ Page({
       common.showLoading('发送中')
       let recordUrl = await this.uploadGroupCardRecord(this.data.tempFilePath)
       let result = await this.issueGroupCardRecord(recordUrl)
+      result[0].avatarUrl = app.userInfo.avatarUrl
       await this.setSoundRowArr(result[0])
-
-
       common.Toast('已发送')
       this.drawCircle(0)
       this.setData({
@@ -609,14 +612,12 @@ Page({
         duration
       } = this.data
       let {
-        id,
-        avatarUrl
+        id
       } = app.userInfo
       app.post(app.Api.issueGroupCardRecord, {
         userid: id,
         groupcardId: groupCards[cardCurrent].id,
         recordUrl,
-        avatarUrl,
         duration
       }).then(res => resolve(res)).catch(err => reject(err))
     })
@@ -655,5 +656,56 @@ Page({
       app.globalData.guide.puchCard = false
       wx.setStorageSync('guide', guide)
     }
-  }
+  },
+  longpress(e) {
+    this.setData({
+      longpressIndex: e.currentTarget.dataset.j,
+      longpressStyle: 'rgba(255,255,255,0.1)'
+    }, () => {
+      setTimeout(() => {
+        this.setData({
+          longpressStyle: 'none'
+        })
+      }, 500)
+      this.showMenu(e)
+    })
+  },
+  showMenu(e) {
+    let {
+      i,
+      j
+    } = e.currentTarget.dataset
+    let soundRowArr = this.data.groupCards[i].soundRowArr
+    if (app.userInfo.id === soundRowArr[j].userId) {
+      wx.showActionSheet({
+        itemList: ['删除'],
+        success: res => {
+          app.post(app.Api.deleteGroupCardRecord, {
+            id: soundRowArr[j].id
+          }).then(data => {
+            if (data.affectedRows) {
+              soundRowArr.splice(j, 1)
+              common.Toast('已删除')
+              this.setData({
+                groupCards: this.data.groupCards
+              })
+            } else {
+              common.Toast('删除失败，请稍后重试')
+            }
+          })
+        }
+      })
+    } else {
+      wx.showActionSheet({
+        itemList: ['举报'],
+        success: res => {
+            core.handleReport({
+              userId: app.userInfo.id,
+              theme: 'groupcardrecord',
+              themeId: soundRowArr[j].id
+            })
+        }
+      })
+    }
+  },
 })

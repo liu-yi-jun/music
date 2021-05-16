@@ -36,6 +36,7 @@ Page({
       minWidth: 130,
       maxWidth: 400,
     },
+    mp4Video: false
     // list: [{
     //   name: '分享',
     //   open_type: 'share',
@@ -79,8 +80,13 @@ Page({
       }
       commentPaging.pageIndex = commentPaging.pageIndex + 1
       if (res.detail) {
-        res.detail.soundWidth = this.initSoundWidth(res.detail.duration),
-          res.detail.tableName = 'alliance'
+        res.detail.soundWidth = this.initSoundWidth(res.detail.duration)
+        res.detail.tableName = 'alliance'
+        if (res.detail.videoUrl.includes('mp4')) {
+          this.setData({
+            mp4Video: true
+          })
+        }
         this.setData({
           detail: res.detail,
           commenetBarData: {

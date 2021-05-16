@@ -2,17 +2,7 @@
 <view class="my" catchtap="tap">
   <canvas canvas-id='canvas' class='canvas'></canvas>
   <block wx:if="{{userInfo.id}}">
-    <view class="hideBarBg {{showHideBar? 'showHideBar': 'hideHideBar'}}"
-      style="background-image: url({{qiniuUrl}}/my/hideBar.png); background-size: 100%;">
-      <view catchtap="toFeedback" class="feedAboutWrap {{showHideBar?'feedWrap':''}}">
-        <image class="feedback" src="/images/my/feedback.png"></image>
-        <view>反馈</view>
-      </view>
-      <view class="feedAboutWrap {{showHideBar?'aboutWrap':''}} ">
-        <image class="about" src="/images/my/about.png"></image>
-        <view>关于</view>
-      </view>
-    </view>
+
     <view class="information">
       <image mode="aspectFill" catchtap="changeImg" class="backgroundImg" src="{{userInfo.bgWall}}">
         <view class="fans" catchtap="goFans">粉丝 {{userInfo.fans}}</view>
@@ -91,10 +81,17 @@
       <image class="miniLogo" src="/images/index/miniLogo.png"></image>
       <image class="musicmonster" src="/images/index/musicmonster.png"></image>
       <!-- <view class="loginText"></view> -->
+      <checkbox-group class="checkbox-group" bindchange="checkboxChange">
+      <checkbox value="cb" />
+      <view>
+        <text>我已阅读并同意</text>
+        <text class="stress" catchtap="goUserNotice">《Music Monster用户须知》</text>
+      </view>
+    </checkbox-group>
       <button class="btn confirm" catchtap="handleGetUserInfo">登录后享受更多服务</button>
     </view>
   </block>
-  <view class="shade {{applyShow? 'shadeShow':''}}" mark:district="shade">
+  <view catchtouchmove="cancelPop" class="shade {{applyShow? 'shadeShow':''}}" mark:district="shade">
     <view class="applyDialog">
       <text class="groupApply">感谢您的反馈</text>
       <textarea wx:if="{{applyShow}}" bindinput="inputApply" class="applyContent" name="applyContent" id=""
@@ -108,4 +105,18 @@
   <showTabBar tabBarBtnShow="{{tabBarBtnShow}}">
   </showTabBar>
 
+</view>
+
+<view bindtouchstart="closeBarWrap" catchtouchmove="closeBarWrap" class="{{showHideBar?'showBarWrap':hideBarWrap}}">
+  <view mark:district="bar" class="hideBarBg {{showHideBar? 'showHideBar': 'hideHideBar'}}"
+    style="background-image: url({{qiniuUrl}}/my/hideBar.png); background-size: 100%;">
+    <view catchtap="toFeedback" class="feedAboutWrap {{showHideBar?'feedWrap':''}}">
+      <image class="feedback" src="/images/my/feedback.png"></image>
+      <view>反馈</view>
+    </view>
+    <view catchtap="toAbout" class="feedAboutWrap {{showHideBar?'aboutWrap':''}} ">
+      <image class="about" src="/images/my/about.png"></image>
+      <view>关于</view>
+    </view>
+  </view>
 </view>

@@ -131,7 +131,6 @@ function alwaysSubscription(requestId = []) {
       } else {
         return resolve('主开关被关闭')
       }
-
     } else {
       if (subscriptionsSetting.itemSettings) {
         //  勾选了总是

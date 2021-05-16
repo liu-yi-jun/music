@@ -10,7 +10,7 @@
     <scroll-view scroll-y style="height: calc({{excludeHeight}}px - 161rpx);" scroll-into-view="{{id}}">
       <view class="wrap">
         <view class="rowWrap">
-          <text space="ensp">标    题</text>
+          <text space="ensp">标 题</text>
           <input placeholder="" placeholder-class="placeholder" name="title"></input>
         </view>
         <view class="rowWrap">
@@ -51,23 +51,20 @@
         <view class="recordWrap" wx:if="{{tempRecordPath}}">
           <view class="playRecord" catchtap="playRecord" style="width:{{soundWidth}}rpx">
             <image class="recordImg" src="http://cdn.eigene.cn/play{{isPlay?'ing':''}}.gif"></image>
-            <text class="recordTime"  wx:if="{{duration}}" >{{duration}}s</text>
+            <text class="recordTime" wx:if="{{duration}}">{{duration}}s</text>
           </view>
         </view>
-        <view class="wrapVideo" wx:if="{{tempVideoPath}}">
-          <video object-fit="cover" src="{{tempVideoPath}}"></video>
+        <view class="wrapVideo" wx:if="{{tempVideoPath || linkUrl}}">
+          <block wx:if="{{tempVideoPath || (linkUrl && !isVid)}}">
+            <video object-fit="cover" src="{{tempVideoPath}}"></video>
+          </block>
+          <block wx:if="{{linkUrl && isVid}}">
+            <txv-video class="video" height="380" vid="{{linkUrl}}" playerid="txv2"></txv-video>
+          </block>
         </view>
-    
       </view>
     </scroll-view>
   </form>
-  <view catchtap="cancelPopup" catchtouchmove="touchmove" class="mask {{dialogShow? 'shadeShow':''}}">
-    <view class="popup" catchtap="return">
-      <textarea wx:if="{{dialogShow}}" value="{{linkUrl}}" bindinput="inputLinkUrl" class="popupTextarea"
-        placeholder="请输入{{currentType==1?'音频':(currentType==2?'视频':'资料')}}链接" cursor-spacing="120"></textarea>
-      <view class="complete" catchtap="complete">完成</view>
-    </view>
-  </view>
   <record class="record" id="record" bind:recordResult="recordResult" recordTime="{{recordTime}}"></record>
   <view class="footer" style="bottom:{{keyBoardHeight}}">
     <view class="footerInner">
@@ -76,4 +73,7 @@
       <image src="/images/secondIssue/selectRecord.png" catchtap="recordSheet"></image>
     </view>
   </view>
+  <linkDialog linkDialogShow="{{linkDialogShow}}" bind:completeInput="completeInput"></linkDialog>
 </view>
+<msgAuthorization wx:if="{{msgAuthorizationShow}}" bind:completeMsgAuthorization="completeMsgAuthorization"
+  msgAuthorizationShow="{{msgAuthorizationShow}}" requestId="{{requestId}}"></msgAuthorization>

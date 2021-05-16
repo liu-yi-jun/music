@@ -1,0 +1,109 @@
+/* pages/square/band/IssueMoment/IssueMoment.wxss */
+
+.placeholder {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 30rpx;
+}
+
+.textareaWarp {
+  position: relative;
+  height: 30vh;
+}
+
+.textarea {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  width: 600rpx;
+  height: 360rpx;
+  box-sizing: border-box;
+  border-radius: 50rpx;
+  font-size: 30rpx;
+  padding: 30rpx;
+  color: white;
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.videoWrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 2.99vh 0 5.3vh;
+}
+
+.videoWrap::after {
+  content: "";
+  display: block;
+  width: 600rpx;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  height: 3rpx;
+  background-color: #b7b8b8;
+}
+
+.videoWrap video {
+  border-radius: 50rpx;
+  width: 600rpx;
+  height: 400rpx;
+}
+
+
+.locationWrap {
+  color: #b7b8b8;
+  margin: 2.62vh auto 0;
+  width: 600rpx;
+  font-size: 30rpx;
+}
+
+
+.location {
+  display: inline-block;
+}
+.picker {
+  color: white;
+  margin-left: 34rpx;
+}
+.locationLogo {
+  width: 26rpx;
+  height: 36rpx;
+  position: relative;
+  top: 4rpx;
+}
+.locationText {
+  margin-left: 8rpx;
+  font-size: 28rpx;
+}
+
+.issueWrap {
+  box-sizing: border-box;
+  padding: 4.49vh 0 0rpx;
+}
+
+.issue {
+  width: 162rpx !important;
+  height: 64rpx !important;
+  background: #A77FDC !important;
+  border: 1px solid #A77FDC !important;
+  opacity: 1 !important;
+  border-radius: 999rem !important;
+  text-align: center !important;
+  line-height: 64rpx !important;
+  color: white !important;
+  margin: auto !important;
+  font-size: 30rpx !important;
+  box-shadow: 0rpx 0rpx 10rpx 4rpx rgba(0, 0, 0, .1);
+  letter-spacing: 8rpx;
+  text-indent: 8rpx;
+}
+.add {
+  width: 180rpx;
+  height: 180rpx;
+  border-radius: 20rpx;
+}

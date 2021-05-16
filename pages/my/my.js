@@ -117,7 +117,7 @@ Page({
 
   completeGetUserInfo() {
     app.myGetUserInfo = true
-    this.getDynamics(app.userInfo.id)
+    // this.getDynamics(app.userInfo.id)
     this.getmyRelease(app.userInfo.id)
     this.setUserInfo()
   },
@@ -276,23 +276,23 @@ Page({
       })
     })
   },
-  getDynamics(id) {
-    let dynamicsPaging = this.data.dynamicsPaging
-    app.get(app.Api.getDynamics, {
-      ...dynamicsPaging,
-      userId: id
-    }).then(res => {
-      if (res.length < dynamicsPaging.pageSize) {
-        this.setData({
-          'dynamicsPaging.isNotData': true
-        })
-      }
-      this.setData({
-        dynamics: this.data.dynamics.concat(res),
-        'dynamicsPaging.pageIndex': dynamicsPaging.pageIndex + 1
-      })
-    })
-  },
+  // getDynamics(id) {
+  //   let dynamicsPaging = this.data.dynamicsPaging
+  //   app.get(app.Api.getDynamics, {
+  //     ...dynamicsPaging,
+  //     userId: id
+  //   }).then(res => {
+  //     if (res.length < dynamicsPaging.pageSize) {
+  //       this.setData({
+  //         'dynamicsPaging.isNotData': true
+  //       })
+  //     }
+  //     this.setData({
+  //       dynamics: this.data.dynamics.concat(res),
+  //       'dynamicsPaging.pageIndex': dynamicsPaging.pageIndex + 1
+  //     })
+  //   })
+  // },
   onReachBottom() {
     let {
       dynamicsPaging,
@@ -300,7 +300,7 @@ Page({
       actIndex
     } = this.data
     if (actIndex === 0 && !dynamicsPaging.isNotData) {
-      this.getDynamics()
+      // this.getDynamics()
     } else if (actIndex === 1 && !alliancePaging.isNotData) {
       this.getPersonalAlliance()
     }
@@ -516,6 +516,10 @@ Page({
     })
   },
   handleGetUserInfo(data) {
+    if (!this.data.check) {
+      common.Tip('请仔细阅读并勾选同意《Music Monster用户须知》')
+      return
+    }
     wx.getUserProfile({
       desc: '用于完善个人资料',
       success: (data) => {
@@ -551,7 +555,8 @@ Page({
   },
   toFeedback() {
     this.setData({
-      applyShow: true
+      applyShow: true,
+      showHideBar: false
     })
   },
   cancelApply() {
@@ -577,7 +582,13 @@ Page({
         applyShow: false
       })
     })
-  }
+  },
+  closeBarWrap(e) {
+    if (e.mark.district) return;
+    this.setData({
+      showHideBar: false
+    })
+  },
   // sendinfo() {
   //   app.post(app.Api.sendSubscribeInfo,{
   //     msgtype
@@ -585,6 +596,23 @@ Page({
   //     console.log(res);
   //   })
   // },
+  toAbout() {
+    this.setData({
+      showHideBar: false
+    })
+    wx.navigateTo({
+      url: '/pages/my/about/about',
+    })
 
-
+  },
+  checkboxChange(e) {
+    this.setData({
+      check: !this.data.check
+    })
+  },
+  goUserNotice() {
+    wx.navigateTo({
+      url: '/pages/my/agreement/agreement',
+    })
+  }
 })

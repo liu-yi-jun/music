@@ -126,6 +126,10 @@ Page({
     } = this.data
     try {
       params = await this.validate(params)
+     var regName = /^[\u4e00-\u9fa5]{2,10}$/;
+    if (!regName.test(params.userName)) {
+          return common.Tip('请正确输入您的姓名')
+     }
       common.showLoading('创建中')
       if (tempFilePath) params.videoUrl = await this.uploadVideo(tempFilePath)
       const result = await this.joinBand(params)
@@ -159,7 +163,7 @@ Page({
         template_id: app.InfoId.band,
         data: {
           "name1": {
-            "value": tool.cutstr(params.userName, 16)
+            "value": tool.cutstr(params.userName, 6).replace(/[\d]+/g,'*')
           },
           "thing5": {
             "value": tool.cutstr(params.userName, 16)

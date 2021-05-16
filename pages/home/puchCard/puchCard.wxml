@@ -18,7 +18,8 @@
 
   <image wx:if="{{isMyGroup && (groupDuty === 0 || groupDuty === 1)}}" catchtap="issuePuchCard" class="issuePuchCard"
     src="/images/puchCard/issuePuchCard.png"></image>
-  <swiper wx:if="{{groupCards.length}}" style="height: {{excludeHeight}}px;" bindchange="changeCard" current="{{swiperCurrent}}">
+  <swiper wx:if="{{groupCards.length}}" style="height: {{excludeHeight}}px;" bindchange="changeCard"
+    current="{{swiperCurrent}}">
     <swiper-item wx:for="{{groupCards}}" wx:key="inex" wx:for-index="i">
       <view class="card">
         <view class="head">
@@ -40,7 +41,13 @@
         <view class="MusicscoreWrap {{item.flag==='demonstration'? 'noMinH':''}}">
           <image wx:if="{{item.flag==='practice'}}" class="Musicscore" mode="widthFix" src="{{item.datumUrls}}"
             data-preview="{{item.datumUrls}}" catchtap="previewImage"></image>
-          <video wx:else src="{{item.videoUrl}}" class="video" object-fit="cover"></video>
+          <!-- <video wx:else src="{{item.videoUrl}}" class="video" object-fit="cover"></video> -->
+          <block wx:else>
+            <txv-video wx:if="{{!item.mp4Video}}" class="video" height="380" vid="{{item.videoUrl}}" playerid="txv1">
+            </txv-video>
+            <video class="video" wx:else object-fit="cover" src="{{item.videoUrl}}"></video>
+          </block>
+
         </view>
         <view class="timeWrap">
           <text class="time">{{item.releaseTime}}</text>
@@ -48,7 +55,9 @@
         <view class="time-sound {{item.flag==='demonstration'?'videoSound':''}}">
           <scroll-view bindscrolltolower="scrolltolower" class="scroll" scroll-y enhanced show-scrollbar="{{false}}">
             <view class="soundRowWrap">
-              <view class="soundRow" wx:for="{{item.soundRowArr}}" wx:key="id" wx:for-item="soundRow" wx:for-index="j">
+              <view class="soundRow" catchlongpress="longpress" data-i="{{i}}" data-j="{{j}}"
+                style="background:{{longpressIndex === j?longpressStyle:'none'}}" wx:for="{{item.soundRowArr}}"
+                wx:key="id" wx:for-item="soundRow" wx:for-index="j">
                 <view class="avatarWrap" data-userid="{{soundRow.userId}}" catchtap="goPersonal">
                   <text class="rank" wx:if="{{j===0||j===1||j===2}}">{{j+1}}</text>
                   <image wx:if="{{j===0}}" class="avatarBackground" src="/images/puchCard/firstBackground.png">
@@ -99,9 +108,10 @@
   </image>
 
 
-  <view class="guideMask {{puchCardGuide?'showGuide': 'hideGuide'}}" catchtouchstart="moveStart" catchtouchend="moveEnd">
-    <image class="slide" src="/images/puchCard/slide.png" >
+  <view class="guideMask {{puchCardGuide?'showGuide': 'hideGuide'}}" catchtouchstart="moveStart"
+    catchtouchend="moveEnd">
+    <image class="slide" src="/images/puchCard/slide.png">
     </image>
-    <view class="slideText" >“滑动发现更多打卡”</view>
-  </view> 
+    <view class="slideText">“滑动发现更多打卡”</view>
+  </view>
 </view>

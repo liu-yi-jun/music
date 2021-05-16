@@ -36,7 +36,7 @@
 }
 
 
-.part view {
+.part .btn {
   background: white;
   color: #727171;
   border-radius: 10rpx;
@@ -62,6 +62,7 @@
 .dataImg {
   width: 500rpx;
   height: 359rpx;
+  position: relative;
   /* margin: 20rpx auto 40rpx; */
   /* border-radius: 10rpx; */
 }
@@ -69,6 +70,7 @@
 .video {
   width: 500rpx;
   height: 359rpx;
+  position: relative;
 }
 
 .okInner {
@@ -123,6 +125,18 @@
   margin-bottom: 90rpx;
 }
 
+.delete {
+  position: absolute;
+  right: 8rpx;
+  top: 0rpx;
+  font-size: 42rpx;
+  z-index: 20;
+  /* color: rgba(191, 191, 191, 0.8); */
+}
+.video .delete {
+  right: 8rpx;
+  top: 30rpx;
+}
 @media screen and (max-aspect-ratio: 1/2) {
 
   .card {

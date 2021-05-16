@@ -1,0 +1,37 @@
+<!--components/square/band/bandMoment/bandMoment.wxml-->
+<view class="bandMoment">
+  <view class="column" wx:for="{{moments}}" wx:for-index="i" wx:for-item="moment" wx:key="*this">
+    <view  wx:for="{{moment}}" wx:for-index="j" wx:key="*this" catchtap="toMomentDetail"
+      data-id="{{item.id}}" data-i="{{i}}" data-j="{{j}}">
+      <view class="card">
+      <!-- <image class="secondStore" data-i="{{i}}" data-j="{{j}}" catchtap="switchSecondStore"
+        src="/images/bandMoment/imgIcon.png"></image> -->
+      <video catchtap="cancelPop" object-fit="cover" class="img img{{item.id % 4}} video" wx:if="{{item.videoUrl}}"
+        src="{{item.videoUrl}}" id='video{{item.id}}' data-id="{{item.id}}" bindplay="startPlay"></video>
+      <!-- <swiper wx:else class="img img{{item.id % 4}} swiper" indicator-dots>
+        <swiper-item wx:for="{{item.pictureUrls}}" wx:for-item="url">
+          <image class="img img{{item.id % 4}}" mode="aspectFill" src="{{url}}" data-url="{{url}}"
+            data-urls="{{item.pictureUrls}}" catchtap="pre">
+
+          </image>
+        </swiper-item>
+      </swiper> -->
+      <view class="bottomContent">
+        <view class="goods">
+          <view class="title">
+            <text>{{item.introduce}}</text>
+          </view>
+        </view>
+        <view class="bottomBar">
+          <view class="avatar-username" data-userid="{{item.userId}}" catchtap="goPersonal">
+            <image mode="aspectFill" class="avatar" src="{{item.avatarUrl}}"></image>
+            <text class="username">{{item.nickName}}</text>
+          </view>
+          <!-- <view class="right">¥{{item.price}}</view> -->
+        </view>
+      </view>
+    </view>
+      <view class="time">{{item.releaseTime}}</view>
+    </view>
+  </view>
+</view>

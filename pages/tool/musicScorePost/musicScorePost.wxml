@@ -7,14 +7,29 @@
       <view class="part topPart {{isData?'part-change':''}}">
         <text wx:if="{{!isData}}">曲谱资料</text>
         <image mode="aspectFill" class="dataImg" wx:if="{{isData}}" src="{{tempImgPaths[0]}}" catchtap="previewImage">
+          <view class="delete iconfont icondelete" catchtap="toDelete" data-type="image"></view>
         </image>
-        <view wx:if="{{!isData}}" catchtap="chooseData" class="uploadData topUpload">上传</view>
+        <view wx:if="{{!isData}}" catchtap="chooseData" class="btn uploadData topUpload">上传</view>
       </view>
-      <view class="part bottomPart {{isVideo?'part-change':''}}">
-        <text wx:if="{{!isVideo}}">演示视频</text>
-        <video object-fit="cover" class="video" wx:if="{{isVideo}}" src="{{tempVideoPath}}">
-        </video>
-        <view wx:if="{{!isVideo}}" catchtap="chooseVideo" class="uploadVideo bottomUpload">上传</view>
+      <view class="part bottomPart {{(tempVideoPath || linkUrl)?'part-change':''}}">
+        <text wx:if="{{!tempVideoPath && !linkUrl}}">演示视频</text>
+        <!-- <video object-fit="cover" class="video" wx:if="{{tempVideoPath}}" src="{{tempVideoPath}}">
+          <view class="delete iconfont icondelete" catchtap="toDelete" data-type="video"></view>
+        </video> -->
+        <block wx:if="{{tempVideoPath || (linkUrl && !isVid)}}">
+          <video class="video" object-fit="cover" src="{{tempVideoPath}}">
+            <view class="delete iconfont icondelete" catchtap="toDelete" data-type="video"></view>
+          </video>
+        </block>
+        <block wx:if="{{linkUrl && isVid}}">
+          <view class="video">
+            <txv-video height="{{'240rpx'}}" class="video" vid="{{linkUrl}}" playerid="txv4">
+            </txv-video>
+            <cover-view style="top:8rpx" class="delete iconfont icondelete" catchtap="toDelete" data-type="video"></cover-view>
+          </view>
+        </block>
+        <view wx:if="{{!tempVideoPath && !linkUrl}}" catchtap="videoSheet" class="btn uploadVideo bottomUpload">上传
+        </view>
       </view>
       <view class="basicWrap">
         <view class="row">
@@ -36,3 +51,5 @@
     </view>
   </form>
 </view>
+
+<linkDialog linkDialogShow="{{linkDialogShow}}" bind:completeInput="completeInput"></linkDialog>

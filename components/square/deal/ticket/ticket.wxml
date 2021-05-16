@@ -44,8 +44,4 @@
       <view class="money">¥{{item.price}}</view>
     </view>
   </view>
-  <image wx:if="{{isShowAdd}}" class="issueDynamic" src="/images/square/issueDynamic2.png">
-    <view class="issueDynamicInner" catchtap="goTicketIssue"></view>
-  </image>
-
 </view>

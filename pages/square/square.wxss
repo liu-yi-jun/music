@@ -6,7 +6,7 @@
 .cardWrap {
   display: flex;
   justify-content: center;
-  margin: 10rpx 0;
+  margin: -20rpx 0;
   overflow: hidden;
 }
 
@@ -321,4 +321,310 @@ swiper-item {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+}
+
+
+
+.shade {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  /* background: rgba(0, 0, 0, 0.3); */
+  z-index: 999999999;
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.4s all;
+}
+
+.shadeShow {
+  opacity: 1;
+  visibility: visible;
+}
+
+.dialog {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  top: 50%;
+  /* bottom: 0; */
+  /* top: 40%; */
+  left: 50%;
+  /* right: 0; */
+  /* margin: auto; */
+  transform: translate(-50%, -50%);
+  border-radius: 40rpx;
+  background: linear-gradient(to bottom, #AD7AE0, #8572DE, #0051D8);
+  color: white;
+}
+
+.d-introduce {
+  width: 621rpx;
+  height: 996rpx;
+}
+
+.d-success {
+  width: 555rpx;
+  height: 487rpx;
+  justify-content: space-between;
+  padding: 140rpx 0rpx 80rpx;
+}
+
+.d-continuity {
+  width: 556rpx;
+  height: 582rpx;
+  padding: 30rpx 0rpx 56rpx;
+  justify-content: space-between;
+}
+
+.d-medal {
+  width: 634rpx;
+  height: 702rpx;
+  padding: 69rpx 0rpx 74rpx;
+  justify-content: space-between;
+}
+
+.meteor {
+  position: absolute;
+  width: 68rpx;
+  height: 42rpx;
+}
+
+.meteor1 {
+  top: 71rpx;
+  left: 31rpx;
+}
+
+.meteor2 {
+  top: 28rpx;
+  left: 243rpx;
+}
+
+.meteor3 {
+  top: 70rpx;
+  left: 375rpx;
+}
+
+.meteor4 {
+  top: 39rpx;
+  right: 18rpx;
+}
+
+.everyDay {
+  position: absolute;
+  left: 38rpx;
+  top: 26rpx;
+  width: 240rpx;
+  height: 121rpx;
+}
+
+.close {
+  position: absolute;
+  width: 57rpx;
+  height: 57rpx;
+  top: 35rpx;
+  right: 26rpx;
+}
+
+.frame {
+  position: absolute;
+  top: 172rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 525rpx;
+  height: 132rpx;
+  font-size: 22rpx;
+  display: flex;
+  align-items: center;
+  padding-left: 69rpx;
+  padding-right: 10rpx;
+  box-sizing: border-box;
+  justify-content: space-between;
+}
+
+.frame .content {
+  width: 317rpx;
+  line-height: 26rpx;
+  text-align: justify;
+}
+
+.frame .content>text {
+  font-size: 45rpx;
+  font-family: 'SH-Bold';
+}
+
+.frame .bag {
+  width: 109rpx;
+  height: 109rpx;
+  border-radius: 50%;
+}
+
+.introduce {
+  position: absolute;
+  top: 135rpx;
+  left: 63rpx;
+  font-size: 22rpx;
+}
+
+
+.prizeBg {
+  position: absolute;
+  width: 520rpx;
+  height: 636rpx;
+  background-color: rgba(255, 255, 255, .25);
+  border-radius: 80rpx;
+  top: 319rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 28rpx 37rpx 39rpx;
+  box-sizing: border-box;
+}
+
+.prizeBg .content {
+  display: flex;
+  justify-content: space-between;
+  font-size: 22rpx;
+
+}
+
+.prize {
+  display: flex;
+  align-items: center;
+  margin-top: 20rpx;
+}
+
+.prizeBg .content text {
+  font-size: 45rpx;
+  font-family: 'SH-Bold';
+}
+
+.prizeImg {
+  width: 148rpx;
+  height: 107rpx;
+}
+
+.prizeIntroduce {
+  margin-left: 31rpx;
+}
+
+.order {
+  font-size: 22rpx;
+}
+
+.prizeName {
+  font-size: 26rpx;
+  font-family: 'SH-Bold';
+}
+
+.bulletSignIn {
+  width: 138rpx;
+  height: 138rpx;
+  position: absolute;
+  right: 2rpx;
+  bottom: 2rpx;
+}
+
+.createWarp {
+  display: flex;
+  justify-content: center;
+}
+
+.create {
+  text-align: center;
+  line-height: 56rpx !important;
+  width: 160rpx !important;
+  color: white;
+  height: 56rpx !important;
+  border-radius: 999rem;
+  font-size: 26rpx !important;
+  background: #B37AE5;
+  box-shadow: 0rpx 0rpx 10rpx 4rpx rgba(0, 0, 0, .1);
+  letter-spacing: 8rpx;
+  text-indent: 8rpx;
+}
+
+.singInSuccess {
+  font-size: 54rpx;
+  letter-spacing: 10rpx;
+}
+
+.continuityText {
+  font-size: 36rpx;
+  letter-spacing: 10rpx;
+}
+
+.stress {
+  font-size: 70rpx;
+  font-family: 'SH-Bold';
+}
+
+.logo {
+  width: 125rpx;
+  height: 125rpx;
+}
+
+.logoRow {
+  display: flex;
+  justify-content: center;
+}
+
+.logoRow1 {
+  margin-bottom: -14rpx;
+}
+
+.medalLogo {
+  width: 411rpx;
+  height: 322rpx;
+}
+
+.congratulationsWrap {
+  font-size: 26rpx;
+  text-align: center;
+  margin-top: -90rpx;
+}
+
+.activitySwiper {
+  width: 100%;
+  height: 320rpx;
+}
+
+.activityBox {
+  height: 100%;
+  width: 686rpx;
+  border-radius: 50rpx;
+  position: relative;
+}
+
+.activityContent {
+  position: absolute;
+  left: 32rpx;
+  bottom: 20rpx;
+  color: white;
+  /* padding: 10rpx;
+  box-sizing: border-box;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 10rpx; */
+}
+
+.small {
+  font-size: 20rpx;
+  font-family: 'SH-Bold'
+}
+
+.middle {
+  font-size: 30rpx;
+  font-family: 'SH-Bold'
+}
+
+.strong {
+  font-size: 38rpx;
+}
+
+/* 右下角 */
+.wx-swiper-dots.wx-swiper-dots-horizontal {
+  width: 80%;
+  text-align: right;
 }

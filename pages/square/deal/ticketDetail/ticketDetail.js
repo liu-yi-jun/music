@@ -318,5 +318,11 @@ Page({
         common.Toast('该票务已不存在')
       }
     })
+  },  
+  goPersonal(e) {
+    let userId = this.data.detail.userId
+    wx.navigateTo({
+      url: `/pages/my/invitation/invitation?userId=${userId}`,
+    })
   },
 })

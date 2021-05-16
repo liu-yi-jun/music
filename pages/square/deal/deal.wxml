@@ -2,10 +2,10 @@
 <view class="deal">
   <navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' back="{{true}}" iconTheme='white'
     bindback="handlerGobackClick"></navBar>
-    <view class="barWrap">
-      <bar barList="{{barList}}" actIndex="{{actIndex}}" bind:switchBtn="switchBtn" gap="{{10}}" size="{{30}}" ></bar>
-      <image class="myStore" catchtap="storeDeal" src="/images/deal/myStore.png"></image>
-    </view>
+  <view class="barWrap">
+    <bar barList="{{barList}}" actIndex="{{actIndex}}" bind:switchBtn="switchBtn" gap="{{10}}" size="{{30}}"></bar>
+    <image class="myStore" catchtap="storeDeal" src="/images/deal/myStore.png"></image>
+  </view>
   <!-- <view class="title">
     <text class="title-top">二手交易</text>
     <text class="title-bottom">flea market</text>
@@ -20,7 +20,8 @@
     </view>
     <view class="searchText" catchtap="confirm">搜索</view>
   </view>
-  <scroll-view scroll-y style="height: calc({{excludeHeight}}px - 178rpx);" bindscrolltolower="scrolltolower">
+  <scroll-view scroll-y style="height: calc({{excludeHeight}}px - 178rpx);" bindscrolltolower="scrolltolower"
+    refresher-enabled="{{true}}" refresher-triggered="{{triggered}}" bindrefresherrefresh="onRefresh">
     <view hidden="{{actIndex !== 0}}">
       <second id="second" seconds="{{doubleSeconds}}"></second>
     </view>
@@ -28,4 +29,10 @@
       <ticket id="ticket" tickets="{{tickets}}"></ticket>
     </view>
   </scroll-view>
+  <image hidden="{{actIndex !== 0}}" class="issueDynamic" src="/images/square/issueDynamic2.png">
+    <view class="issueDynamicInner" catchtap="goSecondIssue"></view>
+  </image>
+  <image hidden="{{actIndex !== 1}}" class="issueDynamic" src="/images/square/issueDynamic2.png">
+    <view class="issueDynamicInner" catchtap="goTicketIssue"></view>
+  </image>
 </view>

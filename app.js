@@ -58,6 +58,7 @@ App({
   isLogin: false,
   userInfo: null,
   groupInfo: null,
+  signInInfo: null,
   globalData: {
     guide: {}
   },

@@ -3,6 +3,7 @@ const app = getApp()
 const tool = require('../../../../assets/tool/tool.js')
 const common = require('../../../../assets/tool/common')
 const upload = require('../../../../assets/request/upload')
+const authorize = require('../../../../assets/tool/authorize')
 import WxValidate from '../../../../assets/tool/WxValidate'
 Page({
 
@@ -35,12 +36,16 @@ Page({
     isPlay: false,
     // 弹出的连接是什么类型
     currentType: 0,
+    // 标注是否是有输入链接
+    isVideoLink: false,
+    // 控制连接弹窗
+    linkDialogShow: false,
     // 链接路径
     linkUrl: '',
-    // 标注是否是有输入链接
-    isAudioLink: false,
-    isVideoLink: false,
-    isDatumLink: false
+    // 标注视频链接类型
+    isVid: false,
+    msgAuthorizationShow: false,
+    requestId: [app.InfoId.like, app.InfoId.content, app.InfoId.reply]
   },
 
   /**
@@ -106,57 +111,21 @@ Page({
     record.stopRecord()
   },
   handlerGobackClick: app.handlerGobackClick,
-  inputLinkUrl(e) {
-    clearTimeout(this.point)
-    this.point = setTimeout(() => {
-      this.setData({
-        linkUrl: e.detail.value
-      })
-    }, 200)
-  },
-  // 取消弹窗
-  cancelPopup() {
-    this.setData({
-      dialogShow: false,
-      linkUrl: ''
-    })
-  },
   // 完成输入链接
-  complete() {
-    let currentType = this.data.currentType
-    if (currentType == 1) {
-      // 音频
-      this.setData({
-        tempRecordPath: this.data.linkUrl,
-        isAudioLink: true,
-        dialogShow: false,
-        linkUrl: ''
-      })
-    } else if (currentType == 2) {
-      // 视频
-      this.setData({
-        tempVideoPath: this.data.linkUrl,
-        dialogShow: false,
-        isVideoLink: true,
-        linkUrl: ''
-      })
-    } else if (currentType == 3) {
-      // 资料
-      this.setData({
-        tempPicturePaths: this.data.linkUrl ? [this.data.linkUrl] : '',
-        dialogShow: false,
-        isDatumLink: true,
-        linkUrl: ''
-      })
-    }
-  },
-  // 显示弹窗
-  showPopup(currentType) {
+  completeInput(e) {
+    let {
+      linkUrl,
+      isVid
+    } = e.detail
+    console.log('完成', e.detail);
     this.setData({
-      currentType,
-      dialogShow: true
+      linkUrl,
+      tempVideoPath:'',
+      isVid,
+      linkDialogShow: false
     })
   },
+  
   // 初始化声音条实例
   initSound() {
     // wx.setInnerAudioOption({
@@ -240,18 +209,17 @@ Page({
     let type = e.currentTarget.dataset.type
     if (type == 1) {
       this.setData({
-        tempRecordPath: '',
-        isAudioLink: false
+        tempRecordPath: ''
       })
     } else if (type == 2) {
       this.setData({
         tempVideoPath: '',
-        isVideoLink: false
+        linkUrl:''
       })
     } else if (type == 3) {
       this.setData({
         tempPicturePaths: [],
-        isDatumLink: false
+
       })
     }
   },
@@ -270,11 +238,11 @@ Page({
       tempPicturePaths,
       posterUrl,
       duration,
-      tempRecordPath
+      tempRecordPath,
+      linkUrl
     } = this.data
     let {
       voiceUrl,
-      videoUrl,
       pictureUrls,
       courseName,
       introduce
@@ -287,7 +255,7 @@ Page({
         return reject(error)
       }
       // if (!tempRecordPath && !voiceUrl) return reject('请添加课程音频')
-      if (!tempVideoPath && !videoUrl) return reject('请添加课程视频')
+      if (!tempVideoPath && !linkUrl) return reject('请添加课程视频')
       // if (!pictureUrls && !tempPicturePaths.length) return reject('请添加课程资料')
 
       // app.userInfo.avatarUrl ||  app.userInfo.nickName
@@ -295,14 +263,12 @@ Page({
         groupId: app.userInfo.groupId,
         userId: app.userInfo.id,
         groupName: app.userInfo.groupName,
-        nickName: app.userInfo.nickName,
-        avatarUrl: app.userInfo.avatarUrl,
         posterUrl,
         courseName,
         introduce,
         duration,
         pictureUrls: pictureUrls || '',
-        videoUrl: videoUrl || '',
+        videoUrl: tempVideoPath || linkUrl,
         voiceUrl: voiceUrl || ''
       })
     })
@@ -330,29 +296,23 @@ Page({
         if (res.tapIndex === 1) {
           this.chooseVideo()
         } else if (res.tapIndex === 0) {
-          this.showPopup(2)
+          this.setData({
+            linkDialogShow:true
+          })
         }
       }
     })
   },
   // 图片菜单
   pictureurlSheet() {
-    wx.showActionSheet({
-      itemList: ['添加链接', '从手机选择图片'],
-      success: res => {
-        if (res.tapIndex === 1) {
-          this.choosePicture()
-        } else if (res.tapIndex === 0) {
-          this.showPopup(3)
-        }
-      }
-    })
+    this.choosePicture()
   },
   // 选择视频
   chooseVideo() {
     common.chooseVideo().then(res => {
       this.setData({
-        tempVideoPath: res.tempFilePath
+        tempVideoPath: res.tempFilePath,
+        linkUrl: ''
       })
     })
   },
@@ -433,36 +393,46 @@ Page({
   // 提交表单
   async formSubmit(e) {
     let params = e.detail.value
-    console.log('111111111', params)
-    let {
-      tempVideoPath,
-      tempPicturePaths,
-      tempRecordPath,
-      isAudioLink,
-      isVideoLink,
-      isDatumLink
-    } = this.data
     try {
       params = await this.validate(params)
-      console.log('22222222222', params)
-      common.showLoading('发布中')
-      let posterUrls = await this.uploadImg([params.posterUrl])
-      params.posterUrl = posterUrls[0]
-      if (tempRecordPath && !isAudioLink) params.voiceUrl = await this.uploadVoice(tempRecordPath)
-      if (tempVideoPath && !isVideoLink) params.videoUrl = await this.uploadVideo(tempVideoPath)
-      if (tempPicturePaths.length && !isDatumLink) params.pictureUrls = await this.uploadImg(tempPicturePaths)
-      console.log('33333333333', params)
-      const result = await this.addCourse(params)
-      console.log(result)
-      if (result.affectedRows) {
-        this.goCourse()
+      let subscriptionsSetting = await authorize.isSubscription()
+      if (!subscriptionsSetting.itemSettings) {
+        this.params = params
+        // 未勾选总是
+        this.setData({
+          msgAuthorizationShow: true
+        })
+      } else {
+        this.submitTeam(params)
       }
-      common.Toast('已发布')
     } catch (err) {
       console.log(err)
       common.Tip(err)
       wx.hideLoading()
     }
+  },
+  completeMsgAuthorization() {
+    this.submitTeam(this.params)
+  },
+  async submitTeam(params) {
+    let {
+      tempVideoPath,
+      tempPicturePaths,
+      tempRecordPath,
+      linkUrl
+    } = this.data
+    common.showLoading('发布中')
+    let posterUrls = await this.uploadImg([params.posterUrl])
+    params.posterUrl = posterUrls[0]
+    if (tempRecordPath) params.voiceUrl = await this.uploadVoice(tempRecordPath)
+    if (tempVideoPath &&  !linkUrl) params.videoUrl = await this.uploadVideo(tempVideoPath)
+    if (tempPicturePaths.length ) params.pictureUrls = await this.uploadImg(tempPicturePaths)
+    const result = await this.addCourse(params)
+    console.log(result)
+    if (result.affectedRows) {
+      this.goCourse()
+    }
+    common.Toast('已发布')
   },
   // 跳转到课程
   goCourse() {
@@ -471,10 +441,11 @@ Page({
   },
   deleteVideo() {
     this.setData({
-      tempVideoPath: ''
+      tempVideoPath: '',
+      linkUrl:''
     })
   },
-  deleteAllImg(){
+  deleteAllImg() {
     this.setData({
       tempPicturePaths: []
     })

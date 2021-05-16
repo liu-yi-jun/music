@@ -40,12 +40,11 @@ Component({
           operate: commenetBarData.isLike,
           relation: {
             userId: app.userInfo.id,
-            themeId: commenetBarData.themeId
+            themeId: commenetBarData.themeId,
+            nickName: app.userInfo.nickName.replace(/[\d]+/g,'*'),
           },
           extra: {
             otherId: commenetBarData.otherId,
-            avatarUrl: app.userInfo.avatarUrl,
-            nickName: app.userInfo.nickName,
             themeTitle: commenetBarData.themeTitle
           }
         }).then(res=>{

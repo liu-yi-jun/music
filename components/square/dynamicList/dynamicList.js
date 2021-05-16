@@ -309,12 +309,11 @@ Component({
           operate: content.isLike,
           relation: {
             userId: app.userInfo.id,
-            themeId: content.id
+            themeId: content.id,
+            nickName: app.userInfo.nickName,
           },
           extra: {
             otherId: content.userId,
-            avatarUrl: app.userInfo.avatarUrl,
-            nickName: app.userInfo.nickName,
             themeTitle: content.introduce
           }
         })

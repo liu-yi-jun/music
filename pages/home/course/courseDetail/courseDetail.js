@@ -41,7 +41,8 @@ Page({
       name: '举报',
       open_type: '',
       functionName: 'handleReport'
-    }]
+    }],
+    mp4Video: false
     // list: [{
     //   name: '分享',
     //   open_type: 'share',
@@ -165,6 +166,11 @@ Page({
       userId: app.userInfo.id
     }).then(res => {
       let detail = res[0]
+      if (detail.videoUrl.includes('mp4')) {
+        this.setData({
+          mp4Video: true
+        })
+      }
       this.setData({
         datumUrls: detail.pictureUrls,
         detail,
@@ -179,6 +185,11 @@ Page({
           themeId: detail.id,
           likeUrl: 'groupcourseLike',
           storeUrl: 'groupcourseStore'
+        }
+      })
+      app.groupInfo.myGrouList.forEach((item, index) => {
+        if (item.groupId === detail.groupId && item.groupDuty !== -1) {
+          return this.flag = true
         }
       })
     })
@@ -306,32 +317,40 @@ Page({
     })
   },
   toComment(e) {
-    // console.log(e.detail.showTextara)
-    this.setData({
-      showTextara: true,
-      param: {
-        type: '课程',
-        themeUserId: this.data.detail.userId,
-        themeTitle: this.data.detail.courseName,
-        theme:  this.table,
-        themeId: this.data.detail.id,
-        commenterId: app.userInfo.id,
-        commenterAvatar: app.userInfo.avatarUrl,
-        commenterName: app.userInfo.nickName
-      }
-    })
+    if (this.flag) {
+      // console.log(e.detail.showTextara)
+      this.setData({
+        showTextara: true,
+        param: {
+          type: '课程',
+          themeUserId: this.data.detail.userId,
+          themeTitle: this.data.detail.courseName,
+          theme: this.table,
+          themeId: this.data.detail.id,
+          commenterId: app.userInfo.id,
+          commenterAvatar: app.userInfo.avatarUrl,
+          commenterName: app.userInfo.nickName
+        }
+      })
+    } else {
+      common.Tip('您还未成为该小组成员，暂不能发表评论')
+    }
   },
   toReply(e) {
-    let param = e.detail.param
-    param.theme = this.table
-    param.themeId = this.data.detail.id
-    param.themeTitle = this.data.detail.courseName
-    param.isReply = true
-    this.setData({
-      showTextara: true,
-      param,
-      indexObject: e.detail.indexObject
-    })
+    if (this.flag) {
+      let param = e.detail.param
+      param.theme = this.table
+      param.themeId = this.data.detail.id
+      param.themeTitle = this.data.detail.courseName
+      param.isReply = true
+      this.setData({
+        showTextara: true,
+        param,
+        indexObject: e.detail.indexObject
+      })
+    } else {
+      common.Tip('您还未成为该小组成员，暂不能回复评论')
+    }
   },
   scrolltolower() {
     if (!this.data.IsNoData && this.data.actIndex == 0) this.getCourseCommont(this.data.detail.id)

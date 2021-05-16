@@ -74,7 +74,8 @@ Page({
     let dynamicsPaging = this.data.dynamicsPaging
     app.get(app.Api.getDynamics, {
       ...dynamicsPaging,
-      userId: id
+      otherId: id,
+      userId:app.userInfo.id
     }).then(res => {
       if (res.length < dynamicsPaging.pageSize) {
         this.setData({

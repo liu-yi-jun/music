@@ -1,0 +1,20 @@
+/* pages/square/squarePost/standard/standard.wxss */
+.standard {
+  color: white;
+
+  font-size: 24rpx;
+  word-break: break-all;
+  text-align: justify;
+}
+.title {
+  text-align: center;
+  font-size: 30rpx;
+  font-weight: bold;
+}
+.wrap {
+  padding:0 30rpx ;
+}
+.bold {
+  font-weight: bold;
+
+}

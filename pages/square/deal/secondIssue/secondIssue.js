@@ -21,7 +21,9 @@ Page({
     index: 0,
     mks: [],
     dialogShow: true,
-    money: 0
+    money: 0,
+    msgAuthorizationShow: false,
+    requestId: [app.InfoId.like, app.InfoId.content, app.InfoId.reply]
   },
 
   /**
@@ -141,8 +143,6 @@ Page({
       }
       return resolve({
         userId: app.userInfo.id,
-        nickName: app.userInfo.nickName,
-        avatarUrl: app.userInfo.avatarUrl,
         pictureUrls: tempImagePaths || [],
         videoUrl: tempVideoPath || '',
         location,
@@ -155,26 +155,41 @@ Page({
   // 提交表单
   async formSubmit(e) {
     let params = e.detail.value
-    let {
-      tempVideoPath,
-      tempImagePaths
-    } = this.data
     try {
       params = await this.validate(params)
-      common.showLoading('发布中')
-      if (tempVideoPath) params.videoUrl = await this.uploadVideo(tempVideoPath)
-      if (tempImagePaths.length) params.pictureUrls = await this.uploadImg(tempImagePaths)
-      const result = await this.secondIssue(params)
-      console.log(result)
-      if (result.affectedRows) {
-        this.godeal()
+      let subscriptionsSetting = await authorize.isSubscription()
+      if (!subscriptionsSetting.itemSettings) {
+        this.params = params
+        // 未勾选总是
+        this.setData({
+          msgAuthorizationShow: true
+        })
+      } else {
+        this.submitTeam(params)
       }
-      common.Toast('已发布')
     } catch (err) {
       console.log(err)
       common.Tip(err)
       wx.hideLoading()
     }
+  },
+  completeMsgAuthorization() {
+    this.submitTeam(this.params)
+  },
+  async submitTeam(params) {
+    let {
+      tempVideoPath,
+      tempImagePaths
+    } = this.data
+    common.showLoading('发布中')
+    if (tempVideoPath) params.videoUrl = await this.uploadVideo(tempVideoPath)
+    if (tempImagePaths.length) params.pictureUrls = await this.uploadImg(tempImagePaths)
+    const result = await this.secondIssue(params)
+    console.log(result)
+    if (result.affectedRows) {
+      this.godeal()
+    }
+    common.Toast('已发布')
   },
   godeal() {
     app.secondIssueBack = true

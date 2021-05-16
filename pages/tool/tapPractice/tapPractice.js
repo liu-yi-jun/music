@@ -154,6 +154,7 @@ Page({
       tapId: id,
       userId: app.userInfo.id
     }).then(res => {
+      console.log(res,111111111111);
       if (res.length < pagingTapRecord.pageSize) {
         this.setData({
           'pagingTapRecord.isNoData': true
@@ -161,7 +162,14 @@ Page({
       }
       pagingTapRecord.pageIndex = pagingTapRecord.pageIndex + 1
       let tapRecord = this.initSoundWidth(res.tapRecord)
-      res.tapDetail.tapVideoLink = this.getParam(res.tapDetail.tapVideoLink, 'vid')
+      if(res.tapDetail.tapVideoLink.includes('mp4')) {
+        this.setData({
+          mp4Video:true
+        })
+      }else {
+        res.tapDetail.tapVideoLink = this.getParam(res.tapDetail.tapVideoLink, 'vid')
+      }
+   
       this.setData({
         pagingTapRecord,
         tapDetail: res.tapDetail,
@@ -170,16 +178,21 @@ Page({
     })
   },
   getParam(url, name) {
-    try {
-      var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
-      var r = url.split('?')[1].match(reg);
-      if (r != null) {
-        return r[2];
+    if(url.includes('http')){
+      try {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+        var r = url.split('?')[1].match(reg);
+        if (r != null) {
+          return r[2];
+        }
+        return ""; //如果此处只写return;则返回的是undefined
+      } catch (e) {
+        return ""; //如果此处只写return;则返回的是undefined
       }
-      return ""; //如果此处只写return;则返回的是undefined
-    } catch (e) {
-      return ""; //如果此处只写return;则返回的是undefined
+    }else {
+      return url
     }
+
   },
 
   // 处理声音条的宽度
@@ -438,6 +451,7 @@ Page({
       let recordUrl = await this.uploadTapRecord(this.data.tempFilePath)
       let result = await this.issueTapRecord(recordUrl)
       console.log('1111111111111111111', result)
+      result[0].avatarUrl = app.userInfo.avatarUrl
       await this.setSoundRowArr(result[0])
 
       common.Toast('已发送')
@@ -499,7 +513,6 @@ Page({
         userid: id,
         tapId: tapDetail.id,
         recordUrl,
-        avatarUrl,
         duration
       }).then(res => resolve(res)).catch(err => reject(err))
     })

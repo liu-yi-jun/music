@@ -40,18 +40,33 @@ Page({
     isRecordLink: false,
     isVideoLink: false,
     isImageLink: false,
-    linkUrl: ''
+    linkUrl: '',
+    showSignIn: false,
+    msgAuthorizationShow: false,
+    requestId: [app.InfoId.like, app.InfoId.content, app.InfoId.reply]
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    console.log(options);
+    if (options.showSignIn) {
+      this.isSignIn = true
+      this.setData({
+        showSignIn: true
+      })
+    }
     // 获取去除上面导航栏，剩余的高度
     tool.navExcludeHeight(this)
     this.getUserInfo()
     this.getTopic()
     this.initValidate()
+  },
+  close() {
+    this.setData({
+      showSignIn: false
+    })
   },
   getUserInfo() {
     let {
@@ -209,17 +224,7 @@ Page({
     // })
   },
   videoSheet() {
-    wx.showActionSheet({
-      itemList: ['添加网络链接', '从手机选择视频'],
-      success: res => {
-        console.log(res)
-        if (res.tapIndex === 1) {
-          this.chooseVideo()
-        } else if (res.tapIndex === 0) {
-          this.showPopup(2)
-        }
-      }
-    })
+    this.chooseVideo()
   },
   recordSheet() {
     // wx.showActionSheet({
@@ -324,8 +329,6 @@ Page({
       }
       return resolve({
         userId: app.userInfo.id,
-        nickName: app.userInfo.nickName,
-        avatarUrl: app.userInfo.avatarUrl,
         groupId: app.userInfo.groupId,
         groupName: app.userInfo.groupName,
         introduce: params.introduce,
@@ -335,9 +338,6 @@ Page({
         topicId: topic.id,
         topicName: topic.topicName,
         mold,
-        gender: app.userInfo.gender,
-        constellation: app.userInfo.constellation,
-        age: app.userInfo.age,
         duration: this.data.duration,
         soundWidth: this.data.soundWidth,
         location
@@ -348,6 +348,28 @@ Page({
   // 提交表单
   async formSubmit(e) {
     let params = e.detail.value
+    try {
+      params = await this.validate(params)
+      let subscriptionsSetting = await authorize.isSubscription()
+      if (!subscriptionsSetting.itemSettings) {
+        this.params = params
+        // 未勾选总是
+        this.setData({
+          msgAuthorizationShow: true
+        })
+      } else {
+        this.submitTeam(params)
+      }
+    } catch (err) {
+      console.log(err)
+      common.Tip(err)
+      wx.hideLoading()
+    }
+  },
+  completeMsgAuthorization() {
+    this.submitTeam(this.params)
+  },
+  async submitTeam(params) {
     let {
       tempVideoPath,
       tempImagePaths,
@@ -356,22 +378,14 @@ Page({
       isVideoLink,
       isImageLink
     } = this.data
-    try {
-      params = await this.validate(params)
-      common.showLoading('发布中')
-      if (tempRecordPath && !isRecordLink) params.voiceUrl = await this.uploadVoice(tempRecordPath)
-      if (tempVideoPath && !isVideoLink) params.videoUrl = await this.uploadVideo(tempVideoPath)
-      if (tempImagePaths.length && !isImageLink) params.pictureUrls = await this.uploadImg(tempImagePaths)
-      const result = await this.squarePost(params)
-      console.log(result)
-      if (result.affectedRows) {
-        this.goSquare()
-      }
-      common.Toast('已发布')
-    } catch (err) {
-      console.log(err)
-      common.Tip(err)
-      wx.hideLoading()
+    common.showLoading('发布中')
+    if (tempRecordPath && !isRecordLink) params.voiceUrl = await this.uploadVoice(tempRecordPath)
+    if (tempVideoPath && !isVideoLink) params.videoUrl = await this.uploadVideo(tempVideoPath)
+    if (tempImagePaths.length && !isImageLink) params.pictureUrls = await this.uploadImg(tempImagePaths)
+    const result = await this.squarePost(params)
+    common.Toast('已发布')
+    if (result.affectedRows) {
+      this.goSquare()
     }
   },
   goSquare() {
@@ -433,7 +447,19 @@ Page({
       console.log(data)
       app.post(app.Api.squarePost, data, {
         loading: false
-      }).then(res => resolve(res)).catch(err => reject(err))
+      }).then(res => {
+        if (this.isSignIn) {
+          app.post(app.Api.signInPost, {
+            userId: app.userInfo.id
+          }).then((data) => {
+            app.signInComplete = true
+            app.signInInfo = data
+            resolve(res)
+          })
+        } else {
+          resolve(res)
+        }
+      }).catch(err => reject(err))
     })
   },
   // 取消弹窗
@@ -506,4 +532,9 @@ Page({
       tempImagePaths
     })
   },
+  standard() {
+    wx.navigateTo({
+      url: '/pages/square/squarePost/standard/standard',
+    })
+  }
 })

@@ -15,10 +15,10 @@
     <view hidden="{{actIndex !== 2}}">
       <allianceList alliances="{{alliances}}"> </allianceList>
     </view>
-    <view hidden="{{actIndex !== 3}}">
+    <!-- <view hidden="{{actIndex !== 3}}">
       <liveHouse id="liveHouse" list="{{performances}}"> </liveHouse>
-    </view>
-    <view hidden="{{actIndex !== 4}}">
+    </view> -->
+    <view hidden="{{actIndex !== 3}}">
       <composeBand bands="{{bands}}" isMyStore="{{true}}"></composeBand>
     </view>
   </scroll-view>

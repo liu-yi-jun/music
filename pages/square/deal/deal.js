@@ -16,7 +16,7 @@ Page({
       isNotData: false
     },
     ticketPaging: {
-      pageSize: 20,
+      pageSize: 3,
       pageIndex: 1,
       isNotData: false
     },
@@ -38,7 +38,7 @@ Page({
       },
     ],
     actIndex: 0,
-    tempValue:''
+    tempValue: ''
   },
 
   /**
@@ -51,61 +51,53 @@ Page({
     this.searchTickets(this.data.title)
   },
   searchSeconds(brand) {
-    let secondPaging = this.data.secondPaging
-    app.get(app.Api.searchSeconds, {
-      ...secondPaging,
-      userId: app.userInfo.id,
-      brand
-    }).then(res => {
-      if (res.length < secondPaging.pageSize) {
-        this.setData({
-          'secondPaging.isNotData': true
-        })
-      }
-      // let seconds = this.data.seconds
-      // if(seconds.length === 1) {
-      //   seconds = [...seconds[0]]
-      // } else if(seconds.length === 2) {
-      //   seconds = [...seconds[0], ...seconds[1]]
-      // }
-      // seconds = seconds.concat(res)
-      // seconds = tool.arraySplit(seconds, 0, 2)
-
-      let doubleSeconds = this.data.doubleSeconds
-
-      res.forEach(item => {
-        if (doubleSeconds[0].length > doubleSeconds[1].length) {
-          doubleSeconds[1].push(item)
-        } else {
-          doubleSeconds[0].push(item)
+    return new Promise((resolve, reject) => {
+      let secondPaging = this.data.secondPaging
+      app.get(app.Api.searchSeconds, {
+        ...secondPaging,
+        userId: app.userInfo.id,
+        brand
+      }).then(res => {
+        if (res.length < secondPaging.pageSize) {
+          secondPaging.isNotData = true
         }
-      })
-
-      this.setData({
-        doubleSeconds,
-        'secondPaging.pageIndex': secondPaging.pageIndex + 1
+        let doubleSeconds = this.data.doubleSeconds
+        res.forEach(item => {
+          if (doubleSeconds[0].length > doubleSeconds[1].length) {
+            doubleSeconds[1].push(item)
+          } else {
+            doubleSeconds[0].push(item)
+          }
+        })
+        secondPaging.pageIndex = secondPaging.pageIndex + 1
+        this.setData({
+          doubleSeconds
+        })
+        resolve()
       })
     })
+
   },
   searchTickets(title) {
-    let ticketPaging = this.data.ticketPaging
-    app.get(app.Api.searchTickets, {
-      ...ticketPaging,
-      userId: app.userInfo.id,
-      title
-    }).then(res => {
-      if (res.length < ticketPaging.pageSize) {
+    return new Promise((resolve, reject) => {
+      let ticketPaging = this.data.ticketPaging
+      app.get(app.Api.searchTickets, {
+        ...ticketPaging,
+        userId: app.userInfo.id,
+        title
+      }).then(res => {
+        if (res.length < ticketPaging.pageSize) {
+          ticketPaging.isNotData = true
+        }
+        ticketPaging.pageIndex = ticketPaging.pageIndex + 1
         this.setData({
-          'ticketPaging.isNotData': true
+          tickets: this.data.tickets.concat(res),
         })
-      }
-      this.setData({
-        tickets: this.data.tickets.concat(res),
-        'ticketPaging.pageIndex': ticketPaging.pageIndex + 1
+        resolve()
       })
     })
   },
-  searchInput(event){
+  searchInput(event) {
     this.setData({
       tempValue: event.detail.value,
     })
@@ -114,23 +106,22 @@ Page({
     let value = event.detail.value
     let actIndex = this.data.actIndex
     if (actIndex === 0) {
-      this.setData({
-        doubleSeconds: [
-          [],
-          []
-        ],
-        brand: value?value:this.data.tempValue,
-        'secondPaging.isNotData': false,
-        'secondPaging.pageIndex': 1
-      }, () => this.searchSeconds(this.data.brand))
+      let secondPaging = this.data.secondPaging
+      secondPaging.isNotData = false
+      secondPaging.pageIndex = 1
+      this.data.doubleSeconds = [
+        [],
+        []
+      ]
+      this.data.brand = value ? value : this.data.tempValue
+      this.searchSeconds(this.data.brand)
     } else if (actIndex === 1) {
-      this.setData({
-        tickets: [],
-        title:value?value:this.data.tempValue,
-        'ticketPaging.isNotData': false,
-        'ticketPaging.pageIndex': 1
-      }, () => this.searchTickets(this.data.title))
-
+      let ticketPaging = this.data.ticketPaging
+      ticketPaging.isNotData = false
+      ticketPaging.pageIndex = 1
+      this.data.tickets = []
+      this.data.title = value ? value : this.data.tempValue
+      this.searchTickets(this.data.title)
     }
   },
   completeSecondStore(commenetBarData) {
@@ -155,32 +146,62 @@ Page({
     if (app.secondIssueBack || app.secondDeleteBack) {
       app.secondIssueBack = false
       app.secondDeleteBack = false
-      this.setData({
-        doubleSeconds: [
-          [],
-          []
-        ],
-        brand: '',
-        'secondPaging.isNotData': false,
-        'secondPaging.pageIndex': 1
-      }, () => this.searchSeconds(this.data.brand))
-
+      let secondPaging = this.data.secondPaging
+      secondPaging.isNotData = false
+      secondPaging.pageIndex = 1
+      this.data.doubleSeconds = [
+        [],
+        []
+      ]
+      this.data.brand = ''
+      this.searchSeconds(this.data.brand)
     }
     if (app.ticketIssueBack || app.ticketDeleteBack) {
       app.ticketIssueBack = false
       app.ticketDeleteBack = false
-      this.setData({
-        tickets: [],
-        title: '',
-        'ticketPaging.isNotData': false,
-        'ticketPaging.pageIndex': 1
-      }, () => {
-        this.searchTickets(this.data.title)
-      })
+      let ticketPaging = this.data.ticketPaging
+      ticketPaging.isNotData = false
+      ticketPaging.pageIndex = 1
+      this.data.tickets = []
+      this.data.title = ''
+      this.searchTickets(this.data.title)
     }
   },
+  onRefresh() {
+    if (this._freshing) return
+    this._freshing = true
+    let {
+      secondPaging,
+      ticketPaging,
+      actIndex
+    } = this.data
+    if (actIndex === 0) {
+      secondPaging.isNotData = false
+      secondPaging.pageIndex = 1
+      this.data.doubleSeconds = [
+        [],
+        []
+      ]
+      this.searchSeconds(this.data.brand).then(() => {
+        this._freshing = false
+        this.setData({
+          triggered: false
+        })
+      })
+    } else if (actIndex === 1) {
+      ticketPaging.isNotData = false
+      ticketPaging.pageIndex = 1
+      this.data.tickets = []
+      this.searchTickets(this.data.title).then(() => {
+        this._freshing = false
+        this.setData({
+          triggered: false
+        })
+      })
+    }
+
+  },
   scrolltolower() {
-    console.log(this.data.band)
     let {
       secondPaging,
       ticketPaging,
@@ -233,13 +254,23 @@ Page({
     if (actIndex === this.data.actIndex) return
     this.setData({
       actIndex,
-      tempValue:'',
-      groupName:''
+      tempValue: '',
+      groupName: ''
     })
   },
   storeDeal() {
     wx.navigateTo({
       url: '/pages/square/deal/storeDeal/storeDeal',
+    })
+  },
+  goSecondIssue() {
+    wx.navigateTo({
+      url: '/pages/square/deal/secondIssue/secondIssue',
+    })
+  },
+  goTicketIssue() {
+    wx.navigateTo({
+      url: '/pages/square/deal/ticketIssue/ticketIssue',
     })
   }
 })

@@ -1,6 +1,8 @@
 <!--pages/home/massManagement/massManagement.wxml-->
 <view>
   <canvas canvas-id='canvas' class='canvas'></canvas>
+  <canvas type="2d" id="canvasLogo" class='canvasLogo'></canvas>
+  <canvas id="canvasPoster"  canvas-id="canvasPoster" class='canvasPoster'></canvas>
   <navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' back="{{true}}" iconTheme='white'
     bindback="handlerGobackClick"></navBar>
   <view class="head">小组{{(groupDuty===0 || groupDuty===1)?'管理':'信息'}}</view>
@@ -15,7 +17,7 @@
       </view>
       <text>{{groupInfo.groupName}}</text>
     </view>
-    <view class="dissolution generate" catchtap="generate">生成二维码</view>
+    <view wx:if="{{groupDuty===0 }}" class="dissolution generate" catchtap="generate">生成二维码</view>
     <view class="typeWrap" wx:if="{{groupDuty===0 || groupDuty===1}}">
       <view class=" type">
         <text class="typeTile">小组类型</text>
@@ -31,7 +33,7 @@
         </view>
       </view>
     </view>
-   
+
     <view class="textareaWarp" wx:if="{{groupDuty===0 || groupDuty===1}}">
       <textarea bindinput="inputDescribe" maxlength="-1" class="textarea" placeholder="小组描述："
         placeholder-class="placeholder" value="{{describe}}"></textarea>
@@ -72,7 +74,15 @@
       <view class="dissolution">审核中</view>
     </view>
   </scroll-view>
-  <view class="shade {{showQRcode? 'shadeShow':''}}" catchtap="cancel">
-    <image src="{{QRcode}}" catchtap="previewQR"></image>
+  <view class="shade {{showQRcode? 'shadeShow':''}}" catchtap="cancel" catchtouchmove="stopMove">
+    <view class="dialog" mark:stop="Bubb">
+      <image class="poster" src="{{posterUrl}}" catchtap="previewPoster"></image>
+      <image class="save-poster" src="../../../images/massManagement/save.png" catchtap="savePoster"></image>
+      <image class="share-poster" src="../../../images/massManagement/share.png">
+      <button open-type="share"></button>
+      </image>
+    </view>
+    <!-- <image src="{{QRcode}}" catchtap="previewQR"></image> -->
   </view>
 </view>
+<msgAuthorization wx:if="{{msgAuthorizationShow}}" bind:completeMsgAuthorization="completeMsgAuthorization"  msgAuthorizationShow="{{msgAuthorizationShow}}" requestId="{{requestId}}"></msgAuthorization>

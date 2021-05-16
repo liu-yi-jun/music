@@ -18,9 +18,11 @@ Page({
       groupName: '',
       introduce: '',
       privates: 0,
-      examine: 1
+      examine: 0
     },
-    dialogShow: false
+    dialogShow: false,
+    msgAuthorizationShow: false,
+    requestId: [app.InfoId.joinGroup]
   },
 
   /**
@@ -121,8 +123,13 @@ Page({
   // 选择图片
   chooseGroupLogo() {
     // {isCompress:false}
-    common.chooseImage(1).then(res => {
+    // wx.chooseImage({
+    //   count: 1,
+    //   success:res=> {
 
+    //   }
+    // })
+    common.chooseImage(1).then(res => {
       wx.createSelectorQuery()
         .select('#canvasLogo')
         .fields({
@@ -131,7 +138,6 @@ Page({
         })
         .exec(this.canvasLogo.bind(this))
       this.tempFilePaths = res.tempFilePaths
-      this.imgInfo = res
       this.setData({
         tempUrls: res.tempFilePaths
       })
@@ -212,44 +218,8 @@ Page({
           }
         }
       })
-
-      // ctx.clip()
-      // ctx.drawImage(logo, 0, 0, width, height, 0, 0, width, height)
-      // wx.canvasToTempFilePath({
-      //   canvas,
-      //   width,
-      //   height,
-      //   destWidth: width,
-      //   destHeight: height,
-      //   success: res => {
-      //     console.log(res.tempFilePath)
-      //     this.setData({
-      //       tempFilePaths: [res.tempFilePath]
-      //     })
-      //   }
-      // })
     }
   },
-  // 预览图片 
-
-  // logo.onload = () => {
-  //   ctx.clip()
-  //   ctx.drawImage(logo, 0, 0, width, height)
-  //   wx.canvasToTempFilePath({
-  //     canvas,
-  //     width,
-  //     height,
-  //     destWidth: width,
-  //     destHeight: height,
-  //     success: res => {
-  //       console.log(res.tempFilePath)
-  //       this.setData({
-  //         tempFilePaths: [res.tempFilePath]
-  //       })
-  //     }
-  //   }, that)
-  // }
-  // },
   // 预览图片
 
   previewImage() {
@@ -340,34 +310,53 @@ Page({
       app.userInfo = result
       console.log(result)
       wx.hideLoading()
-      authorize.isSubscription().then(res => {
-        if (res.mainSwitch && (!res.itemSettings || !res.itemSettings[app.InfoId.joinGroup])) {
-          common.Tip('接下来将授权"申请加入小组"通知。授权时请勾选“总是保持以上选择,不再询问”，后续有其他用户加入本小组将会第一时间通知到您', '创建成功').then(res => {
-            if (res.confirm) {
-              authorize.alwaysSubscription([app.InfoId.joinGroup]).then(res => {
-                this.goHome()
-              })
-            }
-          })
-        } else {
-          common.Tip('小组已创建完成，快邀请您的伙伴加入吧!', '提示').then(res => {
-            if (res.confirm) {
-              authorize.alwaysSubscription([app.InfoId.joinGroup]).then(res => {
-                this.goHome()
-              })
-            }
-          })
-        }
-      })
+      common.Toast('创建成功',1500,'success')
+      setTimeout(()=>{
+        this.goHome()
+      },1500)
+      // authorize.isSubscription().then(res => {
+      //   if (res.mainSwitch && (!res.itemSettings || !res.itemSettings[app.InfoId.joinGroup])) {
+      //     common.Tip('接下来将授权"申请加入小组"通知。授权时请勾选“总是保持以上选择,不再询问”，后续有其他用户加入本小组将会第一时间通知到您', '创建成功').then(res => {
+      //       if (res.confirm) {
+      //         authorize.alwaysSubscription([app.InfoId.joinGroup]).then(res => {
+      //           this.goHome()
+      //         })
+      //       }
+      //     })
+      //   } else {
+      //     common.Tip('小组已创建完成，快邀请您的伙伴加入吧!', '提示').then(res => {
+      //       if (res.confirm) {
+      //         authorize.alwaysSubscription([app.InfoId.joinGroup]).then(res => {
+      //           this.goHome()
+      //         })
+      //       }
+      //     })
+      //   }
+      // })
     } catch (err) {
+
       common.Tip(err)
       console.log(err)
       wx.hideLoading()
     }
   },
-  changeExamine(event) {
+  async changeExamine(event) {
+    if(Number(event.detail.value)) {
+      let subscriptionsSetting = await authorize.isSubscription()
+      if (!subscriptionsSetting.itemSettings) {
+        // 未勾选总是
+        this.setData({
+          msgAuthorizationShow: true
+        })
+      }
+    }
     this.setData({
       "form.examine": Number(event.detail.value)
+    })
+  },
+  completeMsgAuthorization() {
+    this.setData({
+      msgAuthorizationShow: false
     })
   },
   changePrivate(event) {

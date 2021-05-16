@@ -18,8 +18,8 @@
   </view>
 
   <view class="logoWrap">
-    <!--  catchtap="switchFunctionBar"  -->
-    <image mode="aspectFill" class="logo" src="{{groupInfo.groupLogo}}">
+    <!--    -->
+    <image catchtap="switchFunctionBar" mode="aspectFill" class="logo" src="{{groupInfo.groupLogo}}">
       <view class="logoName">
         <text class="organizationName">{{groupNameTop}}</text>
         <text class="organization">{{groupNamebuttom}}</text>
@@ -27,7 +27,7 @@
     </image>
     <image class="follow" src="http://cdn.eigene.cn/home/follow{{groupInfo.isFollow?'ed':''}}.png" catchtap="follow">
     </image>
-    <view mark:district="functionBar" class="functionBar {{functionBarShow? 'functionBarShow':''}}">
+    <view mark:district="functionBar" style="background-image: url('http://cdn.shengruo.top/home/massBackground.png');" class="functionBar {{functionBarShow? 'functionBarShow':''}}">
       <view catchtap="goPuchCard" class="puchCard {{functionBarShow? 'puchCardShow':''}}">
         <image src="http://cdn.eigene.cn/home/puchCard2.png"></image>
         <text>打卡</text>
@@ -36,10 +36,10 @@
         <image src="http://cdn.eigene.cn/home/course2.png"></image>
         <text>课程</text>
       </view>
-      <!-- <view catchtap="goMassManagement" class="setUp {{functionBarShow? 'setUpShow':''}}">
+      <view catchtap="goMassManagement" class="setUp {{functionBarShow? 'setUpShow':''}}">
         <image src="{{qiniuUrl}}/home/setUp.png"></image>
-        <text>设置</text>
-      </view> -->
+        <text>详情</text>
+      </view>
     </view>
   </view>
   <!-- mark:area不行 -->

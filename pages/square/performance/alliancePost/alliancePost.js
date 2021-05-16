@@ -2,6 +2,7 @@
 const app = getApp()
 const tool = require('../../../../assets/tool/tool.js')
 const common = require('../../../../assets/tool/common')
+const authorize = require('../../../../assets/tool/authorize.js')
 import WxValidate from '../../../../assets/tool/WxValidate'
 const upload = require('../../../../assets/request/upload')
 Page({
@@ -31,16 +32,14 @@ Page({
     tempRecordPath: '',
     tempVideoPath: '',
     isPlay: false,
-    // 弹出的连接是什么类型
-    currentType: 0,
     // 控制连接弹窗
-    dialogShow: false,
+    linkDialogShow: false,
     // 链接路径
     linkUrl: '',
-    // 标注是否输入了链接
-    isRecordLink: false,
-    isVideoLink: false,
-    isImageLink: false
+    // 标注视频链接类型
+    isVid: false,
+    msgAuthorizationShow: false,
+    requestId: [app.InfoId.like, app.InfoId.content, app.InfoId.reply]
   },
 
   /**
@@ -62,7 +61,7 @@ Page({
     const changeRange = maxWidth - minWidth
     let soundWidth = duration * changeRange / recordTime + minWidth
     soundWidth >= maxWidth ? soundWidth = maxWidth : soundWidth
-    
+
     return (soundWidth)
   },
   // 初始化声音条实例
@@ -215,22 +214,12 @@ Page({
   },
 
   imgSheet() {
-    wx.showActionSheet({
-      itemList: ['添加网络链接', '从手机选择图片'],
-      success: res => {
-        if (res.tapIndex === 1) {
-          this.chooseImg()
-        } else if (res.tapIndex === 0) {
-          this.showPopup(3)
-        }
-      }
-    })
+    this.chooseImg()
   },
   chooseImg() {
     common.chooseImage(9).then(res => {
       this.setData({
-        tempImagePaths: res.tempFilePaths,
-        isImageLink: false
+        tempImagePaths: res.tempFilePaths
       })
     })
   },
@@ -242,7 +231,9 @@ Page({
         if (res.tapIndex === 1) {
           this.chooseVideo()
         } else if (res.tapIndex === 0) {
-          this.showPopup(2)
+          this.setData({
+            linkDialogShow: true
+          })
         }
       }
     })
@@ -251,7 +242,7 @@ Page({
     common.chooseVideo().then(res => {
       this.setData({
         tempVideoPath: res.tempFilePath,
-        isVideoLink: false
+        linkUrl: ''
       })
     })
   },
@@ -275,8 +266,7 @@ Page({
     this.setData({
       tempRecordPath: data.tempFilePath,
       duration: data.duration,
-      soundWidth: this.initSoundWidth(data.duration),
-      isRecordLink: false
+      soundWidth: this.initSoundWidth(data.duration)
     })
   },
   handlerGobackClick: app.handlerGobackClick,
@@ -322,7 +312,8 @@ Page({
         tempVideoPath,
         tempImagePaths,
         tempRecordPath,
-        duration
+        duration,
+        linkUrl
       } = this.data
       let {
         date,
@@ -345,13 +336,11 @@ Page({
       return resolve({
         duration,
         userId: app.userInfo.id,
-        nickName: app.userInfo.nickName,
-        avatarUrl: app.userInfo.avatarUrl,
         groupId: app.userInfo.groupId,
         groupName: app.userInfo.groupName,
         introduce: params.introduce,
         pictureUrls: tempImagePaths || [],
-        videoUrl: tempVideoPath || '',
+        videoUrl: tempVideoPath || linkUrl,
         voiceUrl: tempRecordPath || '',
         // mold,
         activityTime,
@@ -362,31 +351,43 @@ Page({
   // 提交表单
   async formSubmit(e) {
     let params = e.detail.value
-    let {
-      tempVideoPath,
-      tempImagePaths,
-      tempRecordPath,
-      isRecordLink,
-      isVideoLink,
-      isImageLink
-    } = this.data
     try {
       params = await this.validate(params)
-      common.showLoading('发布中')
-      if (tempRecordPath && !isRecordLink) params.voiceUrl = await this.uploadVoice(tempRecordPath)
-      if (tempVideoPath && !isVideoLink) params.videoUrl = await this.uploadVideo(tempVideoPath)
-      if (tempImagePaths.length && !isImageLink) params.pictureUrls = await this.uploadImg(tempImagePaths)
-      const result = await this.postAlliance(params)
-      console.log(result)
-      if (result.affectedRows) {
-        this.goPerformance()
+      let subscriptionsSetting = await authorize.isSubscription()
+      if (!subscriptionsSetting.itemSettings) {
+        this.params = params
+        // 未勾选总是
+        this.setData({
+          msgAuthorizationShow: true
+        })
+      } else {
+        this.submitTeam(params)
       }
-      common.Toast('已发布')
     } catch (err) {
       console.log(err)
       common.Tip(err)
       wx.hideLoading()
     }
+  },
+  completeMsgAuthorization() {
+    this.submitTeam(this.params)
+  },
+  async submitTeam(params) {
+    let {
+      tempVideoPath,
+      tempImagePaths,
+      tempRecordPath,
+      linkUrl,
+    } = this.data
+    common.showLoading('发布中')
+    if (tempRecordPath) params.voiceUrl = await this.uploadVoice(tempRecordPath)
+    if (tempVideoPath && !linkUrl) params.videoUrl = await this.uploadVideo(tempVideoPath)
+    if (tempImagePaths.length) params.pictureUrls = await this.uploadImg(tempImagePaths)
+    const result = await this.postAlliance(params)
+    if (result.affectedRows) {
+      this.goPerformance()
+    }
+    common.Toast('已发布')
   },
   goPerformance() {
     app.alliancePostBack = true
@@ -450,55 +451,21 @@ Page({
       }).then(res => resolve(res)).catch(err => reject(err))
     })
   },
-  // 取消弹窗
-  cancelPopup() {
-    this.setData({
-      dialogShow: false,
-      linkUrl: ''
-    })
-  },
   // 完成输入链接
-  complete() {
-    let currentType = this.data.currentType
-    if (currentType == 1) {
-      this.setData({
-        tempRecordPath: this.data.linkUrl,
-        dialogShow: false,
-        linkUrl: '',
-        isRecordLink: true
-      })
-    } else if (currentType == 2) {
-      this.setData({
-        tempVideoPath: this.data.linkUrl,
-        dialogShow: false,
-        linkUrl: '',
-        isVideoLink: true
-      })
-    } else if (currentType == 3) {
-      this.setData({
-        tempImagePaths: this.data.linkUrl ? [this.data.linkUrl] : '',
-        dialogShow: false,
-        linkUrl: '',
-        isImageLink: true
-      })
-    }
+  completeInput(e) {
+    let {
+      linkUrl,
+      isVid
+    } = e.detail
+    console.log('完成', e.detail);
+    this.setData({
+      linkUrl,
+      tempVideoPath: '',
+      isVid,
+      linkDialogShow: false
+    })
   },
   touchmove() {
     return
-  },
-  inputLinkUrl(e) {
-    clearTimeout(this.point)
-    this.point = setTimeout(() => {
-      this.setData({
-        linkUrl: e.detail.value
-      })
-    }, 200)
-  },
-  // 显示弹窗
-  showPopup(currentType) {
-    this.setData({
-      currentType,
-      dialogShow: true
-    })
   },
 })

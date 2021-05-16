@@ -2,7 +2,10 @@
   "usingComponents": {
     "navBar": "/components/navBar/navBar",
     "issueHead": "/components/common/issueHead/issueHead",
-    "record": "/components/common/record/record"
+    "record": "/components/common/record/record",
+    "linkDialog": "/components/common/linkDialog/linkDialog",
+    "txv-video": "plugin://tencentvideo/video",
+    "msgAuthorization":"/components/common/msgAuthorization/msgAuthorization"
   },
   "disableScroll": true
 }

@@ -5,6 +5,7 @@
     "commentBar": "/components/common/comment/commentBar/commentBar",
     "inputBox": "/components/common/comment/inputBox/inputBox",
     "playRecord":"/components/common/playRecord/playRecord",
-    "menu": "/components/common/menu/menu"
+    "menu": "/components/common/menu/menu",
+    "txv-video": "plugin://tencentvideo/video"
   }
 }

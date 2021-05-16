@@ -1,0 +1,17 @@
+<!--pages/common/howObtainVid/howObtainVid.wxml-->
+<view class="howObtainVid">
+  <navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' color="#FFF" back="{{true}}" iconTheme='white'
+    bindback="handlerGobackClick"></navBar>
+  <view style="height: calc({{excludeHeight}}px);" scroll-y>
+    <view class="wrap">
+      <view class="title">获取通讯视频vid</view>
+      <view>1、在浏览器中打开腾讯视频官网</view>
+      <view>2、点击您想添加的视频，进入到播放页</view>
+      <view>3、将鼠标移动到分享处</view>
+      <view>4、点击嵌入代码，你将获取到类似以下的内容</view>
+      <text class="code" decode="{{true}}">&lt;iframe frameborder="0" src="https://v.qq.com/txp/iframe/player.html?vid=w3230bugtoy" allowFullScreen="true"&gt;&lt;iframe&gt;</text>
+      <view>5、复制其中的vid=xxxxxxxxxx添加到输入框中</view>
+
+    </view>
+  </view>
+</view>

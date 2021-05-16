@@ -8,10 +8,10 @@
   <scroll-view refresher-enabled="{{true}}" refresher-triggered="{{triggered}}"
     bindrefresherrefresh="onRefresh" bindscrolltolower="scrolltolower" style="height: calc({{excludeHeight}}px - 91rpx);" scroll-y>
     <view hidden="{{actIndex !== 0}}">
-      <groupList groups="{{settleGroup}}" isSettleGroup="{{true}}"></groupList>
+      <mygroupList groups="{{joinGroup}}"></mygroupList>
     </view>
     <view hidden="{{actIndex !== 1}}">
-      <mygroupList groups="{{joinGroup}}"></mygroupList>
+      <groupList groups="{{settleGroup}}" isSettleGroup="{{true}}"></groupList>
     </view>
     <view hidden="{{actIndex !== 2}}">
       <groupList groups="{{followGroups}}"></groupList>
