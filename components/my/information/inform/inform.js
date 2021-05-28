@@ -70,7 +70,12 @@ Component({
         wx.navigateTo({
           url: `/pages/square/deal/ticketDetail/ticketDetail?id=${detail.themeId}`,
         })
+      } else if(detail.theme === 'bandmoment') {
+        wx.navigateTo({
+          url: `/pages/square/band/momentDetail/momentDetail?id=${detail.themeId}`,
+        })
       }
+      console.log(detail.theme);
     },
     goPersonal(e) {
       let userId = e.currentTarget.dataset.userid

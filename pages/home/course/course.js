@@ -1,7 +1,7 @@
 // pages/home/course/course.js
 const app = getApp()
 const tool = require('../../../assets/tool/tool.js')
-const common =require('../../../assets/tool/common')
+const common = require('../../../assets/tool/common')
 Page({
 
   /**
@@ -11,10 +11,13 @@ Page({
     qiniuUrl: app.qiniuUrl,
     // 去除上面导航栏，剩余的高度
     excludeHeight: 0,
-    pageSize: 10,
-    pageIndex: 1,
+    coursePaging: {
+      pageSize: 3,
+      pageIndex: 1,
+      isNotData: false,
+      minID: 0
+    },
     courses: [],
-    isNoData: false,
     // 是否是自己的小组
     isMyGroup: false,
     groupDuty: 0,
@@ -31,14 +34,10 @@ Page({
     let isMyGroup = options.showGroupId == app.userInfo.groupId
     this.getCourses().then(() => {
       if (!this.data.courses.length) {
-        if (!isMyGroup) {
-          return common.Tip('该小组暂无发布课程')
-        } else {
-          if (app.userInfo.groupDuty == -1) {
-            return common.Tip('该小组暂无发布课程')
-          } else if (app.userInfo.groupDuty == 2) {
-            return common.Tip('暂时还没有课程信息,请联系管理员或组长发布课程吧')
-          }
+        if (!isMyGroup || app.userInfo.groupDuty == -1 || app.userInfo.groupDuty == 2) {
+          return common.Tip('暂时还没有打卡信息，等待管理员或组长发布').then(res=> {
+            wx.navigateBack()
+          })
         }
       }
     })
@@ -50,25 +49,21 @@ Page({
   // 获取分页课程信息
   getCourses() {
     let {
-      pageSize,
-      pageIndex
+      coursePaging
     } = this.data
     return new Promise((resolve, reject) => {
       app.get(app.Api.getCourses, {
-        pageSize,
-        pageIndex,
+        ...coursePaging,
         groupId: this.showGroupId
       }, {
         loading: false
       }).then(res => {
-        if (res.length < pageSize) {
-          this.setData({
-            isNoData: true
-          })
+        if (res.length < coursePaging.pageSize) {
+          coursePaging.isNotData = true
         }
+        coursePaging.minID = res.length ? res[res.length - 1].id : 0
         this.setData({
-          courses: this.data.courses.concat(res),
-          pageIndex: pageIndex + 1
+          courses: this.data.courses.concat(res)
         })
         resolve()
       })
@@ -88,24 +83,23 @@ Page({
    */
   onShow: function () {
     if (app.addCourseBack || app.courseDeleteBack) {
+      let coursePaging = this.data.coursePaging
       app.courseDeleteBack = false
       app.addCourseBack = false
-      this.setData({
-        courses: [],
-        pageSize: 10,
-        isNoData: false,
-        pageIndex: 1
-      }, () => {
-        this.getCourses()
-      })
-
+      this.data.courses = []
+      coursePaging.isNotData = false
+      coursePaging.pageIndex = 1
+      coursePaging.minID = 0
+      this.getCourses()
     }
   },
   onRefresh() {
     if (this._freshing) return
     this._freshing = true
-    this.data.isNoData = false
-    this.data.pageIndex = 1
+    let coursePaging = this.data.coursePaging
+    coursePaging.isNotData = false
+    coursePaging.pageIndex = 1
+    coursePaging.minID = 0
     this.data.courses = []
     this.getCourses().then(() => {
       this._freshing = false
@@ -149,7 +143,7 @@ Page({
 
   },
   scrolltolower() {
-    if (!this.data.isNoData) {
+    if (!this.data.coursePaging.isNotData) {
       this.getCourses()
     }
   },

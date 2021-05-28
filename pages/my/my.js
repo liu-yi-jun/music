@@ -4,6 +4,7 @@ let socket = require('../../assets/request/socket')
 const common = require('../../assets/tool/common')
 const upload = require('../../assets/request/upload')
 const authorize = require('../../assets/tool/authorize')
+const tool = require('../../assets/tool/tool')
 Page({
 
   /**
@@ -14,11 +15,6 @@ Page({
     // 控制右下角三角show
     tabBarBtnShow: false,
     userInfo: {},
-    dynamicsPaging: {
-      pageSize: 20,
-      pageIndex: 1,
-      isNotData: false
-    },
     alliancePaging: {
       pageSize: 20,
       pageIndex: 1,
@@ -42,9 +38,16 @@ Page({
     squarePaging: {
       pageSize: 20,
       pageIndex: 1,
+      minID: 0,
       isNotData: false
     },
     groupdPaging: {
+      pageSize: 20,
+      pageIndex: 1,
+      minID: 0,
+      isNotData: false
+    },
+    momentPaging: {
       pageSize: 20,
       pageIndex: 1,
       isNotData: false
@@ -53,7 +56,10 @@ Page({
       [],
       []
     ],
-    dynamics: [],
+    doubleMoment: [
+      [],
+      []
+    ],
     alliances: [],
     groupdDynamics: [],
     squareDynamics: [],
@@ -78,48 +84,135 @@ Page({
             name: '一起组乐队'
           },
           {
+            name: '乐队瞬间'
+          },
+          {
             name: '二手乐器'
           },
           {
             name: '票务转让'
-          }
+          },
         ]
       }
     ],
     actIndexArr: [0, 0],
     noticeNumbe: 0,
     showHideBar: false,
-    myReleasePagin: {
-      pageSize: 18,
-      pageIndex: 1,
-      isNotData: false
-    },
-    release: [],
+
     applyShow: false,
-    feedbackContent: ''
+    feedbackContent: '',
+    showCode: false,
+    code: ''
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    this.flag = true
+    this.oldScrollTop = 0
     if (app.userInfo) {
-      // this.getDynamics(app.userInfo.id)
       this.getPersonalAlliance(app.userInfo.id)
       this.getBand(app.userInfo.id)
       this.getSecond(app.userInfo.id)
       this.getTicket(app.userInfo.id)
       this.getSquareDynamics(app.userInfo.id)
       this.getGroupdDynamics(app.userInfo.id)
-      // this.getmyRelease(app.userInfo.id)
+      this.getBandmoment(app.userInfo.id)
     }
   },
+  onPageScroll(e) {
+    if (!this.pullDown) {
+      if (this.flag) {
+        this.flag = false
+        setTimeout(() => {
+          this.oldScrollTop = e.scrollTop
+          this.flag = true
+        }, 1000)
+      }
+      if (e.scrollTop - this.oldScrollTop > 100) {
+        if (!this.data.tabBarBtnShow) {
+          this.getTabBar().setData({
+            show: false
+          })
+          this.setData({
+            tabBarBtnShow: true
+          })
+        }
+      } else {
+        if (this.data.tabBarBtnShow) {
+          this.getTabBar().setData({
+            show: true
+          })
+          this.setData({
+            tabBarBtnShow: false
+          })
+        }
+      }
+    }
 
+  },
+  // touchstart(e) {
+  //   if (!app.userInfo) return
+  //   this.startX = e.changedTouches[0].clientX
+  //   this.startY = e.changedTouches[0].clientY
+  // },
+  // touchend(e) {
+  //   if (!app.userInfo) return
+  //   this.endX = e.changedTouches[0].clientX
+  //   this.endY = e.changedTouches[0].clientY
+  //   let direction = tool.GetSlideDirection(this.startX, this.startY, this.endX, this.endY)
+  //   if (direction === 1) {
+  //     // 上
+  //     if (!this.data.tabBarBtnShow) {
+  //       this.getTabBar().setData({
+  //         show: false
+  //       })
+  //       this.setData({
+  //         tabBarBtnShow: true
+  //       })
+  //     }
+  //   } else if (direction === 2) {
+  //     // 下
+  //     if (this.data.tabBarBtnShow) {
+  //       this.getTabBar().setData({
+  //         show: true
+  //       })
+  //       this.setData({
+  //         tabBarBtnShow: false
+  //       })
+  //     }
+  //   }
+  // },
   completeGetUserInfo() {
     app.myGetUserInfo = true
-    // this.getDynamics(app.userInfo.id)
-    this.getmyRelease(app.userInfo.id)
     this.setUserInfo()
+  },
+  getBandmoment(id) {
+    return new Promise((resolve, reject) => {
+      let momentPaging = this.data.momentPaging
+      app.get(app.Api.mybandmoment, {
+        ...momentPaging,
+        userId: id
+      }).then(res => {
+        if (res.length < momentPaging.pageSize) {
+          momentPaging.isNotData = true
+        }
+        let doubleMoment = this.data.doubleMoment
+        res.forEach(item => {
+          if (doubleMoment[0].length > doubleMoment[1].length) {
+            doubleMoment[1].push(item)
+          } else {
+            doubleMoment[0].push(item)
+          }
+        })
+        momentPaging.pageIndex = momentPaging.pageIndex + 1
+        this.setData({
+          doubleMoment
+        })
+        resolve()
+      })
+    })
   },
   getSquareDynamics(id) {
     let squarePaging = this.data.squarePaging
@@ -128,13 +221,11 @@ Page({
       userId: id
     }).then(res => {
       if (res.length < squarePaging.pageSize) {
-        this.setData({
-          'squarePaging.isNotData': true
-        })
+        this.data.squarePaging.isNotData = true
       }
+      this.data.squarePaging.minID = res.length ? res[res.length - 1].id : 0
       this.setData({
         squareDynamics: this.data.squareDynamics.concat(res),
-        'squarePaging.pageIndex': squarePaging.pageIndex + 1
       })
     })
   },
@@ -145,13 +236,11 @@ Page({
       userId: id
     }).then(res => {
       if (res.length < groupdPaging.pageSize) {
-        this.setData({
-          'groupdPaging.isNotData': true
-        })
+        this.data.groupdPaging.isNotData = true
       }
+      this.data.groupdPaging.minID = res.length ? res[res.length - 1].id : 0
       this.setData({
-        groupdDynamics: this.data.groupdDynamics.concat(res),
-        'groupdPaging.pageIndex': groupdPaging.pageIndex + 1
+        groupdDynamics: this.data.groupdDynamics.concat(res)
       })
     })
   },
@@ -220,27 +309,6 @@ Page({
       })
     })
   },
-  getmyRelease(id) {
-    return new Promise((resolve, reject) => {
-      let myReleasePagin = this.data.myReleasePagin
-      app.get(app.Api.myRelease, {
-        ...myReleasePagin,
-        userId: id
-      }).then(res => {
-        if (res.length < myReleasePagin.pageSize) {
-          this.setData({
-            'myReleasePagin.isNotData': true
-          })
-        }
-        this.setData({
-          release: this.data.release.concat(res),
-          'myReleasePagin.pageIndex': myReleasePagin.pageIndex + 1
-        })
-        resolve()
-      })
-    })
-
-  },
   getNoticeNumber(id) {
     app.get(app.Api.noticeNumbe, {
       userId: id
@@ -276,33 +344,40 @@ Page({
       })
     })
   },
-  // getDynamics(id) {
-  //   let dynamicsPaging = this.data.dynamicsPaging
-  //   app.get(app.Api.getDynamics, {
-  //     ...dynamicsPaging,
-  //     userId: id
-  //   }).then(res => {
-  //     if (res.length < dynamicsPaging.pageSize) {
-  //       this.setData({
-  //         'dynamicsPaging.isNotData': true
-  //       })
-  //     }
-  //     this.setData({
-  //       dynamics: this.data.dynamics.concat(res),
-  //       'dynamicsPaging.pageIndex': dynamicsPaging.pageIndex + 1
-  //     })
-  //   })
-  // },
+
   onReachBottom() {
+    if (!app.userInfo) return
     let {
-      dynamicsPaging,
       alliancePaging,
-      actIndex
+      bandsPaging,
+      secondPaging,
+      ticketPaging,
+      squarePaging,
+      groupdPaging,
+      momentPaging,
+      actIndexArr
     } = this.data
-    if (actIndex === 0 && !dynamicsPaging.isNotData) {
-      // this.getDynamics()
-    } else if (actIndex === 1 && !alliancePaging.isNotData) {
-      this.getPersonalAlliance()
+    if (actIndexArr[0] === 0 && actIndexArr[1] === 0 && !groupdPaging.isNotData) {
+      // 获取小组动态
+      this.getGroupdDynamics(app.userInfo.id)
+    } else if (actIndexArr[0] === 0 && actIndexArr[1] === 1 && !squarePaging.isNotData) {
+      // 获取广场动态
+      this.getSquareDynamics(app.userInfo.id)
+    } else if (actIndexArr[0] === 1 && actIndexArr[1] === 0 && !alliancePaging.isNotData) {
+      // 获取小组活动
+      this.getPersonalAlliance(app.userInfo.id)
+    } else if (actIndexArr[0] === 1 && actIndexArr[1] === 1 && !bandsPaging.isNotData) {
+      // 获取组乐队
+      this.getBand(app.userInfo.id)
+    } else if (actIndexArr[0] === 1 && actIndexArr[1] === 2 && !momentPaging.isNotData) {
+      // 获取乐队瞬间
+      this.getBandmoment(app.userInfo.id)
+    } else if (actIndexArr[0] === 1 && actIndexArr[1] === 3 && !secondPaging.isNotData) {
+      // 获取二手乐器
+      this.getSecond(app.userInfo.id)
+    } else if (actIndexArr[0] === 1 && actIndexArr[1] === 4 && !ticketPaging.isNotData) {
+      // 获取票务
+      this.getTicket(app.userInfo.id)
     }
   },
   // 设置用户信息
@@ -363,60 +438,151 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
+    this.pullDown = true
     if (app.userInfo) {
-      this.setData({
-        'squarePaging.isNotData': false,
-        'squarePaging.pageIndex': 1,
-        'groupdPaging.isNotData': false,
-        'groupdPaging.pageIndex': 1,
-        'alliancePaging.isNotData': false,
-        'alliancePaging.pageIndex': 1,
-        'bandsPaging.isNotData': false,
-        'bandsPaging.pageIndex': 1,
-        'secondPaging.isNotData': false,
-        'secondPaging.pageIndex': 1,
-        'ticketPaging.isNotData': false,
-        'ticketPaging.pageIndex': 1,
-        seconds: [
-          [],
-          []
-        ],
-        dynamics: [],
-        alliances: [],
-        bands: [],
-        tickets: [],
-        groupdDynamics: [],
-        squareDynamics: [],
-      }, () => {
-        this.setUserInfo()
-        this.getNoticeNumber(app.userInfo.id)
-        this.getSquareDynamics(app.userInfo.id)
-        this.getGroupdDynamics(app.userInfo.id)
-        this.getPersonalAlliance(app.userInfo.id)
-        this.getBand(app.userInfo.id)
-        this.getSecond(app.userInfo.id)
-        this.getTicket(app.userInfo.id).then(() => {
-          wx.stopPullDownRefresh()
-        })
+      this.data.squarePaging.isNotData = false
+      this.data.squarePaging.pageIndex = 1
+      this.data.squarePaging.minID = 0
+      this.data.groupdPaging.isNotData = false
+      this.data.groupdPaging.pageIndex = 1
+      this.data.groupdPaging.minID = 0
+      this.data.alliancePaging.isNotData = false
+      this.data.alliancePaging.pageIndex = 1
+      this.data.bandsPaging.isNotData = false
+      this.data.bandsPaging.pageIndex = 1
+      this.data.secondPaging.isNotData = false
+      this.data.secondPaging.pageIndex = 1
+      this.data.ticketPaging.isNotData = false
+      this.data.ticketPaging.pageIndex = 1
+      this.data.momentPaging.isNotData = false
+      this.data.momentPaging.pageIndex = 1
+      this.data.seconds = [
+        [],
+        []
+      ]
+      this.data.doubleMoment = [
+        [],
+        []
+      ]
+      this.data.alliances = []
+      this.data.bands = []
+      this.data.tickets = []
+      this.data.groupdDynamics = []
+      this.data.squareDynamics = []
+      this.setUserInfo()
+      // 获取新消息数量
+      this.getNoticeNumber(app.userInfo.id)
+      // 获取广场动态
+      this.getSquareDynamics(app.userInfo.id)
+      // 获取小组动态
+      this.getGroupdDynamics(app.userInfo.id)
+      // 获取小组活动
+      this.getPersonalAlliance(app.userInfo.id)
+      // 获取组乐队
+      this.getBand(app.userInfo.id)
+      // 获取二手乐器
+      this.getSecond(app.userInfo.id)
+      // 获取乐队瞬间
+      this.getBandmoment(app.userInfo.id)
+      // 获取二手票务
+      this.getTicket(app.userInfo.id).then(() => {
+        wx.stopPullDownRefresh()
+        this.pullDown = false
       })
+    } else {
+      wx.stopPullDownRefresh()
     }
   },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
+  deleteDynamic(e) {
+    let index = e.detail.index
+    common.showLoading('删除中')
+    let dynamics, actIndexArr = this.data.actIndexArr
+    if (actIndexArr[1] === 0) {
+      // 小组
+      dynamics = this.data.groupdDynamics
+    } else {
+      // 广场
+      dynamics = this.data.squareDynamics
+    }
+    let {
+      tableName,
+      id
+    } = dynamics[index]
+    app.post(app.Api[tableName + 'Delete'], {
+      tableName,
+      id
+    }, {
+      loading: false
+    }).then(res => {
+      console.log(res)
+      if (res.affectedRows) {
+        dynamics.splice(index, 1)
+        if (actIndexArr[1] === 0) {
+          this.setData({
+            groupdDynamics: dynamics
+          })
+        } else {
+          this.setData({
+            squareDynamics: dynamics
+          })
+        }
+        common.Toast('已删除')
+      } else {
+        dynamics.splice(index, 1)
+        if (actIndexArr[1] === 0) {
+          this.setData({
+            groupdDynamics: dynamics
+          })
+        } else {
+          this.setData({
+            squareDynamics: dynamics
+          })
+        }
+        common.Toast('该动态已不存在')
+      }
+    })
   },
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
+  onShareAppMessage: function (e) {
+    let index;
+    if (app.globalData.squareIndex !== undefined) {
+      index = app.globalData.squareIndex
+      app.globalData.squareIndex = undefined
+    } else {
+      index = e.target.dataset.index
+    }
+    let dynamics, actIndexArr = this.data.actIndexArr
+    if (actIndexArr[1] === 0) {
+      // 小组
+      dynamics = this.data.groupdDynamics
+    } else {
+      // 广场
+      dynamics = this.data.squareDynamics
+    }
+    setTimeout(() => {
+      app.post(app.Api.share, {
+        table: dynamics[index].tableName,
+        id: dynamics[index].id
+      }, {
+        loading: false
+      }).then(res => {
+        let dynamicList = null
+        if (actIndexArr[1] === 0) {
+          dynamicList = this.selectComponent('#groupdDynamics');
+        } else {
+          dynamicList = this.selectComponent('#squareDynamics');
+        }
+        dynamicList.completeShare(index)
 
+      })
+    }, 3000)
   },
   // 控制bar栏
   tap() {
+    if (!app.userInfo) return
     this.setData({
       tabBarBtnShow: true
     })
@@ -515,7 +681,8 @@ Page({
       showHideBar: !this.data.showHideBar
     })
   },
-  handleGetUserInfo(data) {
+  handleGetUserInfo(e) {
+    console.log(e);
     if (!this.data.check) {
       common.Tip('请仔细阅读并勾选同意《Music Monster用户须知》')
       return
@@ -525,7 +692,8 @@ Page({
       success: (data) => {
         if (!app.userInfo) {
           app.post(app.Api.register, {
-            userInfo: data.userInfo
+            userInfo: data.userInfo,
+            codeCheck: wx.getStorageSync('codeCheck')
           }, {
             loading: false
           }).then(res => {
@@ -536,14 +704,41 @@ Page({
         }
       }
     })
+
+    // wx.getUserProfile({
+    //   desc: '用于完善个人资料',
+    //   success: (data) => {
+    //     wx.getUserInfo({
+    //       withCredentials: true,
+    //       success: userDate=> {
+    //         console.log(userDate)
+    //         if (!app.userInfo) {
+    //           app.post(app.Api.register, {
+    //             userInfo: data.userInfo,
+    //             encryptedData: userDate.encryptedData,
+    //             iv: userDate.iv
+    //           }, {
+    //             loading: false
+    //           }).then(res => {
+    //             app.userInfo = res.userInfo
+    //             socket.initSocketEvent()
+    //             this.completeGetUserInfo()
+    //           })
+    //         }
+    //       }
+    //     })
+
+    //   }
+    // })
+
   },
   goInformation() {
     wx.navigateTo({
       url: '/pages/my/information/information',
     })
-    this.authorizeNotice([app.InfoId.like, app.InfoId.content, app.InfoId.reply]).then(res => {
+    // this.authorizeNotice([app.InfoId.like, app.InfoId.content, app.InfoId.reply]).then(res => {
 
-    })
+    // })
   },
   authorizeNotice(requestId) {
     return new Promise((resolve, reject) => {
@@ -614,5 +809,36 @@ Page({
     wx.navigateTo({
       url: '/pages/my/agreement/agreement',
     })
+  },
+  toCode() {
+    app.post(app.Api.generateCode, {
+      userId: app.userInfo.id
+    }, {
+      loading: ['生成中...']
+    }).then((res) => {
+      this.setData({
+        code: res,
+        showCode: true,
+        showHideBar: false
+      })
+    })
+  },
+  cancelPopup() {
+    this.setData({
+      showCode: false
+    })
+  },
+  complete() {
+    wx.setClipboardData({
+      data: this.data.code,
+      success: res => {
+        this.cancelPopup()
+      }
+    })
+
+  },
+
+  touchmove() {
+    return
   }
 })

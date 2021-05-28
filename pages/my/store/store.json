@@ -6,7 +6,8 @@
     "navBar": "/components/navBar/navBar",
     "dynamicList":"/components/square/dynamicList/dynamicList",
     "bar":"/components/common/bar/bar",
-    "composeBand": "/components/square/band/composeBand/composeBand"
+    "composeBand": "/components/square/band/composeBand/composeBand",
+    "bandMoment":"/components/square/band/bandMoment/bandMoment"
   },
   "disableScroll": true
 }

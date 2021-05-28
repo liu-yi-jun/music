@@ -444,17 +444,18 @@ Page({
     })
   },
   async changeExamine(event) {
-    if(Number(event.detail.value)) {
-      let subscriptionsSetting = await authorize.isSubscription()
-      if (!subscriptionsSetting.itemSettings) {
-        // 未勾选总是
-        this.setData({
-          msgAuthorizationShow: true
-        })
-      }
+    if (Number(event.detail.value)) {
+      authorize.newSubscription(this.data.requestId).then((res) => {
+        wx.hideLoading()
+        if (res.type === 1) {
+          this.setData({
+            msgAuthorizationShow: true
+          })
+        }
+      })
     }
     this.setData({
-      "form.examine": Number(event.detail.value)
+      examine: Number(event.detail.value)
     })
   },
   completeMsgAuthorization() {
@@ -462,13 +463,14 @@ Page({
       msgAuthorizationShow: false
     })
   },
- 
+
   changePrivate(event) {
     this.setData({
       privates: Number(event.detail.value)
     })
 
   },
+
   toDissolution() {
     common.Tip('是否解散该小组', '提示', '确定', true).then(res => {
       if (res.confirm) {

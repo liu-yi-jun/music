@@ -172,7 +172,7 @@ Page({
         replyindex
       } = this.data.indexObject
       if (commentArr[commentindex].replyArr === undefined) commentArr[commentindex].replyArr = [];
-      commentArr[commentindex].replyArr.unshift(param)
+      commentArr[commentindex].replyArr.push(param)
     }
     this.setData({
       commentArr

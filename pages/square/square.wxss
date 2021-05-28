@@ -331,7 +331,7 @@ swiper-item {
   left: 0;
   right: 0;
   bottom: 0;
-  /* background: rgba(0, 0, 0, 0.3); */
+  background: rgba(0, 0, 0, 0.3);
   z-index: 999999999;
   opacity: 0;
   visibility: hidden;
@@ -603,10 +603,14 @@ swiper-item {
   left: 32rpx;
   bottom: 20rpx;
   color: white;
-  /* padding: 10rpx;
+  padding: 10rpx;
   box-sizing: border-box;
-  background-color: rgba(0, 0, 0, 0.5);
-  border-radius: 10rpx; */
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 10rpx;
+  max-width: 500rpx;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .small {
@@ -616,11 +620,19 @@ swiper-item {
 
 .middle {
   font-size: 30rpx;
-  font-family: 'SH-Bold'
+  font-family: 'SH-Bold';
+  width: 500rpx;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .strong {
   font-size: 38rpx;
+  width: 500rpx;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 /* 右下角 */

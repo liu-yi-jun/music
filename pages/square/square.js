@@ -26,7 +26,8 @@ Page({
     day: '',
     squaredynamicsPaging: {
       pageSize: 20,
-      pageIndex: 1
+      pageIndex: 1,
+      minID: 0
     },
     isNotData: false,
     dynamics: [],
@@ -41,7 +42,7 @@ Page({
     type: 0,
     continuity: 0,
     continuitys: [false, false, false, false, false, false, false],
-    alliances:[]
+    alliances: []
   },
 
   /**
@@ -53,12 +54,13 @@ Page({
   //   })
   // },
   onLoad: function (options) {
+    this.flag = true
+    this.oldScrollTop = 0
     // 获取去除上面导航栏，剩余的高度
     tool.navExcludeHeight(this)
     if (app.userInfo) {
       this.initSquare()
       this.getSignInInfo()
-      this.getAlliance()
     } else {
       this.setData({
         dialogShow: true
@@ -67,8 +69,7 @@ Page({
   },
   getAlliance() {
     return new Promise((resolve, reject) => {
-      let alliancePaging = this.data.alliancePaging
-      app.get(app.Api.getAlliance, {
+      app.get(app.Api.getSimpleAlliance, {
         pageSize: 5,
         pageIndex: 1
       }, {
@@ -88,12 +89,12 @@ Page({
     }).then((res) => {
       app.signInInfo = res
       if (res.everyday) {
-        // this.tabBarStatus = 2
-        // this.getTabBar().setData({
-        //   show: false
-        // })
+        this.tabBarStatus = 2
+        this.getTabBar().setData({
+          show: false
+        })
         this.setData({
-          // tabBarBtnShow: true,
+          tabBarBtnShow: true,
           showSignIn: true
         })
       }
@@ -101,10 +102,12 @@ Page({
   },
   handleGetUserInfo() {
     this.initSquare()
+    this.getSignInInfo()
   },
   initSquare() {
     let signInSums = this.handleSignInSum(app.userInfo.signInSum)
     this.getSquaredynamics()
+    this.getAlliance()
     this.getTopic()
     this.getDate()
     this.setData({
@@ -126,18 +129,15 @@ Page({
         userId: app.userInfo.id
       }).then(res => {
         if (res.length < squaredynamicsPaging.pageSize) {
-          this.setData({
-            isNotData: true
-          })
+          this.data.isNotData = true
         }
+        this.data.squaredynamicsPaging.minID = res.length ? res[res.length - 1].id : 0
         this.setData({
-          dynamics: this.data.dynamics.concat(res),
-          'squaredynamicsPaging.pageIndex': squaredynamicsPaging.pageIndex + 1
+          dynamics: this.data.dynamics.concat(res)
         })
         resolve()
       })
     })
-
   },
   add0(m) {
     return m < 10 ? '0' + m : m
@@ -170,11 +170,11 @@ Page({
       }).then(res => {
         let isSignIn = res.isSignIn
         if (!isSignIn) {
-          // if (this.data.tabBarBtnShow) {
-          //   this.tabBarStatus = 1
-          // } else {
-          //   this.tabBarStatus = 2
-          // }
+          if (this.data.tabBarBtnShow) {
+            this.tabBarStatus = 1
+          } else {
+            this.tabBarStatus = 2
+          }
           wx.navigateTo({
             url: `/pages/square/squarePost/squarePost?showSignIn=${true}`,
           })
@@ -226,6 +226,7 @@ Page({
     if (app.squarePostBack || app.dynamicDeleteBack) {
       app.dynamicDeleteBack = false
       app.squarePostBack = false
+      this.data.squaredynamicsPaging.minID = 0
       this.setData({
         dynamics: [],
         isNotData: false,
@@ -233,41 +234,42 @@ Page({
       }, () => {
         this.getSquaredynamics().then(() => {
           if (app.signInComplete) {
-            // this.setData({
-            //   tabBarBtnShow: true,
-            // })
-            // this.getTabBar().setData({
-            //   show: false
-            // })
-            app.signInComplete = false
             this.setData({
-              signInSums: this.handleSignInSum(app.signInInfo.signInSum)
+              tabBarBtnShow: true,
             })
-            if (app.signInInfo.seven) {
-              // 已完成七天，包含七天
-              if (app.signInInfo.showSeven) {
-                this.setData({
-                  type: 3,
-                  showSignIn: true
-                })
-              } else {
-                this.setData({
-                  type: 1,
-                  showSignIn: true
-                })
-              }
-            } else {
-              let continuitys = this.data.continuitys
-              for (let index = 0; index < app.signInInfo.continuity; index++) {
-                continuitys[index] = true
-              }
+            this.getTabBar().setData({
+              show: false
+            }, () => {
+              app.signInComplete = false
               this.setData({
-                type: 2,
-                showSignIn: true,
-                continuitys,
-                continuity: app.signInInfo.continuity
+                signInSums: this.handleSignInSum(app.signInInfo.signInSum)
               })
-            }
+              if (app.signInInfo.seven) {
+                // 已完成七天，包含七天
+                if (app.signInInfo.showSeven) {
+                  this.setData({
+                    type: 3,
+                    showSignIn: true
+                  })
+                } else {
+                  this.setData({
+                    type: 1,
+                    showSignIn: true
+                  })
+                }
+              } else {
+                let continuitys = this.data.continuitys
+                for (let index = 0; index < app.signInInfo.continuity; index++) {
+                  continuitys[index] = true
+                }
+                this.setData({
+                  type: 2,
+                  showSignIn: true,
+                  continuitys,
+                  continuity: app.signInInfo.continuity
+                })
+              }
+            })
           }
         })
       })
@@ -304,16 +306,18 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-    
+    this.pullDown = true
+    this.data.squaredynamicsPaging.minID = 0
     this.setData({
       dynamics: [],
-      alliances:[],
+      alliances: [],
       isNotData: false,
       'squaredynamicsPaging.pageIndex': 1
     }, () => {
       this.getSquaredynamics().then(() => {
         wx.stopPullDownRefresh()
         this.getAlliance()
+        this.pullDown = false
       })
     })
   },
@@ -329,7 +333,14 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function (e) {
-    let index = e.target.dataset.index
+    let index
+    if (app.globalData.squareIndex !== undefined) {
+      index = app.globalData.squareIndex
+      app.globalData.squareIndex = undefined
+    } else {
+      index = e.target.dataset.index
+    }
+
     let dynamics = this.data.dynamics
     setTimeout(() => {
       app.post(app.Api.share, {
@@ -462,6 +473,36 @@ Page({
   //     url: `/pages/square/topic/topic?topicId=${topicid}`,
   //   })
   // },
+  deleteDynamic(e) {
+    let index = e.detail.index
+    common.showLoading('删除中')
+    let dynamics = this.data.dynamics
+    let {
+      tableName,
+      id
+    } = dynamics[index]
+    app.post(app.Api[tableName + 'Delete'], {
+      tableName,
+      id
+    }, {
+      loading: false
+    }).then(res => {
+      console.log(res)
+      if (res.affectedRows) {
+        dynamics.splice(index, 1)
+        this.setData({
+          dynamics
+        })
+        common.Toast('已删除')
+      } else {
+        dynamics.splice(index, 1)
+        this.setData({
+          dynamics
+        })
+        common.Toast('该动态已不存在')
+      }
+    })
+  },
   completeLike(commenetBarData) {
     const dynamicList = this.selectComponent('#dynamicList');
     dynamicList.completeLike(commenetBarData)
@@ -509,26 +550,58 @@ Page({
       // }, 1000)
     })
   },
-  move(e) {
-    if (this.getTabBar().data.show) {
-      this.setData({
-        tabBarBtnShow: true,
-      })
-      this.getTabBar().setData({
-        show: false
-      })
+  onPageScroll(e) {
+    if (!this.pullDown && !this.prohibit) {
+      if (this.flag) {
+        this.flag = false
+        setTimeout(() => {
+          this.oldScrollTop = e.scrollTop
+          this.flag = true
+        }, 1000)
+      }
+      if (e.scrollTop - this.oldScrollTop > 100) {
+        if (!this.data.tabBarBtnShow) {
+          this.getTabBar().setData({
+            show: false
+          })
+          this.setData({
+            tabBarBtnShow: true
+          })
+        }
+      } else {
+        if (this.data.tabBarBtnShow) {
+          this.getTabBar().setData({
+            show: true
+          })
+          this.setData({
+            tabBarBtnShow: false
+          })
+        }
+      }
     }
   },
+  // move(e) {
+
+  //   if (this.getTabBar().data.show) {
+  //     this.setData({
+  //       tabBarBtnShow: true,
+  //     })
+  //     this.getTabBar().setData({
+  //       show: false
+  //     })
+  //   }
+  // },
   fullscreenchange(e) {
     let fullScreen = e.detail.fullScreen //值true为进入全屏，false为退出全屏
     if (!fullScreen) { //退出全屏
+      this.prohibit = false
       console.log('退出全屏', this.tempScrollTop)
-      console.log('111', this.tempScrollTop ? this.tempScrollTop : this.data.scrollTop)
-      setTimeout(() => {
-        this.setData({
-          scrollTop: this.tempScrollTop ? this.tempScrollTop : this.data.scrollTop
-        })
-      }, 100)
+      // console.log('111', this.tempScrollTop ? this.tempScrollTop : this.data.scrollTop)
+      // setTimeout(() => {
+      //   this.setData({
+      //     scrollTop: this.tempScrollTop ? this.tempScrollTop : this.data.scrollTop
+      //   })
+      // }, 100)
 
       if (this.show) {
         this.getTabBar().setData({
@@ -536,8 +609,9 @@ Page({
         })
       }
     } else { //进入全屏
+      this.prohibit = true
       console.log('进入全屏')
-      this.tempScrollTop = this.scrollTop
+      // this.tempScrollTop = this.scrollTop
       this.show = this.getTabBar().data.show
       if (this.getTabBar().data.show) {
         this.getTabBar().setData({
@@ -549,7 +623,7 @@ Page({
   },
   closeSignIn() {
     this.closeEveryday()
-    // this.recovery()
+    this.recovery()
     this.setData({
       showSignIn: false
     })
@@ -590,7 +664,7 @@ Page({
     })
   },
   determine() {
-    // this.recovery()
+    this.recovery()
     this.setData({
       showSignIn: false
     })

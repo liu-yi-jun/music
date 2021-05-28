@@ -120,12 +120,12 @@ Page({
     console.log('完成', e.detail);
     this.setData({
       linkUrl,
-      tempVideoPath:'',
+      tempVideoPath: '',
       isVid,
       linkDialogShow: false
     })
   },
-  
+
   // 初始化声音条实例
   initSound() {
     // wx.setInnerAudioOption({
@@ -214,7 +214,7 @@ Page({
     } else if (type == 2) {
       this.setData({
         tempVideoPath: '',
-        linkUrl:''
+        linkUrl: ''
       })
     } else if (type == 3) {
       this.setData({
@@ -297,7 +297,7 @@ Page({
           this.chooseVideo()
         } else if (res.tapIndex === 0) {
           this.setData({
-            linkDialogShow:true
+            linkDialogShow: true
           })
         }
       }
@@ -395,16 +395,24 @@ Page({
     let params = e.detail.value
     try {
       params = await this.validate(params)
-      let subscriptionsSetting = await authorize.isSubscription()
-      if (!subscriptionsSetting.itemSettings) {
-        this.params = params
-        // 未勾选总是
-        this.setData({
-          msgAuthorizationShow: true
-        })
-      } else {
-        this.submitTeam(params)
-      }
+      common.showLoading()
+      authorize.newSubscription(this.data.requestId, {
+        cancelText: '继续发布'
+      }).then((res) => {
+        wx.hideLoading()
+        if (res.type === 1) {
+          this.params = params
+          this.setData({
+            msgAuthorizationShow: true
+          })
+        } else if (res.type === -1) {
+          if (!res.result.confirm) {
+            this.submitTeam(params)
+          }
+        } else if (res.type === 0) {
+          this.submitTeam(params)
+        }
+      })
     } catch (err) {
       console.log(err)
       common.Tip(err)
@@ -425,8 +433,8 @@ Page({
     let posterUrls = await this.uploadImg([params.posterUrl])
     params.posterUrl = posterUrls[0]
     if (tempRecordPath) params.voiceUrl = await this.uploadVoice(tempRecordPath)
-    if (tempVideoPath &&  !linkUrl) params.videoUrl = await this.uploadVideo(tempVideoPath)
-    if (tempPicturePaths.length ) params.pictureUrls = await this.uploadImg(tempPicturePaths)
+    if (tempVideoPath && !linkUrl) params.videoUrl = await this.uploadVideo(tempVideoPath)
+    if (tempPicturePaths.length) params.pictureUrls = await this.uploadImg(tempPicturePaths)
     const result = await this.addCourse(params)
     console.log(result)
     if (result.affectedRows) {
@@ -442,7 +450,7 @@ Page({
   deleteVideo() {
     this.setData({
       tempVideoPath: '',
-      linkUrl:''
+      linkUrl: ''
     })
   },
   deleteAllImg() {

@@ -1,0 +1,25 @@
+/* components/common/guidMsgAuthor/guidMsgAuthor.wxss */
+.shade {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 9999999;
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.4s all;
+}
+
+.shadeShow {
+  opacity: 1;
+  visibility: visible;
+}
+
+
+.guidGif {
+  margin-top: 20%;
+  width: 750rpx;
+  height: 514rpx;
+}

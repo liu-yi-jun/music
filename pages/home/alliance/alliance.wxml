@@ -15,6 +15,32 @@
   </view>
   <scroll-view  refresher-enabled="{{true}}" refresher-triggered="{{triggered}}"
     bindrefresherrefresh="onRefresh"  bindscrolltolower="scrolltolower" style="height: calc({{excludeHeight}}px - 126rpx);" scroll-y>
-    <groupList groups="{{groups}}"></groupList>
+    <groupList id="groupList" bind:showAuthorDialog="showAuthorDialog" bind:showJoin="showJoin"  groups="{{groups}}" ></groupList>
   </scroll-view>
 </view>
+
+<view class="shade {{joinShow? 'shadeShow':''}}" mark:district="shade">
+  <view class="dialog">
+    <text>是否确定加入该小组？</text>
+    <view class="yesOrNo">
+      <image catchtap="noJoin" src="/images/groupList/no2.png"></image>
+      <image catchtap="yesJoin" src="/images/groupList/yes1.png"></image>
+    </view>
+  </view>
+</view>
+
+<view class="shade {{applyShow? 'shadeShow':''}}" mark:district="shade">
+  <view class="applyDialog">
+    <text class="groupApply">请提交您的小组申请</text>
+    <textarea wx:if="{{applyShow}}" bindinput="inputApply" class="applyContent" name="applyContent" id=""
+      maxlength="100" placeholder="100字以内" placeholder-class="applyPlaceholder"></textarea>
+    <view class="choose">
+      <image catchtap="cancelApply" src="/images/groupList/delete.png" ></image>
+      <image src="/images/groupList/success.png" catchtap="apply"></image>
+    </view>
+  </view>
+</view>
+
+<authorization  dialogShow="{{dialogShow}}"></authorization>
+
+<msgAuthorization wx:if="{{msgAuthorizationShow}}" bind:completeMsgAuthorization="completeMsgAuthorization"  msgAuthorizationShow="{{msgAuthorizationShow}}" requestId="{{requestId}}"></msgAuthorization>

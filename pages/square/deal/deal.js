@@ -13,12 +13,14 @@ Page({
     secondPaging: {
       pageSize: 20,
       pageIndex: 1,
-      isNotData: false
+      isNotData: false,
+      minID: 0
     },
     ticketPaging: {
-      pageSize: 3,
+      pageSize: 20,
       pageIndex: 1,
-      isNotData: false
+      isNotData: false,
+      minID: 0
     },
     tickets: [],
     doubleSeconds: [
@@ -69,7 +71,7 @@ Page({
             doubleSeconds[0].push(item)
           }
         })
-        secondPaging.pageIndex = secondPaging.pageIndex + 1
+        secondPaging.minID = res.length ? res[res.length - 1].id : 0
         this.setData({
           doubleSeconds
         })
@@ -89,7 +91,7 @@ Page({
         if (res.length < ticketPaging.pageSize) {
           ticketPaging.isNotData = true
         }
-        ticketPaging.pageIndex = ticketPaging.pageIndex + 1
+        ticketPaging.minID = res.length ? res[res.length - 1].id : 0
         this.setData({
           tickets: this.data.tickets.concat(res),
         })
@@ -109,6 +111,7 @@ Page({
       let secondPaging = this.data.secondPaging
       secondPaging.isNotData = false
       secondPaging.pageIndex = 1
+      secondPaging.minID = 0
       this.data.doubleSeconds = [
         [],
         []
@@ -119,6 +122,7 @@ Page({
       let ticketPaging = this.data.ticketPaging
       ticketPaging.isNotData = false
       ticketPaging.pageIndex = 1
+      ticketPaging.minID = 0
       this.data.tickets = []
       this.data.title = value ? value : this.data.tempValue
       this.searchTickets(this.data.title)
@@ -149,6 +153,7 @@ Page({
       let secondPaging = this.data.secondPaging
       secondPaging.isNotData = false
       secondPaging.pageIndex = 1
+      secondPaging.minID = 0
       this.data.doubleSeconds = [
         [],
         []
@@ -162,6 +167,7 @@ Page({
       let ticketPaging = this.data.ticketPaging
       ticketPaging.isNotData = false
       ticketPaging.pageIndex = 1
+      ticketPaging.minID = 0
       this.data.tickets = []
       this.data.title = ''
       this.searchTickets(this.data.title)
@@ -178,6 +184,7 @@ Page({
     if (actIndex === 0) {
       secondPaging.isNotData = false
       secondPaging.pageIndex = 1
+      secondPaging.minID = 0
       this.data.doubleSeconds = [
         [],
         []
@@ -191,6 +198,7 @@ Page({
     } else if (actIndex === 1) {
       ticketPaging.isNotData = false
       ticketPaging.pageIndex = 1
+      ticketPaging.minID = 0
       this.data.tickets = []
       this.searchTickets(this.data.title).then(() => {
         this._freshing = false

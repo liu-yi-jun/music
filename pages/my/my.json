@@ -10,8 +10,8 @@
     "myDynamic":"/components/my/myDynamic/myDynamic",
     "composeBand": "/components/square/band/composeBand/composeBand",
     "second": "/components/square/deal/second/second",
-    "ticket": "/components/square/deal/ticket/ticket"
-    
+    "ticket": "/components/square/deal/ticket/ticket",
+    "bandMoment":"/components/square/band/bandMoment/bandMoment"
   },
   "enablePullDownRefresh": true,
   "backgroundTextStyle": "dark"

@@ -9,7 +9,7 @@
     </view>
     <view catchtap="showMenu" class="delete iconfont iconshenglve"></view>
   </view>
-  <scroll-view style="height: calc({{excludeHeight}}px - 130rpx);" scroll-y bindscrolltolower="scrolltolower">
+  <scroll-view scroll-into-view="{{intoId}}" style="height: calc({{excludeHeight}}px - 130rpx);" scroll-y bindscrolltolower="scrolltolower">
     <!-- wx:if="{{detail.mold === 0}}"  -->
     <video class="video" object-fit="cover" wx:if="{{detail.videoUrl}}" src="{{detail.videoUrl}}"></video>
     <swiper class="swiper" indicator-dots duration="400" wx:else>
@@ -55,7 +55,7 @@
       </view>
 
     </view>
-    <view class="commentWrap">
+    <view class="commentWrap" id="comment">
       <image src="/images/home/dynamicComment.png"></image>
       <text>评论</text>
     </view>

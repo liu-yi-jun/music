@@ -7,7 +7,8 @@
 <image class="socialManagement" catchtap="pullPage" wx:if="{{isShowPull}}"
   style="background-image: url({{qiniuUrl}}/home/switchGroup.png); background-size: 43rpx 37rpx;"></image>
 <!-- <block wx:if="{{isShowGroup}}"> -->
-<view wx:if="{{isShowGroup===true}}" class="home"  bindtouchstart="tapStart" bindtouchend="tapEnd" >
+  <!-- bindtouchstart="tapStart" bindtouchend="tapEnd" -->
+<view wx:if="{{isShowGroup===true}}" class="home" catchtap="tap"   >
   <!-- style="background: url(/images/home/background.png) no-repeat;" -->
   <view class="homebg"
     style="background: url({{qiniuUrl}}/home/background1.png) no-repeat; background-size: 100% 100%;">
@@ -74,7 +75,7 @@
     </view>
     <!-- <view mark:operation="No" class="delete iconfont iconshenglve" catchtap="showMenu" data-index="{{index}}"></view> -->
     <view wx:if="{{showContent.userId === myId}}" mark:operation="No" class="delete" catchtap="hadleDelete"
-      data-index="{{index}}" style="background-image: url(/images/home/delete.png);background-size: 30rpx 32rpx;">
+      data-index="{{index}}" style="background-image: url({{qiniuUrl}}/home/delete.png);background-size: 30rpx 32rpx;">
     </view>
     <!-- <image  src=""></image> -->
     <view class="like-comment" mark:operation="No">
@@ -173,11 +174,11 @@
     </image>
     <view class="issueGuideText" catchtap="click" data-click="issueGuide">“发布动态”</view>
   </block>
-  <block wx:if="{{bottomGuide}}">
+  <!-- <block wx:if="{{bottomGuide}}">
     <image class="bottomGuide" src="/images/home/bottom.png" catchtap="click" data-click="bottomGuide">
     </image>
     <view class="bottomGuideText" catchtap="click" data-click="bottomGuide">“展开主菜单”</view>
-  </block>
+  </block> -->
 
   <block>
     <view class="travel {{cross?'showCross':'hideCross'}}">音乐之旅启动中...</view>
@@ -201,12 +202,12 @@
 <showTabBar tabBarBtnShow="{{tabBarBtnShow}}">
 </showTabBar>
 <!-- </block> -->
-
-<view class="pageBackground" bindtouchstart="indexStart" 
-bindtouchend="indexEnd" 
+<!-- bindtouchstart="indexStart" 
+bindtouchend="indexEnd"  -->
+<view class="pageBackground" 
   style="transform: translateY({{isShowGroup?'-106':'0'}}%); background: url({{qiniuUrl}}/home/pageBackground2.png) no-repeat;  background-size: 100% 100%;">
   <image class="indexLogo" src="/images/home/index-logo.png"></image>
-  <view mark:district="fold" class="fold" style="background-image: url({{qiniuUrl}}/home/fold.png);">
+  <view mark:district="fold" class="fold" style="background-image: url({{qiniuUrl}}/home/fold1.png);">
     <view class="firstPart"  catchtap="toUnion">
     </view>
     <view class="secondPart" catchtap="toGroupSettlement">
@@ -221,3 +222,16 @@ bindtouchend="indexEnd"
 
 <menu id="menu" list="{{list}}" bind:handleStore="handleStore" bind:handleReport="handleReport"
   bind:hadleDelete="hadleDelete" bind:cancelMenu="cancelMenu"></menu>
+
+
+  <!-- 邀请码 -->
+  <view catchtap="cancelPopup" catchtouchmove="touchmove" class="mask {{showCode? 'shadeShow':''}}">
+  <view class="popup" catchtap="return">
+    <view class="popup-title">邀请码</view>
+    <view class="popup-content">
+      <input wx:if="{{showCode}}" maxlength="8" cursor-spacing="120" bindinput="inputCode" class="popupTextarea" 
+        value="{{linkUrl}}" type="text" placeholder="请输入邀请码"></input>
+    </view>
+    <view hover-stay-time="{{100}}" hover-class="hoverComplete" class="complete" catchtap="complete">完成</view>
+  </view>
+</view>

@@ -1,12 +1,12 @@
 <!--pages/my/information/information.wxml-->
 <view class="information">
-  <navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' back="{{true}}" iconTheme='white'
-    bindback="handlerGobackClick"></navBar>
+  <navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' back="{{!isHome}}" home="{{isHome}}" iconTheme='white'
+    bindback="handlerGobackClick" bindhome="handlerGobackClick"></navBar>
   <view class="barWrap">
     <bar barList="{{barList}}" actIndex="{{actIndex}}" bind:switchBtn="switchBtn"></bar>
   </view>
   <scroll-view scroll-y style="height: calc({{excludeHeight}}px - 93rpx);" bindscrolltolower="scrolltolower"
-    refresher-enabled="{{true}}" scroll-into-view="{{intoView}}"  refresher-triggered="{{triggered}}"
+    refresher-enabled="{{true}}"   refresher-triggered="{{triggered}}"
     bindrefresherrefresh="onRefresh">
     <view hidden="{{actIndex !== 'privateLetter'}}">
       <privateLetter userMessage="{{userMessage}}">

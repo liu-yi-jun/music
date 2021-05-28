@@ -7,7 +7,7 @@
   </view>
   <scroll-view bindscrolltolower="scrolltolower" scroll-y style="height: calc({{excludeHeight}}px - 91rpx);">
     <view hidden="{{actIndex !== 0}}">
-      <dynamicList id="dynamicList" isInvitation="{{true}}" dynamics="{{dynamics}}" isBack="{{true}}"></dynamicList>
+      <dynamicList id="dynamicList" isInvitation="{{true}}" dynamics="{{dynamics}}" isBack="{{true}}" bind:deleteDynamic="deleteDynamic"></dynamicList>
     </view>
     <view hidden="{{actIndex !== 1}}">
       <courseList courses="{{courses}}"></courseList>
@@ -20,6 +20,9 @@
     </view> -->
     <view hidden="{{actIndex !== 3}}">
       <composeBand bands="{{bands}}" isMyStore="{{true}}"></composeBand>
+    </view>
+    <view hidden="{{actIndex !== 4}}">
+      <bandMoment moments="{{doubleMoment}}"></bandMoment>
     </view>
   </scroll-view>
 </view>

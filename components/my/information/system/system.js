@@ -28,10 +28,21 @@ Component({
    */
   lifetimes: {
     attached: function () {
-      this.loadData()
+      // this.loadData()
     },
   },
   methods: {
+    refresh() {
+      return new Promise((resolve, reject) => {
+        this.data.msgList = []
+        this.data.pageSize = 5
+        this.data.pageIndex = 1
+        this.loadData().then(() => {
+          resolve()
+        })
+      })
+
+    },
     loadData() {
       return new Promise((resolve, reject) => {
         let systemMsg = wx.getStorageSync('systemMsg')
@@ -42,7 +53,7 @@ Component({
         } = this.data
         systemMsg = systemMsg.slice((pageIndex - 1) * pageSize, pageIndex * pageSize)
         systemMsg.forEach(item => {
-          this.data.msgList.unshift(item)
+          this.data.msgList.push(item)
         })
         this.setData({
           msgList: this.data.msgList
@@ -99,7 +110,7 @@ Component({
                 "value": "通过"
               },
               "name7": {
-                "value": tool.cutstr(app.userInfo.nickName, 6).replace(/[\d]+/g,'*')
+                "value": tool.cutstr(app.userInfo.nickName, 6).replace(/[\d]+/g, '*')
               },
               "thing2": {
                 "value": '无'
@@ -128,7 +139,7 @@ Component({
                 "value": "通过"
               },
               "name7": {
-                "value": tool.cutstr(app.userInfo.nickName, 6).replace(/[\d]+/g,'*')
+                "value": tool.cutstr(app.userInfo.nickName, 6).replace(/[\d]+/g, '*')
               },
               "thing2": {
                 "value": '无'
@@ -192,7 +203,7 @@ Component({
                 "value": "未通过"
               },
               "name7": {
-                "value": tool.cutstr(app.userInfo.nickName, 6).replace(/[\d]+/g,'*')
+                "value": tool.cutstr(app.userInfo.nickName, 6).replace(/[\d]+/g, '*')
               },
               "thing2": {
                 "value": '无'
@@ -222,7 +233,7 @@ Component({
                 "value": "未通过"
               },
               "name7": {
-                "value": tool.cutstr(app.userInfo.nickName, 6).replace(/[\d]+/g,'*')
+                "value": tool.cutstr(app.userInfo.nickName, 6).replace(/[\d]+/g, '*')
               },
               "2": {
                 "value": '无'

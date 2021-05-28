@@ -220,8 +220,10 @@ Page({
           }
         }
         if (!this.data.groupCards.length) {
-          if (!this.data.isMyGroup || this.data.groupDuty == -1) {
-            return common.Tip('该小组暂无发布打卡')
+          if (!this.data.isMyGroup || this.data.groupDuty == -1 || this.data.groupDuty == 2) {
+            return common.Tip('暂时还没有打卡信息，等待管理员或组长发布').then(res=> {
+              wx.navigateBack()
+            })
           }
         }
       })

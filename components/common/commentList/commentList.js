@@ -89,6 +89,7 @@ Component({
             app.post(app.Api['delete' + table], {
               id
             }).then(data => {
+              // 修改
               if (data.affectedRows) {
                 if (replyindex !== undefined) { 
                   commentArr[commentindex].replyArr.splice(replyindex, 1)

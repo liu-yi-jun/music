@@ -16,7 +16,7 @@
     </view>
 
   </view>
-  <scroll-view style="height: calc({{excludeHeight}}px - 152rpx);" scroll-y bindscrolltolower="scrolltolower">
+  <scroll-view scroll-into-view="{{intoId}}" style="height: calc({{excludeHeight}}px - 152rpx);" scroll-y bindscrolltolower="scrolltolower">
     <block wx:if="{{mp4Video}}">
       <video class="video" object-fit="cover" src="{{detail.videoUrl}}" enable-auto-rotation show-mute-btn></video>
     </block>
@@ -61,7 +61,7 @@
         </view>
       </view>
     </view>
-    <view class="barWrap">
+    <view class="barWrap" >
       <bar size="{{30}}" gap="{{20}}" barList="{{barList}}" actIndex="{{actIndex}}" bind:switchBtn="switchBtn"></bar>
     </view>
     <!-- <view class="bar">
@@ -74,7 +74,7 @@
         <text class="datumText">课程资料</text>
       </view>
     </view> -->
-    <view hidden="{{actIndex !== 0}}">
+    <view hidden="{{actIndex !== 0}}" id="comment">
       <commentList bind:toReply="toReply" commentArr="{{commentArr}}">
       </commentList>
     </view>

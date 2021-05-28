@@ -1,5 +1,5 @@
 <!--pages/square/square.wxml-->
-<view class="square" catchtap="tap" bindtouchmove="move">
+<view class="square" catchtap="tap" >
   <!-- <scroll-view enable-back-to-top="{{true}}" bindscroll="move" class="scroll" scroll-with-animation scroll-y bindscrolltolower="scrolltolower" scroll-top="{{scrollTop}}"> -->
   <navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' iconTheme='white'></navBar>
   <!-- bind:toScrollTop="toScrollTop" -->
@@ -64,20 +64,20 @@
         </view>
       </swiper-item>
     </swiper>
-    <swiper class="activitySwiper" indicator-dots="{{true}}" indicator-color="rgba(255, 255, 255, .3)"
+    <swiper wx:if="{{alliances.length}}" class="activitySwiper" indicator-dots="{{true}}" indicator-color="rgba(255, 255, 255, .3)"
       indicator-active-color="#ffffff" autoplay="{{true}}" circular="{{true}}">
       <swiper-item wx:for="{{alliances}}" catchtap="goAllianceDetail" data-id="{{item.id}}" data-index="{{index}}">
         <image mode="aspectFill" class="activityBox" src="{{item.pictureUrls[0]}}">
           <view class="activityContent">
             <view class="strong">{{item.title}}</view>
-            <view class="middle">演出地点：{{detail.activityLocation}}</view>
+            <view class="middle">演出地点：{{item.activityLocation}}</view>
             <view class="small">演出时间：{{item.activityTime}}</view>
             <view class="small">组织者：{{item.organization}}</view>
           </view>
         </image>
       </swiper-item>
     </swiper>
-    <dynamicList bind:fullscreenchange="fullscreenchange" id="dynamicList" dynamics="{{dynamics}}"></dynamicList>
+    <dynamicList bind:fullscreenchange="fullscreenchange" id="dynamicList" dynamics="{{dynamics}}" bind:deleteDynamic="deleteDynamic"></dynamicList>
     <image class="issueDynamic" src="/images/square/issueDynamic2.png">
       <view class="issueDynamicInner" catchtap="goSquarePost"></view>
     </image>
@@ -142,7 +142,7 @@
             <image class="prizeImg" src="../../images/square/fourth.png"></image>
             <view class="prizeIntroduce">
               <view class="order">·四等奖·（两名）</view>
-              <view class="prizeName">卡巴林</view>
+              <view class="prizeName">卡林巴</view>
             </view>
           </view>
           <image catchtap="bulletSignIn" class="bulletSignIn" src="../../images/square/bulletSignIn.png"></image>

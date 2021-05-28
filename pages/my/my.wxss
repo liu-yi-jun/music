@@ -123,7 +123,7 @@
 }
 
 .showHideBar {
-  height: 422rpx;
+  height: 600rpx;
   opacity: 1;
   visibility: 1;
 }
@@ -211,7 +211,8 @@
 }
 
 .barWrap {
-  padding: 32rpx 0rpx 0rpx 32rpx;
+  padding-top: 32rpx;
+  /* padding: 32rpx 0rpx 0rpx 32rpx; */
   box-sizing: border-box;
   width: 100%;
 }
@@ -228,6 +229,9 @@
 
 .aboutWrap {
   transform: translateY(194rpx);
+}
+.codeWrap {
+  transform: translateY(370rpx);
 }
 
 .groupName {
@@ -394,4 +398,73 @@ align-items: flex-start;
 
 .stress {
   color:rgb(219, 15, 15);
+}
+
+
+
+
+
+.mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 99999;
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.4s all;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.popup {
+  background: white;
+  width: 650rpx;
+  border-radius: 20rpx;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  overflow: hidden;
+}
+
+.shadeShow {
+  opacity: 1;
+  visibility: visible;
+}
+
+.popupTextarea {
+  padding: 0rpx 10rpx;
+  height: 66rpx;
+  /* background-color: #ECE4FC; */
+  border: 1rpx solid #d6d6d6;
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 32rpx;
+}
+
+.complete {
+  height: 100rpx;
+  text-align: center;
+  line-height: 100rpx;
+  color: #5CB372;
+  font-size: 34rpx;
+  font-weight: bold;
+  border-top: 1rpx solid #E9E9E9;
+}
+.hoverComplete {
+  background-color: #E4E4E4;
+}
+
+
+.popup-title {
+  font-size: 36rpx;
+  font-weight: bold;
+  text-align: center;
+  padding:40rpx 0rpx;
+}
+.popup-content {
+  box-sizing: border-box;
+  word-wrap: break-word;
+  padding: 0rpx 40rpx 60rpx;
 }

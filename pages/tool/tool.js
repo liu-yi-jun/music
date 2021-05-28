@@ -69,6 +69,11 @@ Page({
     // this.gettaps(this.data.value)
 
   },
+  handleGetUserInfo() {
+    this.setData({
+      pageShow: true
+    })
+  },
   toAnalysis() {
     wx.navigateTo({
       url: '/pages/tool/analysis/analysis',

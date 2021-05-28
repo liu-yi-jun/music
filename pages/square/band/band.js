@@ -24,12 +24,14 @@ Page({
     bandPagin: {
       pageSize: 20,
       pageIndex: 1,
-      isNotData: false
+      isNotData: false,
+      minID: 0
     },
     momentPaging: {
       pageSize: 20,
       pageIndex: 1,
-      isNotData: false
+      isNotData: false,
+      minID: 0
     },
     doubleMoment: [
       [],
@@ -65,7 +67,7 @@ Page({
             doubleMoment[0].push(item)
           }
         })
-        momentPaging.pageIndex = momentPaging.pageIndex + 1
+        momentPaging.minID = res.length ? res[res.length - 1].id : 0
         this.setData({
           doubleMoment
         })
@@ -84,9 +86,9 @@ Page({
       }).then(res => {
         console.log(res)
         if (res.length < bandPagin.pageSize) {
-          bandPagin.isNoData = true
+          bandPagin.isNotData = true
         }
-        bandPagin.pageIndex = bandPagin.pageIndex + 1
+        bandPagin.minID = res.length ? res[res.length - 1].id : 0
         this.setData({
           bands: this.data.bands.concat(res),
         })
@@ -113,6 +115,7 @@ Page({
       app.bandBack = false
       app.bandDeleteBack = false
       bandPagin.pageIndex = 1
+      bandPagin.minID = 0
       bandPagin.isNotData = false
       this.data.bands = []
       this.getBands()
@@ -121,6 +124,7 @@ Page({
       app.momentBack = false
       app.momentDeleteBack = false
       momentPaging.pageIndex = 1
+      momentPaging.minID = 0
       momentPaging.isNotData = false
       this.data.doubleMoment = [
         [],
@@ -139,6 +143,7 @@ Page({
     } = this.data
     if (actIndex === 0) {
       momentPaging.isNotData = false
+      momentPaging.minID = 0
       momentPaging.pageIndex = 1
       this.data.doubleMoment = [
         [],
@@ -151,8 +156,9 @@ Page({
         })
       })
     } else if (actIndex === 1) {
-      bandPagin.isNoData = false
+      bandPagin.isNotData = false
       bandPagin.pageIndex = 1
+      bandPagin.minID = 0
       this.data.bands = []
       this.getBands().then(() => {
         this._freshing = false
@@ -205,9 +211,9 @@ Page({
       actIndex
     } = this.data
     if (!momentPaging.isNotData && actIndex === 0) {
-      this.getBands()
-    } else if (!bandPagin.isNoData && actIndex === 1) {
       this.getMoment()
+    } else if (!bandPagin.isNotData && actIndex === 1) {
+      this.getBands()
     }
   },
   toIssueMoment() {

@@ -24,7 +24,7 @@
         </view>
         <view class="courseIntroduceWrap">
           <text class="courseIntroduce">课程介绍：</text>
-          <textarea maxlength="1000" class="courseIntroduceTextarea" name="introduce" placeholder="请添加课程描述……"
+          <textarea maxlength="1000" cursor-spacing="{{100}}" class="courseIntroduceTextarea" name="introduce" placeholder="请添加课程描述……"
             placeholder-class="placeholder"></textarea>
         </view>
         <view class="media">

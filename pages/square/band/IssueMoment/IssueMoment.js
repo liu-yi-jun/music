@@ -182,16 +182,24 @@ Page({
     let params = e.detail.value
     try {
       params = await this.validate(params)
-      let subscriptionsSetting = await authorize.isSubscription()
-      if (!subscriptionsSetting.itemSettings) {
-        this.params = params
-        // 未勾选总是
-        this.setData({
-          msgAuthorizationShow: true
-        })
-      } else {
-        this.submitTeam(params)
-      }
+      common.showLoading()
+      authorize.newSubscription(this.data.requestId, {
+        cancelText: '继续发布'
+      }).then((res) => {
+        wx.hideLoading()
+        if (res.type === 1) {
+          this.params = params
+          this.setData({
+            msgAuthorizationShow: true
+          })
+        } else if (res.type === -1) {
+          if (!res.result.confirm) {
+            this.submitTeam(params)
+          }
+        } else if (res.type === 0) {
+          this.submitTeam(params)
+        }
+      })
     } catch (err) {
       console.log(err)
       common.Tip(err)

@@ -226,6 +226,23 @@ function GetSlideDirection(startX, startY, endX, endY) { //判读手指滑动方
 function GetSlideAngle(dx, dy) { //判断角度
   return Math.atan2(dy, dx) * 180 / Math.PI;
 }
+
+function add0(m) {
+  return m < 10 ? '0' + m : m
+}
+
+function format(shijianchuo) {
+  //shijianchuo是整数，否则要parseInt转换
+  var time = new Date(shijianchuo);
+  var y = time.getFullYear();
+  var m = time.getMonth() + 1;
+  var d = time.getDate();
+  // var h = time.getHours();
+  // var mm = time.getMinutes();
+  // var s = time.getSeconds();
+  // return y+'-'+add0(m)+'-'+add0(d)+' '+add0(h)+':'+add0(mm)+':'+add0(s);
+  return y + '-' + add0(m) + '-' + add0(d);
+}
 module.exports = {
   navExcludeHeight: navExcludeHeight,
   reverseGeocoder: reverseGeocoder,
@@ -235,5 +252,6 @@ module.exports = {
   cutstr: cutstr,
   getDateDiff: getDateDiff,
   reduction: reduction,
-  GetSlideDirection: GetSlideDirection
+  GetSlideDirection: GetSlideDirection,
+  format:format
 }

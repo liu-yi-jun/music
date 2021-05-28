@@ -296,7 +296,7 @@
   height: 887rpx; */
   width: 600rpx;
   height: 1024rpx;
-  padding: 32rpx 36rpx 66rpx;
+  padding: 40rpx 40rpx 66rpx;
 }
 
 .poster {

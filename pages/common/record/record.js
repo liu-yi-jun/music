@@ -78,6 +78,7 @@ Page({
    */
   onUnload: function () {
     this.innerAudioContext.stop()
+    this.recorderManager.stop()
   },
 
   /**

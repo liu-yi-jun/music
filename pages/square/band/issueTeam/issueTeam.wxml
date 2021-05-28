@@ -79,7 +79,7 @@
     </view>
 
     <view class="textareaWarp">
-      <textarea name="introduce" maxlength="-1" class="textarea" placeholder="详情"
+      <textarea cursor-spacing="{{100}}" name="introduce" maxlength="-1" maxlength="{{1000}}" class="textarea" placeholder="详情"
         placeholder-class="placeholderText" value="{{introduce}}"></textarea>
       <view class="locationWrap">
         <view class="location" catchtap="getLocation">

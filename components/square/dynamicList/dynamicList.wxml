@@ -1,5 +1,5 @@
 <!--components/square/dynamicList/dynamicList.wxml-->
-<view class="list">
+<view class="list"  >
   <view class="item" wx:for="{{dynamics}}" wx:key="id" wx:for-index="i">
     <image mode="aspectFill" data-userid="{{item.userId}}" catchtap="goPersonal" class="avatar" src="{{item.avatarUrl}}"
       lazy-load="{{true}}"></image>

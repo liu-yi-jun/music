@@ -71,10 +71,10 @@ Component({
   methods: {
     showMenu(e) {
       let index = e.currentTarget.dataset.index
+      app.globalData.squareIndex = index
       this.index = index
       let detail = this.data.dynamics[index]
       let list = this.data.list
-      console.log(detail.isStore);
       if (detail.isStore) {
         list[1].name = '取消收藏'
         this.setData({
@@ -94,21 +94,20 @@ Component({
             open_type: '',
             functionName: 'hadleDelete'
           }
-          this.getTabBar().setData({
-            show: false
-          }, () => this.setData({
-            list
-          }, () => {
-            this.selectComponent('#menu').show();
-          }))
-
         } else {
-          this.getTabBar().setData({
-            show: false
-          }, () => {
-            this.selectComponent('#menu').show();
-          })
+          list[2] = {
+            name: '举报',
+            open_type: '',
+            functionName: 'handleReport'
+          }
         }
+        this.getTabBar().setData({
+          show: false
+        }, () => this.setData({
+          list
+        }, () => {
+          this.selectComponent('#menu').show();
+        }))
       } else {
         if (app.userInfo.id === detail.userId) {
           list[2] = {
@@ -150,20 +149,21 @@ Component({
             themeId: detail.id
           },
         }).then(res => {
-          if (res.modify) {
+          if (res) {
             if (detail.isStore) {
               common.Toast('收藏成功')
             } else {
               common.Toast('已取消收藏')
             }
           } else {
-            common.Toast('系统繁忙,请稍后再试')
+            common.Toast('该动态已不存在')
           }
 
         })
       })
 
     },
+
     handleReport(e) {
       let {
         tableName,
@@ -186,32 +186,8 @@ Component({
       })
     },
     deleteDynamic(e) {
-      common.showLoading('删除中')
-      let dynamics = this.data.dynamics
-      let {
-        tableName,
-        id
-      } = dynamics[this.index]
-      app.post(app.Api[tableName + 'Delete'], {
-        tableName,
-        id
-      }, {
-        loading: false
-      }).then(res => {
-        console.log(res)
-        if (res.affectedRows) {
-          dynamics.splice(this.index, 1)
-          this.setData({
-            dynamics
-          })
-          common.Toast('已删除')
-        } else {
-          dynamics.splice(this.index, 1)
-          this.setData({
-            dynamics
-          })
-          common.Toast('该动态已不存在')
-        }
+      this.triggerEvent('deleteDynamic', {
+        index: this.index
       })
     },
     // 初始化声音条实例
@@ -316,6 +292,10 @@ Component({
             otherId: content.userId,
             themeTitle: content.introduce
           }
+        }).then(res => {
+          if (!res) {
+            common.Toast('该动态已不存在')
+          }
         })
       })
     },
@@ -391,7 +371,7 @@ Component({
         if (flag) {
           app.post(app.Api.switchGroup, {
             groupId: id,
-            groupName:groupname,
+            groupName: groupname,
             groupDuty,
             userId: app.userInfo.id
           }, {
@@ -465,7 +445,7 @@ Component({
     },
     startPlay(e) {
       let index = e.currentTarget.dataset.index
-      if (this.videoId && (this.videoId !== index)) {
+      if (this.videoId !== undefined && (this.videoId !== index)) {
         let videoContext = wx.createVideoContext(`video${this.videoId}`, this)
         videoContext.pause()
       }

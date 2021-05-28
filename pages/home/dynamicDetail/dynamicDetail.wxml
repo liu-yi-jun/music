@@ -9,7 +9,7 @@
     </view>
     <view catchtap="showMenu" class="delete iconfont iconshenglve"></view>
   </view>
-  <scroll-view style="height: calc({{excludeHeight}}px - 130rpx);" scroll-y bindscrolltolower="scrolltolower">
+  <scroll-view scroll-into-view="{{intoId}}" style="height: calc({{excludeHeight}}px - 130rpx);" scroll-y bindscrolltolower="scrolltolower">
     <swiper wx:if="{{detail.mold === 0}}" class="swiper" indicator-dots duration="400">
       <swiper-item wx:for="{{detail.pictureUrls}}" wx:key="*this">
         <image class="dynamicImg" mode="aspectFill" src="{{item}}" catchtap="preview" data-src="{{item}}"></image>
@@ -53,7 +53,7 @@
     <view class="content">
       <text space="ensp">{{detail.introduce}}</text>
     </view>
-    <view class="commentWrap">
+    <view class="commentWrap" id="comment">
       <image src="/images/home/dynamicComment.png"></image>
       <text>评论</text>
       <!-- <text>共 {{detail.comment}} 条评论</text> -->

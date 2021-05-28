@@ -9,7 +9,7 @@
     <view class="wrap">
       <view class="importWrap first">
         <text>标题</text>
-        <input name="title" placeholder-class="placeholder"></input>
+        <input name="title" placeholder-class="placeholder" maxlength="100"></input>
       </view>
       <view class="importWrap additionalWrap">
         <text>附加信息</text>
@@ -17,19 +17,19 @@
       </view>
       <view class="importWrap">
         <text>时间</text>
-        <input name="activityTime"  placeholder-class="placeholder"></input>
+        <input name="activityTime"  placeholder-class="placeholder" maxlength="100"></input>
       </view>
       <view class="importWrap">
         <text>地点</text>
-        <input name="activityLocation" placeholder-class="placeholder"></input>
+        <input name="activityLocation" placeholder-class="placeholder" maxlength="200"></input>
       </view>
       <view class="importWrap">
         <text>数量</text>
-        <input name="number" type="number" placeholder-class="placeholder"></input>
+        <input name="number" type="number" placeholder-class="placeholder" maxlength="10"></input>
       </view>
       <view class="importWrap">
         <text>联系方式</text>
-        <input name="contact" placeholder-class="placeholder"></input>
+        <input name="contact" placeholder-class="placeholder" maxlength="100"></input>
       </view>
       <view class="moneyWrap" wx:if="{{money}}">
           <text>票价: ¥{{money}}</text>

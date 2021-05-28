@@ -23,7 +23,8 @@ Page({
       name: '举报',
       open_type: '',
       functionName: 'handleReport'
-    }]
+    }],
+    intoId:''
   },
 
   /**
@@ -77,10 +78,11 @@ Page({
         commentPaging
       })
     }).catch(err => {
-      common.Toast('该一起组乐队已不存在')
-      setTimeout(() => {
-        wx.navigateBack()
-      }, 1500)
+      console.log(err);
+      // common.Toast('该一起组乐队已不存在')
+      // setTimeout(() => {
+      //   wx.navigateBack()
+      // }, 1500)
     })
   },
   /**
@@ -160,7 +162,8 @@ Page({
       // 属于评论的，将内容插入到commentArr的第一个
       this.data.detail.comment++
       this.setData({
-        detail: this.data.detail
+        detail: this.data.detail,
+        intoId: 'comment'
       })
       commentArr.unshift(param)
     } else {
@@ -170,7 +173,7 @@ Page({
         replyindex
       } = this.data.indexObject
       if (commentArr[commentindex].replyArr === undefined) commentArr[commentindex].replyArr = [];
-      commentArr[commentindex].replyArr.unshift(param)
+      commentArr[commentindex].replyArr.push(param)
 
 
     }
@@ -208,6 +211,9 @@ Page({
   handlerGobackClick: app.handlerGobackClick,
   toApplication(e) {
     let detail = this.data.detail
+    if(detail.userId === app.userInfo.id) {
+      return  common.Toast('请邀请其他人参加！')
+    }
     let recruits = JSON.stringify(detail.recruitArr)
     wx.navigateTo({
       url: `/pages/square/band/application/application?recruits=${recruits}&bandId=${detail.id}&userId=${detail.userId}`,

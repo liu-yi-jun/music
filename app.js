@@ -6,6 +6,7 @@ let {
 } = require("./assets/request/config.js")
 let Api = require("./assets/request/api.js");
 let Req = require("./assets/request/Req.js");
+// let socket = require('./assets/request/socket')
 let env = "Dev";
 App.requestUrls = requestUrls[env]; // 公共文件用的
 App.getToken = function getToken(code) {
@@ -43,8 +44,62 @@ App({
     //     console.log('字体调用失败')
     //   },
     // })
-  },
 
+  },
+  login() {
+    return new Promise((resolve, reject) => {
+      wx.login({
+        success: res => {
+          App.getToken(res.code).then(() => {
+            this.getServerUserInfo().then(() => {
+              resolve()
+            })
+          })
+        },
+        fail: err => reject(err)
+      })
+    })
+  },
+  initLogin() {
+    return new Promise((resolve, reject) => {
+      let token = wx.getStorageSync('wx-token')
+      if (token) {
+        wx.checkSession({
+          success: () => {
+            this.getServerUserInfo().then(() => {
+              resolve()
+            })
+          },
+          fail: () => {
+            this.login().then(() => {
+              resolve()
+            })
+          }
+        })
+      } else {
+        this.login().then(() => {
+          resolve()
+        })
+      }
+    })
+  },
+  getServerUserInfo() {
+    return new Promise((resolve, reject) => {
+      this.get(this.Api.getServerUserInfo, {}, {
+        loading: false
+      }).then(res => {
+        if (res.userInfo) {
+          // 有用户信息，存入app
+          this.userInfo = res.userInfo
+          this.globalData.codePass = true
+          // socket.initSocketEvent()
+        } else {
+          // 没有用户信息等待用户授权
+        }
+        resolve()
+      })
+    })
+  },
   requestUrls: requestUrls[env], // 给页面js用的
   socketUrls: requestUrls['SocketProd'],
   qiniuUrl: requestUrls['Qiniu'].baseUrl,
@@ -60,7 +115,8 @@ App({
   groupInfo: null,
   signInInfo: null,
   globalData: {
-    guide: {}
+    guide: {},
+    codePass: false
   },
   switchData: {},
   cbObj: {},
@@ -74,9 +130,9 @@ App({
         delta: 1
       });
     } else {
-      wx.navigateTo({
-        url: '/pages/init/index/index'
-      });
+      wx.reLaunch({
+        url: '/pages/home/home'
+      })
     }
   },
   getNotice(that, userId) {

@@ -42,6 +42,7 @@ Page({
     isImageLink: false,
     linkUrl: '',
     showSignIn: false,
+    isImg: false,
     msgAuthorizationShow: false,
     requestId: [app.InfoId.like, app.InfoId.content, app.InfoId.reply]
   },
@@ -205,6 +206,7 @@ Page({
     this.setData({
       tempImagePaths: [],
       tempVideoPath: '',
+      isImg: false,
       tempRecordPath: data.tempFilePath,
       duration: data.duration,
       soundWidth: this.initSoundWidth(data.duration),
@@ -253,6 +255,7 @@ Page({
         tempImagePaths: res.tempFilePaths,
         tempRecordPath: '',
         tempVideoPath: '',
+        isImg: true,
         restCount: this.data.restCount - res.tempFilePaths.length,
         isImageLink: false
       })
@@ -263,6 +266,7 @@ Page({
       this.setData({
         tempRecordPath: '',
         tempImagePaths: [],
+        isImg: false,
         tempVideoPath: res.tempFilePath,
         isVideoLink: false
       })
@@ -301,6 +305,17 @@ Page({
     console.log('picker发送选择改变，携带值为', e.detail.value)
     this.setData({
       index: e.detail.value
+    })
+  },
+  addImg() {
+    const restCount = this.data.restCount
+    common.chooseImage(restCount).then(res => {
+      //如果直接arrA.push(arrB); 则arrB只会作为了arrA的一个元素，并且是修改原数组
+      const tempImagePaths = this.data.tempImagePaths.concat(res.tempFilePaths)
+      this.setData({
+        tempImagePaths,
+        restCount: restCount - res.tempFilePaths.length
+      })
     })
   },
   // 进行校验
@@ -350,16 +365,24 @@ Page({
     let params = e.detail.value
     try {
       params = await this.validate(params)
-      let subscriptionsSetting = await authorize.isSubscription()
-      if (!subscriptionsSetting.itemSettings) {
-        this.params = params
-        // 未勾选总是
-        this.setData({
-          msgAuthorizationShow: true
-        })
-      } else {
-        this.submitTeam(params)
-      }
+      common.showLoading()
+      authorize.newSubscription(this.data.requestId, {
+        cancelText: '继续发布'
+      }).then((res) => {
+        wx.hideLoading()
+        if (res.type === 1) {
+          this.params = params
+          this.setData({
+            msgAuthorizationShow: true
+          })
+        } else if (res.type === -1) {
+          if (!res.result.confirm) {
+            this.submitTeam(params)
+          }
+        } else if (res.type === 0) {
+          this.submitTeam(params)
+        }
+      })
     } catch (err) {
       console.log(err)
       common.Tip(err)

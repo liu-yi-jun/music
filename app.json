@@ -1,7 +1,6 @@
 {
   "pages": [
     "pages/home/home",
-    "pages/init/index/index",
     "pages/tool/tool",
     "pages/home/alliance/alliance",
     "pages/home/showInformation/showInformation",
@@ -73,7 +72,8 @@
     "pages/square/band/IssueMoment/IssueMoment",
     "pages/square/band/momentDetail/momentDetail",
     "pages/square/squarePost/standard/standard",
-    "components/common/msgAuthorization/msgAuthorization"
+    "components/common/msgAuthorization/msgAuthorization",
+    "components/common/guidMsgAuthor/guidMsgAuthor"
   ],
   "permission": {
     "scope.userLocation": {

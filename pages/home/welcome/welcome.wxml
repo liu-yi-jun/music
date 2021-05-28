@@ -1,6 +1,6 @@
 <!--pages/home/welcome/welcome.wxml-->
 <view>
-  <navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' iconTheme='white'></navBar>
+  <navBar backgroundColorTop='rgba(0,0,0,0)'  home="{{true}}"  background='rgba(0,0,0,0)' iconTheme='white' bindhome="handlerGobackClick"></navBar>
   <official-account></official-account>
   <view class="logo-group">
       <view class="logoWrap">
@@ -25,4 +25,7 @@
     </view>
   </view>
 </view>
-<authorization dialogShow="{{dialogShow}}" ></authorization>
+<authorization dialogShow="{{dialogShow}}" bind:handleGetUserInfo="handleGetUserInfo" codeCheck="{{codeCheck}}"></authorization>
+
+
+<msgAuthorization wx:if="{{msgAuthorizationShow}}" bind:completeMsgAuthorization="completeMsgAuthorization"  msgAuthorizationShow="{{msgAuthorizationShow}}" requestId="{{requestId}}"></msgAuthorization>

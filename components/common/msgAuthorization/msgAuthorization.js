@@ -46,7 +46,7 @@ Component({
         this.setData({
           msgAuthorizationShow: false
         })
-        authorize.alwaysSubscription(this.data.requestId).then(res => {
+        authorize.infoSubscribe(this.data.requestId).then(res => {
           console.log(res);
           this.triggerEvent('completeMsgAuthorization', {
             res

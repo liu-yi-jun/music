@@ -1,7 +1,9 @@
 {
   "usingComponents": {
     "navBar": "/components/navBar/navBar",
-    "groupList":"/components/home/group/groupList/groupList"
+    "groupList":"/components/home/group/groupList/groupList",
+    "authorization":"/components/common/authorization/authorization",
+    "msgAuthorization":"/components/common/msgAuthorization/msgAuthorization"
   },
   "disableScroll": true
 }

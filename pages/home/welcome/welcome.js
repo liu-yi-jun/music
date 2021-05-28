@@ -13,7 +13,10 @@ Page({
   data: {
     groupInfo: null,
     applyShow: false,
-    applyContent: ''
+    applyContent: '',
+    codeCheck: '',
+    msgAuthorizationShow: false,
+    requestId: [app.InfoId.examine]
   },
 
   /**
@@ -85,16 +88,18 @@ Page({
       }).catch(err => reject(err))
     })
   },
-  yesJoin() {
+  async yesJoin() {
     let groupInfo = this.data.groupInfo
     let flag = false
     let groupDuty
-    this.myGrouList.forEach(item => {
-      if (item.groupId === groupInfo.id && item.groupDuty !== -1) {
-        groupDuty = item.groupDuty
-        return flag = true
-      }
-    })
+    if (this.myGrouList) {
+      this.myGrouList.forEach(item => {
+        if (item.groupId === groupInfo.id && item.groupDuty !== -1) {
+          groupDuty = item.groupDuty
+          return flag = true
+        }
+      })
+    }
     if (flag) {
       // 已经在此小组的
       app.post(app.Api.switchGroup, {
@@ -111,8 +116,26 @@ Page({
       // 未加入
       if (groupInfo.examine) {
         // 需要审核
-        this.setData({
-          applyShow: true,
+        common.showLoading()
+        authorize.newSubscription(this.data.requestId, {
+          cancelText: '继续申请'
+        }).then((res) => {
+          wx.hideLoading()
+          if (res.type === 1) {
+            this.setData({
+              msgAuthorizationShow: true
+            })
+          } else if (res.type === -1) {
+            if (!res.result.confirm) {
+              this.setData({
+                applyShow: true
+              })
+            }
+          } else if (res.type === 0) {
+            this.setData({
+              applyShow: true
+            })
+          }
         })
       } else {
         // 直接进入
@@ -125,6 +148,12 @@ Page({
         }).catch(err => reject(err))
       }
     }
+  },
+  completeMsgAuthorization() {
+    this.setData({
+      msgAuthorizationShow: false,
+      applyShow: true
+    })
   },
   cancelApply() {
     this.setData({
@@ -183,21 +212,21 @@ Page({
       this.setData({
         applyShow: false
       })
-      authorize.isSubscription().then(res => {
-        if (res.mainSwitch && (!res.itemSettings || !res.itemSettings[app.InfoId.examine])) {
-          common.Tip('接下来将授权"审核结果"通知。授权时请勾选“总是保持以上选择,不再询问”，后续将第一时间通知到您', '申请信息已发送').then(res => {
-            if (res.confirm) {
-              authorize.alwaysSubscription([app.InfoId.examine]).then(res => {})
-            }
-          })
-        } else {
-          common.Tip('确保您已开启相应的通知权限，“审核结果”将会第一时间通知到您', '申请信息已发送').then(res => {
-            if (res.confirm) {
-              authorize.alwaysSubscription([app.InfoId.examine]).then(res => {})
-            }
-          })
-        }
-      })
+      // authorize.isSubscription().then(res => {
+      //   if (res.mainSwitch && (!res.itemSettings || !res.itemSettings[app.InfoId.examine])) {
+      //     common.Tip('接下来将授权"审核结果"通知。授权时请勾选“总是保持以上选择,不再询问”，后续将第一时间通知到您', '申请信息已发送').then(res => {
+      //       if (res.confirm) {
+      //         authorize.alwaysSubscription([app.InfoId.examine]).then(res => {})
+      //       }
+      //     })
+      //   } else {
+      //     common.Tip('确保您已开启相应的通知权限，“审核结果”将会第一时间通知到您', '申请信息已发送').then(res => {
+      //       if (res.confirm) {
+      //         authorize.alwaysSubscription([app.InfoId.examine]).then(res => {})
+      //       }
+      //     })
+      //   }
+      // })
     })
   },
   initLogin() {
@@ -241,6 +270,9 @@ Page({
           console.log(app.userInfo);
           resolve()
         } else {
+          this.setData({
+            codeCheck: 'groupId=' + this.data.groupInfo.id
+          })
           resolve()
           // 没有用户信息等待用户授权
         }
@@ -293,5 +325,6 @@ Page({
    */
   onShareAppMessage: function () {
 
-  }
+  },
+  handlerGobackClick: app.handlerGobackClick,
 })

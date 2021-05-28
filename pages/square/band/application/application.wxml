@@ -14,9 +14,9 @@
         </view>
         <view class="row sexRow">
           <text>性别</text>
-          <image class="sexImg" src="/images/editData/man{{userInfo.gender===1?'ed':''}}.png">
+          <image catchtap="changeWoman" class="sexImg" src="/images/editData/woman{{gender===2?'ed':''}}.png">
           </image>
-          <image class="sexImg" src="/images/editData/woman{{userInfo.gender===2?'ed':''}}.png">
+          <image catchtap="changeman" class="sexImg" src="/images/editData/man{{gender===1?'ed':''}}.png">
           </image>
         </view>
         <view class="row">
@@ -41,7 +41,7 @@
               <view class="part" data-i="{{i}}" data-j="{{j}}" wx:for-index="j" wx:for="{{recruit}}" wx:key="index"
                 catchtap="select">
                 <view class="instrumentsWrap">
-                  <image class="instruments" src="{{'/images/' + item.instrumentsUrl}}"></image>
+                  <image class="instruments" src="{{'/images' + item.instrumentsUrl}}"></image>
                   <text class="instrumentsName">{{ item.instrumentsName}}</text>
                 </view>
                 <image class="select" src="/images/issueTeam/{{item.exist?'':'not'}}Selected.png"></image>
@@ -54,7 +54,7 @@
               <view class="part" data-i="{{i}}" data-j="{{j}}" wx:for-index="j" wx:for="{{recruit}}" wx:key="index"
                 catchtap="select">
                 <view class="instrumentsWrap">
-                  <image class="instruments" src="{{'/images/' + item.instrumentsUrl}}"></image>
+                  <image class="instruments" src="{{'/images' + item.instrumentsUrl}}"></image>
                   <text class="instrumentsName">{{item.instrumentsName}}</text>
                 </view>
                 <image class="select" src="/images/issueTeam/{{item.exist?'':'not'}}Selected.png"></image>
@@ -70,19 +70,20 @@
         <view class="exhibition"> 个人展示 </view>
         <view class="tips">（上传一段3分钟以内的表演）</view>
         <view class="upload" wx:if="{{!tempFilePath}}" catchtap="upload">上传</view>
-        <view class="videoText" wx:else catchtap="popupVideo">[video]</view>
+        <video object-fit="=cover" class="video" wx:else src="{{tempFilePath}}"></video>
+        <!-- <view class="videoText" wx:else catchtap="popupVideo">[video]</view> -->
       </view>
       <view class="okLogoWrap">
-        
+
         <image class="okLogo" src="/images/issuePuchCard/okLogo3.png">
           <button form-type="submit" class="okInner" plain='true'></button>
         </image>
       </view>
     </view>
   </form>
-  <view catchtap="cancelPopup" catchtouchmove="touchmove" class="mask {{dialogShow? 'shadeShow':''}}">
+  <!-- <view catchtap="cancelPopup" catchtouchmove="touchmove" class="mask {{dialogShow? 'shadeShow':''}}">
     <view class="popup" mark:popup="true">
       <video wx:if="{{dialogShow}}" src="{{tempFilePath}}" class="video" object-fit="cover"></video>
     </view>
-  </view>
+  </view> -->
 </view>

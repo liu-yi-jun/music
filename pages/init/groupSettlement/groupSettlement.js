@@ -310,10 +310,10 @@ Page({
       app.userInfo = result
       console.log(result)
       wx.hideLoading()
-      common.Toast('创建成功',1500,'success')
-      setTimeout(()=>{
+      common.Toast('创建成功', 1500, 'success')
+      setTimeout(() => {
         this.goHome()
-      },1500)
+      }, 1500)
       // authorize.isSubscription().then(res => {
       //   if (res.mainSwitch && (!res.itemSettings || !res.itemSettings[app.InfoId.joinGroup])) {
       //     common.Tip('接下来将授权"申请加入小组"通知。授权时请勾选“总是保持以上选择,不再询问”，后续有其他用户加入本小组将会第一时间通知到您', '创建成功').then(res => {
@@ -341,14 +341,15 @@ Page({
     }
   },
   async changeExamine(event) {
-    if(Number(event.detail.value)) {
-      let subscriptionsSetting = await authorize.isSubscription()
-      if (!subscriptionsSetting.itemSettings) {
-        // 未勾选总是
-        this.setData({
-          msgAuthorizationShow: true
-        })
-      }
+    if (Number(event.detail.value)) {
+      authorize.newSubscription(this.data.requestId).then((res) => {
+        wx.hideLoading()
+        if (res.type === 1) {
+          this.setData({
+            msgAuthorizationShow: true
+          })
+        }
+      })
     }
     this.setData({
       "form.examine": Number(event.detail.value)

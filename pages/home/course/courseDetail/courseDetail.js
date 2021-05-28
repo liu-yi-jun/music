@@ -42,7 +42,8 @@ Page({
       open_type: '',
       functionName: 'handleReport'
     }],
-    mp4Video: false
+    mp4Video: false,
+    intoId:''
     // list: [{
     //   name: '分享',
     //   open_type: 'share',
@@ -187,11 +188,13 @@ Page({
           storeUrl: 'groupcourseStore'
         }
       })
-      app.groupInfo.myGrouList.forEach((item, index) => {
-        if (item.groupId === detail.groupId && item.groupDuty !== -1) {
-          return this.flag = true
-        }
-      })
+      if (app.groupInfo.myGrouList) {
+        app.groupInfo.myGrouList.forEach((item, index) => {
+          if (item.groupId === detail.groupId && item.groupDuty !== -1) {
+            return this.flag = true
+          }
+        })
+      }
     })
   },
   /**
@@ -243,7 +246,9 @@ Page({
     setTimeout(() => {
       app.post(app.Api.share, {
         table: 'groupcourse',
-        id: this.data.detail.id
+        id: this.data.detail.id,
+        otherId: this.data.detail.userId,
+        themeTitle: this.data.detail.courseName
       }).then(res => {
         console.log(res)
         this.setData({
@@ -279,7 +284,8 @@ Page({
       // 属于评论的，将内容插入到commentArr的第一个
       this.data.detail.comment++
       this.setData({
-        detail: this.data.detail
+        detail: this.data.detail,
+        intoId: 'comment'
       })
       commentArr.unshift(param)
     } else {
@@ -289,7 +295,7 @@ Page({
         replyindex
       } = this.data.indexObject
       if (commentArr[commentindex].replyArr === undefined) commentArr[commentindex].replyArr = [];
-      commentArr[commentindex].replyArr.unshift(param)
+      commentArr[commentindex].replyArr.push(param)
     }
     this.setData({
       commentArr

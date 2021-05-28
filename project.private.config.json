@@ -213,7 +213,7 @@
         {
           "name": "pages/home/welcome/welcome",
           "pathName": "pages/home/welcome/welcome",
-          "query": "scene=groupId%3D115",
+          "query": "scene=groupId%3D147",
           "scene": 1011
         },
         {
@@ -291,6 +291,48 @@
         {
           "name": "components/common/msgAuthorization/msgAuthorization",
           "pathName": "components/common/msgAuthorization/msgAuthorization",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/my/information/information",
+          "pathName": "pages/my/information/information",
+          "query": "scene=groupId%3D22",
+          "scene": null
+        },
+        {
+          "name": "pages/my/information/information",
+          "pathName": "pages/my/information/information",
+          "query": "scene=groupId%3D22",
+          "scene": null
+        },
+        {
+          "name": "pages/my/information/information",
+          "pathName": "pages/my/information/information",
+          "query": "scene=groupId%3D22",
+          "scene": null
+        },
+        {
+          "name": "pages/home/alliance/alliance",
+          "pathName": "pages/home/alliance/alliance",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/my/information/information",
+          "pathName": "pages/my/information/information",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "components/common/guidMsgAuthor/guidMsgAuthor",
+          "pathName": "components/common/guidMsgAuthor/guidMsgAuthor",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "components/common/guidMsgAuthor/guidMsgAuthor",
+          "pathName": "components/common/guidMsgAuthor/guidMsgAuthor",
           "query": "",
           "scene": null
         }

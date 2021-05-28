@@ -29,7 +29,7 @@
       </view> -->
     </view>
   </view>
-  <scroll-view style="height: calc({{excludeHeight}}px - 120rpx);" scroll-y bindscrolltolower="scrolltolower">
+  <scroll-view scroll-into-view="{{intoId}}" style="height: calc({{excludeHeight}}px - 120rpx);" scroll-y bindscrolltolower="scrolltolower">
     <view class="bandPart">
       <view catchtap="showMenu" class="delete iconfont iconshenglve"></view>
       <view class="exist-recruit">
@@ -64,7 +64,7 @@
       <view class="detailInfo">详细信息：</view>
       <text>{{detail.introduce}}</text>
     </view>
-    <view class="commentWrap">
+    <view class="commentWrap" id="comment">
       <image src="/images/home/dynamicComment.png"></image>
       <text>评论</text>
     </view>

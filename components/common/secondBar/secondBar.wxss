@@ -11,7 +11,9 @@
 
 .firstBar {
   width: 100%;
+  box-sizing: border-box;
   display: flex;
+  padding-left: 32rpx;
 }
 
 .active {
@@ -28,22 +30,28 @@
   color: white;
 }
 
-.btnWrap {
-  width: 100%;
+.scroll {
   margin-top: 25rpx;
+}
+
+.btnWrap {
+  padding: 0rpx 32rpx;
   display: flex;
+  box-sizing: border-box;
   color: white;
 }
 
 .btn {
   text-align: center;
-  padding: 2rpx 16rpx !important;
+  padding: 4rpx 16rpx !important;
   color: white;
   border-radius: 999rem;
   font-size: 24rpx !important;
   letter-spacing: 8rpx;
-  text-indent: 8rpx; 
+  text-indent: 8rpx;
+  flex-shrink: 0;
 }
+
 .actBtn {
   background: #B37AE5;
   box-shadow: 0rpx 0rpx 10rpx 4rpx rgba(0, 0, 0, .1);

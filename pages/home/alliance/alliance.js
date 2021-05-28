@@ -2,6 +2,7 @@
 const app = getApp()
 const common = require('../../../assets/tool/common.js')
 const tool = require('../../../assets/tool/tool.js')
+const authorize = require('../../../assets/tool/authorize')
 Page({
 
   /**
@@ -17,9 +18,16 @@ Page({
       pageSize: 20,
       pageIndex: 1,
       isNotData: false,
+      minID: 0,
     },
     tempValue: '',
-    triggered: false
+    triggered: false,
+    dialogShow: false,
+    msgAuthorizationShow: false,
+    requestId: [app.InfoId.examine],
+    joinShow: false,
+    applyShow: false,
+    applyContent: ''
   },
 
   /**
@@ -36,18 +44,18 @@ Page({
     return new Promise((resolve, reject) => {
       app.get(app.Api.pagingGetGroup, {
         groupName,
-        ...groupPaging
-      },{
-        loading:false
+        ...groupPaging,
+        minID: groupPaging.minID
+      }, {
+        loading: false
       }).then((res) => {
         if (res.length < groupPaging.pageSize) {
-          this.setData({
-            'groupPaging.isNotData': true
-          })
+          groupPaging.isNotData = true
         }
+        groupPaging.minID = res.length ? res[res.length - 1].id : 0
         this.setData({
           groups: this.data.groups.concat(this.isJoinGroup(res)),
-          'groupPaging.pageIndex': groupPaging.pageIndex + 1
+          // 'groupPaging.pageIndex': groupPaging.pageIndex + 1
         })
         resolve()
       })
@@ -60,13 +68,15 @@ Page({
     })
   },
   confirm(event) {
+    this.data.groupPaging.minID = 0
+    this.data.groupPaging.pageIndex = 1
+    this.data.groupPaging.isNotData = false
+    this.data.groups = []
     this.setData({
-      groups: [],
       groupName: event.detail.value ? event.detail.value : this.data.tempValue,
-      'groupPaging.isNotData': false,
-      'groupPaging.pageIndex': 1
     }, () => this.pagingGetGroup(this.data.groupName))
   },
+  // 是否加入过该小组
   isJoinGroup(groups) {
     if (groups.length === 0 || !app.groupInfo) {
       return groups
@@ -86,6 +96,174 @@ Page({
     })
     return groups
   },
+  //显示授权
+  showAuthorDialog(e) {
+    this.setData({
+      dialogShow: e.detail.dialogShow
+    })
+  },
+  // 显示是否确定加入该小组的弹出框
+  showJoin(e) {
+    this.groupInfo = this.data.groups[e.detail.index]
+    this.setData({
+      joinShow: e.detail.joinShow
+    })
+  },
+  // 是否确定加入该小组，no
+  noJoin() {
+    this.setData({
+      joinShow: false
+    })
+  },
+  // 是否加入该小组，yes
+  async yesJoin() {
+    let groupInfo = this.groupInfo
+    if (groupInfo.examine) {
+      common.showLoading()
+      authorize.newSubscription(this.data.requestId, {
+        cancelText: '继续申请'
+      }).then((res) => {
+        wx.hideLoading()
+        if (res.type === 1) {
+          this.setData({
+            msgAuthorizationShow: true
+          })
+        } else if (res.type === -1) {
+          if (!res.result.confirm) {
+            this.setData({
+              applyShow: true,
+              joinShow: false
+            })
+          }
+        } else if (res.type === 0) {
+          this.setData({
+            applyShow: true,
+            joinShow: false
+          })
+        }
+      })
+    } else {
+      this.setData({
+        joinShow: false
+      })
+      this.joinGroup(groupInfo).then(res => {
+        app.switchData.isSwitchGroup = true
+        groupInfo.isJoin = 1 //通过
+        groupInfo.groupDuty = 2 //组员
+        this.setData({
+          groups: this.data.groups
+        })
+        common.Tip(`恭喜您成功加入${groupInfo.groupName}`, '提示', '确认', true).then(res => {
+          if (res.confirm) {
+            wx.navigateBack({
+              delta: 2,
+            })
+          }
+        })
+      })
+    }
+  },
+  // 完成消息授权
+  completeMsgAuthorization() {
+    this.setData({
+      applyShow: true,
+      joinShow: false,
+      msgAuthorizationShow: false
+    })
+  },
+  // 小组申请输入
+  inputApply(e) {
+    let applyContent = e.detail.value
+    this.setData({
+      applyContent
+    })
+  },
+  // 取消小组申请
+  cancelApply() {
+    this.setData({
+      applyShow: false
+    })
+  },
+  // 小组申请
+  apply() {
+    let applyContent = this.data.applyContent
+    if (!applyContent) {
+      common.Tip('请输入内容')
+      return
+    }
+    this.applyJoinGrop()
+  },
+  // 发送申请
+  applyJoinGrop() {
+    let applyContent = this.data.applyContent
+    let groupInfo = this.groupInfo
+    this.joinGroup(groupInfo).then(res => {
+      groupInfo.isJoin = -1 //审核中
+      groupInfo.groupDuty = -1 //审核中
+      let from = {
+          userId: app.userInfo.id,
+          nickName: app.userInfo.nickName
+        },
+        to = {
+          userIdList: res.userIdList
+        },
+        message = {
+          type: 1,
+          jsonDate: {
+            groupId: groupInfo.id,
+            groupName: groupInfo.groupName,
+            applyContent,
+            isNew: 1,
+            status: 0
+          }
+        }
+      app.post(app.Api.sendSubscribeInfo, {
+        userIdList: res.userIdList,
+        template_id: app.InfoId.joinGroup,
+        page: `pages/my/information/information?actIndex=1`,
+        data: {
+          "thing1": {
+            "value": tool.cutstr(groupInfo.groupName, 16)
+          },
+          "name2": {
+            "value": tool.cutstr(app.userInfo.nickName, 6).replace(/[\d]+/g, '*')
+          },
+          "thing6": {
+            "value": tool.cutstr(applyContent, 16)
+          },
+        },
+      })
+      app.socket.emit("sendSystemMsg", from, to, message);
+      app.switchData.isSwitchGroup = true
+      this.setData({
+        groups: this.data.groups,
+        applyShow: false
+      })
+    })
+  },
+  // 加入小组
+  joinGroup(groupInfo) {
+    // 加入
+    return new Promise((resolve, reject) => {
+      app.post(app.Api.joinGroup, {
+        groupId: groupInfo.id,
+        groupName: groupInfo.groupName,
+        userId: app.userInfo.id,
+        examine: groupInfo.examine
+      }).then(res => {
+        app.userInfo = res.userInfo
+        if (app.groupInfo) {
+          app.groupInfo.myGrouList = res.myGrouList
+        } else {
+          app.groupInfo = {}
+          app.groupInfo.myGrouList = res.myGrouList
+        }
+        resolve(res)
+      }).catch(err => reject(err))
+    })
+
+  },
+
   scrolltolower() {
     if (!this.data.groupPaging.isNotData) {
       this.pagingGetGroup(this.data.groupName)
@@ -107,18 +285,16 @@ Page({
   onRefresh() {
     if (this._freshing) return
     this._freshing = true
-    this.setData({
-      'groupPaging.pageIndex': 1,
-      'groupPaging.isNotData':false,
-      groups:[]
-      },()=> {
-        this.pagingGetGroup(this.data.groupName).then(() => {
-          this._freshing = false
-          this.setData({
-            triggered: false
-          })
-        })
+    this.data.groupPaging.minID = 0
+    this.data.groupPaging.pageIndex = 1
+    this.data.groupPaging.isNotData = false
+    this.data.groups = []
+    this.pagingGetGroup(this.data.groupName).then(() => {
+      this._freshing = false
+      this.setData({
+        triggered: false
       })
+    })
   },
   /**
    * 生命周期函数--监听页面隐藏

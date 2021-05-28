@@ -5,7 +5,9 @@ let tool = require('../../assets/tool/tool')
 let core = require('../../assets/tool/core')
 let authorize = require('../../assets/tool/authorize')
 let socket = require('../../assets/request/socket')
-const { Tip } = require('../../assets/tool/common')
+const {
+  Tip
+} = require('../../assets/tool/common')
 
 let Style = [{
     index: 0,
@@ -93,6 +95,7 @@ Page({
     showMember: [],
     pageSize: 20,
     pageIndex: 1,
+    minID: 0,
     member: [],
     showContent: {},
     showVideo: false,
@@ -106,6 +109,7 @@ Page({
     lessMember: false,
     isShowGroup: false,
     isShowPull: false,
+    showCode: false
     // list: [{
     //   name: '分享',
     //   open_type: 'share',
@@ -142,47 +146,12 @@ Page({
     //   common.Tip(tip, '等待审批')
     // }
 
-    this.initLogin()
+    this.init()
   },
+  init() {
+    app.initLogin().then(() => {
+      if (app.userInfo) {
 
-  // 
-  initLogin() {
-    let token = wx.getStorageSync('wx-token')
-    if (token) {
-      wx.checkSession({
-        success: () => {
-          this.getServerUserInfo()
-        },
-        fail: () => {
-          this.login()
-        }
-      })
-    } else {
-      this.login()
-    }
-  },
-  login() {
-    return new Promise((resolve, reject) => {
-      wx.login({
-        success: res => {
-          App.getToken(res.code).then(() => {
-            this.getServerUserInfo()
-            resolve()
-          })
-        },
-        fail: err => reject(err)
-      })
-    })
-  },
-  getServerUserInfo() {
-    app.get(app.Api.getServerUserInfo, {
-
-    }, {
-      loading: false
-    }).then(res => {
-      if (res.userInfo) {
-        // 有用户信息，存入app
-        app.userInfo = res.userInfo
         let groupId = app.userInfo.groupId
         this.setData({
           myId: app.userInfo.id
@@ -200,27 +169,77 @@ Page({
           })
         } else {
           // 没有信息等待选择
-          this.getTabBar().setData({
-            show: false
-          })
+          // this.getTabBar().setData({
+          //   show: false
+          // })
           this.setData({
-            tabBarBtnShow: true,
+            // tabBarBtnShow: true,
             isShowGroup: false,
             isShowPull: false
           })
         }
       } else {
-        // 没有用户信息等待用户授权
-        // this.getTabBar().setData({
-        //   show: false
-        // })
-        // this.setData({
-        //   tabBarBtnShow: true
-        // })
+        // 新用户
+        let codeCheck = wx.getStorageSync('codeCheck')
+        if (!codeCheck) {
+          this.setData(({
+            showCode: true
+          }))
+        } else {
+          app.globalData.codePass = true
+        }
       }
-
     })
   },
+  // 
+
+  // getServerUserInfo() {
+  //   app.get(app.Api.getServerUserInfo, {
+
+  //   }, {
+  //     loading: false
+  //   }).then(res => {
+  //     if (res.userInfo) {
+  //       // 有用户信息，存入app
+  //       app.userInfo = res.userInfo
+  //       let groupId = app.userInfo.groupId
+  //       this.setData({
+  //         myId: app.userInfo.id
+  //       })
+  //       socket.initSocketEvent()
+  //       if (groupId) {
+  //         // 获取信息
+  //         this.getGroupInfo(groupId).then(() => {
+  //           this.setData({
+  //             isShowGroup: true
+  //           })
+  //         })
+  //         this.groupPagingGetGroupdynamics(groupId).then(() => {
+  //           this.urlPush()
+  //         })
+  //       } else {
+  //         // 没有信息等待选择
+  //         this.getTabBar().setData({
+  //           show: false
+  //         })
+  //         this.setData({
+  //           tabBarBtnShow: true,
+  //           isShowGroup: false,
+  //           isShowPull: false
+  //         })
+  //       }
+  //     } else {
+  //       // 没有用户信息等待用户授权
+  //       // this.getTabBar().setData({
+  //       //   show: false
+  //       // })
+  //       // this.setData({
+  //       //   tabBarBtnShow: true
+  //       // })
+  //     }
+
+  //   })
+  // },
 
 
   // 获取分页动态
@@ -234,6 +253,7 @@ Page({
       let pageIndex = this.data.pageIndex
       app.get(app.Api.groupPagingGetGroupdynamics, {
         pageSize,
+        minID:this.data.minID,
         pageIndex,
         groupId,
         userId: app.userInfo.id
@@ -247,6 +267,7 @@ Page({
           })
           // return resolve()
         }
+        this.data.minID = res.length ? res[res.length - 1].id : 0
         this.setData({
           member: this.data.member.concat(res),
           pageSize: pageSize,
@@ -266,7 +287,7 @@ Page({
       }, {
         loading: false
       }).then((res) => {
-        if(res=== null) {
+        if (res === null) {
           return common.Tip('很抱歉，你所在的小组已被解散')
         }
         console.log(res)
@@ -333,20 +354,26 @@ Page({
     MB_UpPointer = member.length - 2
     SM_DownPointer = i
     if (app.globalData.guide.home) {
+      this.getTabBar().setData({
+        show: false
+      })
       this.setData({
         homeGuide: app.globalData.guide.home,
+        // tabBarBtnShow: true,
+        showFakeTab: true
       })
+
     }
-    this.getTabBar().setData({
-      show: false
-    })
+    // this.getTabBar().setData({
+    //   show: false
+    // })
 
     this.setData({
       showMember,
       functionBarShow: false,
       switchIssue: false,
       member,
-      tabBarBtnShow: true,
+      // tabBarBtnShow: true,
       showContent: showMember[0],
       SM_UpPointer,
       SM_DownPointer,
@@ -435,20 +462,21 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    if(app.switchData.isModifyGroup) {
+    if (app.switchData.isModifyGroup) {
       app.switchData.isModifyGroup = false
       this.getGroupInfo(app.userInfo.groupId)
     }
-    if (!this.data.isShowGroup) {
-      this.getTabBar().setData({
-        show: false
-      })
-      this.setData({
-        tabBarBtnShow: true
-      })
-    }
+    // if (!this.data.isShowGroup) {
+    //   this.getTabBar().setData({
+    //     show: false
+    //   })
+    //   this.setData({
+    //     tabBarBtnShow: true
+    //   })
+    // }
     if (app.switchData.isSwitchGroup) {
       app.switchData.isSwitchGroup = false
+      this.data.minID = 0
       this.setData({
         dynamicIsShow: false,
         showMember: [],
@@ -466,7 +494,7 @@ Page({
         isLoop: false,
         MB_Index: 0,
       }, () => {
-        this.getServerUserInfo()
+        this.init()
       })
     }
     if (typeof this.getTabBar === 'function' &&
@@ -478,6 +506,7 @@ Page({
     }
     if (app.switchData.refresh || app.dynamicDeleteBack) {
       app.dynamicDeleteBack = false
+      this.data.minID = 0
       this.setData({
         dynamicIsShow: false,
         showMember: [],
@@ -714,6 +743,15 @@ Page({
         ableIndex = styleLeight + 1
       }
       this.data.MB_Index = this.data.MB_Index - 1
+      // 上滑出现下栏
+      if (this.data.tabBarBtnShow) {
+        this.getTabBar().setData({
+          show: true
+        })
+        this.setData({
+          tabBarBtnShow: false
+        })
+      }
       this.setData({
         showMember,
         SM_DownPointer: (SM_DownPointer - 1 == -1) ? styleLeight - 1 : (SM_DownPointer - 1) % styleLeight,
@@ -765,6 +803,15 @@ Page({
         ableIndex = 0
       }
       this.data.MB_Index = this.data.MB_Index + 1
+      // 下滑隐藏下栏
+      if (!this.data.tabBarBtnShow) {
+        this.getTabBar().setData({
+          show: false
+        })
+        this.setData({
+          tabBarBtnShow: true
+        })
+      }
       this.setData({
         showMember,
         SM_DownPointer: (SM_DownPointer + 1) % styleLeight,
@@ -832,71 +879,71 @@ Page({
       show: false
     })
   },
-  tapStart(e) {
-    let district = e.mark.district
-    if (district) return;
-    this.tapStartY = e.changedTouches[0].clientY
-    this.tapStartX = e.changedTouches[0].clientX
-  },
-  tapEnd(e) {
-    let district = e.mark.district
-    if (district) return;
-    let tapEndY = e.changedTouches[0].clientY
-    let tapEndX = e.changedTouches[0].clientX
-    let direction = tool.GetSlideDirection(this.tapStartX, this.tapStartY, tapEndX, tapEndY)
-    if (direction == 2) {
-      this.setData({
-        isShowGroup: false,
-        tabBarBtnShow: true
-      })
-      this.getTabBar().setData({
-        show: false
-      })
-      this.stopPlayRecord()
-    } else {
+  // tapStart(e) {
+  //   let district = e.mark.district
+  //   if (district) return;
+  //   this.tapStartY = e.changedTouches[0].clientY
+  //   this.tapStartX = e.changedTouches[0].clientX
+  // },
+  // tapEnd(e) {
+  //   let district = e.mark.district
+  //   if (district) return;
+  //   let tapEndY = e.changedTouches[0].clientY
+  //   let tapEndX = e.changedTouches[0].clientX
+  //   let direction = tool.GetSlideDirection(this.tapStartX, this.tapStartY, tapEndX, tapEndY)
+  //   if (direction == 2) {
+  //     this.setData({
+  //       isShowGroup: false,
+  //       tabBarBtnShow: true
+  //     })
+  //     this.getTabBar().setData({
+  //       show: false
+  //     })
+  //     this.stopPlayRecord()
+  //   } else {
 
-      this.setData({
-        dynamicIsShow: false,
-        switchIssue: false,
-        functionBarShow: false,
-        tabBarBtnShow: true,
-        showContent: {}
-      })
-      this.getTabBar().setData({
-        show: false
-      })
-    }
+  //     this.setData({
+  //       dynamicIsShow: false,
+  //       switchIssue: false,
+  //       functionBarShow: false,
+  //       tabBarBtnShow: true,
+  //       showContent: {}
+  //     })
+  //     this.getTabBar().setData({
+  //       show: false
+  //     })
+  //   }
 
-  },
-  indexStart(e) {
-    let district = e.mark.district
-    if (district) return;
-    this.indexStartY = e.changedTouches[0].clientY
-    this.indexStartX = e.changedTouches[0].clientX
-  },
-  indexEnd(e) {
-    let district = e.mark.district
-    if (district) return; 
-    let indexEndY = e.changedTouches[0].clientY
-    let indexEndX = e.changedTouches[0].clientX
-    let direction = tool.GetSlideDirection(this.indexStartX, this.indexStartY, indexEndX, indexEndY)
-    if (direction == 1) {
-      if(this.data.isShowPull) {
-        this.setData({
-          isShowGroup: true
-        })
-      }
-    } else {
-      console.log(33333333333);
-      this.getTabBar().setData({
-        show: false
-      })
-      this.setData({
-        tabBarBtnShow: true
-      })
-    }
+  // },
+  // indexStart(e) {
+  //   let district = e.mark.district
+  //   if (district) return;
+  //   this.indexStartY = e.changedTouches[0].clientY
+  //   this.indexStartX = e.changedTouches[0].clientX
+  // },
+  // indexEnd(e) {
+  //   let district = e.mark.district
+  //   if (district) return;
+  //   let indexEndY = e.changedTouches[0].clientY
+  //   let indexEndX = e.changedTouches[0].clientX
+  //   let direction = tool.GetSlideDirection(this.indexStartX, this.indexStartY, indexEndX, indexEndY)
+  //   if (direction == 1) {
+  //     if (this.data.isShowPull) {
+  //       this.setData({
+  //         isShowGroup: true
+  //       })
+  //     }
+  //   } else {
+  //     console.log(33333333333);
+  //     this.getTabBar().setData({
+  //       show: false
+  //     })
+  //     this.setData({
+  //       tabBarBtnShow: true
+  //     })
+  //   }
 
-  },
+  // },
 
   // 去评论
   goComment() {
@@ -1015,6 +1062,10 @@ Page({
           otherId: showContent.userId,
           themeTitle: showContent.introduce
         }
+      }).then(res=> {
+        if(!res) {
+          common.Toast('该动态已不存在')
+        }
       })
     })
   },
@@ -1057,6 +1108,7 @@ Page({
         // showMember.splice(ableIndex - 1, 1)
         // member.splice(pointer - 6, 1)
         // common.Toast('已删除')
+        this.data.minID = 0
         this.setData({
           dynamicIsShow: false,
           showMember: [],
@@ -1109,14 +1161,7 @@ Page({
       this.setData({
         issueGuide: false,
         bottomGuide: true,
-        switchIssue: true,
-      })
-    } else {
-
-      this.setData({
-        bottomGuide: false,
-        tabBarBtnShow: false,
-        showFakeTab: true
+        switchIssue: true
       }, () => {
         setTimeout(() => {
           const showMember = this.data.showMember
@@ -1134,10 +1179,13 @@ Page({
                 homeGuide: false,
               }, () => {
                 setTimeout(() => {
+                  this.getTabBar().setData({
+                    show: true
+                  })
                   this.setData({
                     switchIssue: false,
                     functionBarShow: false,
-                    tabBarBtnShow: true,
+                    // tabBarBtnShow: true,
                     showContent: showMember[0],
                     dynamicIsShow: member.length ? true : false,
                     showFakeTab: false
@@ -1148,6 +1196,42 @@ Page({
           })
         }, 1000);
       })
+    } else {
+      // this.setData({
+      //   bottomGuide: false,
+      //   tabBarBtnShow: false,
+      //   showFakeTab: true
+      // }, () => {
+      //   setTimeout(() => {
+      //     const showMember = this.data.showMember
+      //     let member = this.data.member
+      //     let guide = wx.getStorageSync('guide')
+      //     guide.home = false
+      //     app.globalData.guide.home = false
+      //     wx.setStorageSync('guide', guide)
+      //     this.setData({
+      //       cross: true
+      //     }, () => {
+      //       // 过渡动画
+      //       setTimeout(() => {
+      //         this.setData({
+      //           homeGuide: false,
+      //         }, () => {
+      //           setTimeout(() => {
+      //             this.setData({
+      //               switchIssue: false,
+      //               functionBarShow: false,
+      //               tabBarBtnShow: true,
+      //               showContent: showMember[0],
+      //               dynamicIsShow: member.length ? true : false,
+      //               showFakeTab: false
+      //             })
+      //           }, 1000);
+      //         })
+      //       }, 2000);
+      //     })
+      //   }, 1000);
+      // })
     }
   },
   // 视频加载完成
@@ -1178,11 +1262,13 @@ Page({
   },
 
   toUnion() {
+    if (!app.globalData.codePass) return
     wx.navigateTo({
       url: '/pages/home/alliance/alliance',
     })
   },
   toGroupSettlement() {
+    if (!app.globalData.codePass) return
     if (app.userInfo) {
       // if (app.userInfo.isSettle) {
       //   wx.showModal({
@@ -1203,6 +1289,7 @@ Page({
 
   },
   toMyGroup() {
+    if (!app.globalData.codePass) return
     wx.navigateTo({
       url: '/pages/home/myGroup/myGroup',
     })
@@ -1220,14 +1307,14 @@ Page({
     this.setData({
       isShowGroup: !this.data.isShowGroup
     }, () => {
-      if (!this.data.isShowGroup) {
-        this.getTabBar().setData({
-          show: false
-        })
-        this.setData({
-          tabBarBtnShow: true
-        })
-      }
+      // if (!this.data.isShowGroup) {
+      //   this.getTabBar().setData({
+      //     show: false
+      //   })
+      //   this.setData({
+      //     tabBarBtnShow: true
+      //   })
+      // }
     })
     this.stopPlayRecord()
   },
@@ -1295,5 +1382,29 @@ Page({
   stopPlayRecord() {
     let playRecord = this.selectComponent('#playRecord')
     playRecord && playRecord.endSound()
-  }
+  },
+  inputCode(e) {
+    this.code = e.detail.value
+  },
+  complete() {
+    console.log(this.code)
+    if (this.code.length !== 6 && this.code.length !== 8) return common.Toast('请输入正确的邀请码！')
+    app.post(app.Api.codeCheck, {
+      code: this.code
+    }, {
+      loading: ['校验中...']
+    }).then((res) => {
+      console.log(res);
+      if (res) {
+        common.Toast('欢迎来到音乐世界！')
+        app.globalData.codePass = true
+        wx.setStorageSync('codeCheck', this.code)
+        this.setData({
+          showCode: false
+        })
+      } else {
+        common.Toast('此邀请码无效！')
+      }
+    })
+  },
 })

@@ -16,7 +16,7 @@
       <view class="basic">
         <view class="nickNameWrap">
           <text>昵称</text>
-          <input placeholder-class="placeholder" name="nickName" value="{{userInfo.nickName}}"></input>
+          <input placeholder-class="placeholder" maxlength="20" name="nickName" value="{{userInfo.nickName}}"></input>
         </view>
         <view class="sexWarp">
           <text>性别</text>

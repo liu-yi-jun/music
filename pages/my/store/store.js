@@ -1,6 +1,7 @@
 // pages/my/store/store.js
 const app = getApp()
 const tool = require('../../../assets/tool/tool.js')
+const common = require('../../../assets/tool/common')
 Page({
 
   /**
@@ -14,6 +15,10 @@ Page({
     dynamics: [],
     bands: [],
     performances: [],
+    doubleMoment: [
+      [],
+      []
+    ],
     coursePaging: {
       pageSize: 10,
       pageIndex: 1,
@@ -39,6 +44,11 @@ Page({
       pageIndex: 1,
       isNotData: false
     },
+    momentPaging: {
+      pageSize: 10,
+      pageIndex: 1,
+      isNotData: false
+    },
     barList: [{
         name: '动态',
       },
@@ -53,6 +63,9 @@ Page({
       // },
       {
         name: '一起组乐队'
+      },
+      {
+        name: '乐队瞬间'
       }
     ],
     actIndex: 0
@@ -66,6 +79,7 @@ Page({
     this.getmyStoreAlliance()
     this.getMyStoreDynamic()
     this.getStoreBand()
+    this.getMyStoreMoment()
     // this.getStorePerformance()
   },
   getStorePerformance() {
@@ -110,7 +124,7 @@ Page({
       userId: app.userInfo.id,
       ...dynamicPaging
     }).then(res => {
-      if (res.length < dynamicPaging.pageSize) {
+      if (res.length < Math.ceil(dynamicPaging.pageSize / 2)) {
         this.setData({
           'dynamicPaging.isNotData': true
         })
@@ -157,6 +171,32 @@ Page({
       })
     })
   },
+  getMyStoreMoment() {
+    return new Promise((resolve, reject) => {
+      let momentPaging = this.data.momentPaging
+      app.get(app.Api.myStoreMoment, {
+        ...momentPaging,
+        userId: app.userInfo.id,
+      }).then(res => {
+        if (res.length < momentPaging.pageSize) {
+          momentPaging.isNotData = true
+        }
+        let doubleMoment = this.data.doubleMoment
+        res.forEach(item => {
+          if (doubleMoment[0].length > doubleMoment[1].length) {
+            doubleMoment[1].push(item)
+          } else {
+            doubleMoment[0].push(item)
+          }
+        })
+        momentPaging.pageIndex = momentPaging.pageIndex + 1
+        this.setData({
+          doubleMoment
+        })
+        resolve()
+      })
+    })
+  },
   scrolltolower() {
     let {
       coursePaging,
@@ -172,6 +212,8 @@ Page({
       this.getmyStoreAlliance()
     } else if (actIndex === 3 && !bandPagin.isNotData) {
       this.getStoreBand()
+    } else if (actIndex === 4 && !momentPaging.isNotData) {
+      this.getMyStoreMoment()
     }
     // else if (actIndex === 3 && !performancePagin.isNotData) {
     // this.getStorePerformance()
@@ -252,10 +294,60 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
+  onShareAppMessage: function (e) {
+    let index
+    if (app.globalData.squareIndex !== undefined) {
+      index = app.globalData.squareIndex
+      app.globalData.squareIndex = undefined
+    } else {
+      index = e.target.dataset.index
+    }
 
+    let dynamics = this.data.dynamics
+    setTimeout(() => {
+      app.post(app.Api.share, {
+        table: dynamics[index].tableName,
+        id: dynamics[index].id
+      }, {
+        loading: false
+      }).then(res => {
+        const dynamicList = this.selectComponent('#dynamicList');
+        dynamicList.completeShare(index)
+
+      })
+    }, 3000)
   },
   handlerGobackClick: app.handlerGobackClick,
+  deleteDynamic(e) {
+    let index = e.detail.index
+    common.showLoading('删除中')
+    let dynamics = this.data.dynamics
+    let {
+      tableName,
+      id
+    } = dynamics[index]
+    app.post(app.Api[tableName + 'Delete'], {
+      tableName,
+      id
+    }, {
+      loading: false
+    }).then(res => {
+      console.log(res)
+      if (res.affectedRows) {
+        dynamics.splice(index, 1)
+        this.setData({
+          dynamics
+        })
+        common.Toast('已删除')
+      } else {
+        dynamics.splice(index, 1)
+        this.setData({
+          dynamics
+        })
+        common.Toast('该动态已不存在')
+      }
+    })
+  },
   completeLike(commenetBarData) {
     let actIndex = this.data.actIndex
     if (actIndex === 0) {

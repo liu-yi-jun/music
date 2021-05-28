@@ -1,0 +1,5 @@
+<!--components/common/guidMsgAuthor/guidMsgAuthor.wxml-->
+<view class="shade {{msgAuthorizationShow? 'shadeShow':''}}">
+  <image src="{{qiniuUrl}}/guidMsgAuthor/guidMsgAuthor.gif" class="guidGif">
+  </image>
+</view>

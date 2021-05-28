@@ -66,14 +66,14 @@ var Toast = function (toastText, duration = 1500, icon = false, succCallback = f
  * @param { number } delay
  */
 var showLoading = function (title = '加载中', condition = true, delay = 0) {
-  setTimeout(() => {
+  // setTimeout(() => {
     if (!!condition) {
       wx.showLoading({
         title: title,
         mask: true,
       })
     }
-  }, delay)
+  // }, delay)
 }
 
 /**

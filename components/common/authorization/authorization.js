@@ -14,6 +14,10 @@ Component({
     dialogShow: {
       type: Boolean,
       value: false
+    },
+    codeCheck: {
+      type: String,
+      value: ''
     }
   },
 
@@ -39,13 +43,15 @@ Component({
         common.Tip('请仔细阅读并勾选同意《Music Monster用户须知》')
         return
       }
+      let codeCheck = wx.getStorageSync('codeCheck')
       wx.getUserProfile({
         desc: '用于完善个人资料',
         success: (data) => {
           console.log(data);
           if (!app.userInfo) {
             app.post(app.Api.register, {
-              userInfo: data.userInfo
+              userInfo: data.userInfo,
+              codeCheck: codeCheck?codeCheck:this.data.codeCheck
             }, {
               loading: false
             }).then(res => {

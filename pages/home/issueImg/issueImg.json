@@ -1,6 +1,7 @@
 {
   "usingComponents": {
     "navBar": "/components/navBar/navBar",
-    "msgAuthorization":"/components/common/msgAuthorization/msgAuthorization"
+    "msgAuthorization":"/components/common/msgAuthorization/msgAuthorization",
+    "guidMsgAuthor":"/components/common/guidMsgAuthor/guidMsgAuthor"
   }
 }

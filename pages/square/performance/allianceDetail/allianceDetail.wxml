@@ -9,7 +9,7 @@
     </view>
     <view catchtap="showMenu" class="delete iconfont iconshenglve"></view>
   </view>
-  <scroll-view style="height: calc({{excludeHeight}}px - 120rpx);" scroll-y>
+  <scroll-view scroll-into-view="{{intoId}}" style="height: calc({{excludeHeight}}px - 120rpx);" scroll-y>
     <view class="Wrap">
       <view class="info">
         <text>组织者：</text>
@@ -65,7 +65,7 @@
         <text class="number">{{detail.share}}</text>
       </view>
     </view> -->
-    <view class="commentWrap">
+    <view class="commentWrap" id="comment">
       <image src="/images/home/dynamicComment.png"></image>
       <text>评论</text>
     </view>

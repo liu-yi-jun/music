@@ -1,6 +1,7 @@
 // pages/my/information/information.js
 const app = getApp()
 const tool = require('../../../assets/tool/tool.js')
+const socket = require('../../../assets/request/socket')
 const authorize = require('../../../assets/tool/authorize')
 Page({
 
@@ -34,7 +35,8 @@ Page({
         name: '系统'
       }
     ],
-    actIndex: 0
+    actIndex: 0,
+    isHome:false
   },
 
   /**
@@ -43,7 +45,34 @@ Page({
   onLoad: function (options) {
     // 获取去除上面导航栏，剩余的高度
     tool.navExcludeHeight(this)
-    this.getInform()
+    this.system = this.selectComponent('#system')
+    if(options.actIndex !== undefined ) {
+      this.setData({
+        actIndex:parseInt(options.actIndex)
+      })
+    }
+    if (app.userInfo) {
+      this.getInform()
+      this.system.loadData()
+    } else {
+      this.setData({
+        isHome:true
+      })
+      app.initLogin().then(() => {
+        if(app.userInfo) {
+          socket.initSocketEvent()
+          this.getInform()
+          setTimeout(() => {
+            this.system.loadData()
+          }, 1000)
+        }else {
+          wx.reLaunch({
+            url: '/pages/home/home',
+          })
+        }
+      })
+    }
+
     // this.getSystem()
     // // 获取消息数据
     // this.getThreas()
@@ -129,7 +158,7 @@ Page({
     setTimeout(() => {
       if (actIndex === 1) {
         let system = this.selectComponent('#system')
-        system.loadData().then(() => {
+        system.refresh().then(() => {
           this.setData({
             triggered: false,
           })
@@ -152,7 +181,7 @@ Page({
     if (actIndex === 0 && !informPaging.isNotData) {
       this.getInform()
     } else if (actIndex === 1) {
-
+      this.system.loadData()
     }
   },
   /**
@@ -210,13 +239,6 @@ Page({
     if (actIndex === this.data.actIndex) return
     this.setData({
       actIndex
-    }, () => {
-      if (actIndex === 1 && !this.noSystemIntoView) {
-        this.setData({
-          intoView: 'last'
-        })
-        this.noSystemIntoView = true
-      }
     })
   },
 })

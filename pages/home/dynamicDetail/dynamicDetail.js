@@ -31,6 +31,7 @@ Page({
     }],
     isSquare: false,
     isPlay: false,
+    intoId: ''
   },
 
   /**
@@ -143,17 +144,21 @@ Page({
             storeUrl: `${this.table}Store`
           }
         })
-        app.groupInfo.myGrouList.forEach((item, index) => {
-          if (item.groupId === res.detail.groupId && item.groupDuty !== -1) {
-            return this.flag = true
-          }
-        })
+        if (app.groupInfo) {
+          app.groupInfo.myGrouList.forEach((item, index) => {
+            if (item.groupId === res.detail.groupId && item.groupDuty !== -1) {
+              // 如果是加入的小组才能评论
+              return this.flag = true
+            }
+          })
+        }
       }
       this.setData({
         commentArr: this.data.commentArr.concat(res.commentArr),
         commentPaging
       })
     }).catch(err => {
+      console.log(err);
       common.Toast('该动态已不存在')
       setTimeout(() => {
         wx.navigateBack()
@@ -246,7 +251,8 @@ Page({
       // 属于评论的，将内容插入到commentArr的第一个
       this.data.detail.comment++
       this.setData({
-        detail: this.data.detail
+        detail: this.data.detail,
+        intoId: 'comment'
       })
       commentArr.unshift(param)
     } else {
@@ -256,9 +262,10 @@ Page({
         replyindex
       } = this.data.indexObject
       if (commentArr[commentindex].replyArr === undefined) commentArr[commentindex].replyArr = [];
-      commentArr[commentindex].replyArr.unshift(param)
-
-
+      commentArr[commentindex].replyArr.push(param)
+      this.setData({
+        intoId: 'commentIndex_' + commentindex
+      })
     }
     this.setData({
       commentArr
@@ -293,7 +300,7 @@ Page({
   },
   toComment(e) {
 
-    if (this.flag) {
+    if (this.flag || this.table == 'squaredynamics') {
       this.setData({
         showTextara: true,
         param: {
@@ -313,7 +320,7 @@ Page({
 
   },
   toReply(e) {
-    if (this.flag) {
+    if (this.flag || this.table == 'squaredynamics') {
       // 加入通知的一些参数
       let param = e.detail.param
       param.theme = this.table

@@ -119,14 +119,100 @@ function isSubscription() {
     })
   })
 }
-// 有需要的权限，则传参。不传参则获取已经总是的子权限次数
-function alwaysSubscription(requestId = []) {
+
+function newSubscription(requestId = [], cancelOptions = false) {
+  if (requestId.length > 3) {
+    requestId = requestId.slice(0, 3)
+  }
   return new Promise(async (resolve, reject) => {
     let subscriptionsSetting = await isSubscription()
     if (!subscriptionsSetting.mainSwitch) {
+      // 主开关，关了
+      wx.hideLoading()
+      common.Tip('通知授权失败，将无法进行消息推送，请自行点击右上角“•••”，在设置中开启订阅消息权限', '提示', '去开启', cancelOptions).then(result => {
+        console.log('主开关，关了');
+        return resolve({
+          type: -1,
+          result
+        })
+      })
+    } else {
+      // 主开关，开启
+      if (subscriptionsSetting.itemSettings) {
+        // 勾选总是
+        let rejectId = []
+        let acceptId = []
+        let unauthorId = []
+        requestId.forEach(item => {
+          let flag = true
+          for (let key in subscriptionsSetting.itemSettings) {
+            if (String(key) === item && subscriptionsSetting.itemSettings[key] === "reject") {
+              flag = false
+              return rejectId.push(key + '')
+            }
+            if (String(key) === item && subscriptionsSetting.itemSettings[key] === "accept") {
+              flag = false
+              return acceptId.push(key + '')
+            }
+          }
+          if (flag) {
+            unauthorId.push(item + '')
+          }
+        })
+        if (unauthorId.length) {
+          // 存在未授权的，需要指引
+          console.log('存在未授权的，需要指引');
+          return resolve({
+            type: 1
+          })
+        } else {
+          if (rejectId.length) {
+            // 存在拒绝，弹出提示
+            let InfoList = ''
+            rejectId.forEach(item => {
+              !InfoList ? (InfoList = InfoName[item]) : (InfoList = InfoList + '、' + InfoName[item])
+            })
+            if (InfoList) {
+              wx.hideLoading()
+              common.Tip(`“${InfoList}”通知授权失败，将无法进行消息推送，请自行点击右上角“•••”，在设置的订阅消息中开启`, '提示', '去开启', cancelOptions).then(result => {
+                console.log('存在拒绝，弹出提示');
+                return resolve({
+                  type: -1,
+                  result
+                })
+              })
+              return
+            }
+          } else {
+            console.log('全部已经授权');
+            return resolve({
+              type: 0
+            })
+          }
+        }
+      } else {
+        console.log('未勾选总是，需要指引');
+        return resolve({
+          type: 1
+        })
+      }
+    }
+  })
+}
+
+// 有需要的权限，则传参。不传参则获取已经总是的子权限次数
+function alwaysSubscription(requestId = [], subscriptionsSetting, cancelOptions = false) {
+  if (requestId.length > 3) {
+    requestId = requestId.slice(0, 3)
+  }
+  return new Promise(async (resolve, reject) => {
+    subscriptionsSetting = subscriptionsSetting ? subscriptionsSetting : await isSubscription()
+
+    if (!subscriptionsSetting.mainSwitch) {
       if (requestId.length) {
-        common.Tip('请点击右上角“•••”，在设置中开启订阅消息权限').then(result => {
-          return resolve('主开关被关闭')
+        wx.hideLoading()
+        common.Tip('通知授权失败，将无法进行消息推送，请自行点击右上角“•••”，在设置中开启订阅消息权限', '提示', '去开启', cancelOptions).then(result => {
+          return resolve(result)
         })
       } else {
         return resolve('主开关被关闭')
@@ -149,37 +235,34 @@ function alwaysSubscription(requestId = []) {
               needId.push(item + '')
             }
           })
-          infoSubscribe(needId).then(res => {
-            // 已拒绝的,弹出提示
-            for (let key in res) {
-              if (res[key] === 'reject') {
-                rejectId.push(key + '')
-              }
-            }
-            let InfoList = ''
-            rejectId.forEach(item => {
-              console.log(item);
-              !InfoList ? (InfoList = InfoName[item]) : (InfoList = InfoList + '、' + InfoName[item])
-            })
-            console.log(InfoList);
-            if (InfoList) {
-              common.Tip(`“${InfoList}”通知授权失败，将无法进行消息推送，如果之前勾选过“总是保持以上选择,不再询问”，将不会再弹出相应的授权请求，需要时请自行点击右上角“•••”，在设置的订阅消息中开启`).then(result => {
-                resolve({
-                  msg: '触发所有子权限授权',
-                  res
-                })
-              })
-              return
-            }
-            console.log('rejectId = ', rejectId, 'needId = ', needId);
-            resolve({
-              msg: '增加已授权子权限次数 || 不存在弹出授权',
-              res
-            })
-          }).catch(err => {
-            // 其他错误
-            reject(err)
+          // infoSubscribe(needId).then(res => {
+          //   // 已拒绝的,弹出提示
+          //   for (let key in res) {
+          //     if (res[key] === 'reject') {
+          //       rejectId.push(key + '')
+          //     }
+          //   }
+          let InfoList = ''
+          rejectId.forEach(item => {
+            console.log(item);
+            !InfoList ? (InfoList = InfoName[item]) : (InfoList = InfoList + '、' + InfoName[item])
           })
+          console.log(InfoList);
+          if (InfoList) {
+            wx.hideLoading()
+            common.Tip(`“${InfoList}”通知授权失败，将无法进行消息推送，请自行点击右上角“•••”，在设置的订阅消息中开启`, '提示', '去开启', cancelOptions).then(result => {
+              resolve(result)
+            })
+            return
+          }
+          console.log('rejectId = ', rejectId, 'needId = ', needId);
+          resolve({
+            msg: '增加已授权子权限次数 || 不存在弹出授权',
+          })
+          // }).catch(err => {
+          //   // 其他错误
+          //   reject(err)
+          // })
         } else {
           // 获取已经勾选了总是的子权限,增加次数
           let gainId = []
@@ -190,14 +273,14 @@ function alwaysSubscription(requestId = []) {
           }
 
           if (gainId.length > 3) {
-           
+
             let random = tool.randomNumber(0, gainId.length - 1)
             gainId = gainId.concat(gainId)
             let newGainId = gainId.slice(random, random + 3);
             gainId = newGainId
           }
           console.log(gainId);
-          infoSubscribe(gainId).then(res => {                                                                               
+          infoSubscribe(gainId).then(res => {
             resolve({
               msg: '增加已授权子权限次数',
               res
@@ -258,5 +341,6 @@ module.exports = {
   authSettingRecord: authSettingRecord,
   infoSubscribe: infoSubscribe,
   isSubscription: isSubscription,
+  newSubscription: newSubscription,
   alwaysSubscription: alwaysSubscription
 }

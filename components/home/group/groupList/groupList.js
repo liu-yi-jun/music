@@ -23,9 +23,7 @@ Component({
     // 控制弹出框
     joinShow: false,
     applyShow: false,
-    applyContent: '',
-    msgAuthorizationShow: false,
-    requestId: [app.InfoId.examine]
+    applyContent: ''
   },
 
   /**
@@ -55,175 +53,171 @@ Component({
           })
         }
       } else {
-        this.setData({
+        this.triggerEvent('showAuthorDialog', {
           dialogShow: true
         })
       }
     },
-    joinGroup(groupInfo) {
-      // 加入
-      return new Promise((resolve, reject) => {
-        app.post(app.Api.joinGroup, {
-          groupId: groupInfo.id,
-          groupName: groupInfo.groupName,
-          userId: app.userInfo.id,
-          examine: groupInfo.examine
-        }).then(res => {
-          app.userInfo = res.userInfo
-          if (app.groupInfo) {
-            app.groupInfo.myGrouList = res.myGrouList
-          } else {
-            app.groupInfo = {}
-            app.groupInfo.myGrouList = res.myGrouList
-          }
-          resolve(res)
-        }).catch(err => reject(err))
-      })
+    // joinGroup(groupInfo) {
+    //   // 加入
+    //   return new Promise((resolve, reject) => {
+    //     app.post(app.Api.joinGroup, {
+    //       groupId: groupInfo.id,
+    //       groupName: groupInfo.groupName,
+    //       userId: app.userInfo.id,
+    //       examine: groupInfo.examine
+    //     }).then(res => {
+    //       app.userInfo = res.userInfo
+    //       if (app.groupInfo) {
+    //         app.groupInfo.myGrouList = res.myGrouList
+    //       } else {
+    //         app.groupInfo = {}
+    //         app.groupInfo.myGrouList = res.myGrouList
+    //       }
+    //       resolve(res)
+    //     }).catch(err => reject(err))
+    //   })
 
-    },
+    // },
     showJoin(e) {
       let index = e.currentTarget.dataset.index
-      let groupInfo = this.data.groups[index]
-      this.groupInfo = groupInfo
+      // let groupInfo = this.data.groups[index]
+      // this.groupInfo = groupInfo
       if (app.userInfo) {
-        this.setData({
-          joinShow: true
+        this.triggerEvent('showJoin', {
+          joinShow: true,
+          index,
         })
       } else {
-        this.setData({
+        this.triggerEvent('showAuthorDialog', {
           dialogShow: true
         })
       }
     },
-    async yesJoin() {
-      let groupInfo = this.groupInfo
-      if (groupInfo.examine) {
-        let subscriptionsSetting = await authorize.isSubscription()
-        if (!subscriptionsSetting.itemSettings) {
-          // 未勾选总是
-          this.setData({
-            msgAuthorizationShow: true
-          })
-        }else {
-          this.setData({
-            applyShow: true,
-            joinShow: false
-          })
-        }
-      } else {
-        this.setData({
-          joinShow: false
-        })
-        this.joinGroup(groupInfo).then(res => {
-          app.switchData.isSwitchGroup = true
-          groupInfo.isJoin = 1 //通过
-          groupInfo.groupDuty = 2 //组员
-          this.setData({
-            groups: this.data.groups
-          })
-          common.Tip(`恭喜您成功加入${groupInfo.groupName}`, '提示', '确认', true).then(res => {
-            if (res.confirm) {
-              wx.navigateBack({
-                delta: 2,
-              })
-            }
-          })
-        })
-      }
-    },
-    noJoin() {
-      this.setData({
-        joinShow: false
-      })
-    },
-    cancelApply() {
-      this.setData({
-        applyShow: false
-      })
-    },
-    inputApply(e) {
-      let applyContent = e.detail.value
-      this.setData({
-        applyContent
-      })
-    },
+    // showApply() {
+    //   this.triggerEvent('showApply', {
+    //     applyShow: true,
+    //   })
+    //   this.triggerEvent('showJoin', {
+    //     joinShow: false
+    //   })
+    // },
+    // async yesJoin() {
+    //   let groupInfo = this.groupInfo
+    //   if (groupInfo.examine) {
+    //     let subscriptionsSetting = await authorize.isSubscription()
+    //     if (!subscriptionsSetting.itemSettings) {
+    //       // 未勾选总是
+    //       this.triggerEvent('showMsgAuthorization', {
+    //         msgAuthorizationShow: true
+    //       })
+    //     } else {
+    //       this.showApply()
+    //     }
+    //   } else {
+    //     this.triggerEvent('showJoin', {
+    //       joinShow: false
+    //     })
+    //     this.joinGroup(groupInfo).then(res => {
+    //       app.switchData.isSwitchGroup = true
+    //       groupInfo.isJoin = 1 //通过
+    //       groupInfo.groupDuty = 2 //组员
+    //       this.setData({
+    //         groups: this.data.groups
+    //       })
+    //       common.Tip(`恭喜您成功加入${groupInfo.groupName}`, '提示', '确认', true).then(res => {
+    //         if (res.confirm) {
+    //           wx.navigateBack({
+    //             delta: 2,
+    //           })
+    //         }
+    //       })
+    //     })
+    //   }
+    // },
 
-     apply() {
-      let applyContent = this.data.applyContent
-      if (!applyContent) {
-        common.Tip('请输入内容')
-        return
-      }
-      this.applyJoinGrop()
-    },
-    completeMsgAuthorization() {
-      // this.applyJoinGrop()
-      this.setData({
-        applyShow: true,
-        joinShow: false
-      })
-    },
-    applyJoinGrop() {
-      let applyContent = this.data.applyContent
-      let groupInfo = this.groupInfo
-      this.joinGroup(groupInfo).then(res => {
-        groupInfo.isJoin = -1 //审核中
-        groupInfo.groupDuty = -1 //审核中
-        let from = {
-            userId: app.userInfo.id,
-            nickName: app.userInfo.nickName
-          },
-          to = {
-            userIdList: res.userIdList
-          },
-          message = {
-            type: 1,
-            jsonDate: {
-              groupId: groupInfo.id,
-              groupName: groupInfo.groupName,
-              applyContent,
-              isNew: 1,
-              status: 0
-            }
-          }
-        app.post(app.Api.sendSubscribeInfo, {
-          userIdList: res.userIdList,
-          template_id: app.InfoId.joinGroup,
-          data: {
-            "thing1": {
-              "value": tool.cutstr(groupInfo.groupName, 16)
-            },
-            "name2": {
-              "value": tool.cutstr(app.userInfo.nickName, 6).replace(/[\d]+/g, '*')
-            },
-            "thing6": {
-              "value": tool.cutstr(applyContent, 16)
-            },
-          },
+    // cancelApply() {
+    //   this.setData({
+    //     applyShow: false
+    //   })
+    // },
+    // inputApply(e) {
+    //   let applyContent = e.detail.value
+    //   this.setData({
+    //     applyContent
+    //   })
+    // },
 
-        })
-        app.socket.emit("sendSystemMsg", from, to, message);
-        app.switchData.isSwitchGroup = true
-        this.setData({
-          groups: this.data.groups,
-          applyShow: false
-        })
-        // authorize.isSubscription().then(res => {
-        //   if (res.mainSwitch && (!res.itemSettings || !res.itemSettings[app.InfoId.examine])) {
-        //     common.Tip('接下来将授权"审核结果"通知。授权时请勾选“总是保持以上选择,不再询问”，后续将第一时间通知到您', '申请信息已发送').then(res => {
-        //       if (res.confirm) {
-        //         authorize.alwaysSubscription([app.InfoId.examine]).then(res => {})
-        //       }
-        //     })
-        //   } else {
-        //     common.Tip('确保您已开启相应的通知权限，“审核结果”将会第一时间通知到您', '申请信息已发送').then(res => {
-        //       if (res.confirm) {
-        //         authorize.alwaysSubscription([app.InfoId.examine]).then(res => {})
-        //       }
-        //     })
-        //   }
-        // })
-      })
-    }
+    // apply() {
+    //   let applyContent = this.data.applyContent
+    //   if (!applyContent) {
+    //     common.Tip('请输入内容')
+    //     return
+    //   }
+    //   this.applyJoinGrop()
+    // },
+    // applyJoinGrop() {
+    //   let applyContent = this.data.applyContent
+    //   let groupInfo = this.groupInfo
+    //   this.joinGroup(groupInfo).then(res => {
+    //     groupInfo.isJoin = -1 //审核中
+    //     groupInfo.groupDuty = -1 //审核中
+    //     let from = {
+    //         userId: app.userInfo.id,
+    //         nickName: app.userInfo.nickName
+    //       },
+    //       to = {
+    //         userIdList: res.userIdList
+    //       },
+    //       message = {
+    //         type: 1,
+    //         jsonDate: {
+    //           groupId: groupInfo.id,
+    //           groupName: groupInfo.groupName,
+    //           applyContent,
+    //           isNew: 1,
+    //           status: 0
+    //         }
+    //       }
+    //     app.post(app.Api.sendSubscribeInfo, {
+    //       userIdList: res.userIdList,
+    //       template_id: app.InfoId.joinGroup,
+    //       page: `pages/my/information/information?actIndex=1`,
+    //       data: {
+    //         "thing1": {
+    //           "value": tool.cutstr(groupInfo.groupName, 16)
+    //         },
+    //         "name2": {
+    //           "value": tool.cutstr(app.userInfo.nickName, 6).replace(/[\d]+/g, '*')
+    //         },
+    //         "thing6": {
+    //           "value": tool.cutstr(applyContent, 16)
+    //         },
+    //       },
+
+    //     })
+    //     app.socket.emit("sendSystemMsg", from, to, message);
+    //     app.switchData.isSwitchGroup = true
+    //     this.setData({
+    //       groups: this.data.groups,
+    //       applyShow: false
+    //     })
+    //     // authorize.isSubscription().then(res => {
+    //     //   if (res.mainSwitch && (!res.itemSettings || !res.itemSettings[app.InfoId.examine])) {
+    //     //     common.Tip('接下来将授权"审核结果"通知。授权时请勾选“总是保持以上选择,不再询问”，后续将第一时间通知到您', '申请信息已发送').then(res => {
+    //     //       if (res.confirm) {
+    //     //         authorize.alwaysSubscription([app.InfoId.examine]).then(res => {})
+    //     //       }
+    //     //     })
+    //     //   } else {
+    //     //     common.Tip('确保您已开启相应的通知权限，“审核结果”将会第一时间通知到您', '申请信息已发送').then(res => {
+    //     //       if (res.confirm) {
+    //     //         authorize.alwaysSubscription([app.InfoId.examine]).then(res => {})
+    //     //       }
+    //     //     })
+    //     //   }
+    //     // })
+    //   })
+    // }
   }
 })

@@ -187,30 +187,43 @@ Page({
   },
   // 提交表单
   async formSubmit(e) {
-    console.log('form发生了submit事件，携带的数据为：', e.detail.value)
-    let params = e.detail.value
-    console.log(params)
-    try {
-      params = await this.validate(params)
-      let subscriptionsSetting = await authorize.isSubscription()
-      if (!subscriptionsSetting.itemSettings) {
-        this.params = params
-        // 未勾选总是
-        this.setData({
-          msgAuthorizationShow: true
-        })
-      } else {
-        this.submitTeam(params)
-      }
-    } catch (err) {
-      console.log(err)
-      common.Tip(err)
-      wx.hideLoading()
-    }
+
+    this.params = e.detail.value
+    // try {
+    //   params = await this.validate(params)
+    //   common.showLoading()
+    //   authorize.newSubscription(this.data.requestId, {
+    //     cancelText: '继续发布'
+    //   }).then((res) => {
+    //     wx.hideLoading()
+    //     if (res.type === 1) {
+    //       // this.setData({
+    //       //   msgAuthorizationShow: true
+    //       // })
+
+    //     } else if (res.type === -1) {
+    //       if (!res.result.confirm) {
+    //         this.submitTeam(params)
+    //       } else {
+    //         // 去开启
+    //         wx.openSetting({
+    //           success(res) {
+    //             console.log(res.authSetting)
+
+    //           }
+    //         })
+    //       }
+    //     } else if (res.type === 0) {
+    //       this.submitTeam(params)
+    //     }
+    //   })
+    // } catch (err) {
+    //   console.log(err)
+    //   common.Tip(err)
+    //   wx.hideLoading()
+    // }
   },
-  completeMsgAuthorization() {
-    this.submitTeam(this.params)
-  },
+
   async submitTeam(params) {
     common.showLoading('发布中')
     if (params.pictureUrls.length) {
@@ -228,4 +241,65 @@ Page({
     app.switchData.refresh = true
     wx.navigateBack()
   },
+  time() {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve()
+      }, 200)
+    })
+  },
+  async issueSubmit() {
+    try {
+      await this.time()
+      let params = this.params
+      params = await this.validate(params)
+      common.showLoading()
+      wx.requestSubscribeMessage({
+        tmplIds: this.data.requestId,
+        success(res) {
+          this.submitTeam(params)
+        },
+        fail(err) {
+          console.log(err);
+        }
+      })
+      authorize.newSubscription(this.data.requestId, {
+        cancelText: '继续发布'
+      }).then((res) => {
+        wx.hideLoading()
+        if (res.type === 1) {
+          // this.setData({
+          //   msgAuthorizationShow: true
+          // })
+          // wx.requestSubscribeMessage({
+          //   tmplIds: this.data.requestId,
+          //   success(res) {
+          //     this.submitTeam(params)
+          //   },
+          //   fail(err) {
+          //     console.log(err);
+          //   }
+          // })
+        } else if (res.type === -1) {
+          if (!res.result.confirm) {
+            this.submitTeam(params)
+          } else {
+            // 去开启
+            wx.openSetting({
+              success(res) {
+                console.log(res.authSetting)
+
+              }
+            })
+          }
+        } else if (res.type === 0) {
+          this.submitTeam(params)
+        }
+      })
+    } catch (err) {
+      console.log(err)
+      common.Tip(err)
+      wx.hideLoading()
+    }
+  }
 })

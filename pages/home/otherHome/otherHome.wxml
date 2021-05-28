@@ -29,15 +29,15 @@
     </image>
     <view mark:district="functionBar" style="background-image: url('http://cdn.shengruo.top/home/massBackground.png');" class="functionBar {{functionBarShow? 'functionBarShow':''}}">
       <view catchtap="goPuchCard" class="puchCard {{functionBarShow? 'puchCardShow':''}}">
-        <image src="http://cdn.eigene.cn/home/puchCard2.png"></image>
+        <image src="/images/home/puchCard.png"></image>
         <text>打卡</text>
       </view>
       <view catchtap="goCourse" class="course {{functionBarShow? 'courseShow':''}}">
-        <image src="http://cdn.eigene.cn/home/course2.png"></image>
+        <image src="/images/home/course.png"></image>
         <text>课程</text>
       </view>
       <view catchtap="goMassManagement" class="setUp {{functionBarShow? 'setUpShow':''}}">
-        <image src="{{qiniuUrl}}/home/setUp.png"></image>
+        <image src="/images/home/setUp.png"></image>
         <text>详情</text>
       </view>
     </view>

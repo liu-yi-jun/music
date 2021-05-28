@@ -3,7 +3,7 @@ const app = getApp()
 const tool = require('../../../assets/tool/tool.js')
 const authorize = require('../../../assets/tool/authorize.js')
 const upload = require('../../../assets/request/upload')
-const common  = require('../../../assets/tool/common')
+const common = require('../../../assets/tool/common')
 Page({
 
   /**
@@ -39,8 +39,8 @@ Page({
     // 录音限制时间
     limitTime: 300000,
     // 附近位置,
-    index:0,
-    mks:[],
+    index: 0,
+    mks: [],
     msgAuthorizationShow: false,
     requestId: [app.InfoId.like, app.InfoId.content, app.InfoId.reply]
   },
@@ -48,7 +48,7 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(options) {
+  onLoad: function (options) {
     // 获取去除上面导航栏，剩余的高度
     tool.navExcludeHeight(this)
 
@@ -57,51 +57,52 @@ Page({
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function() {
+  onReady: function () {
 
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function() {
+  onShow: function () {
     authorize.authSettingRecord().then(() => {
       this.initialization()
-      })
+    })
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function() {
+  onHide: function () {
 
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function() {
+  onUnload: function () {
     this.innerAudioContext.stop()
+    this.recorderManager.stop()
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function() {
+  onPullDownRefresh: function () {
 
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function() {
+  onReachBottom: function () {
 
   },
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function() {
+  onShareAppMessage: function () {
 
   },
   handlerGobackClick: app.handlerGobackClick,
@@ -187,10 +188,9 @@ Page({
   // 点击图片调用
   soundRecord() {
     authorize.authSettingRecord().then(() => {
-    let current = this.data.current
-    switch (current) {
-      case 0:
-        {
+      let current = this.data.current
+      switch (current) {
+        case 0: {
           wx.showToast({
             title: '开始录音',
             icon: 'success',
@@ -210,8 +210,7 @@ Page({
           current++
           break
         }
-      case 1:
-        {
+        case 1: {
           this.recorderManager.stop()
           wx.showToast({
             title: '录音结束',
@@ -223,16 +222,14 @@ Page({
           clearInterval(this.loop)
           return
         }
-      case 2:
-        {
+        case 2: {
           // 开始播放录音
           console.log('// 开始播放录音')
           this.innerAudioContext.play()
           current++
           break
         }
-      case 3:
-        {
+        case 3: {
           // this.pauseRing()
           // 暂停播放录音
           console.log('// 暂停播放录音')
@@ -240,12 +237,12 @@ Page({
           current--
           break
         }
-    }
-    this.setData({
-      soundRecordSrc: this.data.soundRecordSrcArr[current],
-      current
+      }
+      this.setData({
+        soundRecordSrc: this.data.soundRecordSrcArr[current],
+        current
+      })
     })
-  })
   },
   // 重录
   remake() {
@@ -302,8 +299,8 @@ Page({
         tool.reverseGeocoder(location).then(data => {
           console.log(data)
           this.setData({
-            mks:data.mks
-          },()=>{
+            mks: data.mks
+          }, () => {
             wx.hideLoading()
           })
         }).catch(err => console.log(err))
@@ -314,14 +311,14 @@ Page({
     })
   },
   // 弹起位置选择
-  bindPickerChange: function(e) {
+  bindPickerChange: function (e) {
     console.log('picker发送选择改变，携带值为', e.detail.value)
     this.setData({
       index: e.detail.value
     })
   },
-   // 进行校验
-   validate(params) {
+  // 进行校验
+  validate(params) {
     let describe = params.describe
     let mks = this.data.mks
     let location = ''
@@ -373,16 +370,24 @@ Page({
     console.log(params)
     try {
       params = await this.validate(params)
-      let subscriptionsSetting = await authorize.isSubscription()
-      if (!subscriptionsSetting.itemSettings) {
-        this.params = params
-        // 未勾选总是
-        this.setData({
-          msgAuthorizationShow: true
-        })
-      } else {
-        this.submitTeam(params)
-      }
+      common.showLoading()
+      authorize.newSubscription(this.data.requestId, {
+        cancelText: '继续发布'
+      }).then((res) => {
+        wx.hideLoading()
+        if (res.type === 1) {
+          this.params = params
+          this.setData({
+            msgAuthorizationShow: true
+          })
+        } else if (res.type === -1) {
+          if (!res.result.confirm) {
+            this.submitTeam(params)
+          }
+        } else if (res.type === 0) {
+          this.submitTeam(params)
+        }
+      })
     } catch (err) {
       console.log(err)
       common.Tip(err)

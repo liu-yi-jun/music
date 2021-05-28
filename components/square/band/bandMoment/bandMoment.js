@@ -38,7 +38,7 @@ Component({
     },
     startPlay(e) {
       let id = e.currentTarget.dataset.id
-      if (this.videoId && (this.videoId !== id)) {
+      if (this.videoId !== undefined && (this.videoId !== id)) {
         let videoContext = wx.createVideoContext(`video${this.videoId}`, this)
         videoContext.pause()
       }

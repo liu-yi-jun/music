@@ -158,7 +158,7 @@ Page({
     return new Promise((resolve, reject) => {
       // app.userInfo.id
       let option = {
-          userId:  app.userInfo.id,
+          userId: app.userInfo.id,
           type: 'video',
           module: 'groupdynamics'
         },
@@ -180,21 +180,27 @@ Page({
   },
   // 提交表单
   async formSubmit(e) {
-    console.log('form发生了submit事件，携带的数据为：', e.detail.value)
     let params = e.detail.value
-    console.log(params)
     try {
       params = await this.validate(params)
-      let subscriptionsSetting = await authorize.isSubscription()
-      if (!subscriptionsSetting.itemSettings) {
-        this.params = params
-        // 未勾选总是
-        this.setData({
-          msgAuthorizationShow: true
-        })
-      } else {
-        this.submitTeam(params)
-      }
+      common.showLoading()
+      authorize.newSubscription(this.data.requestId, {
+        cancelText: '继续发布'
+      }).then((res) => {
+        wx.hideLoading()
+        if (res.type === 1) {
+          this.params = params
+          this.setData({
+            msgAuthorizationShow: true
+          })
+        } else if (res.type === -1) {
+          if (!res.result.confirm) {
+            this.submitTeam(params)
+          }
+        } else if (res.type === 0) {
+          this.submitTeam(params)
+        }
+      })
     } catch (err) {
       console.log(err)
       common.Tip(err)

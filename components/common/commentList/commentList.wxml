@@ -22,7 +22,7 @@
     </view> -->
 
     <view catchlongpress="longpress"  class="user1" hover-class="hover-user2" hover-stay-time="{{200}}" catchtap="toReply"
-      data-commentindex="{{commentIndex}}">
+      data-commentindex="{{commentIndex}}" >
       <view class="avatar" style="background-image: url({{comment.commenterAvatar}});"
         data-userid="{{comment.commenterId}}" catchtap="goPersonal" hover-stop-propagation="{{true}}"></view>
       <view class="userName-content">
@@ -35,7 +35,7 @@
       </view>
     </view>
     <view catchlongpress="longpress" class="user2" hover-class="hover-user2" hover-stay-time="{{200}}" wx:for="{{comment.replyArr}}"
-      wx:for-index="replyIndex" wx:key="id" catchtap="toReply" data-commentindex="{{commentIndex}}"
+      wx:for-index="replyIndex" wx:key="id" catchtap="toReply"  data-commentindex="{{commentIndex}}"
       data-replyindex="{{replyIndex}}">
       <view class="angle"></view>
       <view class="userName" hover-stop-propagation="{{true}}" catchtap="goPersonal"

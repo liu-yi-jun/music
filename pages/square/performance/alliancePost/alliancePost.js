@@ -38,6 +38,7 @@ Page({
     linkUrl: '',
     // 标注视频链接类型
     isVid: false,
+    startTime: tool.format(Date.now()),
     msgAuthorizationShow: false,
     requestId: [app.InfoId.like, app.InfoId.content, app.InfoId.reply]
   },
@@ -48,6 +49,7 @@ Page({
   onLoad: function (options) {
     // 获取去除上面导航栏，剩余的高度
     tool.navExcludeHeight(this)
+
     this.getUserInfo()
     this.initValidate()
   },
@@ -329,12 +331,14 @@ Page({
       if (time === '活动时间') return reject('请选择活动开始时间')
       if (!tempImagePaths.length) return reject('需要添加图片哦')
       // let mold = tempImagePaths.length ? 0 : (tempVideoPath ? 1 : 2)
-
+      let timeStamp = `${this.data.date} ${time}`
       let dates = this.data.date.split('-')
 
       let activityTime = `${dates[0]}年${dates[1]}月${dates[2]}日${time}`
+
       return resolve({
         duration,
+        timeStamp,
         userId: app.userInfo.id,
         groupId: app.userInfo.groupId,
         groupName: app.userInfo.groupName,
@@ -353,16 +357,24 @@ Page({
     let params = e.detail.value
     try {
       params = await this.validate(params)
-      let subscriptionsSetting = await authorize.isSubscription()
-      if (!subscriptionsSetting.itemSettings) {
-        this.params = params
-        // 未勾选总是
-        this.setData({
-          msgAuthorizationShow: true
-        })
-      } else {
-        this.submitTeam(params)
-      }
+      common.showLoading()
+      authorize.newSubscription(this.data.requestId, {
+        cancelText: '继续发布'
+      }).then((res) => {
+        wx.hideLoading()
+        if (res.type === 1) {
+          this.params = params
+          this.setData({
+            msgAuthorizationShow: true
+          })
+        } else if (res.type === -1) {
+          if (!res.result.confirm) {
+            this.submitTeam(params)
+          }
+        } else if (res.type === 0) {
+          this.submitTeam(params)
+        }
+      })
     } catch (err) {
       console.log(err)
       common.Tip(err)

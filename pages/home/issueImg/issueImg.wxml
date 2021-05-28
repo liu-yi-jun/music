@@ -15,7 +15,7 @@
           <view class="delete iconfont icondelete" catchtap="toDelete" data-id="{{index}}"></view>
         </image>
         <image wx:if="{{restCount}}" catchtap="addImg" class="addImg" mode="aspectFill"
-          src="{{qiniuUrl}}/issueImg/addImg.png">
+          src="/images/issueImg/addImg.png">
         </image>
       </view>
     </view>
@@ -31,8 +31,11 @@
       </picker>
     </view>
     <view class="issueWrap">
-      <button class="issue" form-type="submit">发布</button>
+      <button class="issue" form-type="submit" catchtap="issueSubmit">发布</button>
     </view>
   </form>
-</view>
-<msgAuthorization wx:if="{{msgAuthorizationShow}}" bind:completeMsgAuthorization="completeMsgAuthorization"  msgAuthorizationShow="{{msgAuthorizationShow}}" requestId="{{requestId}}"></msgAuthorization>
+</view> 
+<!-- <msgAuthorization wx:if="{{msgAuthorizationShow}}" bind:completeMsgAuthorization="completeMsgAuthorization"
+  msgAuthorizationShow="{{msgAuthorizationShow}}" requestId="{{requestId}}"></msgAuthorization> -->
+
+<guidMsgAuthor  msgAuthorizationShow="{{msgAuthorizationShow}}"></guidMsgAuthor>

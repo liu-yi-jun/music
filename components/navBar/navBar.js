@@ -142,6 +142,7 @@ Component({
     },
     // 返回事件
     back: function() {
+      console.log('back',this.data.delta);
       this.triggerEvent('back', {
         delta: this.data.delta
       });

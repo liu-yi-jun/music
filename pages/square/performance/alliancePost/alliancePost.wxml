@@ -11,10 +11,10 @@
       <view class="wrap">
         <view class="rowWrap">
           <text space="ensp">标 题</text>
-          <input placeholder="" placeholder-class="placeholder" name="title"></input>
+          <input placeholder="" maxlength="50" placeholder-class="placeholder" name="title"></input>
         </view>
         <view class="rowWrap">
-          <picker class="date" mode="date" value="{{date}}" start="2017-09-01" end="2025-09-01"
+          <picker class="date" mode="date" value="{{date}}" start="{{startTime}}" end="2025-09-01"
             bindchange="bindDateChange">
             <view class="picker">
               活动日期<text space="ensp"> {{date}}</text>
@@ -30,14 +30,14 @@
         </view>
         <view class="rowWrap">
           <text>活动地点</text>
-          <input name="activityLocation" placeholder="" placeholder-class="placeholder"></input>
+          <input name="activityLocation" maxlength="100" placeholder="" placeholder-class="placeholder"></input>
         </view>
         <view class="rowWrap">
           <text space="ensp">组 织 者</text>
-          <input name="organization" placeholder="" placeholder-class="placeholder"></input>
+          <input name="organization" maxlength="100" placeholder="" placeholder-class="placeholder"></input>
         </view>
         <view class="warptextarea">
-          <textarea name="introduce" id="textarea" adjust-position="{{false}}" auto-height disable-default-padding
+          <textarea maxlength="1000" cursor-spacing="{{100}}" name="introduce" id="textarea" adjust-position="{{true}}" auto-height disable-default-padding
             placeholder="演出详情" placeholder-class="placeholder" bindkeyboardheightchange="boardheightchange"
             maxlength="-1"></textarea>
         </view>

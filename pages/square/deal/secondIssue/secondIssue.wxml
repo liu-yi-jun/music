@@ -10,19 +10,19 @@
       <view class="wrap">
         <view class="importWrap first">
           <view>品牌·型号</view>
-          <input name="brand" placeholder-class="placeholder"></input>
+          <input name="brand" maxlength="100" placeholder-class="placeholder"></input>
         </view>
         <view class="importWrap">
           <view>新旧程度</view>
-          <input name="newOld" placeholder-class="placeholder"></input>
+          <input name="newOld" maxlength="100"  placeholder-class="placeholder"></input>
         </view>
         <view class="textareaWrap">
           <view>附加信息</view>
-          <textarea name="additional" disable-default-padding placeholder-class="placeholder"></textarea>
+          <textarea name="additional" maxlength="1100" disable-default-padding placeholder-class="placeholder"></textarea>
         </view>
         <view class="importWrap min">
           <view>联系方式</view>
-          <input name="contact" placeholder-class="placeholder"></input>
+          <input name="contact"  maxlength="100" placeholder-class="placeholder"></input>
         </view>
         <view class="moneyWrap" wx:if="{{money}}">
           <text>定价: ¥{{money}}</text>

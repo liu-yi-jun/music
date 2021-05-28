@@ -17,7 +17,8 @@ Page({
     userInfo: {},
     recruits: [],
     tempFilePath: '',
-    dialogShow: false
+    dialogShow: false,
+    gender: 0
   },
 
   /**
@@ -33,7 +34,18 @@ Page({
     this.initValidate()
     this.setData({
       userInfo: app.userInfo,
+      gender: app.userInfo.gender,
       recruits
+    })
+  },
+  changeWoman() {
+    this.setData({
+      gender: 2
+    })
+  },
+  changeman() {
+    this.setData({
+      gender: 1
     })
   },
   //验证规则函数
@@ -83,7 +95,7 @@ Page({
         ...params,
         videoUrl: tempFilePath,
         bandId: this.bandId,
-        gender: userInfo.gender,
+        gender: this.data.gender,
         issueId: this.userId,
         joinId: userInfo.id,
         nickName: userInfo.nickName,
@@ -126,10 +138,10 @@ Page({
     } = this.data
     try {
       params = await this.validate(params)
-     var regName = /^[\u4e00-\u9fa5]{2,10}$/;
-    if (!regName.test(params.userName)) {
-          return common.Tip('请正确输入您的姓名')
-     }
+      var regName = /^[\u4e00-\u9fa5]{2,10}$/;
+      if (!regName.test(params.userName)) {
+        return common.Tip('请正确输入您的姓名')
+      }
       common.showLoading('创建中')
       if (tempFilePath) params.videoUrl = await this.uploadVideo(tempFilePath)
       const result = await this.joinBand(params)
@@ -161,9 +173,10 @@ Page({
       app.post(app.Api.sendSubscribeInfo, {
         otherId: params.issueId,
         template_id: app.InfoId.band,
+        page: `pages/my/information/information?actIndex=1`,
         data: {
           "name1": {
-            "value": tool.cutstr(params.userName, 6).replace(/[\d]+/g,'*')
+            "value": tool.cutstr(params.userName, 6).replace(/[\d]+/g, '*')
           },
           "thing5": {
             "value": tool.cutstr(params.userName, 16)

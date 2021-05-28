@@ -76,6 +76,7 @@ Page({
     isNotData: false,
     styleLeight: 7,
     ableIndex: 1,
+    minID: 0,
     SM_UpPointer: 0,
     SM_DownPointer: 0,
     MB_UpPointer: 0,
@@ -130,16 +131,15 @@ Page({
       app.get(app.Api.groupPagingGetGroupdynamics, {
         pageSize,
         pageIndex,
+        minID: this.data.minID,
         groupId,
         userId: app.userInfo.id
       }).then(res => {
         console.log('res.length', res.length)
         if (res.length < pageSize) {
-          this.setData({
-            isNotData: true
-          })
-          // return resolve()
+          this.data.isNotData = true
         }
+        this.data.minID = res.length ? res[res.length - 1].id : 0
         this.setData({
           member: this.data.member.concat(res),
           pageSize: pageSize,
@@ -593,6 +593,10 @@ Page({
         extra: {
           otherId: showContent.userId,
           themeTitle: showContent.introduce
+        }
+      }).then(res => {
+        if (!res) {
+          common.Toast('该动态已不存在')
         }
       })
     })

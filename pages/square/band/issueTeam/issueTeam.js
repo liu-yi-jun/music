@@ -372,38 +372,27 @@ Page({
     let params = e.detail.value
     try {
       params = await this.validate(params)
-      console.log(params)
+
       if (!this.data.isEdit) {
         // 发布
-        let subscriptionsSetting = await authorize.isSubscription()
-        if (!subscriptionsSetting.itemSettings) {
-          this.params = params
-          // 未勾选总是
-          this.setData({
-            msgAuthorizationShow: true
-          })
-        }else {
-          this.submitTeam(params)
-        }
-        // authorize.isSubscription().then(res => {
-        //   if (res.mainSwitch && (!res.itemSettings || !res.itemSettings[app.InfoId.band])) {
-        //     common.Tip('接下来将授权"组乐队申请"通知。授权时请勾选“总是保持以上选择,不再询问”，后续有其他用户申请与您组乐队，将会第一时间通知到您', '发布成功').then(res => {
-        //       if (res.confirm) {
-        //         authorize.alwaysSubscription([app.InfoId.band]).then(res => {
-        //           this.goBand()
-        //         })
-        //       }
-        //     })
-        //   } else {
-        //     common.Tip('确保您已开启相应的通知权限，“组乐队申请”将会第一时间通知到您', '发布成功').then(res => {
-        //       if (res.confirm) {
-        //         authorize.alwaysSubscription([app.InfoId.band]).then(res => {
-        //           this.goBand()
-        //         })
-        //       }
-        //     })
-        //   }
-        // })
+        common.showLoading()
+        authorize.newSubscription(this.data.requestId, {
+          cancelText: '继续发布'
+        }).then((res) => {
+          wx.hideLoading()
+          if (res.type === 1) {
+            this.params = params
+            this.setData({
+              msgAuthorizationShow: true
+            })
+          } else if (res.type === -1) {
+            if (!res.result.confirm) {
+              this.submitTeam(params)
+            }
+          } else if (res.type === 0) {
+            this.submitTeam(params)
+          }
+        })
       } else {
         // 编辑
         common.showLoading('保存中')

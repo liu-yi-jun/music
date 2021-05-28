@@ -16,7 +16,8 @@ Page({
     alliancePaging: {
       pageSize: 20,
       pageIndex: 1,
-      isNotData: false
+      isNotData: false,
+      minID: 0
     },
     festivalPaging: {
       pageSize: 10,
@@ -101,7 +102,7 @@ Page({
         if (res.length < alliancePaging.pageSize) {
           alliancePaging.isNotData = true
         }
-        alliancePaging.pageIndex = alliancePaging.pageIndex + 1
+        alliancePaging.minID = res.length ? res[res.length - 1].id : 0
         this.setData({
           alliances: this.data.alliances.concat(res),
         })
@@ -121,11 +122,13 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    let alliancePaging = this.data.alliancePaging
     if (app.alliancePostBack || app.allianceDeleteBack) {
       app.alliancePostBack = false
       app.allianceDeleteBack = false
-      this.data.alliancePaging.isNotData = false
-      this.data.alliancePaging.pageIndex = 1
+      alliancePaging.isNotData = false
+      alliancePaging.pageIndex = 1
+      alliancePaging.minID = 0
       this.data.alliances = []
       this.getAlliance()
     }
@@ -184,6 +187,7 @@ Page({
     if (actIndex === 0) {
       alliancePaging.isNotData = false
       alliancePaging.pageIndex = 1
+      alliancePaging.minID = 0
       this.data.alliances = []
       this.getAlliance().then(() => {
         this._freshing = false
