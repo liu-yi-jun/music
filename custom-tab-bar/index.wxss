@@ -44,8 +44,8 @@
   height: 20rpx;
   border-radius: 50%;
   background-color: #FA5151;
-  right: 15rpx;
-  top: 10rpx;
+  right: 0rpx;
+  top: 0rpx;
 }
 .iconWrap {
   display: flex;

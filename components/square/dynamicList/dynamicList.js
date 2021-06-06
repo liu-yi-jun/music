@@ -350,50 +350,56 @@ Component({
 
       let flag = false
       let groupDuty
-      console.log(app.groupInfo.myGrouList);
-      if (id === app.groupInfo.id) {
-        if (this.data.isBack) {
-          wx.navigateBack({
-            delta: 9999,
-          })
-          app.backGroup = true
-        } else {
-          e.currentTarget.dataset.path = '/pages/home/home'
-          this.getTabBar().switchTab(e)
-        }
-      } else {
-        app.groupInfo.myGrouList.forEach(item => {
-          if (item.groupId === id) {
-            groupDuty = item.groupDuty
-            return flag = true
+      if(app.groupInfo){
+        if (id === app.groupInfo.id) {
+          if (this.data.isBack) {
+            wx.navigateBack({
+              delta: 9999,
+            })
+            app.backGroup = true
+          } else {
+            e.currentTarget.dataset.path = '/pages/home/home'
+            this.getTabBar().switchTab(e)
           }
-        })
-        if (flag) {
-          app.post(app.Api.switchGroup, {
-            groupId: id,
-            groupName: groupname,
-            groupDuty,
-            userId: app.userInfo.id
-          }, {
-            loading: false
-          }).then((res) => {
-            app.switchData.isSwitchGroup = true
-            if (this.data.isBack) {
-              wx.navigateBack({
-                delta: 9999,
-              })
-              app.backGroup = true
-            } else {
-              e.currentTarget.dataset.path = '/pages/home/home'
-              this.getTabBar().switchTab(e)
+        } else {
+          app.groupInfo.myGrouList.forEach(item => {
+            if (item.groupId === id) {
+              groupDuty = item.groupDuty
+              return flag = true
             }
           })
-        } else {
-          wx.navigateTo({
-            url: `/pages/home/otherHome/otherHome?showGroupId=${id}`,
-          })
+          if (flag) {
+            app.post(app.Api.switchGroup, {
+              groupId: id,
+              groupName: groupname,
+              groupDuty,
+              userId: app.userInfo.id
+            }, {
+              loading: false
+            }).then((res) => {
+              app.switchData.isSwitchGroup = true
+              if (this.data.isBack) {
+                wx.navigateBack({
+                  delta: 9999,
+                })
+                app.backGroup = true
+              } else {
+                e.currentTarget.dataset.path = '/pages/home/home'
+                this.getTabBar().switchTab(e)
+              }
+            })
+          } else {
+            wx.navigateTo({
+              url: `/pages/home/otherHome/otherHome?showGroupId=${id}`,
+            })
+          }
         }
+      }else {
+        wx.navigateTo({
+          url: `/pages/home/otherHome/otherHome?showGroupId=${id}`,
+        })
       }
+
 
     },
     goPersonal(e) {

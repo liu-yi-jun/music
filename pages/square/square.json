@@ -5,7 +5,8 @@
     "marquee": "/components/square/marquee/marquee",
     "dynamicList":"/components/square/dynamicList/dynamicList",
     "menu":"/components/common/menu/menu",
-    "authorization":"/components/common/authorization/authorization"
+    "authorization":"/components/common/authorization/authorization",
+    "guidMsgAuthor":"/components/common/guidMsgAuthor/guidMsgAuthor"
   },
   "enablePullDownRefresh": true
 }

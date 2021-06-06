@@ -5,7 +5,7 @@
     "record": "/components/common/record/record",
     "linkDialog": "/components/common/linkDialog/linkDialog",
     "txv-video": "plugin://tencentvideo/video",
-    "msgAuthorization":"/components/common/msgAuthorization/msgAuthorization"
+    "guidMsgAuthor":"/components/common/guidMsgAuthor/guidMsgAuthor"
   },
   "disableScroll": true
 }

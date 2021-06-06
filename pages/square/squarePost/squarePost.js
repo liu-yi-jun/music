@@ -371,13 +371,26 @@ Page({
       }).then((res) => {
         wx.hideLoading()
         if (res.type === 1) {
-          this.params = params
-          this.setData({
-            msgAuthorizationShow: true
+          common.Tip('为了更好通知到您，需要您授权相应权限，请接下来按照提示操作').then(res => {
+            this.setData({
+              msgAuthorizationShow: true
+            })
+            authorize.infoSubscribe(this.data.requestId).then(res => {
+              this.setData({
+                msgAuthorizationShow: false
+              })
+              this.submitTeam(params)
+            })
           })
         } else if (res.type === -1) {
           if (!res.result.confirm) {
             this.submitTeam(params)
+          } else {
+            // 去开启
+            wx.openSetting({
+              success(res) {
+              }
+            })
           }
         } else if (res.type === 0) {
           this.submitTeam(params)
@@ -388,9 +401,6 @@ Page({
       common.Tip(err)
       wx.hideLoading()
     }
-  },
-  completeMsgAuthorization() {
-    this.submitTeam(this.params)
   },
   async submitTeam(params) {
     let {
@@ -471,6 +481,7 @@ Page({
       app.post(app.Api.squarePost, data, {
         loading: false
       }).then(res => {
+        console.log(res,22222222);
         if (this.isSignIn) {
           app.post(app.Api.signInPost, {
             userId: app.userInfo.id

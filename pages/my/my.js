@@ -112,6 +112,7 @@ Page({
     this.flag = true
     this.oldScrollTop = 0
     if (app.userInfo) {
+      this.setUserInfo()
       this.getPersonalAlliance(app.userInfo.id)
       this.getBand(app.userInfo.id)
       this.getSecond(app.userInfo.id)
@@ -418,6 +419,13 @@ Page({
       this.getTabBar().setData({
         selected: 3
       })
+      if (app.userInfo) {
+        this.getTabBar().setIsNew(1).then(res => {
+          app.TabBar.homeTabBar && app.TabBar.homeTabBar.beforehandSetIsNew(res)
+          app.TabBar.toolTabBar && app.TabBar.toolTabBar.beforehandSetIsNew(res)
+          app.TabBar.squareTabBar && app.TabBar.squareTabBar.beforehandSetIsNew(res)
+        })
+      }
     }
   },
   /**
@@ -840,5 +848,10 @@ Page({
 
   touchmove() {
     return
+  },
+  toCustomer() {
+    this.setData({
+      showHideBar: false
+    })
   }
 })

@@ -29,14 +29,17 @@ Page({
     intoView: '',
     triggered: false,
     barList: [{
-        name: '通知'
+        name: '通知',
+        isNew: false
       },
       {
-        name: '系统'
+        name: '系统',
+        isNew: false
       }
     ],
     actIndex: 0,
-    isHome:false
+    isHome: false,
+
   },
 
   /**
@@ -46,26 +49,30 @@ Page({
     // 获取去除上面导航栏，剩余的高度
     tool.navExcludeHeight(this)
     this.system = this.selectComponent('#system')
-    if(options.actIndex !== undefined ) {
+    if (options.actIndex !== undefined) {
       this.setData({
-        actIndex:parseInt(options.actIndex)
+        actIndex: parseInt(options.actIndex)
       })
     }
     if (app.userInfo) {
       this.getInform()
-      this.system.loadData()
+      this.system.loadData().then(() => {
+        this.isIsNew()
+      })
     } else {
       this.setData({
-        isHome:true
+        isHome: true
       })
       app.initLogin().then(() => {
-        if(app.userInfo) {
+        if (app.userInfo) {
           socket.initSocketEvent()
           this.getInform()
           setTimeout(() => {
-            this.system.loadData()
+            this.system.loadData().then(() => {
+              this.isIsNew()
+            })
           }, 1000)
-        }else {
+        } else {
           wx.reLaunch({
             url: '/pages/home/home',
           })
@@ -77,6 +84,20 @@ Page({
     // // 获取消息数据
     // this.getThreas()
     // this.WhachMessage()
+  },
+  isIsNew() {
+    let systemMsg = wx.getStorageSync('systemMsg')
+    if (systemMsg) {
+      systemMsg.forEach(item => {
+        if (item.message.jsonDate.isNew) {
+          this.data.barList[1].isNew = true
+          this.setData({
+            barList: this.data.barList
+          })
+          return
+        }
+      })
+    }
   },
   // 监听数据，更新视图
   WhachMessage() {
@@ -148,8 +169,30 @@ Page({
         informs: this.data.informs.concat(res),
         'informPaging.pageIndex': informPaging.pageIndex + 1
       })
-      console.log(res)
+      this.checkIsNew(res)
     })
+  },
+  checkIsNew(list) {
+    let flag = false
+    list.forEach(item => {
+      if (item.isNew) {
+        flag = true
+        return
+      }
+    })
+    if (flag) {
+      this.data.barList[0].isNew = true
+      this.setData({
+        barList: this.data.barList
+      })
+      return
+    } else {
+      this.data.barList[0].isNew = false
+      this.setData({
+        barList: this.data.barList
+      })
+      return
+    }
   },
   onRefresh() {
     let actIndex = this.data.actIndex
@@ -183,6 +226,20 @@ Page({
     } else if (actIndex === 1) {
       this.system.loadData()
     }
+  },
+  updateNew(e) {
+    let index = e.detail.index
+    let detail = this.data.informs[index]
+    app.post(app.Api.modifyInform, {
+      id: detail.id
+    }).then((res) => {
+      detail.isNew = 0
+      this.setData({
+        informs:this.data.informs
+      }, () => {
+        this.checkIsNew(this.data.informs)
+      })
+    })
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -237,6 +294,19 @@ Page({
   switchBtn(e) {
     let actIndex = e.detail.actIndex
     if (actIndex === this.data.actIndex) return
+    if (actIndex == 1) {
+      if (this.data.barList[1].isNew) {
+        let systemMsg = wx.getStorageSync('systemMsg')
+        systemMsg.forEach(item => {
+          if (item.message.jsonDate.isNew) item.message.jsonDate.isNew = 0
+        })
+        this.data.barList[1].isNew = false
+        this.setData({
+          barList: this.data.barList
+        })
+        wx.setStorageSync('systemMsg', systemMsg)
+      }
+    }
     this.setData({
       actIndex
     })

@@ -2,7 +2,7 @@
 <view>
   <canvas canvas-id='canvas' class='canvas'></canvas>
   <canvas type="2d" id="canvasLogo" class='canvasLogo'></canvas>
-  <canvas id="canvasPoster"  canvas-id="canvasPoster" class='canvasPoster'></canvas>
+  <canvas id="canvasPoster" canvas-id="canvasPoster" class='canvasPoster'></canvas>
   <navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' back="{{true}}" iconTheme='white'
     bindback="handlerGobackClick"></navBar>
   <view class="head">小组{{(groupDuty===0 || groupDuty===1)?'管理':'信息'}}</view>
@@ -15,7 +15,8 @@
         <image wx:if="{{groupDuty===0 || groupDuty===1}}" catchtap="chooseGroupLogo" class="newLogo"
           src="/images/massManagement/newLogo.png"></image>
       </view>
-      <text>{{groupInfo.groupName}}</text>
+      <input bindinput="inputGroupName" wx:if="{{groupDuty===0 }}" type="text" value="{{groupInfo.groupName}}"> </input>
+      <text wx:else>{{groupInfo.groupName}}</text>
     </view>
     <view wx:if="{{groupDuty===0 }}" class="dissolution generate" catchtap="generate">生成二维码</view>
     <view class="typeWrap" wx:if="{{groupDuty===0 || groupDuty===1}}">
@@ -79,10 +80,10 @@
       <image class="poster" src="{{posterUrl}}" catchtap="previewPoster"></image>
       <image class="save-poster" src="../../../images/massManagement/save.png" catchtap="savePoster"></image>
       <image class="share-poster" src="../../../images/massManagement/share.png">
-      <button open-type="share"></button>
+        <button open-type="share"></button>
       </image>
     </view>
     <!-- <image src="{{QRcode}}" catchtap="previewQR"></image> -->
   </view>
 </view>
-<msgAuthorization wx:if="{{msgAuthorizationShow}}" bind:completeMsgAuthorization="completeMsgAuthorization"  msgAuthorizationShow="{{msgAuthorizationShow}}" requestId="{{requestId}}"></msgAuthorization>
+<guidMsgAuthor msgAuthorizationShow="{{msgAuthorizationShow}}"></guidMsgAuthor>

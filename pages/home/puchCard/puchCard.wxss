@@ -37,8 +37,12 @@
 .userName {
   color: white;
   font-size: 24rpx;
+  max-width: 170rpx;
   margin-left: 10rpx;
   font-family: 'SH-Bold';
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .card {
@@ -70,7 +74,8 @@
 
 .MusicscoreWrap {
   width: 100%;
-  min-height: 616rpx;
+  flex-shrink: 0;
+  max-height: 620rpx;
   overflow: auto;
   height: auto;
   transition: 0.3s all;
@@ -402,7 +407,8 @@
   }
 
   .MusicscoreWrap {
-    min-height: 837rpx;
+    flex-shrink: 0;
+    max-height: 775rpx;
     margin-top: 0rpx;
     width: 100%;
     overflow: auto;
@@ -632,3 +638,18 @@
   top: 30%;
   color: white;
 }
+
+
+.delete {
+  width: 60rpx;
+  height: 60rpx;
+  font-size: 34rpx;
+  color: white;
+  text-align: center;
+  line-height: 60rpx;
+  position: relative;
+  left: 20rpx;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+

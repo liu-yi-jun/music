@@ -7,5 +7,6 @@
     "playRecord":"/components/common/playRecord/playRecord",
     "menu": "/components/common/menu/menu",
     "txv-video": "plugin://tencentvideo/video"
-  }
+  },
+  "disableScroll": true
 }

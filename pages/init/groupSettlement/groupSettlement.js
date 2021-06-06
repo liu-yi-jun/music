@@ -48,15 +48,15 @@ Page({
     const rules = {
       groupName: {
         required: true,
-        minlength: 4,
-        maxlength: 12
+        minlength: 6,
+        maxlength: 24
       },
     }
     const messages = {
       groupName: {
         required: '请填写小组名称',
-        minlength: '小组名称不少于4个字符',
-        maxlength: '小组名称不大于12个字符'
+        minlength: '小组名称不少于6个字符',
+        maxlength: '小组名称不大于24个字符'
       },
     }
     this.WxValidate = new WxValidate(rules, messages)
@@ -262,6 +262,7 @@ Page({
         const error = this.WxValidate.errorList[0].msg
         return reject(error)
       }
+
       resolve(params)
     })
   },
@@ -342,22 +343,33 @@ Page({
   },
   async changeExamine(event) {
     if (Number(event.detail.value)) {
-      authorize.newSubscription(this.data.requestId).then((res) => {
+      authorize.newSubscription(this.data.requestId, {
+        cancelText: '取消'
+      }).then((res) => {
         wx.hideLoading()
         if (res.type === 1) {
-          this.setData({
-            msgAuthorizationShow: true
+          common.Tip('为了更好通知到您，需要您授权相应权限，请接下来按照提示操作').then(res => {
+            this.setData({
+              msgAuthorizationShow: true
+            })
+            authorize.infoSubscribe(this.data.requestId).then(res => {
+              this.setData({
+                msgAuthorizationShow: false
+              })
+            })
           })
+        } else if (res.type === -1) {
+          if (res.result.confirm) {
+            // 去开启
+            wx.openSetting({
+              success(res) {}
+            })
+          }
         }
       })
     }
     this.setData({
       "form.examine": Number(event.detail.value)
-    })
-  },
-  completeMsgAuthorization() {
-    this.setData({
-      msgAuthorizationShow: false
     })
   },
   changePrivate(event) {

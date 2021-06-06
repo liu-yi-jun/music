@@ -114,6 +114,9 @@ App({
   userInfo: null,
   groupInfo: null,
   signInInfo: null,
+  TabBar: {
+
+  },
   globalData: {
     guide: {},
     codePass: false

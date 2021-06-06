@@ -24,19 +24,10 @@ Component({
   methods: {
     toDetail(e) {
       let index = e.currentTarget.dataset.index
-      let informs = this.data.informs
-      let detail = informs[index]
+      let detail = this.data.informs[index]
       if (detail.isNew) {
-        app.post(app.Api.modifyInform, {
-          id:detail.id
-          // theme: detail.theme,
-          // themeId: detail.themeId
-        }).then((res) => {
-          console.log(res)
-          detail.isNew = 0
-          this.setData({
-            informs
-          })
+        this.triggerEvent('updateNew',{
+          index
         })
       }
       if (detail.theme === 'groupdynamics' || detail.theme === 'squaredynamics') {

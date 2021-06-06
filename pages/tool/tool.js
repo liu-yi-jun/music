@@ -1,6 +1,7 @@
 // pages/tool/tool.js
 let tool = require('../../assets/tool/tool')
 let common = require('../../assets/tool/common')
+let socket = require('../../assets/request/socket')
 let app = getApp()
 Page({
 
@@ -63,6 +64,17 @@ Page({
     })
   },
   onLoad: function (options) {
+    // options.mp = true //测试
+    if (options.mp) {
+      this.mp = options.mp
+    }
+    if (options.type === 'analysis') {
+
+    } else if (options.type === 'chord') {
+      this.setData({
+        actIndex: 1
+      })
+    }
     // 获取去除上面导航栏，剩余的高度
     tool.navExcludeHeight(this)
     // this.getRandomTap()
@@ -160,19 +172,37 @@ Page({
    */
   onShow: function () {
     console.log('onshow')
-    if (app.userInfo) {
+    if (this.mp) {
+      // 不用授权
+      socket.initSocketEvent(false)
       this.setData({
         pageShow: true
       })
-    } else {
-      this.setData({
-        dialogShow: true
+      this.getTabBar().setData({
+        show: false
       })
+    } else {
+      if (app.userInfo) {
+        this.setData({
+          pageShow: true
+        })
+      } else {
+        this.setData({
+          dialogShow: true
+        })
+      }
     }
+
     if (typeof this.getTabBar === 'function' && this.getTabBar()) {
       this.getTabBar().setData({
         selected: 1
       })
+      if(app.userInfo) {
+        if(!app.TabBar.toolTabBar) {
+          app.TabBar.toolTabBar =  this.getTabBar()
+        }
+        this.getTabBar().setIsNew()
+      }
       // app.getNotice(this, app.userInfo.id)
     }
 
@@ -212,12 +242,14 @@ Page({
   },
   // 控制bar栏
   tap() {
-    this.setData({
-      tabBarBtnShow: true
-    })
-    this.getTabBar().setData({
-      show: false
-    })
+    if (!this.mp) {
+      this.setData({
+        tabBarBtnShow: true
+      })
+      this.getTabBar().setData({
+        show: false
+      })
+    }
   },
   goTapPractice(e) {
     let circulars = this.data.circulars

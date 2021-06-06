@@ -102,6 +102,7 @@ Page({
     homeGuide: false,
     leftGuide: true,
     bottomGuide: false,
+    indexGuide: false,
     issueGuide: false,
     cross: false,
     showFakeTab: false,
@@ -151,7 +152,9 @@ Page({
   init() {
     app.initLogin().then(() => {
       if (app.userInfo) {
-
+        setTimeout(() => {
+          this.getTabBar() && this.getTabBar().setIsNew()
+        }, 1000)
         let groupId = app.userInfo.groupId
         this.setData({
           myId: app.userInfo.id
@@ -253,7 +256,7 @@ Page({
       let pageIndex = this.data.pageIndex
       app.get(app.Api.groupPagingGetGroupdynamics, {
         pageSize,
-        minID:this.data.minID,
+        minID: this.data.minID,
         pageIndex,
         groupId,
         userId: app.userInfo.id
@@ -288,7 +291,15 @@ Page({
         loading: false
       }).then((res) => {
         if (res === null) {
-          return common.Tip('很抱歉，你所在的小组已被解散')
+          return common.Tip('很抱歉，你所在的小组已被解散').then(result => {
+            app.post(app.Api.passiveSwitchGroup, {
+              userId: app.userInfo.id
+            }).then((res) => {
+              if (res.affectedRows) {
+                this.switchGroup()
+              }
+            })
+          })
         }
         console.log(res)
         let groupNameTop, groupNamebuttom = ''
@@ -458,6 +469,29 @@ Page({
       ctx.drawImage(logo, 0, 0, width, height)
     }
   },
+  switchGroup() {
+    app.switchData.isSwitchGroup = false
+    this.data.minID = 0
+    this.setData({
+      dynamicIsShow: false,
+      showMember: [],
+      pageIndex: 1,
+      ableIndex: 1,
+      SM_UpPointer: 0,
+      SM_DownPointer: 0,
+      MB_UpPointer: 0,
+      MB_DownPointer: 0,
+      member: [],
+      style: JSON.parse(JSON.stringify(Style)),
+      isNotData: false,
+      showVideo: false,
+      lessMember: false,
+      isLoop: false,
+      MB_Index: 0,
+    }, () => {
+      this.init()
+    })
+  },
   /**
    * 生命周期函数--监听页面显示
    */
@@ -475,33 +509,20 @@ Page({
     //   })
     // }
     if (app.switchData.isSwitchGroup) {
-      app.switchData.isSwitchGroup = false
-      this.data.minID = 0
-      this.setData({
-        dynamicIsShow: false,
-        showMember: [],
-        pageIndex: 1,
-        ableIndex: 1,
-        SM_UpPointer: 0,
-        SM_DownPointer: 0,
-        MB_UpPointer: 0,
-        MB_DownPointer: 0,
-        member: [],
-        style: JSON.parse(JSON.stringify(Style)),
-        isNotData: false,
-        showVideo: false,
-        lessMember: false,
-        isLoop: false,
-        MB_Index: 0,
-      }, () => {
-        this.init()
-      })
+      this.switchGroup()
     }
     if (typeof this.getTabBar === 'function' &&
       this.getTabBar()) {
       this.getTabBar().setData({
         selected: 0
       })
+      if (app.userInfo) {
+        this.getTabBar().setIsNew()
+        if (!app.TabBar.homeTabBar) {
+          app.TabBar.homeTabBar = this.getTabBar()
+        }
+      }
+
       // app.getNotice(this, app.userInfo.id)
     }
     if (app.switchData.refresh || app.dynamicDeleteBack) {
@@ -1062,8 +1083,8 @@ Page({
           otherId: showContent.userId,
           themeTitle: showContent.introduce
         }
-      }).then(res=> {
-        if(!res) {
+      }).then(res => {
+        if (!res) {
           common.Toast('该动态已不存在')
         }
       })
@@ -1155,13 +1176,19 @@ Page({
         leftGuide: false,
         issueGuide: true,
         functionBarShow: true,
-
       })
     } else if (click === 'issueGuide') {
       this.setData({
         issueGuide: false,
-        bottomGuide: true,
-        switchIssue: true
+        // bottomGuide: true,
+        switchIssue: true,
+        indexGuide: true
+      })
+    } else {
+      this.setData({
+        bottomGuide: false,
+        isShowGroup: false,
+        indexGuide: false
       }, () => {
         setTimeout(() => {
           const showMember = this.data.showMember
@@ -1183,6 +1210,7 @@ Page({
                     show: true
                   })
                   this.setData({
+                    isShowGroup: true,
                     switchIssue: false,
                     functionBarShow: false,
                     // tabBarBtnShow: true,
@@ -1196,7 +1224,7 @@ Page({
           })
         }, 1000);
       })
-    } else {
+
       // this.setData({
       //   bottomGuide: false,
       //   tabBarBtnShow: false,

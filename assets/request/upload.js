@@ -2,6 +2,7 @@
     function uploadManyImg(url, tempFilePaths, option, conf) {
       return new Promise((resolve, reject) => {
         let imgUrls = []
+        if(!tempFilePaths.length) resolve(tempFilePaths)
         let p = Promise.resolve()
         tempFilePaths.forEach((item, index) => {
           p = p.then(() => uploadFile(url, item, option, conf)).then(res => {
@@ -39,6 +40,7 @@
             mask: true
           })
         }
+        if(tempFilePath.includes('/image/')) return resolve(tempFilePath)
         let env = App.requestUrls.baseUrl;
         wx.uploadFile({
           url: env + url,

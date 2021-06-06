@@ -42,7 +42,7 @@
         </view>
       </view>
     </view>
-    <input disabled class="subordinate" placeholder="所属小组:{{userInfo.groupName}}{{userInfo.groupDuty===-1?' 申请中':''}}"
+    <input disabled class="subordinate" placeholder="所属小组:{{userInfo.groupName?userInfo.groupName:'无'}}{{userInfo.groupDuty===-1?' 申请中':''}}"
       placeholder-class="subPlaceholder"> </input>
     <view class="demoteWarp">
       <text class="demote">小组职责</text>

@@ -12,6 +12,7 @@
 }
 
 .head input {
+  width: 500rpx;
   color: white;
 }
 

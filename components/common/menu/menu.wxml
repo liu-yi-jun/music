@@ -1,5 +1,5 @@
 <!--components/common/menu/menu.wxml-->
-<view catchtap="cancel" class="maskMenu {{showMenu?'showMaskMenu': 'hideMaskMenu'}}">
+<view catchtap="cancel" catchtouchmove="cancelMove" class="maskMenu {{showMenu?'showMaskMenu': 'hideMaskMenu'}}">
   <view catchtap="stopBubbling" class="menuWrap {{showMenu?'showMenu': ''}}">
     <block wx:for="{{list}}">
       <button class="topline" open-type="{{item.open_type}}" catchtap="handle" data-functionname="{{item.functionName}}">{{item.name}}</button>

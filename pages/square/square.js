@@ -3,6 +3,7 @@ let app = getApp()
 let common = require('../../assets/tool/common')
 const tool = require('../../assets/tool/tool.js')
 const core = require('../../assets/tool/core')
+const authorize = require('../../assets/tool/authorize')
 Page({
 
   /**
@@ -42,7 +43,10 @@ Page({
     type: 0,
     continuity: 0,
     continuitys: [false, false, false, false, false, false, false],
-    alliances: []
+    alliances: [],
+    requestId: [app.InfoId.signIn],
+    msgAuthorizationShow: false,
+    SignInThirty: false
   },
 
   /**
@@ -58,9 +62,10 @@ Page({
     this.oldScrollTop = 0
     // 获取去除上面导航栏，剩余的高度
     tool.navExcludeHeight(this)
+    this.isGetSignInInfo = true
     if (app.userInfo) {
       this.initSquare()
-      this.getSignInInfo()
+
     } else {
       this.setData({
         dialogShow: true
@@ -84,10 +89,16 @@ Page({
 
   },
   getSignInInfo() {
+    if (!this.isGetSignInInfo) return
+    this.isGetSignInInfo = false
     app.get(app.Api.signInInfo, {
       userId: app.userInfo.id
     }).then((res) => {
       app.signInInfo = res
+      let signInSums = this.handleSignInSum(app.userInfo.signInSum)
+      this.setData({
+        signInSums
+      })
       if (res.everyday) {
         this.tabBarStatus = 2
         this.getTabBar().setData({
@@ -105,14 +116,14 @@ Page({
     this.getSignInInfo()
   },
   initSquare() {
-    let signInSums = this.handleSignInSum(app.userInfo.signInSum)
+    // let signInSums = this.handleSignInSum(app.signInInfo.signInSum)
     this.getSquaredynamics()
     this.getAlliance()
     this.getTopic()
     this.getDate()
-    this.setData({
-      signInSums
-    })
+    // this.setData({
+    //   signInSums
+    // })
   },
   getTopic(e) {
     app.get(app.Api.allTopic).then(res => {
@@ -170,16 +181,9 @@ Page({
       }).then(res => {
         let isSignIn = res.isSignIn
         if (!isSignIn) {
-          if (this.data.tabBarBtnShow) {
-            this.tabBarStatus = 1
-          } else {
-            this.tabBarStatus = 2
-          }
-          wx.navigateTo({
-            url: `/pages/square/squarePost/squarePost?showSignIn=${true}`,
-          })
+          this.authorizeMeg('singIn')
         } else {
-          common.Toast('每天只需签到一次哦~')
+          common.Toast('每天只能签到一次哦~')
         }
       })
     } else {
@@ -187,7 +191,53 @@ Page({
         dialogShow: true
       })
     }
-
+  },
+  bulletSignIn() {
+    this.authorizeMeg('everyDay')
+  },
+  authorizeMeg(classType) {
+    common.showLoading('加载中...')
+    authorize.newSubscription(this.data.requestId, {
+      cancelText: '继续签到'
+    }).then((res) => {
+      wx.hideLoading()
+      if (res.type === 1) {
+        this.setData({
+          msgAuthorizationShow: true
+        })
+        authorize.infoSubscribe(this.data.requestId).then(res => {
+          this.setData({
+            msgAuthorizationShow: false
+          })
+          this.toIssue(classType)
+        })
+      } else if (res.type === -1) {
+        if (!res.result.confirm) {
+          this.toIssue(classType)
+        } else {
+          // 去开启
+          wx.openSetting({
+            success(res) {}
+          })
+        }
+      } else if (res.type === 0) {
+        this.toIssue(classType)
+      }
+    })
+  },
+  toIssue(classType) {
+    if (classType === 'singIn') {
+      if (this.data.tabBarBtnShow) {
+        this.tabBarStatus = 1
+      } else {
+        this.tabBarStatus = 2
+      }
+    } else if (classType === 'everyDay') {
+      this.closeEveryday()
+    }
+    wx.navigateTo({
+      url: `/pages/square/squarePost/squarePost?showSignIn=${true}`,
+    })
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -209,11 +259,21 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+
+    if (app.userInfo) {
+      this.getSignInInfo()
+    }
     if (typeof this.getTabBar === 'function' &&
       this.getTabBar()) {
       this.getTabBar().setData({
         selected: 2
       })
+      if (app.userInfo) {
+        if(!app.TabBar.squareTabBar) {
+          app.TabBar.squareTabBar =  this.getTabBar()
+        }
+        this.getTabBar().setIsNew()
+      }
       // app.getNotice(this, app.userInfo.id)
     }
     if (app.userInfo && app.myGetUserInfo) {
@@ -241,6 +301,7 @@ Page({
               show: false
             }, () => {
               app.signInComplete = false
+              console.log(app.signInInfo.signInSum, 2222222222222)
               this.setData({
                 signInSums: this.handleSignInSum(app.signInInfo.signInSum)
               })
@@ -252,10 +313,12 @@ Page({
                     showSignIn: true
                   })
                 } else {
-                  this.setData({
-                    type: 1,
-                    showSignIn: true
-                  })
+                  if (app.signInInfo.signInSum !== 30) {
+                    this.setData({
+                      type: 1,
+                      showSignIn: true
+                    })
+                  }
                 }
               } else {
                 let continuitys = this.data.continuitys
@@ -267,6 +330,11 @@ Page({
                   showSignIn: true,
                   continuitys,
                   continuity: app.signInInfo.continuity
+                })
+              }
+              if (app.signInInfo.signInSum == 30) {
+                this.setData({
+                  SignInThirty: true
                 })
               }
             })
@@ -657,12 +725,7 @@ Page({
 
     })
   },
-  bulletSignIn() {
-    this.closeEveryday()
-    wx.navigateTo({
-      url: `/pages/square/squarePost/squarePost?showSignIn=${true}`,
-    })
-  },
+
   determine() {
     this.recovery()
     this.setData({
@@ -678,6 +741,11 @@ Page({
     let index = e.currentTarget.dataset.index
     wx.navigateTo({
       url: `/pages/square/performance/allianceDetail/allianceDetail?id=${id}&index=${index}`,
+    })
+  },
+  closeThirty() {
+    this.setData({
+      SignInThirty: false
     })
   }
 })

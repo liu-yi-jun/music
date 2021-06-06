@@ -99,9 +99,13 @@
 .title {
   font-size: 28rpx;
   width: 75%;
-  line-height: 27rpx;
+  /* line-height: 27rpx; */
   padding-left: 10rpx;
   box-sizing: border-box;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  word-break: break-all;
   font-family: 'SH-Bold';
 }
 

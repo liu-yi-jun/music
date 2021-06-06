@@ -169,8 +169,8 @@ Page({
     const rules = {
       title: {
         required: true,
-        minlength: 4,
-        maxlength: 24
+        minlength: 6,
+        maxlength: 36
       },
       introduce: {
         required: true
@@ -179,8 +179,8 @@ Page({
     const messages = {
       title: {
         required: '请填写标题',
-        minlength: '标题不少于4个字符',
-        maxlength: '标题不大于24个字符'
+        minlength: '标题不少于6个字符',
+        maxlength: '标题不大于36个字符'
       },
       introduce: {
         required: '请填写详情'
@@ -381,13 +381,26 @@ Page({
         }).then((res) => {
           wx.hideLoading()
           if (res.type === 1) {
-            this.params = params
-            this.setData({
-              msgAuthorizationShow: true
+            common.Tip('为了更好通知到您，需要您授权相应权限，请接下来按照提示操作').then(res => {
+              this.setData({
+                msgAuthorizationShow: true
+              })
+              authorize.infoSubscribe(this.data.requestId).then(res => {
+                this.setData({
+                  msgAuthorizationShow: false
+                })
+                this.submitTeam(params)
+              })
             })
           } else if (res.type === -1) {
             if (!res.result.confirm) {
               this.submitTeam(params)
+            } else {
+              // 去开启
+              wx.openSetting({
+                success(res) {
+                }
+              })
             }
           } else if (res.type === 0) {
             this.submitTeam(params)
@@ -409,9 +422,6 @@ Page({
       common.Tip(err)
       wx.hideLoading()
     }
-  },
-  completeMsgAuthorization() {
-    this.submitTeam(this.params)
   },
   async submitTeam(params) {
     common.showLoading('发布中')

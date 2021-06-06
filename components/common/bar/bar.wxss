@@ -22,4 +22,15 @@
 .portion {
   padding: 0px 6rpx 4rpx;
   color: white;
+  position: relative;
+}
+
+.red {
+  position: absolute;
+  width: 15rpx;
+  height: 15rpx;
+  border-radius: 50%;
+  background-color: #FA5151;
+  right: -8rpx;
+  top: -6rpx;
 }

@@ -381,10 +381,24 @@ page {
   font-size: 35rpx;
 }
 
+.groupName {
+  word-wrap: break-word;
+  font-size: 26rpx;
+  font-weight: bold;
+  display: -webkit-box;
+  display: block;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  width: 178rpx;
+  margin: auto;
+  /* margin-bottom: 22rpx; */
+  margin-top: 10rpx;
+}
+
 .logoName {
-  font-family: 'SH-Normal';
-  font-weight: 400;
   display: flex;
+  text-align: center;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
@@ -393,6 +407,7 @@ page {
   height: 88rpx;
   bottom: 0;
   line-height: 30rpx;
+  width: 100%;
   left: 0;
   background: white;
 }
@@ -688,6 +703,21 @@ page {}
   visibility: hidden;
 }
 
+.indexGuide {
+  left: 40rpx;
+  top: 155rpx;
+  position: absolute;
+  width: 175rpx;
+  height: 135rpx;
+}
+
+.indexGuideText {
+  position: absolute;
+  left: 55rpx;
+  top: 300rpx;
+  color: white;
+}
+
 .leftGuide {
   position: absolute;
   left: 62%;
@@ -778,6 +808,7 @@ page {}
 .tab-bar-item image {
   width: 72rpx;
   height: 72rpx;
+  /* margin-top: 20rpx; */
   position: relative;
 }
 
@@ -811,7 +842,16 @@ page {}
 }
 
 
-
+.iconWrap >view {
+  font-size: 23rpx;
+  color: white;
+}
+.iconWrap {
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  align-items: center;
+}
 
 
 /* 首页部分 */
@@ -921,7 +961,8 @@ page {}
   .secondPart {
     height: 540rpx;
   }
-  .thirdPart  {
+
+  .thirdPart {
     height: 440rpx;
   }
 }
@@ -979,6 +1020,7 @@ page {}
   font-weight: bold;
   border-top: 1rpx solid #E9E9E9;
 }
+
 .hoverComplete {
   background-color: #E4E4E4;
 }
@@ -988,8 +1030,9 @@ page {}
   font-size: 36rpx;
   font-weight: bold;
   text-align: center;
-  padding:40rpx 0rpx;
+  padding: 40rpx 0rpx;
 }
+
 .popup-content {
   box-sizing: border-box;
   word-wrap: break-word;

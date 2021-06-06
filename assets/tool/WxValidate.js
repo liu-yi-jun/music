@@ -1,3 +1,4 @@
+let strlen = require('../../assets/tool/tool').strlen
 /**
  * 表单验证
  * 
@@ -143,13 +144,13 @@ class WxValidate {
              * 验证最小长度
              */
             minlength(value, param) {
-                return that.optional(value) || value.length >= param
+                return that.optional(value) || strlen(value) >= param
             },
             /**
              * 验证最大长度
              */
             maxlength(value, param) {
-                return that.optional(value) || value.length <= param
+                return that.optional(value) || strlen(value) <= param
             },
             /**
              * 验证一个长度范围[min, max]
@@ -208,7 +209,7 @@ class WxValidate {
     formatTpl(source, params) {
         const that = this
         if (arguments.length === 1) {
-            return function() {
+            return function () {
                 let args = Array.from(arguments)
                 args.unshift(source)
                 return that.formatTpl.apply(this, args)
@@ -223,8 +224,8 @@ class WxValidate {
         if (params.constructor !== Array) {
             params = [params]
         }
-        params.forEach(function(n, i) {
-            source = source.replace(new RegExp("\\{" + i + "\\}", "g"), function() {
+        params.forEach(function (n, i) {
+            source = source.replace(new RegExp("\\{" + i + "\\}", "g"), function () {
                 return n
             })
         })

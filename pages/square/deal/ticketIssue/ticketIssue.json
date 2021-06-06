@@ -3,6 +3,6 @@
     "issueHead": "/components/common/issueHead/issueHead",
     "navBar": "/components/navBar/navBar",
     "bottomBar": "/components/square/deal/bottomBar/bottomBar",
-    "msgAuthorization":"/components/common/msgAuthorization/msgAuthorization"
+    "guidMsgAuthor":"/components/common/guidMsgAuthor/guidMsgAuthor"
   }
 }

@@ -75,5 +75,4 @@
   </view>
   <linkDialog linkDialogShow="{{linkDialogShow}}" bind:completeInput="completeInput"></linkDialog>
 </view>
-<msgAuthorization wx:if="{{msgAuthorizationShow}}" bind:completeMsgAuthorization="completeMsgAuthorization"
-  msgAuthorizationShow="{{msgAuthorizationShow}}" requestId="{{requestId}}"></msgAuthorization>
+<guidMsgAuthor  msgAuthorizationShow="{{msgAuthorizationShow}}"></guidMsgAuthor>

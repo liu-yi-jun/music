@@ -21,13 +21,15 @@
     <!--    -->
     <image catchtap="switchFunctionBar" mode="aspectFill" class="logo" src="{{groupInfo.groupLogo}}">
       <view class="logoName">
-        <text class="organizationName">{{groupNameTop}}</text>
-        <text class="organization">{{groupNamebuttom}}</text>
+        <view class="groupName">{{groupInfo.groupName}}</view>
+        <!-- <text class="organizationName">{{groupNameTop}}</text>
+        <text class="organization">{{groupNamebuttom}}</text> -->
       </view>
     </image>
     <image class="follow" src="http://cdn.eigene.cn/home/follow{{groupInfo.isFollow?'ed':''}}.png" catchtap="follow">
     </image>
-    <view mark:district="functionBar" style="background-image: url('http://cdn.shengruo.top/home/massBackground.png');" class="functionBar {{functionBarShow? 'functionBarShow':''}}">
+    <view mark:district="functionBar" style="background-image: url('http://cdn.shengruo.top/home/massBackground.png');"
+      class="functionBar {{functionBarShow? 'functionBarShow':''}}">
       <view catchtap="goPuchCard" class="puchCard {{functionBarShow? 'puchCardShow':''}}">
         <image src="/images/home/puchCard.png"></image>
         <text>打卡</text>
@@ -106,45 +108,52 @@
   <view class="scroll-midguide" id="scroll-midguide" wx:if="{{member.length}}">
     <view class="scrollArea" catchtouchstart="touchstart" catchtouchend="touchend">
       <view class="section" mark:index="6"
-        style="bottom:{{style[0].bottom}}%; transform: scale({{style[0].scaleX}}, {{style[0].scaleY}}); opacity:{{style[0].opacity ? (showMember[5] ? 1:0): 0}}" wx:if="{{showMember[5]}}">
+        style="bottom:{{style[0].bottom}}%; transform: scale({{style[0].scaleX}}, {{style[0].scaleY}}); opacity:{{style[0].opacity ? (showMember[5] ? 1:0): 0}}"
+        wx:if="{{showMember[5]}}">
         <view class="avatarBackground">
-          <image mode="aspectFill"  class="avatar"  src="{{showMember[5].avatarUrl}}"></image>
+          <image mode="aspectFill" class="avatar" src="{{showMember[5].avatarUrl}}"></image>
         </view>
       </view>
       <view class="section" mark:index="5"
-        style="bottom:{{style[1].bottom}}%; transform: scale({{style[1].scaleX}}, {{style[1].scaleY}});  opacity:{{style[1].opacity ? (showMember[4] ? 1:0): 0}}" wx:if="{{showMember[4]}}">
+        style="bottom:{{style[1].bottom}}%; transform: scale({{style[1].scaleX}}, {{style[1].scaleY}});  opacity:{{style[1].opacity ? (showMember[4] ? 1:0): 0}}"
+        wx:if="{{showMember[4]}}">
         <view class="avatarBackground">
-          <image mode="aspectFill"  class="avatar"  src="{{showMember[4].avatarUrl}}"></image>
+          <image mode="aspectFill" class="avatar" src="{{showMember[4].avatarUrl}}"></image>
         </view>
       </view>
       <view class="section" mark:index="4"
-        style="bottom:{{style[2].bottom}}%; transform: scale({{style[2].scaleX}}, {{style[2].scaleY}});  opacity:{{style[2].opacity ? (showMember[3] ? 1:0): 0}}" wx:if="{{showMember[3]}}">
+        style="bottom:{{style[2].bottom}}%; transform: scale({{style[2].scaleX}}, {{style[2].scaleY}});  opacity:{{style[2].opacity ? (showMember[3] ? 1:0): 0}}"
+        wx:if="{{showMember[3]}}">
         <view class="avatarBackground">
-          <image mode="aspectFill"  class="avatar"  src="{{showMember[3].avatarUrl}}"></image>
+          <image mode="aspectFill" class="avatar" src="{{showMember[3].avatarUrl}}"></image>
         </view>
       </view>
       <view class="section" mark:index="3"
-        style="bottom:{{style[3].bottom}}%; transform: scale({{style[3].scaleX}}, {{style[3].scaleY}});  opacity:{{style[3].opacity ? (showMember[2] ? 1:0): 0}}"  wx:if="{{showMember[2]}}">
+        style="bottom:{{style[3].bottom}}%; transform: scale({{style[3].scaleX}}, {{style[3].scaleY}});  opacity:{{style[3].opacity ? (showMember[2] ? 1:0): 0}}"
+        wx:if="{{showMember[2]}}">
         <view class="avatarBackground">
-          <image mode="aspectFill"  class="avatar" src="{{showMember[2].avatarUrl}}"></image>
+          <image mode="aspectFill" class="avatar" src="{{showMember[2].avatarUrl}}"></image>
         </view>
       </view>
       <view class="section" mark:index="2"
-        style="bottom:{{style[4].bottom}}%; transform: scale({{style[4].scaleX}}, {{style[4].scaleY}});  opacity:{{style[4].opacity ? (showMember[1] ? 1:0): 0}}"  wx:if="{{showMember[1]}}">
+        style="bottom:{{style[4].bottom}}%; transform: scale({{style[4].scaleX}}, {{style[4].scaleY}});  opacity:{{style[4].opacity ? (showMember[1] ? 1:0): 0}}"
+        wx:if="{{showMember[1]}}">
         <view class="avatarBackground">
-          <image mode="aspectFill"  class="avatar" src="{{showMember[1].avatarUrl}}"></image>
+          <image mode="aspectFill" class="avatar" src="{{showMember[1].avatarUrl}}"></image>
         </view>
       </view>
       <view class="section" mark:index="1"
-        style="bottom:{{style[5].bottom}}%; transform: scale({{style[5].scaleX}}, {{style[5].scaleY}});  opacity:{{style[5].opacity ? (showMember[0] ? 1:0): 0}}" wx:if="{{showMember[0]}}">
+        style="bottom:{{style[5].bottom}}%; transform: scale({{style[5].scaleX}}, {{style[5].scaleY}});  opacity:{{style[5].opacity ? (showMember[0] ? 1:0): 0}}"
+        wx:if="{{showMember[0]}}">
         <view class="avatarBackground">
-          <image mode="aspectFill"  class="avatar"  src="{{showMember[0].avatarUrl}}"></image>
+          <image mode="aspectFill" class="avatar" src="{{showMember[0].avatarUrl}}"></image>
         </view>
       </view>
       <view class="section" mark:index="0"
-        style="bottom:{{style[6].bottom}}%; transform: scale({{style[6].scaleX}}, {{style[6].scaleY}});  opacity:{{style[6].opacity ? (showMember[6] ? 1:0): 0}}" wx:if="{{showMember[6]}}">
+        style="bottom:{{style[6].bottom}}%; transform: scale({{style[6].scaleX}}, {{style[6].scaleY}});  opacity:{{style[6].opacity ? (showMember[6] ? 1:0): 0}}"
+        wx:if="{{showMember[6]}}">
         <view class="avatarBackground">
-          <image mode="aspectFill"  class="avatar"  src="{{showMember[6].avatarUrl}}"></image>
+          <image mode="aspectFill" class="avatar" src="{{showMember[6].avatarUrl}}"></image>
         </view>
       </view>
     </view>
@@ -153,4 +162,5 @@
 </view>
 
 
-<menu id="menu" list="{{list}}" bind:handleStore="handleStore" bind:handleReport="handleReport" bind:hadleDelete="hadleDelete" bind:cancelMenu="cancelMenu"></menu>
+<menu id="menu" list="{{list}}" bind:handleStore="handleStore" bind:handleReport="handleReport"
+  bind:hadleDelete="hadleDelete" bind:cancelMenu="cancelMenu"></menu>

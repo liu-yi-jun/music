@@ -2,7 +2,7 @@
 .head {
   display: flex;
   border-bottom: 1rpx solid #b7b8b8;
-  height: 8.44vh;
+  min-height: 8.44vh;
   align-items: center;
   justify-content: space-between;
   box-sizing: border-box;

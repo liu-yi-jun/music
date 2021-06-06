@@ -20,6 +20,7 @@ Page({
     posterUrl: '',
     avatarUrl: '',
     nickName: '',
+    open: 0,
     // 控制连接弹窗
     dialogShow: false,
     imgNumber: 4,
@@ -45,26 +46,57 @@ Page({
     // 标注视频链接类型
     isVid: false,
     msgAuthorizationShow: false,
-    requestId: [app.InfoId.like, app.InfoId.content, app.InfoId.reply]
+    requestId: [app.InfoId.like, app.InfoId.content, app.InfoId.reply],
+    isEdit: false,
+    courseName: '',
+    courseId: 0
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    if (options.detail) this.initData(JSON.parse(options.detail), options.isEdit)
     this.initValidate()
     // 获取去除上面导航栏，剩余的高度
     tool.navExcludeHeight(this)
     this.getUserInfo()
 
   },
+  initData(detail, isEdit) {
+    this.oldForm = {
+      introduce: detail.introduce,
+      posterUrl: detail.posterUrl,
+      courseName: detail.courseName,
+      open: detail.open,
+      videoUrl: detail.videoUrl,
+      courseId: detail.id,
+      isEdit,
+    }
+    if (detail.videoUrl.includes('mp4')) {
+      // 是mp4链接
+      this.setData({
+        tempVideoPath: detail.videoUrl
+      })
+    } else {
+      this.setData({
+        linkUrl: detail.videoUrl,
+        isVid: true
+      })
+    }
+    this.setData({
+      ...this.oldForm,
+      tempPicturePaths: JSON.parse(JSON.stringify(detail.pictureUrls))
+    })
+    this.oldForm.tempPicturePaths = detail.pictureUrls
+  },
   //验证规则函数
   initValidate() {
     const rules = {
       courseName: {
         required: true,
-        minlength: 4,
-        maxlength: 100
+        minlength: 6,
+        maxlength: 120
       },
       introduce: {
         required: true,
@@ -75,8 +107,8 @@ Page({
 
       courseName: {
         required: '请填写课程名称',
-        minlength: '课程名称不少于4个字符',
-        maxlength: '课程名称不大于100个字符'
+        minlength: '课程名称不少于6个字符',
+        maxlength: '课程名称不大于120个字符'
       },
       introduce: {
         required: '请填写课程介绍',
@@ -243,9 +275,9 @@ Page({
     } = this.data
     let {
       voiceUrl,
-      pictureUrls,
       courseName,
-      introduce
+      introduce,
+      open
     } = params
     return new Promise((resolve, reject) => {
       if (!posterUrl) return reject('请添加课程封面海报')
@@ -254,6 +286,7 @@ Page({
         const error = this.WxValidate.errorList[0].msg
         return reject(error)
       }
+
       // if (!tempRecordPath && !voiceUrl) return reject('请添加课程音频')
       if (!tempVideoPath && !linkUrl) return reject('请添加课程视频')
       // if (!pictureUrls && !tempPicturePaths.length) return reject('请添加课程资料')
@@ -267,7 +300,8 @@ Page({
         courseName,
         introduce,
         duration,
-        pictureUrls: pictureUrls || '',
+        open: Number(open),
+        pictureUrls: tempPicturePaths || '',
         videoUrl: tempVideoPath || linkUrl,
         voiceUrl: voiceUrl || ''
       })
@@ -394,33 +428,95 @@ Page({
   async formSubmit(e) {
     let params = e.detail.value
     try {
+      console.log(11111111);
       params = await this.validate(params)
-      common.showLoading()
-      authorize.newSubscription(this.data.requestId, {
-        cancelText: '继续发布'
-      }).then((res) => {
-        wx.hideLoading()
-        if (res.type === 1) {
-          this.params = params
-          this.setData({
-            msgAuthorizationShow: true
-          })
-        } else if (res.type === -1) {
-          if (!res.result.confirm) {
+      console.log(22222222);
+      if (!this.data.isEdit) {
+        // 发布
+        console.log(33333333);
+        common.showLoading()
+        authorize.newSubscription(this.data.requestId, {
+          cancelText: '继续发布'
+        }).then((res) => {
+          wx.hideLoading()
+          if (res.type === 1) {
+            common.Tip('为了更好通知到您，需要您授权相应权限，请接下来按照提示操作').then(res => {
+              this.setData({
+                msgAuthorizationShow: true
+              })
+              authorize.infoSubscribe(this.data.requestId).then(res => {
+                this.setData({
+                  msgAuthorizationShow: false
+                })
+                this.submitTeam(params)
+              })
+            })
+          } else if (res.type === -1) {
+            if (!res.result.confirm) {
+              this.submitTeam(params)
+            } else {
+              // 去开启
+              wx.openSetting({
+                success(res) {}
+              })
+            }
+          } else if (res.type === 0) {
             this.submitTeam(params)
           }
-        } else if (res.type === 0) {
-          this.submitTeam(params)
+        })
+      } else {
+        // 编辑
+        common.showLoading('保存中')
+        let result = await this.saveCourse(params)
+        if (result.affectedRows) {
+          common.Toast('已保存')
+          this.goCourse()
         }
-      })
+      }
     } catch (err) {
       console.log(err)
       common.Tip(err)
       wx.hideLoading()
     }
   },
-  completeMsgAuthorization() {
-    this.submitTeam(this.params)
+  saveCourse(params) {
+    return new Promise(async (resolve, reject) => {
+      let flag = true
+      if (params.pictureUrls.length !== this.oldForm.tempPicturePaths.length) {
+        flag = false
+      } else {
+        params.pictureUrls.forEach((item, index) => {
+          console.log(this.oldForm.tempPicturePaths[index], item);
+          if (this.oldForm.tempPicturePaths[index] !== item) return flag = false
+        })
+      }
+
+      console.log(flag);
+      if (params.courseName == this.oldForm.courseName && flag && params.introduce == this.oldForm.introduce && params.posterUrl == this.oldForm.posterUrl && params.open == this.oldForm.open && params.videoUrl == this.oldForm.videoUrl) return resolve({
+        affectedRows: 1
+      })
+
+      if (params.posterUrl !== this.oldForm.posterUrl) params.posterUrl = await this.uploadImg([params.posterUrl])
+      if (!flag) {
+        params.pictureUrls = await this.uploadImg(params.pictureUrls)
+      }
+
+      if (params.videoUrl !== this.oldForm.videoUrl) {
+        let {
+          linkUrl,
+          tempVideoPath
+        } = this.data
+        if ((tempVideoPath && !linkUrl) || tempVideoPath && tempVideoPath !== this.oldForm.videoUrl) {
+          params.videoUrl = await this.uploadVideo(params.videoUrl)
+        }
+      }
+      app.post(app.Api.saveCourse, {
+        params: params,
+        id: this.data.courseId
+      }, {
+        loading: false
+      }).then(res => resolve(res)).catch(err => reject(err))
+    })
   },
   async submitTeam(params) {
     let {

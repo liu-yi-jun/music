@@ -195,7 +195,7 @@ Page({
         if (item.videoUrl && item.videoUrl.includes('mp4')) {
           item.mp4Video = true
         }
-        item.pageSize = 10
+        item.pageSize = 30
         item.pageIndex = 1
         item.soundRowArr = []
         item.pagingGroupCardRecordIsNoData = false
@@ -221,7 +221,7 @@ Page({
         }
         if (!this.data.groupCards.length) {
           if (!this.data.isMyGroup || this.data.groupDuty == -1 || this.data.groupDuty == 2) {
-            return common.Tip('暂时还没有打卡信息，等待管理员或组长发布').then(res=> {
+            return common.Tip('暂时还没有打卡信息，等待管理员或组长发布').then(res => {
               wx.navigateBack()
             })
           }
@@ -659,6 +659,28 @@ Page({
       wx.setStorageSync('guide', guide)
     }
   },
+  hadleDelete(e) {
+    common.Tip('是否删除该打卡', '提示', '确认', true).then(res => {
+      if (res.confirm) {
+        let index = e.currentTarget.dataset.index
+        let groupCards = this.data.groupCards
+        app.post(app.Api.cardDelete, {
+          id: groupCards[index].id
+        }, {
+          loading: ['删除中']
+        }).then(res => {
+          if (res.affectedRows) {
+            groupCards.splice(index, 1)
+            this.setData({
+              swiperCurrent: 0,
+              cardCurrent: 0,
+              groupCards
+            })
+          }
+        })
+      }
+    })
+  },
   longpress(e) {
     this.setData({
       longpressIndex: e.currentTarget.dataset.j,
@@ -701,11 +723,11 @@ Page({
       wx.showActionSheet({
         itemList: ['举报'],
         success: res => {
-            core.handleReport({
-              userId: app.userInfo.id,
-              theme: 'groupcardrecord',
-              themeId: soundRowArr[j].id
-            })
+          core.handleReport({
+            userId: app.userInfo.id,
+            theme: 'groupcardrecord',
+            themeId: soundRowArr[j].id
+          })
         }
       })
     }

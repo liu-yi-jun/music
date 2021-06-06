@@ -31,19 +31,16 @@ Page({
     isPlay: false,
     actIndex: 0,
     barList: [{
-        name: '评论',
-      },
-      {
-        name: '课程资料'
-      },
-    ],
+      name: '评论',
+    }],
     list: [{
       name: '举报',
       open_type: '',
       functionName: 'handleReport'
     }],
     mp4Video: false,
-    intoId:''
+    intoId: '',
+    userId: 0,
     // list: [{
     //   name: '分享',
     //   open_type: 'share',
@@ -63,7 +60,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let id = options.id
+    this.setData({
+      userId: app.userInfo.id
+    })
+    let id = this.id = options.id
     this.getCourseDetail(id)
     this.getCourseCommont(id)
     this.table = 'groupcourse'
@@ -171,6 +171,29 @@ Page({
         this.setData({
           mp4Video: true
         })
+      } else {
+        this.setData({
+          mp4Video: false
+        })
+      }
+      if (detail.pictureUrls && detail.pictureUrls.length) {
+        this.setData({
+          barList: [{
+              name: '评论',
+            },
+            {
+              name: '课程资料',
+            }
+          ],
+          actIndex: 1
+        })
+      } else {
+        this.setData({
+          barList: [{
+            name: '评论',
+          }],
+          actIndex: 0
+        })
       }
       this.setData({
         datumUrls: detail.pictureUrls,
@@ -208,7 +231,14 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    if (app.addCourseBack) {
+      this.data.commentArr = []
+      this.data.commentPaging.pageIndex = 1
+      this.data.IsNoData = false
+      this.data.mp4Video = false
+      this.getCourseDetail(this.id)
+      this.getCourseCommont(this.id)
+    }
   },
 
   /**
@@ -363,12 +393,15 @@ Page({
   },
   showMenu(e) {
     if (app.userInfo.id === this.data.detail.userId) {
-      let list = this.data.list
-      list[0] = {
+      let list = [{
+        name: '编辑',
+        open_type: '',
+        functionName: 'handleEdit'
+      }, {
         name: '删除',
         open_type: '',
         functionName: 'hadleDelete'
-      }
+      }]
       this.setData({
         list
       }, () => {
@@ -377,6 +410,12 @@ Page({
     } else {
       this.selectComponent('#menu').show();
     }
+  },
+  handleEdit(e) {
+    let detail = JSON.stringify(this.data.detail)
+    wx.navigateTo({
+      url: `/pages/home/course/addCourse/addCourse?detail=${detail}&isEdit=1`,
+    })
   },
   handleStore() {
     let detail = this.data.detail
@@ -430,6 +469,20 @@ Page({
       } else {
         common.Toast('该课程已不存在')
       }
+    })
+  },
+  followUser() {
+    let detail = this.data.detail
+    this.setData({
+      'detail.isFollow': !detail.isFollow,
+    }, () => {
+      core.operateFollow(app.Api.followUser, {
+        operate: detail.isFollow,
+        relation: {
+          userId: app.userInfo.id,
+          otherId: detail.userId,
+        }
+      })
     })
   },
   //切换btn 

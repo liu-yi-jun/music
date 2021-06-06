@@ -82,7 +82,8 @@
 .avatarAreaWrap {
   display: flex;
   box-sizing: border-box;
-
+  align-items: center;
+  justify-content: space-between;
 }
 
 .avatarVoiceWrap {
@@ -204,8 +205,11 @@
 .delete {
   width: 70rpx;
   font-size: 36rpx;
+  flex-shrink: 0;
+  height: 70rpx;
   color: white;
   text-align: center;
+  flex-shrink: 0;
 }
 
 .barWrap {
@@ -217,5 +221,25 @@
 .title-showMenu {
   display: flex;
   width: 100%;
+  /* align-items: center; */
   justify-content: space-between;
+}
+
+.follow {
+  border-radius: 999rem;
+  font-size: 24rpx !important;
+  background: #B37AE5;
+  line-height: 45rpx !important;
+  text-align: center;
+  color: white;
+  box-shadow: 0rpx 0rpx 10rpx 4rpx rgba(0, 0, 0, .1);
+  width: 120rpx !important;
+  height: 45rpx !important;
+}
+.followed {
+  background: #B4B4B5;
+}
+
+.avatar-organization {
+  display: flex;
 }

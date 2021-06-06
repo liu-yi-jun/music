@@ -2,7 +2,7 @@
   "usingComponents": {
     "navBar": "/components/navBar/navBar",
     "authorization":"/components/common/authorization/authorization",
-    "msgAuthorization":"/components/common/msgAuthorization/msgAuthorization"
+    "guidMsgAuthor":"/components/common/guidMsgAuthor/guidMsgAuthor"
   },
   "disableScroll": true
 }

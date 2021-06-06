@@ -400,7 +400,7 @@ Page({
     app.post(app.Api[tableName + 'Delete'], {
       tableName,
       id,
-      groupId: app.groupInfo.id
+      // groupId: app.groupInfo.id
     }, {
       loading: false
     }).then(res => {

@@ -33,7 +33,6 @@
 }
 
 .name {
-  margin-top: 16rpx;
   font-size: 36rpx;
   font-weight: 800;
   line-height: 42rpx;
@@ -110,17 +109,15 @@
 .avatarName {
   text-align: center;
   color: white;
-  width: 220rpx;
+  /* width: 220rpx; */
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   position: absolute;
   top: 251rpx;
-  left: 0;
-  right: 0;
-  margin: 0 auto;
-  z-index: 99;
+  transform:translateX(-50%);
+  left: 50%;
 }
 
 .list{
@@ -154,4 +151,11 @@
 
 .groupName {
   font-family: 'SH-bold';
+}
+
+.name-nameBotoom {
+  margin-top: 16rpx;
+  background-color: rgba(0, 0, 0, 0.3);
+  padding: 2rpx 40rpx;
+  border-radius: 10rpx;
 }

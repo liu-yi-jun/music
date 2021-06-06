@@ -12,7 +12,7 @@ Page({
     // 去除上面导航栏，剩余的高度
     excludeHeight: 0,
     coursePaging: {
-      pageSize: 3,
+      pageSize: 20,
       pageIndex: 1,
       isNotData: false,
       minID: 0

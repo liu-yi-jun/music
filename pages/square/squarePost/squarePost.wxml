@@ -84,10 +84,9 @@
       <view class="item"><text class="shallow">凡发表以下内容视为一次</text><text class="emphasize">有效签到</text> </view>
       <view class="item"><text class="shallow">内容一：分享与</text><text class="emphasize">音乐相关</text><text
           class="shallow">的内容（包括但不仅限于乐评、提问、活动体验、乐器演奏音视频等，请勿搬运网络现有内容）</text></view>
-      <view class="item"><text class="shallow">内容二：分享</text><text class="emphasize">生活向的心情和动态</text></view>
+      <view class="item"><text class="shallow">内容二：分享</text><text class="emphasize">生活中的心情和动态</text></view>
       <view class="item"><text class="shallow">内容三：参与</text><text class="emphasize">话题互动</text></view>
-      <view class="item"><text class="shallow">*请遵循</text><text class="underline" catchtap="standard">MUSIC
-          MONSTER用户行为规范</text></view>
+      <view class="item"><text class="shallow">*请遵循</text><text class="underline" catchtap="standard">MUSIC MONSTER用户行为规范</text></view>
     </view>
     <view class="createWarp">
       <button class="create" catchtap="close">我已了解</button>
@@ -95,5 +94,4 @@
   </view>
 </view>
 
-<msgAuthorization wx:if="{{msgAuthorizationShow}}" bind:completeMsgAuthorization="completeMsgAuthorization"
-  msgAuthorizationShow="{{msgAuthorizationShow}}" requestId="{{requestId}}"></msgAuthorization>
+<guidMsgAuthor  msgAuthorizationShow="{{msgAuthorizationShow}}"></guidMsgAuthor>

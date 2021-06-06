@@ -30,7 +30,7 @@
         <view class="btnWrap">
           <block wx:if="{{item.message.jsonDate.status == 0}}">
             <view catchtap="refuseApply" data-index="{{index}}">拒绝</view>
-            <view catchtap="agreeApply" data-index="{{index}}">同意</view>
+            <view catchtap="agreeApply" data-index="{{index}}" data-id="{{item.message.id}}">同意</view>
           </block>
           <block wx:else>
             <block wx:if="{{item.message.jsonDate.status == 1}}">

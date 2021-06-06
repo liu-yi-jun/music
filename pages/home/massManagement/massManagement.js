@@ -16,6 +16,7 @@ Page({
     tempFilePaths: [],
     groupInfo: [],
     describe: '',
+    groupName: '',
     privates: 0,
     examine: 0,
     groupDuty: 0,
@@ -47,9 +48,10 @@ Page({
         groupInfo: app.groupInfo,
         privates: app.groupInfo.privates,
         examine: app.groupInfo.examine,
+        groupName: app.groupInfo.groupName,
         tempFilePaths: [app.groupInfo.groupLogo],
         describe: app.groupInfo.introduce,
-        groupDuty: app.userInfo.groupDuty
+        groupDuty: app.userInfo.groupDuty,
       })
     }
 
@@ -241,33 +243,39 @@ Page({
   },
   save: async function () {
     console.log(1);
-    const params = await this.validate()
-    if (params) {
-      if (this.tempFilePaths) {
-        let tempFilePaths = await this.uploadImg(this.data.tempFilePaths)
-        params.groupLogo = tempFilePaths[0]
-      }
-      let modifyResult = await this.modifyGroup(params)
+    try {
+      const params = await this.validate()
+      if (params) {
+        if (this.tempFilePaths) {
+          let tempFilePaths = await this.uploadImg(this.data.tempFilePaths)
+          params.groupLogo = tempFilePaths[0]
+        }
+        let {userInfo,groupInfo} = await this.modifyGroup(params)
 
-      modifyResult.myGrouList = app.groupInfo.myGrouList
-      app.groupInfo = modifyResult
-      if (modifyResult) {
+        groupInfo.myGrouList = app.groupInfo.myGrouList
+        app.groupInfo = groupInfo
+        if(userInfo) app.userInfo = userInfo
+        if (groupInfo) {
+          common.Toast('已保存', 1500, 'success')
+          app.switchData.isModifyGroup = true
+          setTimeout(() => {
+            wx.navigateBack()
+          }, 1500)
+
+        } else {
+          common.Toast('保存失败,请稍后重试')
+        }
+      } else {
         common.Toast('已保存', 1500, 'success')
-        app.switchData.isModifyGroup = true
         setTimeout(() => {
           wx.navigateBack()
         }, 1500)
-
-      } else {
-        common.Toast('保存失败,请稍后重试')
       }
-    } else {
-      common.Toast('已保存', 1500, 'success')
-      setTimeout(() => {
-        wx.navigateBack()
-      }, 1500)
+    } catch (err) {
+      common.Tip(err)
+      console.log(err)
+      wx.hideLoading()
     }
-
   },
   onUnload: async function () {
     console.log('onUnload')
@@ -287,30 +295,49 @@ Page({
     let oldPrivate = app.groupInfo.privates
     let oldExamine = app.groupInfo.examine
     let introduce = app.groupInfo.introduce
+    let oldGroupName = app.groupInfo.groupName
     let {
       tempFilePaths,
+      groupName,
       describe,
       privates,
       examine
     } = this.data
     return new Promise((resolve, reject) => {
-      if (tempFilePaths[0] != app.groupInfo.groupLogo || describe != introduce || oldPrivate != privates || oldExamine != examine) {
+      if (tempFilePaths[0] != app.groupInfo.groupLogo || describe != introduce || oldPrivate != privates || oldExamine != examine || groupName != oldGroupName) {
+        console.log(tool.strlen(groupName));
+        if (tool.strlen(groupName) < 6) {
+          return reject('小组名称不少于6个字符')
+        }
+        if (tool.strlen(groupName) > 24) {
+          return reject('小组名称不大于24个字符')
+        }
         resolve({
           groupLogo: tempFilePaths[0],
           privates,
           examine,
+          groupName,
           introduce: describe,
-          id: app.groupInfo.id
+          id: app.groupInfo.id,
+          isModifyGroupName:groupName != oldGroupName,
+          userId:app.userInfo.id
         })
       } else {
         resolve()
       }
     })
   },
+  inputGroupName(event) {
+    clearTimeout(this.timeout1)
+    this.timeout1 = setTimeout(() => {
+      this.setData({
+        groupName: event.detail.value
+      })
+    }, 500);
+  },
   inputDescribe(event) {
-    console.log(event.detail.value)
-    clearTimeout(this.timeout)
-    this.timeout = setTimeout(() => {
+    clearTimeout(this.timeout2)
+    this.timeout2 = setTimeout(() => {
       this.setData({
         describe: event.detail.value
       })
@@ -445,12 +472,28 @@ Page({
   },
   async changeExamine(event) {
     if (Number(event.detail.value)) {
-      authorize.newSubscription(this.data.requestId).then((res) => {
+      authorize.newSubscription(this.data.requestId, {
+        cancelText: '取消'
+      }).then((res) => {
         wx.hideLoading()
         if (res.type === 1) {
-          this.setData({
-            msgAuthorizationShow: true
+          common.Tip('为了更好通知到您，需要您授权相应权限，请接下来按照提示操作').then(res => {
+            this.setData({
+              msgAuthorizationShow: true
+            })
+            authorize.infoSubscribe(this.data.requestId).then(res => {
+              this.setData({
+                msgAuthorizationShow: false
+              })
+            })
           })
+        } else if (res.type === -1) {
+          if (res.result.confirm) {
+            // 去开启
+            wx.openSetting({
+              success(res) {}
+            })
+          }
         }
       })
     }

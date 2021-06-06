@@ -7,16 +7,18 @@ let app = getApp()
 
 // console.log('socketsocket',socket);
 
-function initSocketEvent() {
+function initSocketEvent(isLogin = true) {
   if (app.isLogin) return
   const socket = (app.socket = io(app.socketUrls.baseUrl))
   app.isLogin = true
   socket.on('connect', () => {
     console.log('连接成功')
-    let user = {
-      userId: app.userInfo.id,
+    if (isLogin) {
+      let user = {
+        userId: app.userInfo.id,
+      }
+      socket.emit("login", user);
     }
-    socket.emit("login", user);
     // socket.emit("getmessage");
   })
 
@@ -52,7 +54,23 @@ function initSocketEvent() {
       key: 'systemMsg',
     })
   })
+  app.onMsg('updateSystemMsg', (data) => {
+    let systemMsg = wx.getStorageSync('systemMsg')
+    let obj = data[0]
+    obj = JSON.parse(obj)
+    let flag = false
+    systemMsg.forEach((item, index) => {
+      if (obj.message.msgId === item.message.id) {
+        flag = true
+        systemMsg.splice(index, 1)
+        return
+      }
+    })
+    if (flag) {
+      wx.setStorageSync('systemMsg', systemMsg)
+    }
 
+  })
   // 之前的socket，不删除
   // socket.on("message", (from, to, message) => {
   //   console.log('okok')

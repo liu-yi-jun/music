@@ -8,9 +8,11 @@ Component({
       type: Array,
       value: [{
           name: '动态',
+          isNew:false
         },
         {
-          name: '课程'
+          name: '课程',
+          isNew:false
         }
       ]
     },

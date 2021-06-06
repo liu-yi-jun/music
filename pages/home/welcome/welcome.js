@@ -122,13 +122,27 @@ Page({
         }).then((res) => {
           wx.hideLoading()
           if (res.type === 1) {
-            this.setData({
-              msgAuthorizationShow: true
+            common.Tip('为了更好通知到您，需要您授权相应权限，请接下来按照提示操作').then(res => {
+              this.setData({
+                msgAuthorizationShow: true
+              })
+              authorize.infoSubscribe(this.data.requestId).then(res => {
+                this.setData({
+                  msgAuthorizationShow: false,
+                  applyShow: true
+                })
+              })
             })
           } else if (res.type === -1) {
             if (!res.result.confirm) {
               this.setData({
                 applyShow: true
+              })
+            } else {
+              // 去开启
+              wx.openSetting({
+                success(res) {
+                }
               })
             }
           } else if (res.type === 0) {
@@ -148,12 +162,6 @@ Page({
         }).catch(err => reject(err))
       }
     }
-  },
-  completeMsgAuthorization() {
-    this.setData({
-      msgAuthorizationShow: false,
-      applyShow: true
-    })
   },
   cancelApply() {
     this.setData({
@@ -182,6 +190,7 @@ Page({
           userIdList: res.userIdList
         },
         message = {
+          id: new Date().getTime(),
           type: 1,
           jsonDate: {
             groupId: groupInfo.id,

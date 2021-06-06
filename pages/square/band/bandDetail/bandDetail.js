@@ -97,6 +97,7 @@ Page({
    */
   onShow: function () {
     if (app.bandBack) {
+      this.data.commentArr = []
       this.setData({
         'commentPaging.pageIndex': 1,
         IsNoData: false,

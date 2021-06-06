@@ -7,8 +7,8 @@
 <image class="socialManagement" catchtap="pullPage" wx:if="{{isShowPull}}"
   style="background-image: url({{qiniuUrl}}/home/switchGroup.png); background-size: 43rpx 37rpx;"></image>
 <!-- <block wx:if="{{isShowGroup}}"> -->
-  <!-- bindtouchstart="tapStart" bindtouchend="tapEnd" -->
-<view wx:if="{{isShowGroup===true}}" class="home" catchtap="tap"   >
+<!-- bindtouchstart="tapStart" bindtouchend="tapEnd" -->
+<view wx:if="{{isShowGroup===true}}" class="home" catchtap="tap">
   <!-- style="background: url(/images/home/background.png) no-repeat;" -->
   <view class="homebg"
     style="background: url({{qiniuUrl}}/home/background1.png) no-repeat; background-size: 100% 100%;">
@@ -31,13 +31,15 @@
   <view class="logoWrap" mark:district="logoWrap">
     <image mode="aspectFill" class="logo" catchtap="switchFunctionBar" src="{{groupInfo.groupLogo}}">
       <view class="logoName">
-        <text class="organizationName">{{groupNameTop}}</text>
-        <text class="organization">{{groupNamebuttom}}</text>
+        <view class="groupName">{{groupInfo.groupName}}</view>
+        <!-- <text class="organizationName">{{groupNameTop}}</text>
+        <text class="organization">{{groupNamebuttom}}</text> -->
       </view>
     </image>
     <image class="follow" src="/images/home/follow{{groupInfo.isFollow?'ed':''}}.png" catchtap="follow">
     </image>
-    <view mark:district="functionBar" class="functionBar {{functionBarShow? 'functionBarShow':''}}" style="background-image: url('{{qiniuUrl}}/home/massBackground.png');">
+    <view mark:district="functionBar" class="functionBar {{functionBarShow? 'functionBarShow':''}}"
+      style="background-image: url('{{qiniuUrl}}/home/massBackground.png');">
       <view catchtap="goPuchCard" class="puchCard {{functionBarShow? 'puchCardShow':''}}">
         <image src="/images/home/puchCard.png"></image>
         <text>打卡</text>
@@ -53,7 +55,8 @@
     </view>
   </view>
   <view mark:district="dynamic" class="dynamicShowBackground {{dynamicIsShow?'showDynamic':'hideDynamic'}}"
-  style="background-image: url('{{qiniuUrl}}/home/dynamicShowBackground1.png');"  bindtouchstart="dynamicTouchstart"  bindtouchend="dynamicTouchend">
+    style="background-image: url('{{qiniuUrl}}/home/dynamicShowBackground1.png');" bindtouchstart="dynamicTouchstart"
+    bindtouchend="dynamicTouchend">
     <text class="userName">{{showContent.nickName}}</text>
     <view class="title-time">
       <text class="title">{{showContent.introduce}}</text>
@@ -92,51 +95,59 @@
   <view class="scroll-midguide" id="scroll-midguide" wx:if="{{member.length}}">
     <view class="scrollArea" catchtouchstart="touchstart" catchtouchend="touchend">
       <view class="section" mark:index="6"
-        style="bottom:{{style[0].bottom}}%; transform: scale({{style[0].scaleX}}, {{style[0].scaleY}}); opacity:{{style[0].opacity ? (showMember[5] ? 1:0): 0}}" wx:if="{{showMember[5]}}">
+        style="bottom:{{style[0].bottom}}%; transform: scale({{style[0].scaleX}}, {{style[0].scaleY}}); opacity:{{style[0].opacity ? (showMember[5] ? 1:0): 0}}"
+        wx:if="{{showMember[5]}}">
         <view class="avatarBackground">
           <image mode="aspectFill" class="avatar" src="{{showMember[5].avatarUrl}}"></image>
         </view>
-  
+
       </view>
       <view class="section" mark:index="5"
-        style="bottom:{{style[1].bottom}}%; transform: scale({{style[1].scaleX}}, {{style[1].scaleY}});  opacity:{{style[1].opacity ? (showMember[4] ? 1:0): 0}}"  wx:if="{{showMember[4]}}">
+        style="bottom:{{style[1].bottom}}%; transform: scale({{style[1].scaleX}}, {{style[1].scaleY}});  opacity:{{style[1].opacity ? (showMember[4] ? 1:0): 0}}"
+        wx:if="{{showMember[4]}}">
         <view class="avatarBackground">
           <image mode="aspectFill" class="avatar" src="{{showMember[4].avatarUrl}}"></image>
         </view>
-        <view class="section-after" style="background: url(/images/home/avatarBackground.png);background-size:110% 110%; "></view>
+        <view class="section-after"
+          style="background: url(/images/home/avatarBackground.png);background-size:110% 110%; "></view>
       </view>
       <view class="section" mark:index="4"
-        style="bottom:{{style[2].bottom}}%; transform: scale({{style[2].scaleX}}, {{style[2].scaleY}});  opacity:{{style[2].opacity ? (showMember[3] ? 1:0): 0}}" wx:if="{{showMember[3]}}">
+        style="bottom:{{style[2].bottom}}%; transform: scale({{style[2].scaleX}}, {{style[2].scaleY}});  opacity:{{style[2].opacity ? (showMember[3] ? 1:0): 0}}"
+        wx:if="{{showMember[3]}}">
         <view class="avatarBackground">
-          <image mode="aspectFill" class="avatar"  src="{{showMember[3].avatarUrl}}"></image>
+          <image mode="aspectFill" class="avatar" src="{{showMember[3].avatarUrl}}"></image>
         </view>
 
       </view>
       <view class="section" mark:index="3"
-        style="bottom:{{style[3].bottom}}%; transform: scale({{style[3].scaleX}}, {{style[3].scaleY}});  opacity:{{style[3].opacity ? (showMember[2] ? 1:0): 0}}" wx:if="{{showMember[2]}}">
+        style="bottom:{{style[3].bottom}}%; transform: scale({{style[3].scaleX}}, {{style[3].scaleY}});  opacity:{{style[3].opacity ? (showMember[2] ? 1:0): 0}}"
+        wx:if="{{showMember[2]}}">
         <view class="avatarBackground">
-          <image mode="aspectFill" class="avatar"  src="{{showMember[2].avatarUrl}}"></image>
+          <image mode="aspectFill" class="avatar" src="{{showMember[2].avatarUrl}}"></image>
         </view>
 
       </view>
       <view class="section" mark:index="2"
-        style="bottom:{{style[4].bottom}}%; transform: scale({{style[4].scaleX}}, {{style[4].scaleY}});  opacity:{{style[4].opacity ? (showMember[1] ? 1:0): 0}}" wx:if="{{showMember[1]}}" >
+        style="bottom:{{style[4].bottom}}%; transform: scale({{style[4].scaleX}}, {{style[4].scaleY}});  opacity:{{style[4].opacity ? (showMember[1] ? 1:0): 0}}"
+        wx:if="{{showMember[1]}}">
         <view class="avatarBackground">
           <image mode="aspectFill" class="avatar" src="{{showMember[1].avatarUrl}}"></image>
         </view>
 
       </view>
       <view class="section" mark:index="1"
-        style="bottom:{{style[5].bottom}}%; transform: scale({{style[5].scaleX}}, {{style[5].scaleY}});  opacity:{{style[5].opacity ? (showMember[0] ? 1:0): 0}}" wx:if="{{showMember[0]}}">
+        style="bottom:{{style[5].bottom}}%; transform: scale({{style[5].scaleX}}, {{style[5].scaleY}});  opacity:{{style[5].opacity ? (showMember[0] ? 1:0): 0}}"
+        wx:if="{{showMember[0]}}">
         <view class="avatarBackground">
-          <image mode="aspectFill" class="avatar"  src="{{showMember[0].avatarUrl}}"></image>
+          <image mode="aspectFill" class="avatar" src="{{showMember[0].avatarUrl}}"></image>
         </view>
 
       </view>
       <view class="section" mark:index="0"
-        style="bottom:{{style[6].bottom}}%; transform: scale({{style[6].scaleX}}, {{style[6].scaleY}});  opacity:{{style[6].opacity ? (showMember[6] ? 1:0): 0}}" wx:if="{{showMember[6]}}">
+        style="bottom:{{style[6].bottom}}%; transform: scale({{style[6].scaleX}}, {{style[6].scaleY}});  opacity:{{style[6].opacity ? (showMember[6] ? 1:0): 0}}"
+        wx:if="{{showMember[6]}}">
         <view class="avatarBackground">
-          <image mode="aspectFill" class="avatar"  src="{{showMember[6].avatarUrl}}"></image>
+          <image mode="aspectFill" class="avatar" src="{{showMember[6].avatarUrl}}"></image>
         </view>
 
       </view>
@@ -164,6 +175,11 @@
   </view> -->
 </view>
 <view class="guideMask {{homeGuide?'showGuide': 'hideGuide'}} {{cross?'cross':''}}" catchtap="stopBubbling">
+  <block wx:if="{{indexGuide}}">
+    <image class="indexGuide" src="/images/home/leftGuide.png" catchtap="click" data-click="indexGuide">
+    </image>
+    <view class="indexGuideText" catchtap="click" data-click="indexGuide">“切换首页”</view>
+  </block>
   <block wx:if="{{leftGuide}}">
     <image class="leftGuide" src="/images/home/leftGuide.png" catchtap="click" data-click="leftGuide">
     </image>
@@ -187,16 +203,28 @@
 </view>
 <view class="fakeTab-bar {{showFakeTab?'':'hideFakeTab-bar'}}">
   <view class="tab-bar-item">
-    <image src="../../images/homeSelect.png"></image>
+    <view class="iconWrap">
+      <image src="../../images/homeSelect.png"></image>
+      <view>小组</view>
+    </view>
   </view>
   <view class="tab-bar-item">
-    <image src="../../images/tool.png"></image>
+    <view class="iconWrap">
+      <image src="../../images/tool.png"></image>
+      <view>工具</view>
+    </view>
   </view>
   <view class="tab-bar-item">
-    <image src="../../images/square.png"></image>
+    <view class="iconWrap">
+      <image src="../../images/square.png"></image>
+      <view>广场</view>
+    </view>
   </view>
   <view class="tab-bar-item">
-    <image src="../../images/my.png"></image>
+    <view class="iconWrap">
+      <image src="../../images/my.png"></image>
+      <view>我的</view>
+    </view>
   </view>
 </view>
 <showTabBar tabBarBtnShow="{{tabBarBtnShow}}">
@@ -204,19 +232,19 @@
 <!-- </block> -->
 <!-- bindtouchstart="indexStart" 
 bindtouchend="indexEnd"  -->
-<view class="pageBackground" 
+<view class="pageBackground"
   style="transform: translateY({{isShowGroup?'-106':'0'}}%); background: url({{qiniuUrl}}/home/pageBackground2.png) no-repeat;  background-size: 100% 100%;">
   <image class="indexLogo" src="/images/home/index-logo.png"></image>
   <view mark:district="fold" class="fold" style="background-image: url({{qiniuUrl}}/home/fold1.png);">
-    <view class="firstPart"  catchtap="toUnion">
+    <view class="firstPart" catchtap="toUnion">
     </view>
     <view class="secondPart" catchtap="toGroupSettlement">
     </view>
     <view class="thirdPart" catchtap="toMyGroup">
     </view>
     <image class="unionText" src="/images/home/unionText1.png"></image>
-    <image class="settle" src="/images/home/settle1.png" ></image>
-    <image class="my" src="/images/home/my1.png" ></image>
+    <image class="settle" src="/images/home/settle1.png"></image>
+    <image class="my" src="/images/home/my1.png"></image>
   </view>
 </view>
 
@@ -224,12 +252,12 @@ bindtouchend="indexEnd"  -->
   bind:hadleDelete="hadleDelete" bind:cancelMenu="cancelMenu"></menu>
 
 
-  <!-- 邀请码 -->
-  <view catchtap="cancelPopup" catchtouchmove="touchmove" class="mask {{showCode? 'shadeShow':''}}">
+<!-- 邀请码 -->
+<view catchtap="cancelPopup" catchtouchmove="touchmove" class="mask {{showCode? 'shadeShow':''}}">
   <view class="popup" catchtap="return">
     <view class="popup-title">邀请码</view>
     <view class="popup-content">
-      <input wx:if="{{showCode}}" maxlength="8" cursor-spacing="120" bindinput="inputCode" class="popupTextarea" 
+      <input wx:if="{{showCode}}" maxlength="8" cursor-spacing="120" bindinput="inputCode" class="popupTextarea"
         value="{{linkUrl}}" type="text" placeholder="请输入邀请码"></input>
     </view>
     <view hover-stay-time="{{100}}" hover-class="hoverComplete" class="complete" catchtap="complete">完成</view>

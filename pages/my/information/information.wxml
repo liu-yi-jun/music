@@ -13,7 +13,7 @@
       </privateLetter>
     </view>
     <view hidden="{{actIndex !== 0}}">
-      <inform informs="{{informs}}">
+      <inform informs="{{informs}}" bind:updateNew="updateNew">
       </inform>
     </view>
     <view hidden="{{actIndex !== 1}}">

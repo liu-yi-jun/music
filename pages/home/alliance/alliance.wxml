@@ -32,7 +32,7 @@
 <view class="shade {{applyShow? 'shadeShow':''}}" mark:district="shade">
   <view class="applyDialog">
     <text class="groupApply">请提交您的小组申请</text>
-    <textarea wx:if="{{applyShow}}" bindinput="inputApply" class="applyContent" name="applyContent" id=""
+    <textarea wx:if="{{applyShow}}" cursor-spacing="{{170}}" bindinput="inputApply" class="applyContent" name="applyContent" id=""
       maxlength="100" placeholder="100字以内" placeholder-class="applyPlaceholder"></textarea>
     <view class="choose">
       <image catchtap="cancelApply" src="/images/groupList/delete.png" ></image>
@@ -43,4 +43,4 @@
 
 <authorization  dialogShow="{{dialogShow}}"></authorization>
 
-<msgAuthorization wx:if="{{msgAuthorizationShow}}" bind:completeMsgAuthorization="completeMsgAuthorization"  msgAuthorizationShow="{{msgAuthorizationShow}}" requestId="{{requestId}}"></msgAuthorization>
+<guidMsgAuthor  msgAuthorizationShow="{{msgAuthorizationShow}}"></guidMsgAuthor>

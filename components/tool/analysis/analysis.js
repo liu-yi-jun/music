@@ -158,6 +158,7 @@ Component({
     created: function () {
       let that = this
       authorize.authSettingRecord().then(() => {
+        console.log('创建，创建');
         that.can = true
         that.canPonit = true
         // 初始化录音设备
@@ -172,13 +173,13 @@ Component({
       this.getTop()
       this.initSelect()
       this.initStringWidt()
-      wx.createSelectorQuery().in(this)
-        .select('#canvas')
-        .fields({
-          node: true,
-          size: true,
-        })
-        .exec(this.initCanvas.bind(this))
+      // wx.createSelectorQuery().in(this)
+      //   .select('#canvas')
+      //   .fields({
+      //     node: true,
+      //     size: true,
+      //   })
+      //   .exec(this.initCanvas.bind(this))
 
       wx.createSelectorQuery().in(this)
         .select('#canvas')
@@ -187,7 +188,6 @@ Component({
           size: true,
         })
         .exec(this.initCanvas2.bind(this))
-      console.log(this.drawLine, 11111);
     },
     detached: function () {
       // 在组件实例被从页面节点树移除时执行
@@ -775,7 +775,7 @@ Component({
     },
     // 停止录音
     stop() {
-      this.recorderManager.stop()
+      this.recorderManager && this.recorderManager.stop()
       this.isStop = true
     },
     openClose() {

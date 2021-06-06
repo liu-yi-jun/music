@@ -16,7 +16,8 @@
     </view>
 
   </view>
-  <scroll-view scroll-into-view="{{intoId}}" style="height: calc({{excludeHeight}}px - 152rpx);" scroll-y bindscrolltolower="scrolltolower">
+  <scroll-view scroll-into-view="{{intoId}}" style="height: calc({{excludeHeight}}px - 152rpx);" scroll-y
+    bindscrolltolower="scrolltolower">
     <block wx:if="{{mp4Video}}">
       <video class="video" object-fit="cover" src="{{detail.videoUrl}}" enable-auto-rotation show-mute-btn></video>
     </block>
@@ -45,11 +46,21 @@
       <view class="avatarAreaWarp-introduce">
         <view class="avatarVoiceWrap">
           <view class="avatarAreaWrap">
-            <image class="avatar" src="{{detail.avatarUrl}}" catchtap="goPersonal"></image>
-            <view class="name-organization">
-              <text class="name">{{detail.nickName}}</text>
-              <text class="organization">{{detail.groupName}}</text>
+            <view class="avatar-organization">
+              <image class="avatar" src="{{detail.avatarUrl}}" catchtap="goPersonal"></image>
+              <view class="name-organization">
+                <text class="name">{{detail.nickName}}</text>
+                <text class="organization">{{detail.groupName}}</text>
+              </view>
             </view>
+            <block wx:if="{{userId!==detail.userId}}">
+              <view catchtap="followUser" class="follow" wx:if="{{!detail.isFollow}}">
+                关注
+              </view>
+              <view catchtap="followUser" class="follow followed" wx:else>
+                已关注
+              </view>
+            </block>
           </view>
           <!-- <view catchtap="playRecord" class="voiceWrap" wx:if="{{detail.voiceUrl}}">
             <image class="recordImg" src="http://cdn.eigene.cn/play{{isPlay?'ing':''}}.gif"></image>
@@ -61,7 +72,7 @@
         </view>
       </view>
     </view>
-    <view class="barWrap" >
+    <view class="barWrap">
       <bar size="{{30}}" gap="{{20}}" barList="{{barList}}" actIndex="{{actIndex}}" bind:switchBtn="switchBtn"></bar>
     </view>
     <!-- <view class="bar">
@@ -91,4 +102,4 @@
 </view>
 
 <menu id="menu" list="{{list}}" bind:handleStore="handleStore" bind:handleReport="handleReport"
-  bind:hadleDelete="hadleDelete" bind:cancelMenu="cancelMenu"></menu>
+  bind:hadleDelete="hadleDelete" bind:cancelMenu="cancelMenu" bind:handleEdit="handleEdit"></menu>

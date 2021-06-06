@@ -332,7 +332,7 @@ swiper-item {
   right: 0;
   bottom: 0;
   background: rgba(0, 0, 0, 0.3);
-  z-index: 999999999;
+  z-index: 999999;
   opacity: 0;
   visibility: hidden;
   transition: 0.4s all;

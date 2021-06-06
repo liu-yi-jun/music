@@ -2,6 +2,6 @@
   "component": true,
   "usingComponents": {
     "authorization":"/components/common/authorization/authorization",
-    "msgAuthorization":"/components/common/msgAuthorization/msgAuthorization"
+    "guidMsgAuthor":"/components/common/guidMsgAuthor/guidMsgAuthor"
   }
 }

@@ -15,12 +15,21 @@
   box-sizing: border-box;
   padding: 2.99vh 0 0rpx;
 }
-
-.logo-group text {
+.logo-group text  {
   margin-top: 38rpx;
   color: white;
   font-size: 32rpx;
   font-family: 'SH-Heavy';
+}
+.logo-group input{
+  min-width: 169rpx;
+  margin-top: 38rpx;
+  color: white;
+  font-size: 32rpx;
+  font-family: 'SH-Heavy';
+  padding-bottom: 8rpx;
+  border-bottom: 1rpx solid white;
+  text-align: center;
 }
 
 .logo {
@@ -261,7 +270,7 @@
 }
 
 .generate {
-  margin-top: 20rpx;
+  margin-top: 40rpx;
 }
 
 .canvasLogo {

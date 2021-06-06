@@ -14,6 +14,15 @@ function getLocation(callback) {
             wxGetLocation(callback)
           },
           fail() {
+            common.Tip('位置信息授权失败，请点击右上角 “···” → “设置” → “位置信息” -> 勾选“使用小程序期间和离开小程序后”', '提示', '去开启', {
+              cancelText: '取消'
+            }).then(res => {
+              if (res.confirm) {
+                wx.openSetting({
+                  success(res) {}
+                })
+              }
+            })
             callback({
               warning: true,
               msg: '用户拒绝位置信息授权'
@@ -80,8 +89,16 @@ async function authSettingRecord() {
               resolve(success)
             },
             fail: (err) => {
-              reject(err)
-              common.Tip('请点击右上角“•••”，在设置中打开麦克风权限')
+              // reject(err)
+              common.Tip('录音授权失败，请点击右上角 “···” → “设置” → 开启麦克风', '提示', '去开启', {
+                cancelText: '取消'
+              }).then(res => {
+                if (res.confirm) {
+                  wx.openSetting({
+                    success(res) {}
+                  })
+                }
+              })
             }
           })
         } else {
@@ -129,7 +146,7 @@ function newSubscription(requestId = [], cancelOptions = false) {
     if (!subscriptionsSetting.mainSwitch) {
       // 主开关，关了
       wx.hideLoading()
-      common.Tip('通知授权失败，将无法进行消息推送，请自行点击右上角“•••”，在设置中开启订阅消息权限', '提示', '去开启', cancelOptions).then(result => {
+      common.Tip('通知授权失败，将无法进行消息推送，请点击右上角 “···” → “设置” → “订阅消息” → 全部勾选', '提示', '去开启', cancelOptions).then(result => {
         console.log('主开关，关了');
         return resolve({
           type: -1,
@@ -174,7 +191,7 @@ function newSubscription(requestId = [], cancelOptions = false) {
             })
             if (InfoList) {
               wx.hideLoading()
-              common.Tip(`“${InfoList}”通知授权失败，将无法进行消息推送，请自行点击右上角“•••”，在设置的订阅消息中开启`, '提示', '去开启', cancelOptions).then(result => {
+              common.Tip(`通知授权失败，将无法进行消息推送，请点击右上角 “···” → “设置” → “订阅消息” → 全部勾选`, '提示', '去开启', cancelOptions).then(result => {
                 console.log('存在拒绝，弹出提示');
                 return resolve({
                   type: -1,

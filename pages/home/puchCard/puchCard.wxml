@@ -36,6 +36,8 @@
           <view class="avatar-userName" data-userid="{{item.adminId}}" catchtap="goPersonal">
             <image class="avatar" src="{{item.adminAvatar}}"></image>
             <text class="userName">{{item.adminName}}</text>
+            <view wx:if="{{isMyGroup && (groupDuty === 0 || groupDuty === 1)}}" class="delete iconfont icondelete" catchtap="hadleDelete" data-index="{{i}}">
+            </view>
           </view>
         </view>
         <view class="MusicscoreWrap {{item.flag==='demonstration'? 'noMinH':''}}">

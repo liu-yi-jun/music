@@ -3,7 +3,6 @@
   <canvas canvas-id='canvas' class='canvas'></canvas>
   <navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' back="{{true}}" iconTheme='white'
     bindback="handlerGobackClick"></navBar>
-
   <form bindsubmit="formSubmit">
     <issueHead avatarUrl="{{avatarUrl}}" nickName="{{nickName}}">
     </issueHead>
@@ -18,14 +17,18 @@
             <view class="deletePoster iconfont icondelete" catchtap="deletePoster"></view>
           </image>
         </view>
+        <view class="selectWrap">
+          <switch name="open" checked="{{open}}" bindchange="changeExamine"></switch>
+          <text>是否设为公开课</text>
+        </view>
         <view class="courseNameWrap">
           <text class="courseName">课程名称：</text>
-          <input maxlength="100" class="courseNameInput" name="courseName"></input>
+          <input class="courseNameInput" name="courseName" value="{{courseName}}"></input>
         </view>
         <view class="courseIntroduceWrap">
           <text class="courseIntroduce">课程介绍：</text>
-          <textarea maxlength="1000" cursor-spacing="{{100}}" class="courseIntroduceTextarea" name="introduce" placeholder="请添加课程描述……"
-            placeholder-class="placeholder"></textarea>
+          <textarea maxlength="1000" cursor-spacing="{{100}}" class="courseIntroduceTextarea" value="{{introduce}}"
+            name="introduce" placeholder="请添加课程描述……" placeholder-class="placeholder"></textarea>
         </view>
         <view class="media">
           <view class="videoWrap">
@@ -36,8 +39,11 @@
             </view>
             <view class="btnWrap">
               <view wx:if="{{!tempVideoPath && !linkUrl}}" class="btn" catchtap="videoSheet">上传视频</view>
-              <block  wx:if="{{tempVideoPath || (linkUrl && !isVid)}}">
+              <block wx:if="{{tempVideoPath}}">
                 <video class="video" object-fit="cover" src="{{tempVideoPath}}"></video>
+              </block>
+              <block wx:if="{{linkUrl && !isVid}}">
+                <video class="video" object-fit="cover" src="{{linkUrl}}"></video>
               </block>
               <block wx:if="{{linkUrl && isVid}}">
                 <txv-video class="video" height="380" vid="{{linkUrl}}" playerid="txv3"></txv-video>
@@ -68,10 +74,11 @@
           </view>
         </view>
       </view>
+
     </scroll-view>
     <record id="record" bind:recordResult="recordResult"></record>
   </form>
 </view>
 
 <linkDialog linkDialogShow="{{linkDialogShow}}" bind:completeInput="completeInput"></linkDialog>
-<msgAuthorization wx:if="{{msgAuthorizationShow}}" bind:completeMsgAuthorization="completeMsgAuthorization"  msgAuthorizationShow="{{msgAuthorizationShow}}" requestId="{{requestId}}"></msgAuthorization>
+<guidMsgAuthor msgAuthorizationShow="{{msgAuthorizationShow}}"></guidMsgAuthor>

@@ -13,12 +13,14 @@
         </view>
         <view class="avatarName" mark:Mymark="avatarName">
           <image catchtap="previewImage" src="{{userInfo.avatarUrl}}" class="avatar" mode="aspectFill"></image>
-          <text class="name">{{userInfo.nickName}}</text>
-          <view class="nameBotoom">
-            <text wx:if="{{userInfo.gender=== 1}}">♂</text>
-            <text wx:if="{{userInfo.gender=== 2}}">♀</text>
-            <text class="constellation" wx:if="{{userInfo.constellation}}">{{userInfo.constellation}}</text>
-            <text wx:if="{{userInfo.age}}">{{userInfo.age}}岁</text>
+          <view class="name-nameBotoom">
+            <text class="name">{{userInfo.nickName}}</text>
+            <view class="nameBotoom">
+              <text wx:if="{{userInfo.gender=== 1}}">♂</text>
+              <text wx:if="{{userInfo.gender=== 2}}">♀</text>
+              <text class="constellation" wx:if="{{userInfo.constellation}}">{{userInfo.constellation}}</text>
+              <text wx:if="{{userInfo.age}}">{{userInfo.age}}岁</text>
+            </view>
           </view>
         </view>
       </image>
@@ -55,10 +57,12 @@
     <view class="list">
 
       <view hidden="{{(actIndexArr[0] !== 0) || (actIndexArr[1] !== 0)}}">
-        <dynamicList id="groupdDynamics" bind:fullscreenchange="fullscreenchange" dynamics="{{groupdDynamics}}" bind:deleteDynamic="deleteDynamic"></dynamicList>
+        <dynamicList id="groupdDynamics" bind:fullscreenchange="fullscreenchange" dynamics="{{groupdDynamics}}"
+          bind:deleteDynamic="deleteDynamic"></dynamicList>
       </view>
       <view hidden="{{(actIndexArr[0] !== 0) || (actIndexArr[1] !== 1)}}">
-        <dynamicList id="squareDynamics" bind:fullscreenchange="fullscreenchange" dynamics="{{squareDynamics}}" isSquare="{{true}}" bind:deleteDynamic="deleteDynamic">
+        <dynamicList id="squareDynamics" bind:fullscreenchange="fullscreenchange" dynamics="{{squareDynamics}}"
+          isSquare="{{true}}" bind:deleteDynamic="deleteDynamic">
         </dynamicList>
       </view>
       <view hidden="{{(actIndexArr[0] !== 1) || (actIndexArr[1] !== 0)}}">
@@ -97,8 +101,8 @@
   <view catchtouchmove="cancelPop" class="shade {{applyShow? 'shadeShow':''}}" mark:district="shade">
     <view class="applyDialog">
       <text class="groupApply">感谢您的反馈</text>
-      <textarea wx:if="{{applyShow}}" bindinput="inputApply" class="applyContent" name="applyContent" id=""
-        maxlength="300" placeholder="300字以内" placeholder-class="applyPlaceholder"></textarea>
+      <textarea wx:if="{{applyShow}}" cursor-spacing="{{170}}" bindinput="inputApply" class="applyContent"
+        name="applyContent" id="" maxlength="300" placeholder="300字以内" placeholder-class="applyPlaceholder"></textarea>
       <view class="choose">
         <image catchtap="cancelApply" src="/images/groupList/delete.png"></image>
         <image src="/images/groupList/success.png" catchtap="commitFeedback"></image>
@@ -113,16 +117,19 @@
 <view bindtouchstart="closeBarWrap" catchtouchmove="closeBarWrap" class="{{showHideBar?'showBarWrap':hideBarWrap}}">
   <view mark:district="bar" class="hideBarBg {{showHideBar? 'showHideBar': 'hideHideBar'}}"
     style="background-image: url({{qiniuUrl}}/my/hideBar.png); background-size: 100% 100%;">
-    <view catchtap="toFeedback" class="feedAboutWrap {{showHideBar?'feedWrap':''}}">
-      <image class="feedback" src="/images/my/feedback.png"></image>
+    <!-- catchtap="toFeedback" -->
+    <view  catchtap="toFeedback" class="feedAboutWrap {{showHideBar?'feedWrap':''}}">
+      <image class="feedback" src="/images/my/feedback.png">
+      </image>
       <view>反馈</view>
+      <!-- <button open-type="contact" class="contact"></button> -->
     </view>
     <view catchtap="toAbout" class="feedAboutWrap {{showHideBar?'aboutWrap':''}} ">
       <image class="about" src="/images/my/about.png"></image>
       <view>关于</view>
     </view>
     <view catchtap="toCode" class="feedAboutWrap {{showHideBar?'codeWrap':''}} ">
-      <image class="about" src="/images/my/about.png"></image>
+      <image class="invitation" src="/images/my/invitation.png"></image>
       <view>邀请码</view>
     </view>
   </view>

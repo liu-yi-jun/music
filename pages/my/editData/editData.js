@@ -35,14 +35,14 @@ Page({
       nickName: {
         required: true,
         // minlength: 4,
-        maxlength: 10
+        maxlength: 20
       },
     }
     const messages = {
       nickName: {
         required: '请填写昵称',
         // minlength: '昵称不少于4个字符',
-        maxlength: '昵称不大于10个字符'
+        maxlength: '昵称不大于20个字符'
       },
     }
     this.WxValidate = new WxValidate(rules, messages)

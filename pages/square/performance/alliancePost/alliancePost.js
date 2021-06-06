@@ -135,8 +135,8 @@ Page({
     const rules = {
       title: {
         required: true,
-        minlength: 4,
-        maxlength: 20
+        minlength: 6,
+        maxlength: 60
       },
       activityLocation: {
         required: true,
@@ -151,8 +151,8 @@ Page({
     const messages = {
       title: {
         required: '请填写标题',
-        minlength: '小组活动名称不少于4个字符',
-        maxlength: '小组活动名称不大于20个字符'
+        minlength: '小组活动名称不少于6个字符',
+        maxlength: '小组活动名称不大于60个字符'
       },
       activityLocation: {
         required: '请填写活动地点',
@@ -309,48 +309,52 @@ Page({
   },
   // 进行校验
   validate(params) {
-    return new Promise((resolve, reject) => {
-      let {
-        tempVideoPath,
-        tempImagePaths,
-        tempRecordPath,
-        duration,
-        linkUrl
-      } = this.data
-      let {
-        date,
-        time
-      } = this.data
-      if (!this.WxValidate.checkForm(params)) {
-        console.log(this.WxValidate.errorList)
-        const error = this.WxValidate.errorList[0].msg
-        return reject(error)
-      }
-      if (!tempImagePaths && !tempImagePaths.length) return reject('请添加图片')
-      if (date === '活动日期') return reject('请选择活动开始日期')
-      if (time === '活动时间') return reject('请选择活动开始时间')
-      if (!tempImagePaths.length) return reject('需要添加图片哦')
-      // let mold = tempImagePaths.length ? 0 : (tempVideoPath ? 1 : 2)
-      let timeStamp = `${this.data.date} ${time}`
-      let dates = this.data.date.split('-')
-
-      let activityTime = `${dates[0]}年${dates[1]}月${dates[2]}日${time}`
-
-      return resolve({
-        duration,
-        timeStamp,
-        userId: app.userInfo.id,
-        groupId: app.userInfo.groupId,
-        groupName: app.userInfo.groupName,
-        introduce: params.introduce,
-        pictureUrls: tempImagePaths || [],
-        videoUrl: tempVideoPath || linkUrl,
-        voiceUrl: tempRecordPath || '',
-        // mold,
-        activityTime,
-        ...params
+    try {
+      return new Promise((resolve, reject) => {
+        let {
+          tempVideoPath,
+          tempImagePaths,
+          tempRecordPath,
+          duration,
+          linkUrl
+        } = this.data
+        let {
+          date,
+          time
+        } = this.data
+        if (!this.WxValidate.checkForm(params)) {
+          console.log(this.WxValidate.errorList)
+          const error = this.WxValidate.errorList[0].msg
+          return reject(error)
+        }
+        if (date === '活动日期') return reject('请选择活动开始日期')
+        if (time === '活动时间') return reject('请选择活动开始时间')
+        if (!tempImagePaths.length) return reject('需要添加图片哦')
+        // let mold = tempImagePaths.length ? 0 : (tempVideoPath ? 1 : 2)
+        let timeStamp = `${this.data.date} ${time}`
+        let dates = this.data.date.split('-')
+  
+        let activityTime = `${dates[0]}年${dates[1]}月${dates[2]}日${time}`
+  
+        return resolve({
+          duration,
+          timeStamp,
+          userId: app.userInfo.id,
+          groupId: app.userInfo.groupId,
+          groupName: app.userInfo.groupName,
+          introduce: params.introduce,
+          pictureUrls: tempImagePaths || [],
+          videoUrl: tempVideoPath || linkUrl,
+          voiceUrl: tempRecordPath || '',
+          // mold,
+          activityTime,
+          ...params
+        })
       })
-    })
+    } catch (err) {
+      console.log(err);
+    }
+  
   },
   // 提交表单
   async formSubmit(e) {
@@ -363,13 +367,26 @@ Page({
       }).then((res) => {
         wx.hideLoading()
         if (res.type === 1) {
-          this.params = params
-          this.setData({
-            msgAuthorizationShow: true
+          common.Tip('为了更好通知到您，需要您授权相应权限，请接下来按照提示操作').then(res => {
+            this.setData({
+              msgAuthorizationShow: true
+            })
+            authorize.infoSubscribe(this.data.requestId).then(res => {
+              this.setData({
+                msgAuthorizationShow: false
+              })
+              this.submitTeam(params)
+            })
           })
         } else if (res.type === -1) {
           if (!res.result.confirm) {
             this.submitTeam(params)
+          } else {
+            // 去开启
+            wx.openSetting({
+              success(res) {
+              }
+            })
           }
         } else if (res.type === 0) {
           this.submitTeam(params)
@@ -380,9 +397,6 @@ Page({
       common.Tip(err)
       wx.hideLoading()
     }
-  },
-  completeMsgAuthorization() {
-    this.submitTeam(this.params)
   },
   async submitTeam(params) {
     let {

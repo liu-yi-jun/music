@@ -51,6 +51,9 @@ Component({
       })
       this.triggerEvent('showTabBarShow')
       this.triggerEvent(functionName)
+    },
+    cancelMove() {
+      return
     }
   }
 })

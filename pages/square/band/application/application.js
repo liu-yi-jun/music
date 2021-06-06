@@ -158,6 +158,7 @@ Page({
           }]
         },
         message = {
+          id: new Date().getTime(),
           type: 3,
           jsonDate: {
             gender: params.gender,

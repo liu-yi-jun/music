@@ -1,5 +1,7 @@
 <!--pages/square/square.wxml-->
-<view class="square" catchtap="tap" >
+<showTabBar tabBarBtnShow="{{tabBarBtnShow}}">
+  </showTabBar>
+<view class="square" catchtap="tap">
   <!-- <scroll-view enable-back-to-top="{{true}}" bindscroll="move" class="scroll" scroll-with-animation scroll-y bindscrolltolower="scrolltolower" scroll-top="{{scrollTop}}"> -->
   <navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' iconTheme='white'></navBar>
   <!-- bind:toScrollTop="toScrollTop" -->
@@ -27,7 +29,7 @@
     <view class="cardWrap">
       <view class="signInBackground"
         style="background-image: url({{qiniuUrl}}/square/signInBackground.png); background-size: 100% 100%;">
-        <text class="everyday">每日打卡：</text>
+        <text class="everyday">累积签到：</text>
         <view class="date">
           <view class="yearMonth">{{yearMonth}}</view>
           <view class="day">{{day}}</view>
@@ -64,8 +66,9 @@
         </view>
       </swiper-item>
     </swiper>
-    <swiper wx:if="{{alliances.length}}" class="activitySwiper" indicator-dots="{{true}}" indicator-color="rgba(255, 255, 255, .3)"
-      indicator-active-color="#ffffff" autoplay="{{true}}" circular="{{true}}">
+    <swiper wx:if="{{alliances.length}}" class="activitySwiper" indicator-dots="{{true}}"
+      indicator-color="rgba(255, 255, 255, .3)" indicator-active-color="#ffffff" autoplay="{{true}}"
+      circular="{{true}}">
       <swiper-item wx:for="{{alliances}}" catchtap="goAllianceDetail" data-id="{{item.id}}" data-index="{{index}}">
         <image mode="aspectFill" class="activityBox" src="{{item.pictureUrls[0]}}">
           <view class="activityContent">
@@ -77,7 +80,8 @@
         </image>
       </swiper-item>
     </swiper>
-    <dynamicList bind:fullscreenchange="fullscreenchange" id="dynamicList" dynamics="{{dynamics}}" bind:deleteDynamic="deleteDynamic"></dynamicList>
+    <dynamicList bind:fullscreenchange="fullscreenchange" id="dynamicList" dynamics="{{dynamics}}"
+      bind:deleteDynamic="deleteDynamic"></dynamicList>
     <image class="issueDynamic" src="/images/square/issueDynamic2.png">
       <view class="issueDynamicInner" catchtap="goSquarePost"></view>
     </image>
@@ -85,8 +89,7 @@
   </view>
   <!-- </scroll-view> -->
   <!-- <menu></menu> -->
-  <showTabBar tabBarBtnShow="{{tabBarBtnShow}}">
-  </showTabBar>
+
   <view class="guideMask {{squareGuide?'showGuide': 'hideGuide'}} {{cross?'cross':''}}">
     <image wx:if="{{leftGuide}}" class="leftGuide" src="http://cdn.eigene.cn/guide/left.png" catchtap="click"></image>
     <view wx:if="{{leftGuide}}" class="leftGuideText">点击发现隐藏版块</view>
@@ -181,14 +184,29 @@
   </block>
   <block wx:elif="{{type === 3}}">
     <view class="dialog d-medal">
+      <image class="close" catchtap="determine" src="../../images/square/close.png"></image>
       <image class="medalLogo" src="../../images/square/medalLogo.png"></image>
       <view class="congratulationsWrap">
         <view>恭喜您在音乐小怪兽连续签到<text class="stress">7</text>天</view>
-        <view>留意公众号抽奖活动，有精美礼品等着你哦~</view>
+        <view>请联系客服，回复“7”，领取设计周边一套~</view>
       </view>
       <view class="createWarp">
-        <button class="create" catchtap="determine">知道了</button>
+        <button class="create" open-type="contact">去领奖</button>
       </view>
     </view>
   </block>
 </view>
+<view class="shade {{SignInThirty? 'shadeShow':''}}" catchtouchmove="cancelmove">
+    <view class="dialog d-medal">
+      <image class="close" catchtap="closeThirty" src="../../images/square/close.png"></image>
+      <image class="medalLogo" src="../../images/square/medalLogo.png"></image>
+      <view class="congratulationsWrap">
+        <view>恭喜您在音乐小怪兽累积签到<text class="stress">30</text>天</view>
+        <view>请联系客服，回复“30”，参与抽奖活动~</view>
+      </view>
+      <view class="createWarp">
+        <button class="create" open-type="contact">去领奖</button>
+      </view>
+    </view>
+</view>
+<guidMsgAuthor msgAuthorizationShow="{{msgAuthorizationShow}}"></guidMsgAuthor>

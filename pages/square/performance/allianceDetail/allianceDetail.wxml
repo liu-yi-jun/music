@@ -22,7 +22,7 @@
         <text>2020年12月1号</text> -->
       </view>
       <view class="imgWrap">
-        <image wx:for="{{detail.pictureUrls}}" wx:key="index" wx:for-item="url" class="img" mode="widthFix"
+        <image catchtap="preview" data-src="{{url}}" wx:for="{{detail.pictureUrls}}" wx:key="index" wx:for-item="url" class="img" mode="widthFix"
           src="{{url}}"></image>
       </view>
       <view class="introduceWrap">

@@ -335,6 +335,35 @@
           "pathName": "components/common/guidMsgAuthor/guidMsgAuthor",
           "query": "",
           "scene": null
+        },
+        {
+          "name": "pages/tool/tool",
+          "pathName": "pages/tool/tool",
+          "query": "mp=true&type=chord",
+          "scene": null
+        },
+        {
+          "name": "pages/my/my",
+          "pathName": "pages/my/my",
+          "query": "mp=true&type=chord",
+          "scene": null
+        },
+        {
+          "name": "pages/square/square",
+          "pathName": "pages/square/square",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/my/information/information",
+          "pathName": "pages/my/information/information",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/home/course/courseDetail/courseDetail",
+          "pathName": "pages/home/course/courseDetail/courseDetail",
+          "scene": null
         }
       ]
     }
