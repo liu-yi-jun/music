@@ -213,7 +213,7 @@
         {
           "name": "pages/home/welcome/welcome",
           "pathName": "pages/home/welcome/welcome",
-          "query": "scene=groupId%3D147",
+          "query": "scene=groupId%3D171",
           "scene": 1011
         },
         {
@@ -363,6 +363,7 @@
         {
           "name": "pages/home/course/courseDetail/courseDetail",
           "pathName": "pages/home/course/courseDetail/courseDetail",
+          "query": "",
           "scene": null
         }
       ]

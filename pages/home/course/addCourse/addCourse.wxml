@@ -3,8 +3,8 @@
   <canvas canvas-id='canvas' class='canvas'></canvas>
   <navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' back="{{true}}" iconTheme='white'
     bindback="handlerGobackClick"></navBar>
-  <form bindsubmit="formSubmit">
-    <issueHead avatarUrl="{{avatarUrl}}" nickName="{{nickName}}">
+  <form>
+    <issueHead avatarUrl="{{avatarUrl}}" nickName="{{nickName}}" bind:formSubmit="formSubmit">
     </issueHead>
     <scroll-view scroll-y style="height: calc({{excludeHeight}}px - 8.99vh);">
       <view class="Wrap">
@@ -23,11 +23,11 @@
         </view>
         <view class="courseNameWrap">
           <text class="courseName">课程名称：</text>
-          <input class="courseNameInput" name="courseName" value="{{courseName}}"></input>
+          <input class="courseNameInput" bindinput="inputCourseName" name="courseName" value="{{courseName}}"></input>
         </view>
         <view class="courseIntroduceWrap">
           <text class="courseIntroduce">课程介绍：</text>
-          <textarea maxlength="1000" cursor-spacing="{{100}}" class="courseIntroduceTextarea" value="{{introduce}}"
+          <textarea maxlength="1000" bindinput="inputIntroduce" cursor-spacing="{{100}}" class="courseIntroduceTextarea" value="{{introduce}}"
             name="introduce" placeholder="请添加课程描述……" placeholder-class="placeholder"></textarea>
         </view>
         <view class="media">

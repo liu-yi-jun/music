@@ -20,7 +20,10 @@
           </view>
         </view>
       </view>
+      <view class="shadow">
+        </view>
     </image>
+
     <view catchtap="goOtherHome" data-id="{{personal.groupId}}" class="organization" wx:if="{{personal.groupName}}">
       <text class="groupName">{{personal.groupName}}</text>
       <text>{{personal.groupDuty===0?'组长':(personal.groupDuty===1?'管理员':(personal.groupDuty===2?'组员':'申请中'))}}</text>

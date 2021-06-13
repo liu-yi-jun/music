@@ -42,10 +42,21 @@
   font-size: 22rpx;
   margin-top: 8rpx;
 }
-
-.constellation {
-  margin: 0 10rpx;
+.nameBotoom>text {
+  margin: 0 5rpx;
 }
+.shadow {
+  position: absolute;
+  left: 0px;
+  bottom: 0px;
+  width: 100%;
+  height: 50%;
+  background: linear-gradient(to top, rgba(0, 0, 0, 70%) 0%, rgba(0, 0, 0, 0) 100%);
+}
+
+/* .constellation {
+  margin: 0 10rpx;
+} */
 
 .organization {
   position: absolute;
@@ -105,6 +116,7 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
+
 }
 .avatarName {
   text-align: center;
@@ -118,6 +130,7 @@
   top: 251rpx;
   transform:translateX(-50%);
   left: 50%;
+  z-index: 99;
 }
 
 .list{
@@ -155,7 +168,7 @@
 
 .name-nameBotoom {
   margin-top: 16rpx;
-  background-color: rgba(0, 0, 0, 0.3);
+  /* background-color: rgba(0, 0, 0, 0.3); */
   padding: 2rpx 40rpx;
   border-radius: 10rpx;
 }

@@ -12,7 +12,7 @@ Page({
     qiniuUrl: app.qiniuUrl,
     userInfo: {},
     tempFilePaths: [],
-    array: ['无','白羊座', '金牛座', '双子座', '巨蟹座', '狮子座', '处女座', '天秤座', '天蝎座', '射手座', '摩羯座', '水瓶座', '双鱼座'],
+    array: ['无', '白羊座', '金牛座', '双子座', '巨蟹座', '狮子座', '处女座', '天秤座', '天蝎座', '射手座', '摩羯座', '水瓶座', '双鱼座'],
     index: 0
   },
 
@@ -20,13 +20,15 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    this.newForm = {}
     this.setUserInfo()
     this.initValidate()
   },
   bindPickerChange: function (e) {
+    this.newForm.constellation =  Number(e.detail.value)
     console.log('picker发送选择改变，携带值为', e.detail.value)
     this.setData({
-      index: Number(e.detail.value) 
+      index: Number(e.detail.value)
     })
   },
   //验证规则函数
@@ -52,11 +54,16 @@ Page({
     let array = this.data.array
     array.forEach((item, index) => {
       if (item === app.userInfo.constellation) {
+        this.newForm.constellation = index
         this.setData({
           index
         })
       }
     })
+    this.newForm.nickName = app.userInfo.nickName
+    this.newForm.age = app.userInfo.age
+    this.newForm.resume = app.userInfo.resume
+  
     this.setData({
       userInfo: app.userInfo,
       tempFilePaths: [app.userInfo.avatarUrl]
@@ -160,7 +167,9 @@ Page({
   },
   async formSubmit(e) {
     console.log('form发生了submit事件，携带的数据为：', e.detail.value)
-    let params = e.detail.value
+    let params = {
+      ...this.newForm
+    }
     let array = this.data.array
     if (params.age === '') {
       params.age = null
@@ -169,7 +178,7 @@ Page({
     }
     if (params.constellation === 0) {
       params.constellation = null
-    }else {
+    } else {
       params.constellation = array[params.constellation]
     }
     console.log(params)
@@ -190,10 +199,10 @@ Page({
       app.userInfo = result
       console.log(result)
       console.log(common)
-      common.Toast('修改成功',1500,'success')
-      setTimeout(()=> {
+      common.Toast('修改成功', 1500, 'success')
+      setTimeout(() => {
         wx.navigateBack()
-      },1500)
+      }, 1500)
     } catch (err) {
       console.log(err)
       common.Tip(err)
@@ -211,5 +220,13 @@ Page({
       resolve(params)
     })
   },
-
+  inputNickName(e) {
+    this.newForm.nickName = e.detail.value
+  },
+  inputAge(e) {
+    this.newForm.age = e.detail.value
+  },
+  inputResume(e) {
+    this.newForm.resume = e.detail.value
+  },
 })

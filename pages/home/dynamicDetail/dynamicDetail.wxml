@@ -30,6 +30,7 @@
       </view>
     </block>
     <view class="icon-time">
+      <view class="location">{{detail.location}}</view>
       <!-- <view class="iconWrap">
         <view class="icon">
           <image src="http://cdn.eigene.cn/dynamicDetail/like.png"></image>

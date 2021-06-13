@@ -44,13 +44,14 @@ Page({
     showSignIn: false,
     isImg: false,
     msgAuthorizationShow: false,
-    requestId: [app.InfoId.like, app.InfoId.content, app.InfoId.reply]
+    requestId: [app.InfoId.like, app.InfoId.content, app.InfoId.band]
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    this.newForm = {}
     console.log(options);
     if (options.showSignIn) {
       this.isSignIn = true
@@ -362,7 +363,9 @@ Page({
 
   // 提交表单
   async formSubmit(e) {
-    let params = e.detail.value
+    let params = {
+      ...this.newForm
+    }
     try {
       params = await this.validate(params)
       common.showLoading()
@@ -388,8 +391,7 @@ Page({
           } else {
             // 去开启
             wx.openSetting({
-              success(res) {
-              }
+              success(res) {}
             })
           }
         } else if (res.type === 0) {
@@ -397,29 +399,36 @@ Page({
         }
       })
     } catch (err) {
+      wx.hideLoading()
       console.log(err)
       common.Tip(err)
-      wx.hideLoading()
+
     }
   },
   async submitTeam(params) {
-    let {
-      tempVideoPath,
-      tempImagePaths,
-      tempRecordPath,
-      isRecordLink,
-      isVideoLink,
-      isImageLink
-    } = this.data
-    common.showLoading('发布中')
-    if (tempRecordPath && !isRecordLink) params.voiceUrl = await this.uploadVoice(tempRecordPath)
-    if (tempVideoPath && !isVideoLink) params.videoUrl = await this.uploadVideo(tempVideoPath)
-    if (tempImagePaths.length && !isImageLink) params.pictureUrls = await this.uploadImg(tempImagePaths)
-    const result = await this.squarePost(params)
-    common.Toast('已发布')
-    if (result.affectedRows) {
-      this.goSquare()
-    }
+    return new Promise(async (resolve, reject) => {
+      try {
+        let {
+          tempVideoPath,
+          tempImagePaths,
+          tempRecordPath,
+          isRecordLink,
+          isVideoLink,
+          isImageLink
+        } = this.data
+        common.showLoading('发布中')
+        if (tempRecordPath && !isRecordLink) params.voiceUrl = await this.uploadVoice(tempRecordPath)
+        if (tempVideoPath && !isVideoLink) params.videoUrl = await this.uploadVideo(tempVideoPath)
+        if (tempImagePaths.length && !isImageLink) params.pictureUrls = await this.uploadImg(tempImagePaths)
+        const result = await this.squarePost(params)
+        common.Toast('已发布')
+        if (result.affectedRows) {
+          this.goSquare()
+        }
+      } catch (err) {
+        reject(err)
+      }
+    })
   },
   goSquare() {
     app.squarePostBack = true
@@ -481,7 +490,6 @@ Page({
       app.post(app.Api.squarePost, data, {
         loading: false
       }).then(res => {
-        console.log(res,22222222);
         if (this.isSignIn) {
           app.post(app.Api.signInPost, {
             userId: app.userInfo.id
@@ -493,7 +501,11 @@ Page({
         } else {
           resolve(res)
         }
-      }).catch(err => reject(err))
+      }).catch(err => {
+        wx.hideLoading()
+        common.Tip(err)
+        reject(err)
+      })
     })
   },
   // 取消弹窗
@@ -570,5 +582,8 @@ Page({
     wx.navigateTo({
       url: '/pages/square/squarePost/standard/standard',
     })
+  },
+  inputIntroduce(e) {
+    this.newForm.introduce = e.detail.value
   }
 })

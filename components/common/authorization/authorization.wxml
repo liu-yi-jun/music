@@ -19,3 +19,5 @@
     </view>
   </view>
 </view>
+
+<guidMsgAuthor  msgAuthorizationShow="{{msgAuthorizationShow}}"></guidMsgAuthor>

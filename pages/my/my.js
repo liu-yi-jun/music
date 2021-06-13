@@ -98,11 +98,12 @@ Page({
     actIndexArr: [0, 0],
     noticeNumbe: 0,
     showHideBar: false,
-
     applyShow: false,
     feedbackContent: '',
     showCode: false,
-    code: ''
+    code: '',
+    msgAuthorizationShow:false,
+    requestId: [app.InfoId.follow]
   },
 
   /**
@@ -120,6 +121,29 @@ Page({
       this.getSquareDynamics(app.userInfo.id)
       this.getGroupdDynamics(app.userInfo.id)
       this.getBandmoment(app.userInfo.id)
+      authorize.newSubscription(this.data.requestId, {
+        cancelText: '取消'
+      }).then((res) => {
+        if (res.type === 1) {
+          common.Tip('为了更好通知到您，需要您授权相应权限，请接下来按照提示操作').then(res => {
+            this.setData({
+              msgAuthorizationShow: true
+            })
+            authorize.infoSubscribe(this.data.requestId).then(res => {
+              this.setData({
+                msgAuthorizationShow: false
+              })
+            })
+          })
+        } else if (res.type === -1) {
+          if (res.result.confirm) {
+            // 去开启
+            wx.openSetting({
+              success(res) {}
+            })
+          }
+        }
+      })
     }
   },
   onPageScroll(e) {

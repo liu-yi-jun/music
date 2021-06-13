@@ -5,6 +5,7 @@
 
     <view class="information">
       <image mode="aspectFill" catchtap="changeImg" class="backgroundImg" src="{{userInfo.bgWall}}">
+
         <view class="fans" catchtap="goFans">粉丝 {{userInfo.fans}}</view>
         <image class="editData" catchtap="goEditData" src="/images/my/edit.png"></image>
         <view class="hideBar" catchtap="switchHideBar"
@@ -22,6 +23,8 @@
               <text wx:if="{{userInfo.age}}">{{userInfo.age}}岁</text>
             </view>
           </view>
+        </view>
+        <view class="shadow">
         </view>
       </image>
       <view class="organization" wx:if="{{userInfo.groupName}}">
@@ -118,7 +121,7 @@
   <view mark:district="bar" class="hideBarBg {{showHideBar? 'showHideBar': 'hideHideBar'}}"
     style="background-image: url({{qiniuUrl}}/my/hideBar.png); background-size: 100% 100%;">
     <!-- catchtap="toFeedback" -->
-    <view  catchtap="toFeedback" class="feedAboutWrap {{showHideBar?'feedWrap':''}}">
+    <view catchtap="toFeedback" class="feedAboutWrap {{showHideBar?'feedWrap':''}}">
       <image class="feedback" src="/images/my/feedback.png">
       </image>
       <view>反馈</view>
@@ -145,3 +148,5 @@
     <view hover-stay-time="{{100}}" hover-class="hoverComplete" class="complete" catchtap="complete">复制</view>
   </view>
 </view>
+
+<guidMsgAuthor msgAuthorizationShow="{{msgAuthorizationShow}}"></guidMsgAuthor>

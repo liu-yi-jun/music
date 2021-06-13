@@ -14,12 +14,6 @@ Page({
     height: 0,
     tempFilePaths: [],
     tempUrls: [],
-    form: {
-      groupName: '',
-      introduce: '',
-      privates: 0,
-      examine: 0
-    },
     dialogShow: false,
     msgAuthorizationShow: false,
     requestId: [app.InfoId.joinGroup]
@@ -29,19 +23,8 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    this.newForm = {}
     this.initValidate()
-    setTimeout(() => {
-      console.log('1111111')
-      wx.createSelectorQuery()
-        .select('#yy')
-        .fields({
-          node: true,
-          size: true,
-        })
-        .exec(res => {
-          console.log(res)
-        })
-    }, 1000)
   },
   //验证规则函数
   initValidate() {
@@ -298,7 +281,9 @@ Page({
   // 提交表单
   async formSubmit(e) {
     console.log('form发生了submit事件，携带的数据为：', e.detail.value)
-    let params = e.detail.value
+    let params = {
+      ...this.newForm
+    }
     try {
       params = await this.validate(params)
       common.showLoading('创建中')
@@ -342,39 +327,41 @@ Page({
     }
   },
   async changeExamine(event) {
-    if (Number(event.detail.value)) {
-      authorize.newSubscription(this.data.requestId, {
-        cancelText: '取消'
-      }).then((res) => {
-        wx.hideLoading()
-        if (res.type === 1) {
-          common.Tip('为了更好通知到您，需要您授权相应权限，请接下来按照提示操作').then(res => {
-            this.setData({
-              msgAuthorizationShow: true
-            })
-            authorize.infoSubscribe(this.data.requestId).then(res => {
-              this.setData({
-                msgAuthorizationShow: false
-              })
-            })
-          })
-        } else if (res.type === -1) {
-          if (res.result.confirm) {
-            // 去开启
-            wx.openSetting({
-              success(res) {}
-            })
-          }
-        }
-      })
-    }
-    this.setData({
-      "form.examine": Number(event.detail.value)
-    })
+    // if (Number(event.detail.value)) {
+    //   authorize.newSubscription(this.data.requestId, {
+    //     cancelText: '取消'
+    //   }).then((res) => {
+    //     wx.hideLoading()
+    //     if (res.type === 1) {
+    //       common.Tip('为了更好通知到您，需要您授权相应权限，请接下来按照提示操作').then(res => {
+    //         this.setData({
+    //           msgAuthorizationShow: true
+    //         })
+    //         authorize.infoSubscribe(this.data.requestId).then(res => {
+    //           this.setData({
+    //             msgAuthorizationShow: false
+    //           })
+    //         })
+    //       })
+    //     } else if (res.type === -1) {
+    //       if (res.result.confirm) {
+    //         // 去开启
+    //         wx.openSetting({
+    //           success(res) {}
+    //         })
+    //       }
+    //     }
+    //   })
+    // }
+    this.newForm.examine = event.detail.value
   },
   changePrivate(event) {
-    this.setData({
-      "form.privates": Number(event.detail.value)
-    })
+    this.newForm.privates = event.detail.value
+  },
+  inputIntroduce(e) {
+    this.newForm.introduce = e.detail.value
+  },
+  inputGroupName(e) {
+    this.newForm.groupName = e.detail.value
   }
 })

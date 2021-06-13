@@ -117,6 +117,9 @@ App({
   TabBar: {
 
   },
+  PageRefresh:{
+
+  },
   globalData: {
     guide: {},
     codePass: false

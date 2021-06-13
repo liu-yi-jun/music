@@ -156,21 +156,26 @@ Page({
   },
   getInform() {
     let informPaging = this.data.informPaging
-    app.get(app.Api.getInform, {
-      userId: app.userInfo.id,
-      ...informPaging
-    }).then(res => {
-      if (res.length < informPaging.pageSize) {
+    return new Promise((resolve, reject) => {
+      app.get(app.Api.getInform, {
+        userId: app.userInfo.id,
+        ...informPaging
+      }).then(res => {
+
+        if (res.length < informPaging.pageSize) {
+          this.setData({
+            'informPaging.isNotData': true
+          })
+        }
         this.setData({
-          'informPaging.isNotData': true
+          informs: this.data.informs.concat(res),
+          'informPaging.pageIndex': informPaging.pageIndex + 1
         })
-      }
-      this.setData({
-        informs: this.data.informs.concat(res),
-        'informPaging.pageIndex': informPaging.pageIndex + 1
+        resolve(res)
+        this.checkIsNew(res)
       })
-      this.checkIsNew(res)
     })
+
   },
   checkIsNew(list) {
     let flag = false
@@ -198,8 +203,19 @@ Page({
     let actIndex = this.data.actIndex
     if (this._freshing) return
     this._freshing = true
-    setTimeout(() => {
-      if (actIndex === 1) {
+
+    if (actIndex === 0) {
+      this.data.informPaging.isNotData = false
+      this.data.informPaging.pageIndex = 1
+      this.data.informs = []
+      this.getInform().then(() => {
+        this.setData({
+          triggered: false,
+        })
+        this._freshing = false
+      })
+    } else if (actIndex === 1) {
+      setTimeout(() => {
         let system = this.selectComponent('#system')
         system.refresh().then(() => {
           this.setData({
@@ -207,13 +223,14 @@ Page({
           })
           this._freshing = false
         })
-      } else {
-        this.setData({
-          triggered: false,
-        })
-        this._freshing = false
-      }
-    }, 1000)
+      }, 1000)
+    } else {
+      this.setData({
+        triggered: false,
+      })
+      this._freshing = false
+    }
+
   },
   scrolltolower() {
     let {
@@ -235,7 +252,7 @@ Page({
     }).then((res) => {
       detail.isNew = 0
       this.setData({
-        informs:this.data.informs
+        informs: this.data.informs
       }, () => {
         this.checkIsNew(this.data.informs)
       })

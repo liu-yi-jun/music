@@ -4,14 +4,15 @@
   <navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' back="{{true}}" iconTheme='white'
     bindback="handlerGobackClick"></navBar>
   <canvas canvas-id='canvas' class='canvas'></canvas>
-  <form bindsubmit="formSubmit">
-    <issueHead avatarUrl="{{avatarUrl}}" nickName="{{nickName}}">
+  <form>
+    <issueHead avatarUrl="{{avatarUrl}}" nickName="{{nickName}}" bind:formSubmit="formSubmit">
     </issueHead>
     <scroll-view scroll-y style="height: calc({{excludeHeight}}px - 161rpx);" scroll-into-view="{{id}}">
       <view class="wrap">
         <view class="rowWrap">
           <text space="ensp">标 题</text>
-          <input placeholder="" maxlength="50" placeholder-class="placeholder" name="title"></input>
+          <input placeholder="" bindinput="inputTitle" maxlength="50" placeholder-class="placeholder"
+            name="title"></input>
         </view>
         <view class="rowWrap">
           <picker class="date" mode="date" value="{{date}}" start="{{startTime}}" end="2025-09-01"
@@ -29,17 +30,35 @@
           </picker>
         </view>
         <view class="rowWrap">
+          <picker class="date" mode="date" value="{{endDate}}" start="{{startTime}}" end="2025-09-01"
+            bindchange="bindEndDateChange">
+            <view class="picker">
+              结束日期<text space="ensp"> {{endDate}}</text>
+            </view>
+          </picker>
+        </view>
+        <view class="rowWrap">
+          <picker class="date" mode="time" value="{{endTime}}" start="{{time}}" end="23:59"
+            bindchange="bindEndTimeChange">
+            <view class="picker">
+              结束时间<text space="ensp"> {{endTime}}</text>
+            </view>
+          </picker>
+        </view>
+        <view class="rowWrap">
           <text>活动地点</text>
-          <input name="activityLocation" maxlength="100" placeholder="" placeholder-class="placeholder"></input>
+          <input bindinput="inputActivityLocation" name="activityLocation" maxlength="100" placeholder=""
+            placeholder-class="placeholder"></input>
         </view>
         <view class="rowWrap">
           <text space="ensp">组 织 者</text>
-          <input name="organization" maxlength="100" placeholder="" placeholder-class="placeholder"></input>
+          <input bindinput="inputOrganization" name="organization" maxlength="100" placeholder=""
+            placeholder-class="placeholder"></input>
         </view>
         <view class="warptextarea">
-          <textarea maxlength="1000" cursor-spacing="{{100}}" name="introduce" id="textarea" adjust-position="{{true}}" auto-height disable-default-padding
-            placeholder="演出详情" placeholder-class="placeholder" bindkeyboardheightchange="boardheightchange"
-            maxlength="-1"></textarea>
+          <textarea bindinput="inputIntroduce" maxlength="1000" cursor-spacing="{{100}}" name="introduce" id="textarea"
+            adjust-position="{{true}}" auto-height disable-default-padding placeholder="演出详情"
+            placeholder-class="placeholder" bindkeyboardheightchange="boardheightchange" maxlength="-1"></textarea>
         </view>
         <view class="imgWrap" wx:if="{{tempImagePaths.length}}">
           <view class="imgArea">
@@ -75,4 +94,4 @@
   </view>
   <linkDialog linkDialogShow="{{linkDialogShow}}" bind:completeInput="completeInput"></linkDialog>
 </view>
-<guidMsgAuthor  msgAuthorizationShow="{{msgAuthorizationShow}}"></guidMsgAuthor>
+<guidMsgAuthor msgAuthorizationShow="{{msgAuthorizationShow}}"></guidMsgAuthor>

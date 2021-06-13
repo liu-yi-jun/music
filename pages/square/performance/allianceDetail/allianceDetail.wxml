@@ -18,6 +18,8 @@
         <text>{{detail.activityLocation}}</text>
         <text>活动时间：</text>
         <text>{{detail.activityTime}}</text>
+        <text wx:if="{{detail.activityEndTime}}">结束时间：</text>
+        <text  wx:if="{{detail.activityEndTime}}">{{detail.activityEndTime}}</text>
         <!-- <text>共建截止时间：</text>
         <text>2020年12月1号</text> -->
       </view>

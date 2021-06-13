@@ -311,3 +311,8 @@ video {
 .left {
   line-height: 32rpx;
 }
+
+.location {
+  color: white;
+  font-size: 26rpx;
+}

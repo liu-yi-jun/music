@@ -3,26 +3,26 @@
   <navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' back="{{true}}" iconTheme='white'
     bindback="handlerGobackClick"></navBar>
   <canvas canvas-id='canvas' class='canvas'></canvas>
-  <form bindsubmit="formSubmit">
-    <issueHead avatarUrl="{{avatarUrl}}" nickName="{{nickName}}">
+  <form >
+    <issueHead avatarUrl="{{avatarUrl}}" nickName="{{nickName}}" bind:formSubmit="formSubmit">
     </issueHead>
     <scroll-view style="height: calc({{excludeHeight}}px - 160rpx);" scroll-y>
       <view class="wrap">
         <view class="importWrap first">
           <view>品牌·型号</view>
-          <input name="brand" maxlength="100" placeholder-class="placeholder"></input>
+          <input name="brand" bindinput="inputBrand" maxlength="100" placeholder-class="placeholder"></input>
         </view>
         <view class="importWrap">
           <view>新旧程度</view>
-          <input name="newOld" maxlength="100"  placeholder-class="placeholder"></input>
+          <input name="newOld" bindinput="inputNewOld" maxlength="100"  placeholder-class="placeholder"></input>
         </view>
         <view class="textareaWrap">
           <view>附加信息</view>
-          <textarea name="additional" maxlength="1100" disable-default-padding placeholder-class="placeholder"></textarea>
+          <textarea name="additional" bindinput="inputAdditional" maxlength="1100" disable-default-padding placeholder-class="placeholder"></textarea>
         </view>
         <view class="importWrap min">
           <view>联系方式</view>
-          <input name="contact"  maxlength="100" placeholder-class="placeholder"></input>
+          <input name="contact" bindinput="inputContact" maxlength="100" placeholder-class="placeholder"></input>
         </view>
         <view class="moneyWrap" wx:if="{{money}}">
           <text>定价: ¥{{money}}</text>
@@ -37,7 +37,7 @@
         <view class="wrapVideo" wx:if="{{tempVideoPath}}">
           <video object-fit="cover" src="{{tempVideoPath}}"></video>
         </view>
-        <view class="locationWrap">
+        <!-- <view class="locationWrap">
           <view class="location" catchtap="getLocation">
             <image class="locationLogo" src="http://cdn.eigene.cn/squarePost/locationLogo.png"></image>
             <text class="locationText">你在哪里?</text>
@@ -47,7 +47,7 @@
               {{mks[index].title}}
             </view>
           </picker>
-        </view>
+        </view> -->
       </view>
     </scroll-view>
   </form>

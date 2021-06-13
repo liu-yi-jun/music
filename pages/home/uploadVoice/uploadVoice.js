@@ -42,7 +42,7 @@ Page({
     index: 0,
     mks: [],
     msgAuthorizationShow: false,
-    requestId: [app.InfoId.like, app.InfoId.content, app.InfoId.reply]
+    requestId: [app.InfoId.like, app.InfoId.content, app.InfoId.band]
   },
 
   /**
@@ -360,7 +360,11 @@ Page({
       console.log(data)
       app.post(app.Api.voiceIssue, data, {
         loading: false
-      }).then(res => resolve(res)).catch(err => reject(err))
+      }).then(res => resolve(res)).catch(err => {
+        wx.hideLoading()
+        common.Tip(err)
+        reject(err)
+      })
     })
   },
   // 提交表单
@@ -393,8 +397,7 @@ Page({
           } else {
             // 去开启
             wx.openSetting({
-              success(res) {
-              }
+              success(res) {}
             })
           }
         } else if (res.type === 0) {

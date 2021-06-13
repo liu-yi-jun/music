@@ -6,7 +6,8 @@ const InfoId = {
   joinGroup: 'gVM-0N8z4sipyh4riEaEUrSuRVusfgsfk6U3DrDV_-w',
   examine: 'HDFi5dRAZ-sWt-J7LJ6OR59Oc3hgAqtOTqyfosR3qX4',
   forward: '-G-UDwc7TcN9fqymhEOQVyRKabgx0nt4M8BmW0BHSsA',
-  signIn: "Ca_xIYFYmajur3jRrlxqATJlBmA-Z1E8pu9IlyvLnIo"
+  signIn: "Ca_xIYFYmajur3jRrlxqATJlBmA-Z1E8pu9IlyvLnIo",
+  follow: "FK_z03HLwu5lAtmwPxXd0wd81owIbs077fD0kVtpAec"
 }
 const InfoName = {
   [InfoId.like]: '点赞',
@@ -16,16 +17,18 @@ const InfoName = {
   [InfoId.joinGroup]: '申请加入小组',
   [InfoId.examine]: '审核结果',
   [InfoId.forward]: '作品转发',
-  [InfoId.signIn]: '签到'
+  [InfoId.signIn]: '签到',
+  [InfoId.follow]: '关注'
 }
+
 const requestUrls = {
   Dev: {
     // baseUrl:"http://192.168.1.173:3000"
-    // baseUrl: "http://localhost:3000"
-    // baseUrl: "http://192.168.31.40:3000",
+    baseUrl: "http://localhost:3000"
+    // baseUrl: "http://192.168.0.145:3000",
     // baseUrl: "http://192.168.0.145:3000"
     //  baseUrl:"http://192.168.31.72:3000"
-     baseUrl:"https://www.shengruo.top"
+    // baseUrl: "https://www.shengruo.top"
     //  baseUrl:"https://www.shengruo.top"
     // baseUrl: "http://47.111.87.121:3000"
     //  baseUrl:"https://www.eigene.cn"

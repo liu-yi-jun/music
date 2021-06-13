@@ -3,12 +3,12 @@
   <navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' back="{{true}}" iconTheme='white'
     bindback="handlerGobackClick"></navBar>
   <canvas canvas-id='canvas' class='canvas'></canvas>
-  <form bindsubmit="formSubmit">
-    <issueHead avatarUrl="{{avatarUrl}}" nickName="{{nickName}}">
+  <form >
+    <issueHead avatarUrl="{{avatarUrl}}" nickName="{{nickName}}" bind:formSubmit="formSubmit">
     </issueHead>
     <scroll-view style="height: calc({{excludeHeight}}px - 120rpx);" scroll-y>
       <view class="wrap">
-        <textarea class="introduce" name="introduce" maxlength="1000" placeholder="说点什么吧……"
+        <textarea class="introduce" bindinput="inputIntroduce" name="introduce" maxlength="1000" placeholder="说点什么吧……"
           placeholder-class="placeholder" auto-height></textarea>
         <view class="imgWrap" wx:if="{{tempImagePaths.length || isImg}}">
           <view class="imgArea">

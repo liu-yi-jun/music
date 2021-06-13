@@ -9,7 +9,7 @@
     bindback="handlerGobackClick"></navBar>
   <!-- <scroll-view scroll-y style="height:{{height}}px"> -->
 
-  <form bindsubmit="create">
+  <form >
     <view class="title">小组入驻</view>
     <view class="imgWarp">
       <view wx:if="{{tempFilePaths.length}}" class="logoWrap">
@@ -25,12 +25,11 @@
     </view>
 
     <view class="inputWarp">
-      <input placeholder="小组名称：" name="groupName" value="{{form.groupName}}" class="input"
-        placeholder-class="placeholder"></input>
+      <input placeholder="小组名称：" name="groupName"  class="input"
+        placeholder-class="placeholder" bindinput="inputGroupName"></input>
     </view>
     <view class="textareaWarp">
-      <textarea maxlength="-1" class="textarea" placeholder="小组描述：" placeholder-class="placeholder" name="introduce"
-        value='{{form.introduce}}'></textarea>
+      <textarea maxlength="-1" class="textarea"  bindinput="inputIntroduce" placeholder="小组描述：" placeholder-class="placeholder" name="introduce"></textarea>
     </view>
 
     <view class="typeWrap">
@@ -47,7 +46,7 @@
           </view>
         </view>
         <view class="createWarp">
-          <button class="create" form-type="submit">创建</button>
+          <button class="create" catchtap="formSubmit">创建</button>
         </view>
       </view>
     </view>

@@ -87,14 +87,16 @@ Component({
           itemList: ['删除'],
           success: res => {
             app.post(app.Api['delete' + table], {
-              id
+              id,
+              theme: commentArr[commentindex].theme,
+              themeId: commentArr[commentindex].themeId
             }).then(data => {
               // 修改
               if (data.affectedRows) {
-                if (replyindex !== undefined) { 
+                if (replyindex !== undefined) {
                   commentArr[commentindex].replyArr.splice(replyindex, 1)
-                 
-                }else {
+
+                } else {
                   commentArr.splice(commentindex, 1)
                 }
                 common.Toast('已删除')

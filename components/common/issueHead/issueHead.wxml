@@ -4,5 +4,5 @@
       <image src="{{avatarUrl}}"></image>
       <text>{{nickName}}</text>
     </view>
-    <button class="btn" form-type="submit">发布</button>
+    <button class="btn"  catchtap="submit">发布</button>
   </view>

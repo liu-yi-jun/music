@@ -16,6 +16,7 @@ Page({
     applyContent: '',
     codeCheck: '',
     msgAuthorizationShow: false,
+    dialogShow: false,
     requestId: [app.InfoId.examine]
   },
 
@@ -115,42 +116,45 @@ Page({
     } else {
       // 未加入
       if (groupInfo.examine) {
-        // 需要审核
-        common.showLoading()
-        authorize.newSubscription(this.data.requestId, {
-          cancelText: '继续申请'
-        }).then((res) => {
-          wx.hideLoading()
-          if (res.type === 1) {
-            common.Tip('为了更好通知到您，需要您授权相应权限，请接下来按照提示操作').then(res => {
-              this.setData({
-                msgAuthorizationShow: true
-              })
-              authorize.infoSubscribe(this.data.requestId).then(res => {
-                this.setData({
-                  msgAuthorizationShow: false,
-                  applyShow: true
-                })
-              })
-            })
-          } else if (res.type === -1) {
-            if (!res.result.confirm) {
-              this.setData({
-                applyShow: true
-              })
-            } else {
-              // 去开启
-              wx.openSetting({
-                success(res) {
-                }
-              })
-            }
-          } else if (res.type === 0) {
-            this.setData({
-              applyShow: true
-            })
-          }
+        this.setData({
+          applyShow: true
         })
+        // 需要审核
+        // common.showLoading()
+        // authorize.newSubscription(this.data.requestId, {
+        //   cancelText: '继续申请'
+        // }).then((res) => {
+        //   wx.hideLoading()
+        //   if (res.type === 1) {
+        //     common.Tip('为了更好通知到您，需要您授权相应权限，请接下来按照提示操作').then(res => {
+        //       this.setData({
+        //         msgAuthorizationShow: true
+        //       })
+        //       authorize.infoSubscribe(this.data.requestId).then(res => {
+        //         this.setData({
+        //           msgAuthorizationShow: false,
+        //           applyShow: true
+        //         })
+        //       })
+        //     })
+        //   } else if (res.type === -1) {
+        //     if (!res.result.confirm) {
+        //       this.setData({
+        //         applyShow: true
+        //       })
+        //     } else {
+        //       // 去开启
+        //       wx.openSetting({
+        //         success(res) {
+        //         }
+        //       })
+        //     }
+        //   } else if (res.type === 0) {
+        //     this.setData({
+        //       applyShow: true
+        //     })
+        //   }
+        // })
       } else {
         // 直接进入
         this.joinGroup(groupInfo).then(res => {
@@ -220,6 +224,10 @@ Page({
       app.switchData.isSwitchGroup = true
       this.setData({
         applyShow: false
+      }, () => {
+        wx.reLaunch({
+          url: '/pages/home/home'
+        })
       })
       // authorize.isSubscription().then(res => {
       //   if (res.mainSwitch && (!res.itemSettings || !res.itemSettings[app.InfoId.examine])) {

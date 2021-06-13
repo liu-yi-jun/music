@@ -263,3 +263,5 @@ bindtouchend="indexEnd"  -->
     <view hover-stay-time="{{100}}" hover-class="hoverComplete" class="complete" catchtap="complete">完成</view>
   </view>
 </view>
+
+<guidMsgAuthor msgAuthorizationShow="{{msgAuthorizationShow}}"></guidMsgAuthor>

@@ -40,6 +40,15 @@
   position: relative;
 }
 
+.shadow {
+  position: absolute;
+  left: 0px;
+  bottom: 0px;
+  width: 100%;
+  height: 50%;
+  background: linear-gradient(to top, rgba(0, 0, 0, 70%) 0%, rgba(0, 0, 0, 0) 100%);
+}
+
 .avatar {
   width: 158rpx;
   height: 158rpx;
@@ -57,9 +66,13 @@
   /* margin-top: 8rpx; */
 }
 
-.constellation {
-  margin: 0 10rpx;
+.nameBotoom>text {
+  margin: 0 5rpx;
 }
+
+/* .constellation {
+  margin: 0 10rpx;
+} */
 
 .organization {
   position: absolute;
@@ -79,6 +92,7 @@
 .avatarName {
   text-align: center;
   color: white;
+  z-index: 99;
   /* width: 220rpx; */
   display: flex;
   flex-direction: column;
@@ -86,7 +100,7 @@
   align-items: center;
   position: absolute;
   top: 251rpx;
-  transform:translateX(-50%);
+  transform: translateX(-50%);
   left: 50%;
 }
 
@@ -484,11 +498,12 @@
   word-wrap: break-word;
   padding: 0rpx 40rpx 60rpx;
 }
+
 .name-nameBotoom {
   white-space: nowrap;
   word-break: keep-all;
   margin-top: 16rpx;
-  background-color: rgba(0, 0, 0, 0.3);
+  /* background-color: rgba(0, 0, 0, 0.3); */
   padding: 2rpx 40rpx;
   border-radius: 10rpx;
 }
@@ -499,5 +514,5 @@
   left: 0px;
   width: 100%;
   height: 100%;
-  background:transparent;
+  background: transparent;
 }

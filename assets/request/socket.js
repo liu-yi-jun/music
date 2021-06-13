@@ -31,8 +31,9 @@ function initSocketEvent(isLogin = true) {
   app.onMsg('pageRefresh', (data) => {
     data.forEach((item) => {
       item = JSON.parse(item)
+      app.PageRefresh.homePageRefresh && app.PageRefresh.homePageRefresh()
       common.Tip(item.control.title).then(() => {
-        app.switchData[item.control.proper.name] = item.control.proper.value
+        // app.switchData[item.control.proper.name] = item.control.proper.value
       })
     })
   })
@@ -48,11 +49,16 @@ function initSocketEvent(isLogin = true) {
         to: item.to,
         message: item.message
       })
-    })
-    wx.setStorage({
-      data: systemMsg,
-      key: 'systemMsg',
-    })
+      app.post(app.Api.sendSystemMsg, {
+        messageId: item.message.id,
+        msgContent: item,
+        userId: app.userInfo.id
+      }).then(() => {})
+    });
+    wx.setStorageSync('systemMsg', systemMsg)
+    setTimeout(() => {
+      (app.TabBar.homeTabBar && app.TabBar.homeTabBar.setIsNew()) || (app.TabBar.toolTabBar && app.TabBar.toolTabBar.setIsNew()) || (app.TabBar.squareTabBar && app.TabBar.squareTabBar.setIsNew())
+    }, 1000);
   })
   app.onMsg('updateSystemMsg', (data) => {
     let systemMsg = wx.getStorageSync('systemMsg')
@@ -63,6 +69,10 @@ function initSocketEvent(isLogin = true) {
       if (obj.message.msgId === item.message.id) {
         flag = true
         systemMsg.splice(index, 1)
+        app.post(app.Api.deleteSystemMsg, {
+          messageId: item.message.id,
+          userId: app.userInfo.id
+        }).then(() => {})
         return
       }
     })

@@ -110,7 +110,9 @@ Page({
     lessMember: false,
     isShowGroup: false,
     isShowPull: false,
-    showCode: false
+    showCode: false,
+    msgAuthorizationShow: false,
+    requestId: [app.InfoId.examine, app.InfoId.joinGroup]
     // list: [{
     //   name: '分享',
     //   open_type: 'share',
@@ -124,6 +126,7 @@ Page({
     //   open_type: '',
     //   functionName: 'handleReport'
     // }]
+
   },
 
 
@@ -152,9 +155,9 @@ Page({
   init() {
     app.initLogin().then(() => {
       if (app.userInfo) {
-        setTimeout(() => {
-          this.getTabBar() && this.getTabBar().setIsNew()
-        }, 1000)
+        if (!app.TabBar.homeTabBar) {
+          app.TabBar.homeTabBar = this.getTabBar()
+        }
         let groupId = app.userInfo.groupId
         this.setData({
           myId: app.userInfo.id
@@ -320,6 +323,31 @@ Page({
         if (app.userInfo.groupDuty === -1) {
           let tip = '请联系管理员或组长通过审核'
           common.Tip(tip, '等待审核中')
+        } else if (app.userInfo.groupDuty === 0 || app.userInfo.groupDuty === 1) {
+          authorize.newSubscription(this.data.requestId, {
+            cancelText: '取消'
+          }).then((res) => {
+            wx.hideLoading()
+            if (res.type === 1) {
+              common.Tip('为了更好通知到您，需要您授权相应权限，请接下来按照提示操作').then(res => {
+                this.setData({
+                  msgAuthorizationShow: true
+                })
+                authorize.infoSubscribe(this.data.requestId).then(res => {
+                  this.setData({
+                    msgAuthorizationShow: false
+                  })
+                })
+              })
+            } else if (res.type === -1) {
+              if (res.result.confirm) {
+                // 去开启
+                wx.openSetting({
+                  success(res) {}
+                })
+              }
+            }
+          })
         }
       }).catch(err => reject(err))
     })
@@ -496,6 +524,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    app.PageRefresh.homePageRefresh = this.switchGroup
     if (app.switchData.isModifyGroup) {
       app.switchData.isModifyGroup = false
       this.getGroupInfo(app.userInfo.groupId)
@@ -526,33 +555,36 @@ Page({
       // app.getNotice(this, app.userInfo.id)
     }
     if (app.switchData.refresh || app.dynamicDeleteBack) {
-      app.dynamicDeleteBack = false
-      this.data.minID = 0
-      this.setData({
-        dynamicIsShow: false,
-        showMember: [],
-        pageIndex: 1,
-        ableIndex: 1,
-        SM_UpPointer: 0,
-        SM_DownPointer: 0,
-        MB_UpPointer: 0,
-        MB_DownPointer: 0,
-        member: [],
-        style: JSON.parse(JSON.stringify(Style)),
-        isNotData: false,
-        showVideo: false,
-        lessMember: false,
-        isLoop: false,
-        MB_Index: 0
-      }, () => {
-        this.groupPagingGetGroupdynamics(this.data.groupInfo.id).then(() => {
-          this.urlPush()
-        })
-      })
-      app.switchData.refresh = false
+      this.pageRefresh()
     }
   },
+  pageRefresh() {
+    app.switchData.refresh = false
+    app.dynamicDeleteBack = false
+    this.data.minID = 0
+    this.setData({
+      dynamicIsShow: false,
+      showMember: [],
+      pageIndex: 1,
+      ableIndex: 1,
+      SM_UpPointer: 0,
+      SM_DownPointer: 0,
+      MB_UpPointer: 0,
+      MB_DownPointer: 0,
+      member: [],
+      style: JSON.parse(JSON.stringify(Style)),
+      isNotData: false,
+      showVideo: false,
+      lessMember: false,
+      isLoop: false,
+      MB_Index: 0
+    }, () => {
+      this.groupPagingGetGroupdynamics(this.data.groupInfo.id).then(() => {
+        this.urlPush()
+      })
+    })
 
+  },
   /**
    * 生命周期函数--监听页面隐藏
    */

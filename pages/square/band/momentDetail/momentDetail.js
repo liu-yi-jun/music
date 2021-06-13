@@ -28,7 +28,7 @@ Page({
       open_type: '',
       functionName: 'handleReport'
     }],
-    intoId:''
+    intoId: '',
     // list: [{
     //   name: '分享',
     //   open_type: 'share',
@@ -42,6 +42,7 @@ Page({
     //   open_type: '',
     //   functionName: 'handleReport'
     // }]
+    detai: null
   },
 
   /**

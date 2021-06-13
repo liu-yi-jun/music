@@ -26,6 +26,9 @@
         <block wx:if="{{item.type===2}}">
           <text class="elaborate" >回复了你的评论</text>
         </block>
+        <block wx:if="{{item.type===3}}">
+          <text class="elaborate" >关注了你</text>
+        </block>
       </view>
       <block wx:if="{{item.type===0 || item.type===1}}">
         <text class="words">{{item.themeTitle}}</text>

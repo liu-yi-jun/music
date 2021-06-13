@@ -19,7 +19,7 @@
               <text wx:if="{{item.age}}">{{item.age}}岁</text>
             </view>
           </view>
-          <view class="right">{{item.groupDuty === 0? '社长': '管理员'}}</view>
+          <view class="right">{{item.groupDuty === 0? '组长': '管理员'}}</view>
         </view>
       </view>
     </view>

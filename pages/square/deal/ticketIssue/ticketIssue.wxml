@@ -2,34 +2,34 @@
 <view class="ticketIssue">
   <navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' back="{{true}}" iconTheme='white' bindback="handlerGobackClick"></navBar>
   <canvas canvas-id='canvas' class='canvas'></canvas>
-  <form bindsubmit="formSubmit">
-  <issueHead avatarUrl="{{avatarUrl}}" nickName="{{nickName}}">
+  <form>
+  <issueHead avatarUrl="{{avatarUrl}}" nickName="{{nickName}}" bind:formSubmit="formSubmit">
   </issueHead>
   <scroll-view  style="height: calc({{excludeHeight}}px - 160rpx);" scroll-y>
     <view class="wrap">
       <view class="importWrap first">
         <text>标题</text>
-        <input name="title" placeholder-class="placeholder" maxlength="100"></input>
+        <input name="title" bindinput="inputTitle" placeholder-class="placeholder" maxlength="100"></input>
       </view>
       <view class="importWrap additionalWrap">
         <text>附加信息</text>
-        <textarea name="additional" disable-default-padding placeholder-class="placeholder" maxlength="800"></textarea>
+        <textarea name="additional" bindinput="inputAdditional" disable-default-padding placeholder-class="placeholder" maxlength="800"></textarea>
       </view>
       <view class="importWrap">
         <text>时间</text>
-        <input name="activityTime"  placeholder-class="placeholder" maxlength="100"></input>
+        <input name="activityTime"  bindinput="inputActivityTime"  placeholder-class="placeholder" maxlength="100"></input>
       </view>
       <view class="importWrap">
         <text>地点</text>
-        <input name="activityLocation" placeholder-class="placeholder" maxlength="200"></input>
+        <input name="activityLocation" bindinput="inputActivityLocation"  placeholder-class="placeholder" maxlength="200"></input>
       </view>
       <view class="importWrap">
         <text>数量</text>
-        <input name="number" type="number" placeholder-class="placeholder" maxlength="10"></input>
+        <input name="number" type="number" bindinput="inputNumber" placeholder-class="placeholder" maxlength="10"></input>
       </view>
       <view class="importWrap">
         <text>联系方式</text>
-        <input name="contact" placeholder-class="placeholder" maxlength="100"></input>
+        <input name="contact" bindinput="inputContact" placeholder-class="placeholder" maxlength="100"></input>
       </view>
       <view class="moneyWrap" wx:if="{{money}}">
           <text>票价: ¥{{money}}</text>
@@ -44,7 +44,7 @@
         <view class="wrapVideo" wx:if="{{tempVideoPath}}">
           <video object-fit="cover" src="{{tempVideoPath}}"></video>
         </view>
-      <view class="locationWrap">
+      <!-- <view class="locationWrap">
           <view class="location" catchtap="getLocation">
             <image class="locationLogo" src="http://cdn.eigene.cn/squarePost/locationLogo.png"></image>
             <text class="locationText">你在哪里?</text>
@@ -54,7 +54,7 @@
               {{mks[index].title}}
             </view>
           </picker>
-        </view>
+        </view> -->
     </view>
   </scroll-view>
 </form>

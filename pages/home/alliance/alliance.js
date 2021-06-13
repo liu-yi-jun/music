@@ -119,44 +119,44 @@ Page({
   async yesJoin() {
     let groupInfo = this.groupInfo
     if (groupInfo.examine) {
-      common.showLoading()
-      authorize.newSubscription(this.data.requestId, {
-        cancelText: '继续申请'
-      }).then((res) => {
-        wx.hideLoading()
-        if (res.type === 1) {
-          common.Tip('为了更好通知到您，需要您授权相应权限，请接下来按照提示操作').then(res => {
-            this.setData({
-              msgAuthorizationShow: true
-            })
-            authorize.infoSubscribe(this.data.requestId).then(res => {
-              this.setData({
-                applyShow: true,
-                joinShow: false,
-                msgAuthorizationShow: false
-              })
-            })
-          })
-        } else if (res.type === -1) {
-          if (!res.result.confirm) {
-            this.setData({
-              applyShow: true,
-              joinShow: false
-            })
-          } else {
-            // 去开启
-            wx.openSetting({
-              success(res) {
-              }
-            })
-          }
-        } else if (res.type === 0) {
+      // common.showLoading()
+      // authorize.newSubscription(this.data.requestId, {
+      //   cancelText: '继续申请'
+      // }).then((res) => {
+      //   wx.hideLoading()
+      //   if (res.type === 1) {
+      //     common.Tip('为了更好通知到您，需要您授权相应权限，请接下来按照提示操作').then(res => {
+      //       this.setData({
+      //         msgAuthorizationShow: true
+      //       })
+      //       authorize.infoSubscribe(this.data.requestId).then(res => {
+      //         this.setData({
+      //           applyShow: true,
+      //           joinShow: false,
+      //           msgAuthorizationShow: false
+      //         })
+      //       })
+      //     })
+      //   } else if (res.type === -1) {
+      //     if (!res.result.confirm) {
+      //       this.setData({
+      //         applyShow: true,
+      //         joinShow: false
+      //       })
+      //     } else {
+      //       // 去开启
+      //       wx.openSetting({
+      //         success(res) {
+      //         }
+      //       })
+      //     }
+      //   } else if (res.type === 0) {
           this.setData({
             applyShow: true,
             joinShow: false
           })
-        }
-      })
+        // }
+      // })
     } else {
       this.setData({
         joinShow: false

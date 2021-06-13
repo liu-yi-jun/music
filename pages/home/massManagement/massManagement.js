@@ -31,7 +31,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
     // 获取去除上面导航栏，剩余的高度
     tool.navExcludeHeight(this)
     // this.getNewNumber()
@@ -471,32 +470,32 @@ Page({
     })
   },
   async changeExamine(event) {
-    if (Number(event.detail.value)) {
-      authorize.newSubscription(this.data.requestId, {
-        cancelText: '取消'
-      }).then((res) => {
-        wx.hideLoading()
-        if (res.type === 1) {
-          common.Tip('为了更好通知到您，需要您授权相应权限，请接下来按照提示操作').then(res => {
-            this.setData({
-              msgAuthorizationShow: true
-            })
-            authorize.infoSubscribe(this.data.requestId).then(res => {
-              this.setData({
-                msgAuthorizationShow: false
-              })
-            })
-          })
-        } else if (res.type === -1) {
-          if (res.result.confirm) {
-            // 去开启
-            wx.openSetting({
-              success(res) {}
-            })
-          }
-        }
-      })
-    }
+    // if (Number(event.detail.value)) {
+    //   authorize.newSubscription(this.data.requestId, {
+    //     cancelText: '取消'
+    //   }).then((res) => {
+    //     wx.hideLoading()
+    //     if (res.type === 1) {
+    //       common.Tip('为了更好通知到您，需要您授权相应权限，请接下来按照提示操作').then(res => {
+    //         this.setData({
+    //           msgAuthorizationShow: true
+    //         })
+    //         authorize.infoSubscribe(this.data.requestId).then(res => {
+    //           this.setData({
+    //             msgAuthorizationShow: false
+    //           })
+    //         })
+    //       })
+    //     } else if (res.type === -1) {
+    //       if (res.result.confirm) {
+    //         // 去开启
+    //         wx.openSetting({
+    //           success(res) {}
+    //         })
+    //       }
+    //     }
+    //   })
+    // }
     this.setData({
       examine: Number(event.detail.value)
     })

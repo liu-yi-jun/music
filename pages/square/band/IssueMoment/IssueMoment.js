@@ -18,7 +18,7 @@ Page({
     mks: [],
     tempFilePath: '',
     msgAuthorizationShow: false,
-    requestId: [app.InfoId.like, app.InfoId.content, app.InfoId.reply]
+    requestId: [app.InfoId.like, app.InfoId.content, app.InfoId.band]
   },
 
   /**
@@ -173,7 +173,11 @@ Page({
       console.log(data)
       app.post(app.Api.issueMoment, data, {
         loading: false
-      }).then(res => resolve(res)).catch(err => reject(err))
+      }).then(res => resolve(res)).catch(err =>{
+        wx.hideLoading()
+        common.Tip(err)
+        reject(err)
+      } )
     })
   },
   // 提交表单

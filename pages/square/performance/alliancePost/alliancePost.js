@@ -15,6 +15,8 @@ Page({
     excludeHeight: 0,
     date: '',
     time: '',
+    endDate: '',
+    endTime: '',
     first: true,
     keyBoardHeight: '0px',
     id: '',
@@ -40,13 +42,14 @@ Page({
     isVid: false,
     startTime: tool.format(Date.now()),
     msgAuthorizationShow: false,
-    requestId: [app.InfoId.like, app.InfoId.content, app.InfoId.reply]
+    requestId: [app.InfoId.like, app.InfoId.content, app.InfoId.band]
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    this.newForm = {}
     // 获取去除上面导航栏，剩余的高度
     tool.navExcludeHeight(this)
 
@@ -302,6 +305,16 @@ Page({
       date: e.detail.value
     })
   },
+  bindEndDateChange(e) {
+    this.setData({
+      endDate: e.detail.value
+    })
+  },
+  bindEndTimeChange(e) {
+    this.setData({
+      endTime: e.detail.value
+    })
+  },
   bindTimeChange(e) {
     this.setData({
       time: e.detail.value
@@ -316,7 +329,9 @@ Page({
           tempImagePaths,
           tempRecordPath,
           duration,
-          linkUrl
+          linkUrl,
+          endDate,
+          endTime
         } = this.data
         let {
           date,
@@ -327,16 +342,21 @@ Page({
           const error = this.WxValidate.errorList[0].msg
           return reject(error)
         }
-        if (date === '活动日期') return reject('请选择活动开始日期')
-        if (time === '活动时间') return reject('请选择活动开始时间')
+        if (date === '') return reject('请选择活动开始日期')
+        if (time === '') return reject('请选择活动开始时间')
+        if (endDate === '') return reject('请选择结束日期')
+        if (endTime === '') return reject('请选择结束时间')
         if (!tempImagePaths.length) return reject('需要添加图片哦')
         // let mold = tempImagePaths.length ? 0 : (tempVideoPath ? 1 : 2)
         let timeStamp = `${this.data.date} ${time}`
         let dates = this.data.date.split('-')
-  
         let activityTime = `${dates[0]}年${dates[1]}月${dates[2]}日${time}`
-  
+        let endEndDates = endDate.split('-')
+        let activityEndTime = `${endEndDates[0]}年${endEndDates[1]}月${endEndDates[2]}日${endTime}`
+        let endTimeStamp = `${this.data.endDate} ${endTime}`
         return resolve({
+          endTimeStamp,
+          activityEndTime,
           duration,
           timeStamp,
           userId: app.userInfo.id,
@@ -354,11 +374,13 @@ Page({
     } catch (err) {
       console.log(err);
     }
-  
+
   },
   // 提交表单
   async formSubmit(e) {
-    let params = e.detail.value
+    let params = {
+      ...this.newForm
+    }
     try {
       params = await this.validate(params)
       common.showLoading()
@@ -384,8 +406,7 @@ Page({
           } else {
             // 去开启
             wx.openSetting({
-              success(res) {
-              }
+              success(res) {}
             })
           }
         } else if (res.type === 0) {
@@ -474,7 +495,11 @@ Page({
       console.log(data)
       app.post(app.Api.postAlliance, data, {
         loading: false
-      }).then(res => resolve(res)).catch(err => reject(err))
+      }).then(res => resolve(res)).catch(err => {
+        wx.hideLoading()
+        common.Tip(err)
+        reject(err)
+      })
     })
   },
   // 完成输入链接
@@ -494,4 +519,16 @@ Page({
   touchmove() {
     return
   },
+  inputTitle(e) {
+    this.newForm.title = e.detail.value
+  },
+  inputActivityLocation(e) {
+    this.newForm.activityLocation = e.detail.value
+  },
+  inputOrganization(e) {
+    this.newForm.organization = e.detail.value
+  },
+  inputIntroduce(e) {
+    this.newForm.introduce = e.detail.value
+  }
 })

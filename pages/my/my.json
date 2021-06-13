@@ -11,7 +11,8 @@
     "composeBand": "/components/square/band/composeBand/composeBand",
     "second": "/components/square/deal/second/second",
     "ticket": "/components/square/deal/ticket/ticket",
-    "bandMoment":"/components/square/band/bandMoment/bandMoment"
+    "bandMoment":"/components/square/band/bandMoment/bandMoment",
+    "guidMsgAuthor":"/components/common/guidMsgAuthor/guidMsgAuthor"
   },
   "enablePullDownRefresh": true,
   "backgroundTextStyle": "dark"

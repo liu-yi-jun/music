@@ -1,5 +1,5 @@
 <!--components/square/dynamicList/dynamicList.wxml-->
-<view class="list"  >
+<view class="list">
   <view class="item" wx:for="{{dynamics}}" wx:key="id" wx:for-index="i">
     <image mode="aspectFill" data-userid="{{item.userId}}" catchtap="goPersonal" class="avatar" src="{{item.avatarUrl}}"
       lazy-load="{{true}}"></image>
@@ -37,6 +37,7 @@
             <text class="recordTime" wx:if="{{item.duration}}">{{item.duration}}s</text>
           </view>
         </view>
+
         <view class="imgWrap ul" wx:if="{{item.pictureUrls.length}}">
           <view class="li" wx:for="{{item.pictureUrls}}" wx:key="i" wx:for-item="imgUrl" wx:for-index="j">
             <image catchtap="previewImage" data-i="{{i}}" data-j="{{j}}"
@@ -48,6 +49,7 @@
           <video data-index="{{i}}" id="video{{i}}" bindplay="startPlay" bindfullscreenchange="bindfullscreenchange"
             object-fit="cover" src="{{item.videoUrl}}"></video>
         </view>
+        <view class="location">{{item.location}}</view>
       </view>
       <view wx:if="{{item.topicName}}" class="topicWrap">
         <view class="topic">

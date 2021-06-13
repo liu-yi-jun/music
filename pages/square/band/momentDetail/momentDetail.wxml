@@ -17,6 +17,7 @@
       </swiper-item>
     </swiper>
     <view class="icon-time">
+      <view class="location">{{detail.location}}</view>
       <text class="time">{{detail.releaseTime}}</text>
     </view>
     <view class="info">

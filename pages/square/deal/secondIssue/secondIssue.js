@@ -23,13 +23,14 @@ Page({
     dialogShow: true,
     money: 0,
     msgAuthorizationShow: false,
-    requestId: [app.InfoId.like, app.InfoId.content, app.InfoId.reply]
+    requestId: [app.InfoId.like, app.InfoId.content, app.InfoId.band]
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    this.newForm = {}
     // 获取去除上面导航栏，剩余的高度
     tool.navExcludeHeight(this)
     this.getUserInfo()
@@ -154,7 +155,9 @@ Page({
 
   // 提交表单
   async formSubmit(e) {
-    let params = e.detail.value
+    let params = {
+      ...this.newForm
+    }
     try {
       params = await this.validate(params)
       common.showLoading()
@@ -180,8 +183,7 @@ Page({
           } else {
             // 去开启
             wx.openSetting({
-              success(res) {
-              }
+              success(res) {}
             })
           }
         } else if (res.type === 0) {
@@ -252,7 +254,11 @@ Page({
       console.log(data)
       app.post(app.Api.secondIssue, data, {
         loading: false
-      }).then(res => resolve(res)).catch(err => reject(err))
+      }).then(res => resolve(res)).catch(err => {
+        wx.hideLoading()
+        common.Tip(err)
+        reject(err)
+      })
     })
   },
 
@@ -304,5 +310,17 @@ Page({
   onShareAppMessage: function () {
 
   },
-  handlerGobackClick: app.handlerGobackClick
+  handlerGobackClick: app.handlerGobackClick,
+  inputBrand(e) {
+    this.newForm.brand = e.detail.value
+  },
+  inputNewOld(e) {
+    this.newForm.newOld = e.detail.value
+  },
+  inputAdditional(e) {
+    this.newForm.additional = e.detail.value
+  },
+  inputContact(e) {
+    this.newForm.contact = e.detail.value
+  }
 })

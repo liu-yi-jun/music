@@ -11,12 +11,12 @@
       <image catchtap="chooseAvatar" class="changeAvatar" src="/images/editData/changeBackground.png"></image>
     </view>
   </view>
-  <form class="form" bindsubmit="formSubmit">
+  <form class="form" >
     <view class="basicWarp">
       <view class="basic">
         <view class="nickNameWrap">
           <text>昵称</text>
-          <input placeholder-class="placeholder" maxlength="20" name="nickName" value="{{userInfo.nickName}}"></input>
+          <input bindinput="inputNickName" placeholder-class="placeholder" maxlength="20" name="nickName" value="{{userInfo.nickName}}"></input>
         </view>
         <view class="sexWarp">
           <text>性别</text>
@@ -27,7 +27,7 @@
         </view>
         <view class="ageWrap">
           <text>年龄</text>
-          <input type="number" maxlength="3" name="age" placeholder-class="placeholder"
+          <input bindinput="inputAge" type="number" maxlength="3" name="age" placeholder-class="placeholder"
             value="{{userInfo.age}}"></input>
         </view>
         <view class="constellationWrap">
@@ -55,10 +55,10 @@
     <view class="introductionWarp">
       <text class="introduction">个人简历</text>
       <text class="limit">（小于等于30字）</text>
-      <textarea maxlength="30" name="resume" class="textarea" value="{{userInfo.resume}}"></textarea>
+      <textarea bindinput="inputResume" maxlength="30" name="resume" class="textarea" value="{{userInfo.resume}}"></textarea>
     </view>
     <view class="summitWarp">
-      <button class="summit" form-type="submit">保存</button>
+      <button class="summit" catchtap="formSubmit">保存</button>
     </view>
   </form>
   <view class="blank"></view>

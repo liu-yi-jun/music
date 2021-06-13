@@ -2,9 +2,10 @@
 <view>
   <navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' back="{{true}}" iconTheme='white'
     bindback="handlerGobackClick"></navBar>
-  <form bindsubmit="formSubmit">
+  <form>
     <view class="head">
-      <input name="title" placeholder="标题……" placeholder-class="placeholder" value="{{title}}"></input>
+      <input name="title" placeholder="标题……" bindinput="inputTitle" placeholder-class="placeholder"
+        value="{{title}}"></input>
       <view class="avatarWrap">
         <image mode="aspectFill" class="avatar" src="{{avatarUrl}}"></image>
         <!-- <text>{{nickName}}</text> -->
@@ -79,9 +80,9 @@
     </view>
 
     <view class="textareaWarp">
-      <textarea cursor-spacing="{{100}}" name="introduce" maxlength="-1" maxlength="{{1000}}" class="textarea" placeholder="详情"
-        placeholder-class="placeholderText" value="{{introduce}}"></textarea>
-      <view class="locationWrap">
+      <textarea cursor-spacing="{{100}}" bindinput="inputIntroduce" name="introduce" maxlength="-1" maxlength="{{1000}}" class="textarea"
+        placeholder="详情" placeholder-class="placeholderText" value="{{introduce}}"></textarea>
+      <!-- <view class="locationWrap">
         <view class="location" catchtap="getLocation">
           <image class="locationLogo" src="{{qiniuUrl}}/issueImg/locationLogo.png"></image>
           <text class="locationText">你在哪里?</text>
@@ -91,14 +92,14 @@
             {{mks[index].title}}
           </view>
         </picker>
-      </view>
+      </view> -->
     </view>
 
     <view class="issueWrap">
-      <button wx:if="{{!isEdit}}" class="issue" form-type="submit" catchtap="issueSubmit">发布</button>
-      <button wx:else class="issue" form-type="submit">保存</button>
+      <button wx:if="{{!isEdit}}" class="issue" catchtap="formSubmit">发布</button>
+      <button wx:else class="issue" catchtap="formSubmit">保存</button>
     </view>
   </form>
 </view>
 
-<guidMsgAuthor  msgAuthorizationShow="{{msgAuthorizationShow}}"></guidMsgAuthor>
+<guidMsgAuthor msgAuthorizationShow="{{msgAuthorizationShow}}"></guidMsgAuthor>

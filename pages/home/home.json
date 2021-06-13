@@ -2,7 +2,8 @@
   "usingComponents": {
     "showTabBar":"/components/common/showTabBar/showTabBar",
     "playRecord":"/components/common/playRecord/playRecord",
-    "menu": "/components/common/menu/menu"
+    "menu": "/components/common/menu/menu",
+    "guidMsgAuthor":"/components/common/guidMsgAuthor/guidMsgAuthor"
   },
   "disableScroll": true,
   "navigationStyle": "custom"

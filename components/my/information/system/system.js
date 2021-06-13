@@ -43,16 +43,34 @@ Component({
       })
 
     },
+    getSystemMsg() {
+      return new Promise(async (resolve, reject) => {
+        app.get(app.Api.getSystemMsg, {
+          userId: app.userInfo.id
+        }).then((res) => {
+          resolve(res)
+        }).catch(err => {
+          reject(err)
+        })
+      })
+    },
     loadData() {
-      return new Promise((resolve, reject) => {
+      return new Promise(async (resolve, reject) => {
         let systemMsg = wx.getStorageSync('systemMsg')
         this.systemMsg = systemMsg
+        if (!systemMsg.length) {
+          // 请求数据库缓存
+          let sqlSystemMsg = await this.getSystemMsg()
+          systemMsg = sqlSystemMsg
+          wx.setStorageSync('systemMsg', systemMsg)
+        }
         let {
           pageSize,
           pageIndex
         } = this.data
         systemMsg = systemMsg.slice((pageIndex - 1) * pageSize, pageIndex * pageSize)
         systemMsg.forEach(item => {
+          console.log(item);
           this.data.msgList.push(item)
         })
         this.setData({
@@ -74,7 +92,9 @@ Component({
       app.post(app.Api.agreeApply, {
         userId: section.from.userId,
         groupId: section.message.jsonDate.groupId,
-        groupName: section.message.jsonDate.groupName
+        groupName: section.message.jsonDate.groupName,
+        myUserId: app.userInfo.id,
+        msgId
       }).then((res) => {
         section.message.jsonDate.isNew = false
         if (res.affectedRows) {
@@ -187,11 +207,14 @@ Component({
     refuseApply(e) {
       let index = e.currentTarget.dataset.index
       let msgList = this.data.msgList
+      let msgId = e.currentTarget.dataset.id
       let section = msgList[index]
       app.post(app.Api.refuseApply, {
         userId: section.from.userId,
         groupId: section.message.jsonDate.groupId,
-        groupName: section.message.jsonDate.groupName
+        groupName: section.message.jsonDate.groupName,
+        myUserId: app.userInfo.id,
+        msgId
       }).then((res) => {
         console.log(res);
         section.message.jsonDate.isNew = false
@@ -240,6 +263,27 @@ Component({
           })
           app.socket.emit("sendSystemMsg", from, to, message);
 
+
+          // 发送更新消息
+          from = {
+            userId: app.userInfo.id,
+          }
+          let updateUserIdList = JSON.parse(JSON.stringify(res.userIdList))
+          updateUserIdList.forEach((item, index) => {
+            if (item.userId === app.userInfo.id) {
+              updateUserIdList.splice(index, 1)
+              return
+            }
+          })
+          to = {
+            userIdList: updateUserIdList
+          }
+          message = {
+            msgId,
+            type: -1,
+          }
+          app.socket.emit("updateSystemMsg", from, to, message);
+          
           // 发送给用户
           let control = {
             title: `很抱歉，您未能通过"${section.message.jsonDate.groupName}"小组的审核`,

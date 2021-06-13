@@ -118,13 +118,14 @@ Page({
     introduce: '',
     isEdit: false,
     msgAuthorizationShow: false,
-    requestId: [app.InfoId.band]
+    requestId: [app.InfoId.like, app.InfoId.content, app.InfoId.band]
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    this.newForm = {}
     if (options.detail) options.detail = this.initData(JSON.parse(options.detail), options.isEdit)
     // 获取去除上面导航栏，剩余的高度
     tool.navExcludeHeight(this)
@@ -133,6 +134,8 @@ Page({
   },
   initData(detail, isEdit) {
     this.themeId = detail.id
+    this.newForm.title = detail.title
+    this.newForm.introduce = detail.introduce
     console.log(detail);
     let instruments = this.data.instruments
     detail.uploadExists.forEach(exist => {
@@ -363,13 +366,19 @@ Page({
     return new Promise((resolve, reject) => {
       app.post(app.Api.saveTeam, data, {
         loading: false
-      }).then(res => resolve(res)).catch(err => reject(err))
+      }).then(res => resolve(res)).catch(err => {
+        wx.hideLoading()
+        common.Tip(err)
+        reject(err)
+      })
     })
   },
   // 提交表单
   async formSubmit(e) {
     console.log('form发生了submit事件，携带的数据为：', e.detail.value)
-    let params = e.detail.value
+    let params = {
+      ...this.newForm
+    }
     try {
       params = await this.validate(params)
 
@@ -398,8 +407,7 @@ Page({
             } else {
               // 去开启
               wx.openSetting({
-                success(res) {
-                }
+                success(res) {}
               })
             }
           } else if (res.type === 0) {
@@ -436,4 +444,10 @@ Page({
     app.bandBack = true
     wx.navigateBack()
   },
+  inputIntroduce(e) {
+    this.newForm.introduce = e.detail.value
+  },
+  inputTitle(e) {
+    this.newForm.title = e.detail.value
+  }
 })

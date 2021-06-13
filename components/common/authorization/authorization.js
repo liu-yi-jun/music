@@ -1,6 +1,7 @@
 // components/common/authorization/authorization.js
 
 let socket = require('../../../assets/request/socket')
+let authorize = require('../../../assets/tool/authorize')
 const {
   Tip
 } = require('../../../assets/tool/common')
@@ -25,7 +26,9 @@ Component({
    * 组件的初始数据
    */
   data: {
-    check: false
+    msgAuthorizationShow: false,
+    check: false,
+    requestId: [app.InfoId.examine, app.InfoId.joinGroup, app.InfoId.signIn]
   },
 
   /**
@@ -51,7 +54,7 @@ Component({
           if (!app.userInfo) {
             app.post(app.Api.register, {
               userInfo: data.userInfo,
-              codeCheck: codeCheck?codeCheck:this.data.codeCheck
+              codeCheck: codeCheck ? codeCheck : this.data.codeCheck
             }, {
               loading: false
             }).then(res => {
@@ -77,6 +80,33 @@ Component({
     checkboxChange(e) {
       this.setData({
         check: !this.data.check
+      }, () => {
+        if (this.data.check) {
+          authorize.newSubscription(this.data.requestId, {
+            cancelText: '取消'
+          }).then((res) => {
+            wx.hideLoading()
+            if (res.type === 1) {
+              common.Tip('为了更好通知到您，需要您授权相应权限，请接下来按照提示操作').then(res => {
+                this.setData({
+                  msgAuthorizationShow: true
+                })
+                authorize.infoSubscribe(this.data.requestId).then(res => {
+                  this.setData({
+                    msgAuthorizationShow: false
+                  })
+                })
+              })
+            } else if (res.type === -1) {
+              if (res.result.confirm) {
+                // 去开启
+                wx.openSetting({
+                  success(res) {}
+                })
+              }
+            }
+          })
+        }
       })
     },
     goUserNotice() {

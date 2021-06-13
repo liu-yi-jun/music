@@ -46,7 +46,7 @@ Page({
     // 标注视频链接类型
     isVid: false,
     msgAuthorizationShow: false,
-    requestId: [app.InfoId.like, app.InfoId.content, app.InfoId.reply],
+    requestId: [app.InfoId.like, app.InfoId.content, app.InfoId.band],
     isEdit: false,
     courseName: '',
     courseId: 0
@@ -56,6 +56,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    this.newForm = {}
     if (options.detail) this.initData(JSON.parse(options.detail), options.isEdit)
     this.initValidate()
     // 获取去除上面导航栏，剩余的高度
@@ -64,6 +65,9 @@ Page({
 
   },
   initData(detail, isEdit) {
+    this.newForm.introduce = detail.introduce
+    this.newForm.open = detail.open
+    this.newForm.courseName = detail.courseName
     this.oldForm = {
       introduce: detail.introduce,
       posterUrl: detail.posterUrl,
@@ -420,20 +424,32 @@ Page({
       console.log(data)
       app.post(app.Api.addCourse, data, {
         loading: false
-      }).then(res => resolve(res)).catch(err => reject(err))
+      }).then(res => resolve(res)).catch(err => {
+        wx.hideLoading(err)
+        common.Tip(err)
+        reject(err)
+      })
     })
+  },
+  changeExamine(e) {
+    this.newForm.open = e.detail.value
+  },
+  inputCourseName(e) {
+    this.newForm.courseName = e.detail.value
+  },
+  inputIntroduce(e) {
+    this.newForm.introduce = e.detail.value
   },
 
   // 提交表单
   async formSubmit(e) {
-    let params = e.detail.value
+    let params = {
+      ...this.newForm
+    }
     try {
-      console.log(11111111);
       params = await this.validate(params)
-      console.log(22222222);
       if (!this.data.isEdit) {
         // 发布
-        console.log(33333333);
         common.showLoading()
         authorize.newSubscription(this.data.requestId, {
           cancelText: '继续发布'

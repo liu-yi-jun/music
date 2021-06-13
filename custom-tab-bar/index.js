@@ -1,5 +1,6 @@
 const app = getApp()
 const authorize = require('../assets/tool/authorize')
+const common = require('../assets/tool/common')
 Component({
   data: {
     transition: 'none',
@@ -31,9 +32,11 @@ Component({
         name: '我的'
       }
     ],
-    showTabBarRedDot: app.showTabBarRedDot !== undefined ? app.showTabBarRedDot : false
+    showTabBarRedDot: app.showTabBarRedDot !== undefined ? app.showTabBarRedDot : false,
+    msgAuthorizationShow: false,
   },
   methods: {
+
     switchTab(e) {
       if (!app.globalData.codePass) return
       const data = e.currentTarget.dataset
@@ -46,7 +49,6 @@ Component({
       })
       // 出现闪烁现象，注册掉
       // console.log(app.showTabBarRedDot,11111);
-
 
     },
     beforehandSetIsNew(showTabBarRedDot) {

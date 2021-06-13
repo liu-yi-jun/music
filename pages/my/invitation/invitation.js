@@ -190,7 +190,11 @@ Page({
         relation: {
           userId: app.userInfo.id,
           otherId: this.data.personal.id,
+        },
+        extra: {
+          nickName:app.userInfo.nickName,
         }
+        
       })
     })
   },
