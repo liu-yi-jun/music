@@ -135,7 +135,8 @@
 }
 
 .showHideBar {
-  height: 600rpx;
+  /* height: 600rpx; */
+  height: 414rpx;
   opacity: 1;
   visibility: 1;
 }

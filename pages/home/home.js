@@ -186,14 +186,14 @@ Page({
         }
       } else {
         // 新用户
-        let codeCheck = wx.getStorageSync('codeCheck')
-        if (!codeCheck) {
-          this.setData(({
-            showCode: true
-          }))
-        } else {
+        // let codeCheck = wx.getStorageSync('codeCheck')
+        // if (!codeCheck) {
+        //   this.setData(({
+        //     showCode: true
+        //   }))
+        // } else {
           app.globalData.codePass = true
-        }
+        // }
       }
     })
   },

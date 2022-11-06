@@ -102,29 +102,32 @@ Page({
       })
     })
   },
-  // 获取定位
-  getLocation() {
-    authorize.getLocation(data => {
-      if (data.err) return
-      if (data.success) {
-        const location = {
-          latitude: data.latitude,
-          longitude: data.longitude
-        }
-        tool.reverseGeocoder(location).then(data => {
-          console.log(data)
-          this.setData({
-            mks: data.mks
-          }, () => {
-            wx.hideLoading()
-          })
-        }).catch(err => console.log(err))
-      } else if (data.warning) {
-        //用户拒绝位置信息授权
-        console.log(data)
+ // 获取定位
+ getLocation() {
+  authorize.getLocation(data => {
+    if (data.errMsg !== 'getLocation:ok') {
+      common.Tip('请勿频繁定位，请稍后重试')
+      return wx.hideLoading()
+    }
+    if (data.success) {
+      const location = {
+        latitude: data.latitude,
+        longitude: data.longitude
       }
-    })
-  },
+      tool.reverseGeocoder(location).then(data => {
+        console.log(data)
+        this.setData({
+          mks: data.mks
+        }, () => {
+          wx.hideLoading()
+        })
+      }).catch(err => console.log(err))
+    } else if (data.warning) {
+      //用户拒绝位置信息授权
+      console.log(data)
+    }
+  })
+},
   // 弹起位置选择
   bindPickerChange: function (e) {
     console.log('picker发送选择改变，携带值为', e.detail.value)
@@ -148,7 +151,7 @@ Page({
         introduce: describe,
         videoUrl: tempFilePath,
         location,
-        groupName: app.userInfo.groupName,
+        // groupName: app.userInfo.groupName,
         mold: 1
       })
     })
@@ -238,4 +241,9 @@ Page({
     app.switchData.refresh = true
     wx.navigateBack()
   },
+  deleteLocal() {
+    this.setData({
+      mks: []
+    })
+  }
 })

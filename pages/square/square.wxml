@@ -28,7 +28,7 @@
   <view class="community">
     <view class="cardWrap">
       <view class="signInBackground"
-        style="background-image: url({{qiniuUrl}}/square/signInBackground.png); background-size: 100% 100%;">
+        style="background-image: url({{qiniuUrl}}/square/signInBackground.png); background-size: 780rpx 100%;">
         <text class="everyday">累积签到：</text>
         <view class="date">
           <view class="yearMonth">{{yearMonth}}</view>
@@ -47,17 +47,14 @@
         <text class="dayText">天</text>
         <image catchtap="singIn" class="signIn" src="{{qiniuUrl}}/square/signIn.png"></image>
       </view>
-      <view class="recommendBackground" id="recommendBackground"
+      <!-- <view class="recommendBackground" id="recommendBackground"
         style="background-image: url({{qiniuUrl}}/square/recommendBackground2.png); background-size: 100% 100%;">
         <view class="recommendBackgroundItem">
           <view catchtap="goBand"></view>
           <view catchtap="goPerformance"></view>
           <view catchtap="goDeal"></view>
         </view>
-        <!-- <marquee  id="marquee" text="{{song.songName}}-{{song.author}}"></marquee> -->
-        <!-- <image catchtap="playSong" data-songurl="{{song.songUrl}}" class="played" src="http://cdn.eigene.cn/square/play{{play?'ed':''}}.png"></image>
-          <image catchtap="toStoreSong" class="store" src="http://cdn.eigene.cn/square/store{{song.isStore?'d':''}}.png"></image> -->
-      </view>
+      </view> -->
     </view>
     <swiper class="topicWrap">
       <swiper-item wx:for="{{topics}}" wx:key="index" wx:for-item="topic">

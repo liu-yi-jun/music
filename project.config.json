@@ -1,235 +1,237 @@
 {
-  "description": "项目配置文件。",
-  "packOptions": {
-    "ignore": []
-  },
-  "setting": {
-    "urlCheck": false,
-    "es6": true,
-    "enhance": true,
-    "postcss": true,
-    "preloadBackgroundData": false,
-    "minified": true,
-    "newFeature": false,
-    "coverView": true,
-    "nodeModules": false,
-    "autoAudits": false,
-    "showShadowRootInWxmlPanel": true,
-    "scopeDataCheck": false,
-    "uglifyFileName": false,
-    "checkInvalidKey": true,
-    "checkSiteMap": true,
-    "uploadWithSourceMap": true,
-    "compileHotReLoad": false,
-    "useMultiFrameRuntime": true,
-    "useApiHook": true,
-    "useApiHostProcess": false,
-    "babelSetting": {
-      "ignore": [],
-      "disablePlugins": [],
-      "outputPath": ""
+    "description": "项目配置文件。",
+    "packOptions": {
+        "ignore": []
     },
-    "enableEngineNative": false,
-    "bundle": false,
-    "useIsolateContext": true,
-    "useCompilerModule": true,
-    "userConfirmedUseCompilerModuleSwitch": false,
-    "userConfirmedBundleSwitch": false,
-    "packNpmManually": false,
-    "packNpmRelationList": [],
-    "minifyWXSS": true
-  },
-  "appid": "wxf38d23a046de6205",
-  "projectname": "musicMonster",
-  "libVersion": "2.17.0",
-  "simulatorType": "wechat",
-  "simulatorPluginLibVersion": {},
-  "condition": {
-    "plugin": {
-      "list": []
+    "setting": {
+        "urlCheck": false,
+        "es6": true,
+        "enhance": true,
+        "postcss": true,
+        "preloadBackgroundData": false,
+        "minified": true,
+        "newFeature": false,
+        "coverView": true,
+        "nodeModules": false,
+        "autoAudits": false,
+        "showShadowRootInWxmlPanel": true,
+        "scopeDataCheck": false,
+        "uglifyFileName": false,
+        "checkInvalidKey": true,
+        "checkSiteMap": true,
+        "uploadWithSourceMap": true,
+        "compileHotReLoad": false,
+        "lazyloadPlaceholderEnable": false,
+        "useMultiFrameRuntime": true,
+        "useApiHook": true,
+        "useApiHostProcess": true,
+        "babelSetting": {
+            "ignore": [],
+            "disablePlugins": [],
+            "outputPath": ""
+        },
+        "useIsolateContext": false,
+        "userConfirmedBundleSwitch": false,
+        "packNpmManually": false,
+        "packNpmRelationList": [],
+        "minifyWXSS": true,
+        "disableUseStrict": false,
+        "minifyWXML": true,
+        "showES6CompileOption": false,
+        "useCompilerPlugins": false,
+        "ignoreUploadUnusedFiles": true
     },
-    "game": {
-      "list": []
-    },
-    "gamePlugin": {
-      "list": []
-    },
-    "miniprogram": {
-      "list": [
-        {
-          "name": "pages/square/band/band",
-          "pathName": "pages/square/band/band",
-          "query": "",
-          "scene": null
+    "appid": "wxf38d23a046de6205",
+    "projectname": "musicMonster",
+    "libVersion": "2.21.4",
+    "simulatorType": "wechat",
+    "simulatorPluginLibVersion": {},
+    "condition": {
+        "plugin": {
+            "list": []
         },
-        {
-          "name": "pages/my/information/information",
-          "pathName": "pages/my/information/information",
-          "query": "",
-          "scene": null
+        "game": {
+            "list": []
         },
-        {
-          "name": "pages/square/band/band",
-          "pathName": "pages/square/band/band",
-          "query": "",
-          "scene": null
+        "gamePlugin": {
+            "list": []
         },
-        {
-          "name": "pages/square/band/bandDetail/bandDetail",
-          "pathName": "pages/square/band/bandDetail/bandDetail",
-          "query": "",
-          "scene": null
-        },
-        {
-          "name": "pages/square/band/bandDetail/bandDetail",
-          "pathName": "pages/square/band/bandDetail/bandDetail",
-          "query": "",
-          "scene": null
-        },
-        {
-          "name": "pages/square/band/bandDetail/bandDetail",
-          "pathName": "pages/square/band/bandDetail/bandDetail",
-          "query": "",
-          "scene": null
-        },
-        {
-          "name": "pages/square/deal/secondIssue/secondIssue",
-          "pathName": "pages/square/deal/secondIssue/secondIssue",
-          "query": "",
-          "scene": null
-        },
-        {
-          "name": "pages/square/performance/alliancePost/alliancePost",
-          "pathName": "pages/square/performance/alliancePost/alliancePost",
-          "query": "",
-          "scene": null
-        },
-        {
-          "name": "components/common/bar/bar",
-          "pathName": "components/common/bar/bar",
-          "query": "",
-          "scene": null
-        },
-        {
-          "name": "pages/tool/tool",
-          "pathName": "pages/tool/tool",
-          "query": "",
-          "scene": null
-        },
-        {
-          "name": "pages/my/information/information",
-          "pathName": "pages/my/information/information",
-          "query": "",
-          "scene": null
-        },
-        {
-          "name": "pages/my/my",
-          "pathName": "pages/my/my",
-          "query": "",
-          "scene": null
-        },
-        {
-          "name": "pages/square/band/band",
-          "pathName": "pages/square/band/band",
-          "query": "",
-          "scene": null
-        },
-        {
-          "name": "pages/square/performance/performance",
-          "pathName": "pages/square/performance/performance",
-          "query": "",
-          "scene": null
-        },
-        {
-          "name": "pages/square/deal/deal",
-          "pathName": "pages/square/deal/deal",
-          "query": "",
-          "scene": null
-        },
-        {
-          "name": "pages/my/store/store",
-          "pathName": "pages/my/store/store",
-          "query": "",
-          "scene": null
-        },
-        {
-          "name": "pages/home/puchCard/issuePuchCard/issuePuchCard",
-          "pathName": "pages/home/puchCard/issuePuchCard/issuePuchCard",
-          "query": "",
-          "scene": null
-        },
-        {
-          "name": "pages/square/band/application/application",
-          "pathName": "pages/square/band/application/application",
-          "query": "",
-          "scene": null
-        },
-        {
-          "name": "pages/my/information/information",
-          "pathName": "pages/my/information/information",
-          "query": "",
-          "scene": null
-        },
-        {
-          "name": "pages/square/deal/ticketIssue/ticketIssue",
-          "pathName": "pages/square/deal/ticketIssue/ticketIssue",
-          "query": "",
-          "scene": null
-        },
-        {
-          "name": "pages/my/fans/fans",
-          "pathName": "pages/my/fans/fans",
-          "query": "",
-          "scene": null
-        },
-        {
-          "name": "pages/square/band/issueTeam/issueTeam",
-          "pathName": "pages/square/band/issueTeam/issueTeam",
-          "query": "",
-          "scene": null
-        },
-        {
-          "name": "pages/tool/tool",
-          "pathName": "pages/tool/tool",
-          "query": "",
-          "scene": null
-        },
-        {
-          "name": "pages/tool/tool",
-          "pathName": "components/tool/chord/myPicker/myPicker",
-          "query": "",
-          "scene": null
-        },
-        {
-          "name": "components/tool/chord/myPicker/myPicker",
-          "pathName": "components/tool/chord/myPicker/myPicker",
-          "query": "",
-          "scene": null
-        },
-        {
-          "name": "pages/tool/tool",
-          "pathName": "pages/tool/tool",
-          "query": "",
-          "scene": null
-        },
-        {
-          "name": "pages/my/follow/follow",
-          "pathName": "pages/my/follow/follow",
-          "query": "",
-          "scene": null
-        },
-        {
-          "name": "pages/home/massManagement/massManagement",
-          "pathName": "pages/home/massManagement/massManagement",
-          "query": "",
-          "scene": null
-        },
-        {
-          "name": "pages/my/editData/editData",
-          "pathName": "pages/my/editData/editData",
-          "scene": null
+        "miniprogram": {
+            "list": [
+                {
+                    "name": "pages/square/band/band",
+                    "pathName": "pages/square/band/band",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "name": "pages/my/information/information",
+                    "pathName": "pages/my/information/information",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "name": "pages/square/band/band",
+                    "pathName": "pages/square/band/band",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "name": "pages/square/band/bandDetail/bandDetail",
+                    "pathName": "pages/square/band/bandDetail/bandDetail",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "name": "pages/square/band/bandDetail/bandDetail",
+                    "pathName": "pages/square/band/bandDetail/bandDetail",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "name": "pages/square/band/bandDetail/bandDetail",
+                    "pathName": "pages/square/band/bandDetail/bandDetail",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "name": "pages/square/deal/secondIssue/secondIssue",
+                    "pathName": "pages/square/deal/secondIssue/secondIssue",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "name": "pages/square/performance/alliancePost/alliancePost",
+                    "pathName": "pages/square/performance/alliancePost/alliancePost",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "name": "components/common/bar/bar",
+                    "pathName": "components/common/bar/bar",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "name": "pages/tool/tool",
+                    "pathName": "pages/tool/tool",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "name": "pages/my/information/information",
+                    "pathName": "pages/my/information/information",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "name": "pages/my/my",
+                    "pathName": "pages/my/my",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "name": "pages/square/band/band",
+                    "pathName": "pages/square/band/band",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "name": "pages/square/performance/performance",
+                    "pathName": "pages/square/performance/performance",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "name": "pages/square/deal/deal",
+                    "pathName": "pages/square/deal/deal",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "name": "pages/my/store/store",
+                    "pathName": "pages/my/store/store",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "name": "pages/home/puchCard/issuePuchCard/issuePuchCard",
+                    "pathName": "pages/home/puchCard/issuePuchCard/issuePuchCard",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "name": "pages/square/band/application/application",
+                    "pathName": "pages/square/band/application/application",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "name": "pages/my/information/information",
+                    "pathName": "pages/my/information/information",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "name": "pages/square/deal/ticketIssue/ticketIssue",
+                    "pathName": "pages/square/deal/ticketIssue/ticketIssue",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "name": "pages/my/fans/fans",
+                    "pathName": "pages/my/fans/fans",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "name": "pages/square/band/issueTeam/issueTeam",
+                    "pathName": "pages/square/band/issueTeam/issueTeam",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "name": "pages/tool/tool",
+                    "pathName": "pages/tool/tool",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "name": "pages/tool/tool",
+                    "pathName": "components/tool/chord/myPicker/myPicker",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "name": "components/tool/chord/myPicker/myPicker",
+                    "pathName": "components/tool/chord/myPicker/myPicker",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "name": "pages/tool/tool",
+                    "pathName": "pages/tool/tool",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "name": "pages/my/follow/follow",
+                    "pathName": "pages/my/follow/follow",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "name": "pages/home/massManagement/massManagement",
+                    "pathName": "pages/home/massManagement/massManagement",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "name": "pages/my/editData/editData",
+                    "pathName": "pages/my/editData/editData",
+                    "scene": null
+                }
+            ]
         }
-      ]
     }
-  }
 }

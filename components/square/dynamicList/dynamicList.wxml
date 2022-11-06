@@ -39,14 +39,16 @@
         </view>
 
         <view class="imgWrap ul" wx:if="{{item.pictureUrls.length}}">
-          <view class="li" wx:for="{{item.pictureUrls}}" wx:key="i" wx:for-item="imgUrl" wx:for-index="j">
-            <image catchtap="previewImage" data-i="{{i}}" data-j="{{j}}"
+          <view style="height:{{item.pictureUrls.length === 1 ? (item.imgHeight ? item.imgHeight+'px' :'auto'):'176rpx'}}"    class="li" wx:for="{{item.pictureUrls}}" wx:key="i" wx:for-item="imgUrl" wx:for-index="j">
+            <image  catchtap="previewImage" data-i="{{i}}" data-j="{{j}}"
               mode="{{item.pictureUrls.length==1?'widthFix':'aspectFill'}}" class="img" src="{{imgUrl}}"
               lazy-load="{{true}}"></image>
           </view>
         </view>
         <view class="wrapVideo" mark:notDo="video" wx:if="{{item.videoUrl}}">
-          <video data-index="{{i}}" id="video{{i}}" bindplay="startPlay" bindfullscreenchange="bindfullscreenchange"
+          <image class="videoPlay" data-index="{{i}}"  wx:if="{{item.videoImgUrl && !isPlayObj[i]}}"  catchtap="toPlay" src="../../../images/play.png"></image>
+          <image mode="aspectFill" wx:if="{{item.videoImgUrl &&  !isPlayObj[i]}}" data-index="{{i}}" catchtap="toPlay"  src="{{item.videoImgUrl}}"></image>
+          <video autoplay wx:else data-index="{{i}}" id="video{{i}}" bindplay="startPlay" bindfullscreenchange="bindfullscreenchange"
             object-fit="cover" src="{{item.videoUrl}}"></video>
         </view>
         <view class="location">{{item.location}}</view>

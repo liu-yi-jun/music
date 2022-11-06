@@ -41,6 +41,8 @@ Page({
     mp4Video: false,
     intoId: '',
     userId: 0,
+    dialogShow:false,
+    isHome:false
     // list: [{
     //   name: '分享',
     //   open_type: 'share',
@@ -60,16 +62,37 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.setData({
-      userId: app.userInfo.id
-    })
-    let id = this.id = options.id
-    this.getCourseDetail(id)
-    this.getCourseCommont(id)
+    this.id = options.id
     this.table = 'groupcourse'
+    if (!app.userInfo) {
+      this.setData({
+        isHome: true
+      })
+      app.initLogin().then(() => {
+        if (app.userInfo) {
+          this.initCourseDetail()
+        } else {
+          this.setData({
+            dialogShow: true
+          })
+        }
+      })
+    } else {
+      this.initCourseDetail()
+    }
     // 获取去除上面导航栏，剩余的高度
     tool.navExcludeHeight(this)
     // this.initAudio()
+  },
+  initCourseDetail() {
+    this.setData({
+      userId: app.userInfo.id
+    })
+    this.getCourseDetail(this.id)
+    this.getCourseCommont(this.id)
+  },
+  handleGetUserInfo() {
+    this.initCourseDetail()
   },
   // // 初始化
   // initAudio() {
@@ -211,8 +234,9 @@ Page({
           storeUrl: 'groupcourseStore'
         }
       })
-      if (app.groupInfo.myGrouList) {
-        app.groupInfo.myGrouList.forEach((item, index) => {
+      console.log(app.myGrouList);
+      if (app.myGrouList ) {
+        app.myGrouList.forEach((item, index) => {
           if (item.groupId === detail.groupId && item.groupDuty !== -1) {
             return this.flag = true
           }
@@ -287,6 +311,10 @@ Page({
         })
       })
     }, 3000)
+    return {
+      title: '课程分享',
+      path: `/pages/home/course/courseDetail/courseDetail?id=${this.id}`,
+    }
 
   },
   handlerGobackClick: app.handlerGobackClick,
@@ -441,7 +469,7 @@ Page({
     })
   },
   hadleDelete(e) {
-    common.Tip('是否删除该动态', '提示', '确认', true).then(res => {
+    common.Tip('是否删除该课程', '提示', '确认', true).then(res => {
       if (res.confirm) {
         console.log('用户点击确定')
         this.deleteDynamic(e)
@@ -481,6 +509,9 @@ Page({
         relation: {
           userId: app.userInfo.id,
           otherId: detail.userId,
+        },
+        extra: {
+          nickName:app.userInfo.nickName,
         }
       })
     })

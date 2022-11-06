@@ -49,7 +49,8 @@ function wxGetLocation(callback) {
     title: '定位中',
   })
   wx.getLocation({
-    type: 'wgs84',
+    type: 'gcj02',
+    isHighAccuracy:true,
     success(res) {
       res.success = true
       callback(res)

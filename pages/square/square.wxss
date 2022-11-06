@@ -11,10 +11,11 @@
 }
 
 .signInBackground {
-  width: 630rpx;
+  /* width: 630rpx; */
+  width: 100%;
   height: 414rpx;
   position: relative;
-  margin-left: -10rpx;
+  margin-left: -31rpx;
   background-repeat: no-repeat;
 }
 
@@ -64,9 +65,9 @@
 
 .signInSumsWrap {
   position: absolute;
-  left: 73rpx;
-  bottom: 70rpx;
-  width: 237rpx;
+  left: 87rpx;
+  bottom: 72rpx;
+  width: 296rpx;
   display: flex;
   font-size: 65rpx;
   height: 84rpx;
@@ -76,7 +77,7 @@
 }
 
 .signInPart {
-  width: 47%;
+  width: 46%;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -195,6 +196,7 @@ swiper-item {
   position: fixed;
   bottom: calc(120rpx + env(safe-area-inset-bottom));
   right: -16rpx;
+  z-index: 999999;
 }
 
 .hideBar {
@@ -261,7 +263,7 @@ swiper-item {
 
 .dayText {
   position: absolute;
-  left: 320rpx;
+  left: 414rpx;
   bottom: 52rpx;
   display: block;
 }

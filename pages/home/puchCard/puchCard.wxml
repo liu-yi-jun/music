@@ -1,7 +1,7 @@
 <!--pages/home/puchCard/puchCard.wxml-->
 <view>
-  <navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' back="{{true}}" iconTheme='white'
-    bindback="handlerGobackClick"></navBar>
+  <navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' back="{{!isHome}}" home="{{isHome}}" iconTheme='white'
+    bindback="handlerGobackClick" bindhome="handlerGobackClick"></navBar>
   <!-- <view class='progress_box'>
         <canvas class="progress_bg"   canvas-id="canvasProgressbg">  </canvas> 
         <canvas class="progress_canvas"   canvas-id="canvasProgress">  </canvas> 
@@ -117,3 +117,4 @@
     <view class="slideText">“滑动发现更多打卡”</view>
   </view>
 </view>
+<authorization dialogShow="{{dialogShow}}" bind:handleGetUserInfo="handleGetUserInfo"></authorization>

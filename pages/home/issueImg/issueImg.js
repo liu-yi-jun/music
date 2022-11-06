@@ -114,7 +114,10 @@ Page({
   // 获取定位
   getLocation() {
     authorize.getLocation(data => {
-      if (data.err) return
+      if (data.errMsg !== 'getLocation:ok') {
+        common.Tip('请勿频繁定位，请稍后重试')
+        return wx.hideLoading()
+      }
       if (data.success) {
         const location = {
           latitude: data.latitude,
@@ -156,7 +159,7 @@ Page({
         introduce: describe,
         pictureUrls: tempFilePaths,
         location,
-        groupName: app.userInfo.groupName,
+        // groupName: app.userInfo.groupName,
         mold: 0
       })
     })
@@ -249,4 +252,9 @@ Page({
     app.switchData.refresh = true
     wx.navigateBack()
   },
+  deleteLocal() {
+    this.setData({
+      mks: []
+    })
+  }
 })

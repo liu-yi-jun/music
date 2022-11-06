@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/square/square",
     "pages/home/home",
     "pages/tool/tool",
     "pages/home/alliance/alliance",
@@ -9,7 +10,6 @@
     "pages/my/invitation/invitation",
     "pages/my/fansFollow/fansFollow",
     "components/my/fansFollowList/fansFollowList",
-    "pages/square/square",
     "pages/mass/mass",
     "pages/mass/joinClub/joinClub",
     "pages/my/editData/editData",

@@ -63,13 +63,20 @@ Page({
     // 获取去除上面导航栏，剩余的高度
     tool.navExcludeHeight(this)
     this.isGetSignInInfo = true
-    if (app.userInfo) {
-      this.initSquare()
-
-    } else {
-      this.setData({
-        dialogShow: true
+    if (!app.userInfo) {
+      app.initLogin().then(() => {
+        if (app.userInfo) {
+         
+          this.initSquare()
+          this.getSignInInfo()
+        } else {
+          this.setData({
+            dialogShow: true
+          })
+        }
       })
+    } else {
+      this.initSquare()
     }
   },
   getAlliance() {
@@ -93,6 +100,8 @@ Page({
     this.isGetSignInInfo = false
     app.get(app.Api.signInInfo, {
       userId: app.userInfo.id
+    },{
+      loading:false
     }).then((res) => {
       app.signInInfo = res
       let signInSums = this.handleSignInSum(app.userInfo.signInSum)
@@ -104,10 +113,10 @@ Page({
         this.getTabBar().setData({
           show: false
         })
-        this.setData({
-          tabBarBtnShow: true,
-          showSignIn: true
-        })
+        // this.setData({
+        //   tabBarBtnShow: true,
+        //   showSignIn: true
+        // })
       }
     })
   },
@@ -117,16 +126,21 @@ Page({
   },
   initSquare() {
     // let signInSums = this.handleSignInSum(app.signInInfo.signInSum)
+    app.globalData.codePass = true
     this.getSquaredynamics()
     this.getAlliance()
     this.getTopic()
     this.getDate()
+
     // this.setData({
     //   signInSums
     // })
   },
   getTopic(e) {
-    app.get(app.Api.allTopic).then(res => {
+    app.get(app.Api.allTopic,{
+    },{
+      loading:false
+    }).then(res => {
       this.setData({
         topics: tool.arraySplit(res, 3)
       })
@@ -143,6 +157,7 @@ Page({
           this.data.isNotData = true
         }
         this.data.squaredynamicsPaging.minID = res.length ? res[res.length - 1].id : 0
+        common.videoToImg(res,'videoUrl') 
         this.setData({
           dynamics: this.data.dynamics.concat(res)
         })
@@ -246,14 +261,14 @@ Page({
     this.init()
   },
   init() {
-    const query = wx.createSelectorQuery()
-    query.select('#recommendBackground').boundingClientRect()
-    query.exec(res => {
-      this.setData({
-        windowWidth: res[0].width
-      })
+    // const query = wx.createSelectorQuery()
+    // query.select('#recommendBackground').boundingClientRect()
+    // query.exec(res => {
+    //   this.setData({
+    //     windowWidth: res[0].width
+    //   })
 
-    })
+    // })
   },
   /**
    * 生命周期函数--监听页面显示
@@ -269,8 +284,8 @@ Page({
         selected: 2
       })
       if (app.userInfo) {
-        if(!app.TabBar.squareTabBar) {
-          app.TabBar.squareTabBar =  this.getTabBar()
+        if (!app.TabBar.squareTabBar) {
+          app.TabBar.squareTabBar = this.getTabBar()
         }
         this.getTabBar().setIsNew()
       }
@@ -390,12 +405,7 @@ Page({
     })
   },
 
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
 
-  },
 
   /**
    * 用户点击右上角分享

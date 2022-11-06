@@ -55,18 +55,18 @@ Page({
       {
         name: '课程'
       },
-      {
-        name: '小组活动'
-      },
+      // {
+      //   name: '小组活动'
+      // },
       // {
       //   name: '演出咨讯'
       // },
-      {
-        name: '一起组乐队'
-      },
-      {
-        name: '乐队瞬间'
-      }
+      // {
+      //   name: '一起组乐队'
+      // },
+      // {
+      //   name: '乐队瞬间'
+      // }
     ],
     actIndex: 0
   },
@@ -129,6 +129,7 @@ Page({
           'dynamicPaging.isNotData': true
         })
       }
+      common.videoToImg(res,'videoUrl') 
       this.setData({
         dynamics: this.data.dynamics.concat(res),
         'dynamicPaging.pageIndex': dynamicPaging.pageIndex + 1

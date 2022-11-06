@@ -50,7 +50,7 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: async function (options) {
     this.newForm = {}
     console.log(options);
     if (options.showSignIn) {
@@ -62,9 +62,52 @@ Page({
     // 获取去除上面导航栏，剩余的高度
     tool.navExcludeHeight(this)
     this.getUserInfo()
-    this.getTopic()
+    await this.getTopic()
+    this.getTempDynamic()
     this.initValidate()
+    // this.initEnableAlertBeforeUnload()
   },
+  getTempDynamic() {
+    app.get(app.Api.getTempDynamic, {
+      userId: app.userInfo.id
+    }).then(res => {
+      if (res.length) {
+        if (res[0].location) {
+          this.data.mks.push({
+            title: res[0].location
+          })
+        }
+        if (res[0].topicName) {
+          this.data.topics.forEach((item, index) => {
+            if (item.topicName == res[0].topicName) {
+              this.data.topicIndex = index
+              return
+            }
+          })
+        }
+        this.newForm.introduce = res[0].introduce
+        this.setData({
+          duration: res[0].duration,
+          mks: this.data.mks,
+          introduce: res[0].introduce,
+          location: res[0].location,
+          tempImagePaths: JSON.parse(res[0].pictureUrls),
+          soundWidth: res[0].soundWidth,
+          topicIndex: this.data.topicIndex,
+          tempVideoPath: res[0].videoUrl,
+          tempRecordPath: res[0].voiceUrl
+        })
+      }
+    })
+  },
+  // initEnableAlertBeforeUnload() {
+  //   wx.enableAlertBeforeUnload({
+  //     message: '将此次编辑保留？',
+  //     success:(res)=> {
+  //       console.log('00000000000',res);
+  //     }
+  //   })
+  // },
   close() {
     this.setData({
       showSignIn: false
@@ -96,9 +139,13 @@ Page({
     this.WxValidate = new WxValidate(rules, messages)
   },
   getTopic() {
-    app.get(app.Api.allTopic).then(res => {
-      this.setData({
-        topics: res
+    return new Promise((resolve, reject) => {
+      app.get(app.Api.allTopic).then(res => {
+        this.setData({
+          topics: res
+        }, () => {
+          resolve()
+        })
       })
     })
   },
@@ -273,11 +320,91 @@ Page({
       })
     })
   },
-  handlerGobackClick: app.handlerGobackClick,
+
+  handlerGobackClick() {
+    let {
+      tempImagePaths,
+      tempRecordPath,
+      tempVideoPath
+    } = this.data
+    if (!tempImagePaths.length && !tempRecordPath && !tempVideoPath && !this.newForm.introduce) {
+      this.deleteTempdynamic()
+      wx.navigateBack({
+        delta: 1
+      })
+    } else {
+      common.Tip('将此次编辑保留?', '提示', '保留', {
+        cancelText: '不保留'
+      }).then(async res => {
+        console.log(res);
+        if (res.confirm) {
+          // 提交
+          await this.tempdynamic()
+        } else {
+          await this.deleteTempdynamic()
+        }
+        wx.navigateBack({
+          delta: 1
+        })
+      })
+    }
+
+  },
+  deleteTempdynamic() {
+    return new Promise(async (resolve, reject) => {
+      app.post(app.Api.deleteTempdynamic, {
+        userId: app.userInfo.id
+      }, {
+        loading: false
+      }).then(res => {
+        resolve()
+      })
+    })
+  },
+  tempdynamic() {
+    return new Promise(async (resolve, reject) => {
+      let {
+        tempVideoPath,
+        tempImagePaths,
+        tempRecordPath,
+        topics,
+        topicIndex,
+        mks
+      } = this.data
+      let location = ''
+      let topic = (topicIndex === undefined) ? '' : topics[topicIndex]
+      if (mks.length) {
+        location = mks[this.data.index].title
+      }
+
+      if (tempRecordPath) tempRecordPath = await this.uploadVoice(tempRecordPath)
+      if (tempVideoPath) tempVideoPath = await this.uploadVideo(tempVideoPath)
+      if (tempImagePaths.length) tempImagePaths = await this.uploadImg(tempImagePaths)
+
+      app.post(app.Api.tempdynamic, {
+        userId: app.userInfo.id,
+        introduce: this.newForm.introduce,
+        pictureUrls: tempImagePaths || [],
+        videoUrl: tempVideoPath || '',
+        voiceUrl: tempRecordPath || '',
+        topicId: topic.id,
+        topicName: topic.topicName,
+        duration: this.data.duration,
+        soundWidth: this.data.soundWidth,
+        location
+      }).then((res) => {
+        resolve(res)
+        console.log(res);
+      }).catch(err => reject(err))
+    })
+  },
   // 获取定位
   getLocation() {
     authorize.getLocation(data => {
-      if (data.err) return
+      if (data.errMsg !== 'getLocation:ok') {
+        common.Tip('请勿频繁定位，请稍后重试')
+        return wx.hideLoading()
+      }
       if (data.success) {
         const location = {
           latitude: data.latitude,
@@ -346,7 +473,7 @@ Page({
       return resolve({
         userId: app.userInfo.id,
         groupId: app.userInfo.groupId,
-        groupName: app.userInfo.groupName,
+        // groupName: app.userInfo.groupName,
         introduce: params.introduce,
         pictureUrls: tempImagePaths || [],
         videoUrl: tempVideoPath || '',
@@ -421,6 +548,7 @@ Page({
         if (tempVideoPath && !isVideoLink) params.videoUrl = await this.uploadVideo(tempVideoPath)
         if (tempImagePaths.length && !isImageLink) params.pictureUrls = await this.uploadImg(tempImagePaths)
         const result = await this.squarePost(params)
+        this.deleteTempdynamic()
         common.Toast('已发布')
         if (result.affectedRows) {
           this.goSquare()
@@ -585,5 +713,10 @@ Page({
   },
   inputIntroduce(e) {
     this.newForm.introduce = e.detail.value
-  }
+  },
+  deleteLocal() {
+    this.setData({
+      mks: []
+    })
+  },
 })

@@ -7,7 +7,8 @@
     "courseDatum": "/components/home/course/courseDatum/courseDatum",
     "menu": "/components/common/menu/menu",
     "bar":"/components/common/bar/bar",
-    "txv-video": "plugin://tencentvideo/video"
+    "txv-video": "plugin://tencentvideo/video",
+    "authorization":"/components/common/authorization/authorization"
   },
     "disableScroll": true
 }

@@ -1,14 +1,14 @@
 <!--pages/square/squarePost/squarePost.wxml-->
-<view class="squarePost">
+<view class="squarePost" >
   <navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' back="{{true}}" iconTheme='white'
     bindback="handlerGobackClick"></navBar>
   <canvas canvas-id='canvas' class='canvas'></canvas>
-  <form >
+  <form>
     <issueHead avatarUrl="{{avatarUrl}}" nickName="{{nickName}}" bind:formSubmit="formSubmit">
     </issueHead>
     <scroll-view style="height: calc({{excludeHeight}}px - 120rpx);" scroll-y>
       <view class="wrap">
-        <textarea class="introduce" bindinput="inputIntroduce" name="introduce" maxlength="1000" placeholder="说点什么吧……"
+        <textarea value="{{introduce}}" class="introduce" bindinput="inputIntroduce" name="introduce" maxlength="1000" placeholder="说点什么吧……"
           placeholder-class="placeholder" auto-height></textarea>
         <view class="imgWrap" wx:if="{{tempImagePaths.length || isImg}}">
           <view class="imgArea">
@@ -36,9 +36,10 @@
           </view>
         </view>
         <view class="locationWrap">
-          <view class="location" catchtap="getLocation">
+          <view class="location" >
             <image class="locationLogo" src="http://cdn.eigene.cn/squarePost/locationLogo.png"></image>
-            <text class="locationText">你在哪里?</text>
+            <text class="locationText" catchtap="getLocation">你在哪里?</text>
+            <text class="iconfont icondelete localDelete" wx:if="{{mks.length}}" catchtap="deleteLocal"></text>
           </view>
           <picker class="picker" bindchange="bindPickerChange" value="{{index}}" range="{{mks}}" range-key="title">
             <view>
@@ -86,7 +87,8 @@
           class="shallow">的内容（包括但不仅限于乐评、提问、活动体验、乐器演奏音视频等，请勿搬运网络现有内容）</text></view>
       <view class="item"><text class="shallow">内容二：分享</text><text class="emphasize">生活中的心情和动态</text></view>
       <view class="item"><text class="shallow">内容三：参与</text><text class="emphasize">话题互动</text></view>
-      <view class="item"><text class="shallow">*请遵循</text><text class="underline" catchtap="standard">MUSIC MONSTER用户行为规范</text></view>
+      <view class="item"><text class="shallow">*请遵循</text><text class="underline" catchtap="standard">MUSIC
+          MONSTER用户行为规范</text></view>
     </view>
     <view class="createWarp">
       <button class="create" catchtap="close">我已了解</button>
@@ -94,4 +96,4 @@
   </view>
 </view>
 
-<guidMsgAuthor  msgAuthorizationShow="{{msgAuthorizationShow}}"></guidMsgAuthor>
+<guidMsgAuthor msgAuthorizationShow="{{msgAuthorizationShow}}"></guidMsgAuthor>

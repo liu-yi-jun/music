@@ -44,7 +44,8 @@ Component({
       name: '举报',
       open_type: '',
       functionName: 'handleReport'
-    }]
+    }],
+    isPlayObj:[]
   },
   /**
    * 组件的方法列表
@@ -449,6 +450,18 @@ Component({
         fullScreen
       })
     },
+    toPlay(e) {
+      let index = e.currentTarget.dataset.index
+      this.data.isPlayObj[index] = true
+      this.setData({
+        isPlayObj:this.data.isPlayObj
+      },()=> {
+        // wx.nextTick(() => {
+        // let videoContext = wx.createVideoContext(`video${index}`, this)
+        // videoContext.play()
+      // })
+      })
+    },
     startPlay(e) {
       let index = e.currentTarget.dataset.index
       if (this.videoId !== undefined && (this.videoId !== index)) {
@@ -456,6 +469,9 @@ Component({
         videoContext.pause()
       }
       this.videoId = index
+    },
+    onLazyLoad(info) {
+      console.log('img',info)
     }
   },
 

@@ -20,9 +20,10 @@
       </view>
     </view>
     <view class="locationWrap">
-      <view class="location" catchtap="getLocation">
-        <image class="locationLogo" src="{{qiniuUrl}}/issueImg/locationLogo.png"></image>
-        <text class="locationText">你在哪里?</text>
+      <view class="location">
+        <image class="locationLogo" src="http://cdn.eigene.cn/squarePost/locationLogo.png"></image>
+        <text class="locationText" catchtap="getLocation">你在哪里?</text>
+        <text class="iconfont icondelete localDelete" wx:if="{{mks.length}}" catchtap="deleteLocal"></text>
       </view>
       <picker class="picker" bindchange="bindPickerChange" value="{{index}}" range="{{mks}}" range-key="title">
         <view>
@@ -34,5 +35,5 @@
       <button class="issue" form-type="submit" catchtap="issueSubmit">发布</button>
     </view>
   </form>
-</view> 
-<guidMsgAuthor  msgAuthorizationShow="{{msgAuthorizationShow}}"></guidMsgAuthor>
+</view>
+<guidMsgAuthor msgAuthorizationShow="{{msgAuthorizationShow}}"></guidMsgAuthor>

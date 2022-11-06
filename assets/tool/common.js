@@ -197,7 +197,19 @@ function chooseVideo(sourceType = ['album']) {
       camera: 'back',
       compressed: true,
       success: result => {
-        resolve(result)
+        if(result.size > 1024 * 1024 * 100) {
+          reject('上传的视频太大了！')
+          Tip('上传的视频太大了！')
+        }else {
+          // resolve(result)
+          wx.showLoading({
+            title: '压缩中...',
+          })
+          compressVideo(result.tempFilePath).then(res=>{
+            wx.hideLoading()
+            resolve(res)
+          }).catch(err=>reject(err))
+        } 
         // compressVideo(result.tempFilePath).then(res=>resolve(res)).catch(err=>reject(err))
       },
       fail: res => reject(res),
@@ -242,7 +254,7 @@ function vibrateShort() {
 
 
 
-function compressVideo(src, quality = 'medium') {
+function compressVideo(src, quality = 'high') {
   return new Promise((resolve, reject) => {
     wx.compressVideo({
       src,
@@ -257,6 +269,18 @@ function compressVideo(src, quality = 'medium') {
 }
 
 
+function videoToImg(list,name) {
+  if(Array.isArray(list)) {
+    list.forEach(item=> {
+      if(item && item[name]) {
+        item.videoImgUrl = item[name].split('.mp4')[0] + '.jpg'
+      }  
+    })
+  }
+  return list
+}
+
+
 module.exports = {
   Tip: Tip,
   Toast: Toast,
@@ -268,5 +292,5 @@ module.exports = {
   compressImage: compressImage,
   compressManyImage: compressManyImage,
   compressVideo: compressVideo,
-
+  videoToImg:videoToImg
 }

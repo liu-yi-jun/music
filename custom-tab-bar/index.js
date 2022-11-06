@@ -77,7 +77,7 @@ Component({
                 }, {
                   loading: false
                 }).then(res => {
-                  res.noticeNumbe ? (flag = true) : flag
+                  res ? (flag = true) : flag
                   if (flag) {
                     app.showTabBarRedDot = true
                     resolve(true)

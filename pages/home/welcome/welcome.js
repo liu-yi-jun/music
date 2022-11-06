@@ -188,7 +188,6 @@ Page({
     this.joinGroup(groupInfo).then(res => {
       let from = {
           userId: app.userInfo.id,
-          nickName: app.userInfo.nickName
         },
         to = {
           userIdList: res.userIdList
@@ -197,6 +196,7 @@ Page({
           id: new Date().getTime(),
           type: 1,
           jsonDate: {
+            nickName: app.userInfo.nickName,
             groupId: groupInfo.id,
             groupName: groupInfo.groupName,
             applyContent,
@@ -220,7 +220,12 @@ Page({
         },
 
       })
-      app.socket.emit("sendSystemMsg", from, to, message);
+      app.post(app.Api.sendFinalSystemMsg, {
+        from,
+        to,
+        message
+      }).then(() => {})
+      // app.socket.emit("sendSystemMsg", from, to, message);
       app.switchData.isSwitchGroup = true
       this.setData({
         applyShow: false

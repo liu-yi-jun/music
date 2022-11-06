@@ -137,7 +137,7 @@ video {
   margin-left: 8rpx;
   font-size: 30rpx;
   position: fixed;
-  top: 79%;
+  top: calc(79% - env(safe-area-inset-bottom)) ;
   left: 28rpx;
 }
 
@@ -297,7 +297,7 @@ video {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  
+
 }
 
 .title {
@@ -340,7 +340,18 @@ video {
 }
 
 .underline {
-  border-bottom:1rpx solid #8798CD;
+  border-bottom: 1rpx solid #8798CD;
   padding-bottom: 5rpx;
   color: #C4C4C4;
+}
+
+.localDelete {
+  /* color: rgba(191, 191, 191, 0.8); */
+  margin-left: 20rpx;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  text-align: center;
+  cursor: pointer;
 }

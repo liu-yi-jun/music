@@ -1,7 +1,8 @@
 {
   "usingComponents": {
       "navBar": "/components/navBar/navBar" ,
-      "txv-video": "plugin://tencentvideo/video" 
+      "txv-video": "plugin://tencentvideo/video",
+      "authorization":"/components/common/authorization/authorization"
   },
   "disableScroll": true
 }

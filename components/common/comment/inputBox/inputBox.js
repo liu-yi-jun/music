@@ -30,30 +30,27 @@ Component({
     keyBoardChange(height) {
       //键盘高度改变时调用
       // bindkeyboardheightchange="keyBoardChange"安卓不能使用，因为点击空白处没有监听到
-      // console.log(e.detail.height, '2222')
       //键盘收起,修改showTextara
       //注意keyBoardChange刚开始时调用了多次，第一次高度为不正确,这时不应该设置showTextara为false
-      if (this.data.first) {
-        this.setData({
-          first: false
-        })
-      } else {
+      // if (this.data.first) {
+      //   this.setData({
+      //     first: false
+      //   })
+      // } else {
         let keyBoardHeight = height + 'px'
-        console.log(keyBoardHeight, '2222')
-
         this.setData({
           keyBoardHeight
         })
         if (keyBoardHeight === '0px') {
-          this.setData({
-            keyBoardHeight
-          }, () => {
+          // this.setData({
+          //   keyBoardHeight
+          // }, () => {
             this.setData({
               showTextara: false
             })
-          })
+          // })
         }
-      }
+      // }
     },
     sendComment(comment) {
       let param = this.properties.param

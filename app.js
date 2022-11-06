@@ -91,6 +91,7 @@ App({
         if (res.userInfo) {
           // 有用户信息，存入app
           this.userInfo = res.userInfo
+          this.myGrouList = res.myGrouList
           this.globalData.codePass = true
           // socket.initSocketEvent()
         } else {
@@ -113,6 +114,7 @@ App({
   isLogin: false,
   userInfo: null,
   groupInfo: null,
+  myGrouList:null,
   signInInfo: null,
   TabBar: {
 

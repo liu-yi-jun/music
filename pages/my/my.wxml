@@ -60,13 +60,13 @@
     <view class="list">
 
       <view hidden="{{(actIndexArr[0] !== 0) || (actIndexArr[1] !== 0)}}">
-        <dynamicList id="groupdDynamics" bind:fullscreenchange="fullscreenchange" dynamics="{{groupdDynamics}}"
-          bind:deleteDynamic="deleteDynamic"></dynamicList>
-      </view>
-      <view hidden="{{(actIndexArr[0] !== 0) || (actIndexArr[1] !== 1)}}">
         <dynamicList id="squareDynamics" bind:fullscreenchange="fullscreenchange" dynamics="{{squareDynamics}}"
           isSquare="{{true}}" bind:deleteDynamic="deleteDynamic">
         </dynamicList>
+      </view>
+      <view hidden="{{(actIndexArr[0] !== 0) || (actIndexArr[1] !== 1)}}">
+        <dynamicList id="groupdDynamics" bind:fullscreenchange="fullscreenchange" dynamics="{{groupdDynamics}}"
+          bind:deleteDynamic="deleteDynamic"></dynamicList>
       </view>
       <view hidden="{{(actIndexArr[0] !== 1) || (actIndexArr[1] !== 0)}}">
         <allianceList alliances="{{alliances}}"></allianceList>
@@ -131,10 +131,10 @@
       <image class="about" src="/images/my/about.png"></image>
       <view>关于</view>
     </view>
-    <view catchtap="toCode" class="feedAboutWrap {{showHideBar?'codeWrap':''}} ">
+    <!-- <view catchtap="toCode" class="feedAboutWrap {{showHideBar?'codeWrap':''}} ">
       <image class="invitation" src="/images/my/invitation.png"></image>
       <view>邀请码</view>
-    </view>
+    </view> -->
   </view>
 </view>
 

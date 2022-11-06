@@ -1,5 +1,6 @@
 // pages/my/invitation/invitation.js
 const app = getApp()
+let common = require('../../../assets/tool/common')
 const tool = require('../../../assets/tool/tool.js')
 const core = require('../../../assets/tool/core')
 Page({
@@ -43,7 +44,7 @@ Page({
    */
   onLoad: function (options) {
     // 获取去除上面导航栏，剩余的高度
-    let otherId = parseInt(options.userId)
+    let otherId = this.otherId = parseInt(options.userId)
     tool.navExcludeHeight(this)
     this.getPersonalInvitation(otherId)
     this.getDynamics(otherId)
@@ -59,7 +60,7 @@ Page({
       ...alliancePagin,
       userId: id
     }).then(res => {
-      if (res.length < alliancePagin.pageSize) {
+      if (res.length < alliancePagin.pageSize / 2) {
         this.setData({
           'alliancePagin.isNotData': true
         })
@@ -77,11 +78,12 @@ Page({
       otherId: id,
       userId:app.userInfo.id
     }).then(res => {
-      if (res.length < dynamicsPaging.pageSize) {
+      if (res.length < dynamicsPaging.pageSize / 2) {
         this.setData({
           'dynamicsPaging.isNotData': true
         })
       }
+      common.videoToImg(res,'videoUrl') 
       this.setData({
         dynamics: this.data.dynamics.concat(res),
         'dynamicsPaging.pageIndex': dynamicsPaging.pageIndex + 1
@@ -94,10 +96,11 @@ Page({
       alliancePagin,
       actIndex
     } = this.data
+    console.log('进来了');
     if (actIndex === 0 && !dynamicsPaging.isNotData) {
-      this.getDynamics()
+      this.getDynamics( this.otherId)
     } else if (actIndex === 1 && !alliancePagin.isNotData) {
-      this.getPersonalAlliance()
+      this.getPersonalAlliance( this.otherId)
     }
   },
   getPersonalInvitation(id) {
@@ -145,12 +148,6 @@ Page({
 
   },
 
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
 
   /**
    * 用户点击右上角分享

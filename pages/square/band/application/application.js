@@ -184,7 +184,13 @@ Page({
           },
         }
       })
-      app.socket.emit("sendSystemMsg", from, to, message);
+      app.post(app.Api.sendFinalSystemMsg, {
+        from,
+        to,
+        message
+      }).then(() => {})
+      // app.socket.emit("sendSystemMsg", from, to, message);
+
       wx.hideLoading()
       common.Tip('申请已发送，等待审核').then(() => {
         wx.navigateBack()

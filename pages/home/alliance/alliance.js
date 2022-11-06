@@ -151,11 +151,11 @@ Page({
       //       })
       //     }
       //   } else if (res.type === 0) {
-          this.setData({
-            applyShow: true,
-            joinShow: false
-          })
-        // }
+      this.setData({
+        applyShow: true,
+        joinShow: false
+      })
+      // }
       // })
     } else {
       this.setData({
@@ -209,7 +209,6 @@ Page({
       groupInfo.groupDuty = -1 //审核中
       let from = {
           userId: app.userInfo.id,
-          nickName: app.userInfo.nickName
         },
         to = {
           userIdList: res.userIdList
@@ -219,6 +218,7 @@ Page({
           type: 1,
           jsonDate: {
             groupId: groupInfo.id,
+            nickName: app.userInfo.nickName,
             groupName: groupInfo.groupName,
             applyContent,
             isNew: 1,
@@ -241,7 +241,14 @@ Page({
           },
         },
       })
-      app.socket.emit("sendSystemMsg", from, to, message);
+
+      app.post(app.Api.sendFinalSystemMsg, {
+        from,
+        to,
+        message
+      }).then(() => {})
+
+      // app.socket.emit("sendSystemMsg", from, to, message);
       app.switchData.isSwitchGroup = true
       this.setData({
         groups: this.data.groups,

@@ -53,6 +53,9 @@ Component({
           relation: {
             userId: app.userInfo.id,
             otherId,
+          },
+          extra: {
+            nickName:app.userInfo.nickName,
           }
         }, index)
       })
@@ -79,6 +82,9 @@ Component({
           relation: {
             userId: app.userInfo.id,
             otherId,
+          },
+          extra: {
+            nickName:app.userInfo.nickName,
           }
         }, index)
       })

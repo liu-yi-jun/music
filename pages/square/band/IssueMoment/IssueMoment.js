@@ -105,7 +105,10 @@ Page({
   // 获取定位
   getLocation() {
     authorize.getLocation(data => {
-      if (data.err) return
+      if (data.errMsg !== 'getLocation:ok') {
+        common.Tip('请勿频繁定位，请稍后重试')
+        return wx.hideLoading()
+      }
       if (data.success) {
         const location = {
           latitude: data.latitude,
@@ -173,11 +176,11 @@ Page({
       console.log(data)
       app.post(app.Api.issueMoment, data, {
         loading: false
-      }).then(res => resolve(res)).catch(err =>{
+      }).then(res => resolve(res)).catch(err => {
         wx.hideLoading()
         common.Tip(err)
         reject(err)
-      } )
+      })
     })
   },
   // 提交表单
@@ -209,8 +212,7 @@ Page({
           } else {
             // 去开启
             wx.openSetting({
-              success(res) {
-              }
+              success(res) {}
             })
           }
         } else if (res.type === 0) {
@@ -233,5 +235,10 @@ Page({
     common.Toast('已发布')
     app.momentBack = true
     wx.navigateBack()
+  },
+  deleteLocal() {
+    this.setData({
+      mks: []
+    })
   }
 })

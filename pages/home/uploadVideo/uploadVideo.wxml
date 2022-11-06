@@ -10,16 +10,17 @@
     <image wx:else class="add" src="{{qiniuUrl}}/issueImg/addImg.png" catchtap="chooseVideo" ></image>
   </view>
   <view class="locationWrap">
-    <view class="location" catchtap="getLocation">
-      <image class="locationLogo" src="{{qiniuUrl}}/issueImg/locationLogo.png"></image>
-      <text class="locationText">你在哪里?</text>
-    </view>
-    <picker class="picker" bindchange="bindPickerChange" value="{{index}}" range="{{mks}}" range-key="title">
-      <view>
-        {{mks[index].title}}
+      <view class="location">
+        <image class="locationLogo" src="http://cdn.eigene.cn/squarePost/locationLogo.png"></image>
+        <text class="locationText" catchtap="getLocation">你在哪里?</text>
+        <text class="iconfont icondelete localDelete" wx:if="{{mks.length}}" catchtap="deleteLocal"></text>
       </view>
-    </picker>
-  </view>
+      <picker class="picker" bindchange="bindPickerChange" value="{{index}}" range="{{mks}}" range-key="title">
+        <view>
+          {{mks[index].title}}
+        </view>
+      </picker>
+    </view>
   <view class="issueWrap">
     <button class="issue" form-type="submit">发布</button>
   </view>

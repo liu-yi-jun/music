@@ -23,7 +23,9 @@ function reverseGeocoder(location) {
       location,
       //是否返回周边POI列表：1.返回；0不返回
       get_poi: 1,
+      poi_options: 'policy=1;radius=500;page_size=20;page_index=1',
       success: res => {
+        console.log(res.result);
         let mks = []
         const {
           location,
@@ -46,6 +48,7 @@ function reverseGeocoder(location) {
         resolve(result)
       },
       fail: err => {
+        console.log(err);
         reject(err)
       }
     })

@@ -24,21 +24,21 @@ const InfoName = {
 const requestUrls = {
   Dev: {
     // baseUrl:"http://192.168.1.173:3000"
-    baseUrl: "http://localhost:3000"
-    // baseUrl: "http://192.168.0.145:3000",
+    // baseUrl: "http://localhost:3000"
+    // baseUrl: "http://192.168.31.40:3000",
     // baseUrl: "http://192.168.0.145:3000"
-    //  baseUrl:"http://192.168.31.72:3000"
-    // baseUrl: "https://www.shengruo.top"
+    //  baseUrl:"http://192.168.31.40:3000"
+    baseUrl: "https://www.shengruo.top"
     //  baseUrl:"https://www.shengruo.top"
     // baseUrl: "http://47.111.87.121:3000"
     //  baseUrl:"https://www.eigene.cn"
     // baseUrl:"http://eigene.free.idcfengye.com"
   },
   Test: {
-    baseUrl: "https://www.eigene.cn"
+    // baseUrl: "https://www.eigene.cn"
   },
   Prod: {
-    baseUrl: "https://www.eigene.cn"
+    // baseUrl: "https://www.eigene.cn"
   },
   SocketProd: {
     // baseUrl:"http://localhost:8000"

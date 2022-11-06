@@ -3,6 +3,7 @@ const app = getApp()
 const tool = require('../../../assets/tool/tool.js')
 const socket = require('../../../assets/request/socket')
 const authorize = require('../../../assets/tool/authorize')
+const common = require('../../../assets/tool/common')
 Page({
 
   /**
@@ -39,7 +40,7 @@ Page({
     ],
     actIndex: 0,
     isHome: false,
-
+    readStatus: [false, false]
   },
 
   /**
@@ -56,9 +57,10 @@ Page({
     }
     if (app.userInfo) {
       this.getInform()
-      this.system.loadData().then(() => {
-        this.isIsNew()
-      })
+      this.getSystem()
+      // this.system.loadData().then(() => {
+      //   this.isIsNew()
+      // })
     } else {
       this.setData({
         isHome: true
@@ -67,11 +69,12 @@ Page({
         if (app.userInfo) {
           socket.initSocketEvent()
           this.getInform()
-          setTimeout(() => {
-            this.system.loadData().then(() => {
-              this.isIsNew()
-            })
-          }, 1000)
+          this.getSystem()
+          // setTimeout(() => {
+          //   this.system.loadData().then(() => {
+          //     this.isIsNew()
+          //   })
+          // }, 1000)
         } else {
           wx.reLaunch({
             url: '/pages/home/home',
@@ -139,18 +142,22 @@ Page({
   },
   getSystem() {
     let systemPaging = this.data.systemPaging
-    app.get(app.Api.getSystem, {
-      userId: app.userInfo.id,
-      ...systemPaging
-    }).then(res => {
-      if (res.length < systemPaging.pageSize) {
+    return new Promise((resolve, reject) => {
+      app.get(app.Api.getSystem, {
+        userId: app.userInfo.id,
+        ...systemPaging
+      }).then(res => {
+        if (res.length < systemPaging.pageSize) {
+          this.setData({
+            'systemPaging.isNotData': true
+          })
+        }
         this.setData({
-          'systemPaging.isNotData': true
+          systems: this.data.systems.concat(res),
+          'systemPaging.pageIndex': systemPaging.pageIndex + 1
         })
-      }
-      this.setData({
-        systems: this.data.systems.concat(res),
-        'systemPaging.pageIndex': systemPaging.pageIndex + 1
+        resolve(res)
+        this.checkIsNew(res, 1)
       })
     })
   },
@@ -172,12 +179,247 @@ Page({
           'informPaging.pageIndex': informPaging.pageIndex + 1
         })
         resolve(res)
-        this.checkIsNew(res)
+        this.checkIsNew(res, 0)
       })
     })
 
   },
-  checkIsNew(list) {
+  refuseApply(data) {
+    let e = data.detail.e
+    let index = e.currentTarget.dataset.index
+    let systems = this.data.systems
+    let id = e.currentTarget.dataset.id
+    let msgId = e.currentTarget.dataset.msgid
+    let section = systems[index]
+    app.post(app.Api.refuseApply, {
+      userId: section.userId,
+      groupId: section.jsonDate.groupId,
+      groupName: section.jsonDate.groupName,
+      myUserId: app.userInfo.id,
+      id,
+      msgId
+    }).then((res) => {
+      console.log(res);
+      section.jsonDate.isNew = false
+      section.isNew = 0
+      if (res.affectedRows) {
+        section.status = 2
+        this.setData({
+          systems
+        })
+        res.userIdList.forEach((item, index) => {
+          if (item.userId == app.userInfo.id) {
+            res.userIdList.splice(index, 1)
+            return
+          }
+        })
+        // 发送给其他管理员
+        let from = {
+            userId: app.userInfo.id,
+          },
+          to = {
+            userIdList: res.userIdList
+          },
+          message = {
+            id: new Date().getTime(),
+            type: 2,
+            jsonDate: {
+              nickName: app.userInfo.nickName,
+              groupId: section.jsonDate.groupId,
+              groupName: section.jsonDate.groupName,
+              applyNickName: section.jsonDate.nickName,
+              isNew: 1,
+              agree: false
+            }
+          }
+        app.post(app.Api.sendSubscribeInfo, {
+          userIdList: res.userIdList,
+          template_id: app.InfoId.examine,
+          data: {
+            "thing3": {
+              "value": `申请加入“${section.jsonDate.groupName}”小组`
+            },
+            "phrase1": {
+              "value": "未通过"
+            },
+            "name7": {
+              "value": tool.cutstr(app.userInfo.nickName, 6).replace(/[\d]+/g, '*')
+            },
+            "thing2": {
+              "value": '无'
+            }
+          }
+        })
+        app.post(app.Api.sendFinalSystemMsg, {
+          from,
+          to,
+          message
+        }).then(() => {})
+
+        // 发送给用户
+        let control = {
+          title: `很抱歉，您未能通过"${section.jsonDate.groupName}"小组的审核`,
+          proper: {
+            name: 'isSwitchGroup',
+            value: res.isControl
+          }
+        }
+        to = {
+          userId: section.userId
+        }
+        app.post(app.Api.sendSubscribeInfo, {
+          otherId: section.userId,
+          template_id: app.InfoId.examine,
+          data: {
+            "thing3": {
+              "value": `申请加入“${section.jsonDate.groupName}”小组`
+            },
+            "phrase1": {
+              "value": "未通过"
+            },
+            "name7": {
+              "value": tool.cutstr(app.userInfo.nickName, 6).replace(/[\d]+/g, '*')
+            },
+            "2": {
+              "value": '无'
+            }
+          }
+        })
+        app.socket.emit("sendPageRefresh", from, to, control);
+      } else {
+        common.Tip('申请状态已过期').then(() => {
+          section.status = -1
+          this.setData({
+            systems
+          })
+        })
+      }
+      this.setData({
+        systems:this.data.systems
+      },()=>{
+        this.checkIsNew(this.data.systems, 1)
+      })
+    })
+  },
+  agreeApply(data) {
+    let e = data.detail.e
+    let index = e.currentTarget.dataset.index
+    let id = e.currentTarget.dataset.id
+    let msgId = e.currentTarget.dataset.msgid
+    let systems = this.data.systems
+    let section = systems[index]
+    app.post(app.Api.agreeApply, {
+      userId: section.userId,
+      groupId: section.jsonDate.groupId,
+      groupName: section.jsonDate.groupName,
+      myUserId: app.userInfo.id,
+      id,
+      msgId
+    }).then((res) => {
+      section.jsonDate.isNew = false
+      section.isNew = 0
+      if (res.affectedRows) {
+        section.status = 1
+        this.setData({
+          systems
+        })
+        res.userIdList.forEach((item, index) => {
+          if (item.userId == app.userInfo.id) {
+            res.userIdList.splice(index, 1)
+            return
+          }
+        })
+        // 通知管理员
+        let from = {
+            userId: app.userInfo.id,
+          },
+
+          to = {
+            userIdList: res.userIdList
+          },
+          message = {
+            id: new Date().getTime(),
+            type: 2,
+            jsonDate: {
+              nickName: app.userInfo.nickName,
+              groupId: section.jsonDate.groupId,
+              groupName: section.jsonDate.groupName,
+              applyNickName: section.jsonDate.nickName,
+              isNew: 1,
+              agree: true
+            }
+          }
+        app.post(app.Api.sendSubscribeInfo, {
+          userIdList: res.userIdList,
+          template_id: app.InfoId.examine,
+          data: {
+            "thing3": {
+              "value": `申请加入“${section.jsonDate.groupName}”小组`
+            },
+            "phrase1": {
+              "value": "通过"
+            },
+            "name7": {
+              "value": tool.cutstr(app.userInfo.nickName, 6).replace(/[\d]+/g, '*')
+            },
+            "thing2": {
+              "value": '无'
+            }
+          }
+        })
+        app.post(app.Api.sendFinalSystemMsg, {
+          from,
+          to,
+          message
+        }).then(() => {})
+
+        // 通知对方
+        let control = {
+          title: `恭喜您，成为"${section.jsonDate.groupName}"小组成员`,
+          proper: {
+            name: 'isSwitchGroup',
+            value: res.isControl
+          }
+        }
+        to = {
+          userId: section.userId
+        }
+        app.post(app.Api.sendSubscribeInfo, {
+          otherId: section.userId,
+          template_id: app.InfoId.examine,
+          data: {
+            "thing3": {
+              "value": `申请加入“${section.jsonDate.groupName}”小组`
+            },
+            "phrase1": {
+              "value": "通过"
+            },
+            "name7": {
+              "value": tool.cutstr(app.userInfo.nickName, 6).replace(/[\d]+/g, '*')
+            },
+            "thing2": {
+              "value": '无'
+            }
+          }
+        })
+        app.socket.emit("sendPageRefresh", from, to, control);
+
+      } else {
+        common.Tip('申请状态已过期').then(() => {
+          section.status = -1
+          this.setData({
+            systems
+          })
+        })
+      }
+      this.setData({
+        systems:this.data.systems
+      },()=>{
+        this.checkIsNew(this.data.systems, 1)
+      })
+    })
+  },
+  checkIsNew(list, index) {
     let flag = false
     list.forEach(item => {
       if (item.isNew) {
@@ -186,15 +428,20 @@ Page({
       }
     })
     if (flag) {
-      this.data.barList[0].isNew = true
+      this.data.barList[index].isNew = true
+      this.data.readStatus[index] = true
       this.setData({
-        barList: this.data.barList
+        barList: this.data.barList,
+        readStatus: this.data.readStatus
       })
+
       return
     } else {
-      this.data.barList[0].isNew = false
+      this.data.barList[index].isNew = false
+      this.data.readStatus[index] = false
       this.setData({
-        barList: this.data.barList
+        barList: this.data.barList,
+        readStatus: this.data.readStatus
       })
       return
     }
@@ -215,15 +462,18 @@ Page({
         this._freshing = false
       })
     } else if (actIndex === 1) {
-      setTimeout(() => {
-        let system = this.selectComponent('#system')
-        system.refresh().then(() => {
+      this.data.systemPaging.isNotData = false
+      this.data.systemPaging.pageIndex = 1
+      this.data.systems = []
+      this.cancelSystemNew().then(() => {
+        this.getSystem().then(() => {
           this.setData({
             triggered: false,
           })
           this._freshing = false
         })
-      }, 1000)
+      })
+
     } else {
       this.setData({
         triggered: false,
@@ -240,8 +490,10 @@ Page({
     } = this.data
     if (actIndex === 0 && !informPaging.isNotData) {
       this.getInform()
-    } else if (actIndex === 1) {
-      this.system.loadData()
+    } else if (actIndex === 1 && !systemPaging.isNotData) {
+
+      this.getSystem()
+      // this.system.loadData()
     }
   },
   updateNew(e) {
@@ -254,7 +506,7 @@ Page({
       this.setData({
         informs: this.data.informs
       }, () => {
-        this.checkIsNew(this.data.informs)
+        this.checkIsNew(this.data.informs, 0)
       })
     })
   },
@@ -307,25 +559,62 @@ Page({
 
   },
   handlerGobackClick: app.handlerGobackClick,
+  // 取消
+  cancelSystemNew() {
+    return new Promise((resolve, reject) => {
+      app.post(app.Api.cancelSystemNew, {
+        userId: app.userInfo.id
+      }).then(() => {
+        resolve()
+      })
+    })
+
+  },
   //切换btn 
   switchBtn(e) {
     let actIndex = e.detail.actIndex
     if (actIndex === this.data.actIndex) return
-    if (actIndex == 1) {
-      if (this.data.barList[1].isNew) {
-        let systemMsg = wx.getStorageSync('systemMsg')
-        systemMsg.forEach(item => {
-          if (item.message.jsonDate.isNew) item.message.jsonDate.isNew = 0
-        })
-        this.data.barList[1].isNew = false
-        this.setData({
-          barList: this.data.barList
-        })
-        wx.setStorageSync('systemMsg', systemMsg)
-      }
-    }
     this.setData({
       actIndex
     })
   },
+  readAll(e) {
+    let read = e.currentTarget.dataset.read
+    console.log(read);
+    if (read == 'inform') {
+      app.post(app.Api.readAllInform, {
+        userId: app.userInfo.id
+      }).then(res => {
+        this.data.informs.forEach(item => {
+          if (item.isNew) {
+            item.isNew = false
+          }
+        })
+        this.checkIsNew(this.data.informs, 0)
+        this.setData({
+          informs: this.data.informs
+        })
+      })
+    } else if (read == 'system') {
+      app.post(app.Api.cancelSystemNew, {
+        userId: app.userInfo.id
+      }).then(() => {
+        this.data.systems.forEach(item => {
+          if (item.isNew) {
+            item.isNew = false
+          }
+        })
+        this.checkIsNew(this.data.systems, 1)
+        this.setData({
+          systems: this.data.systems
+        })
+      })
+
+      // app.post(app.Api.readAllSystem, {
+      //   loading: false
+      // }).then(res => {
+
+      // })
+    }
+  }
 })

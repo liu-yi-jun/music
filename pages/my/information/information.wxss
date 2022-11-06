@@ -6,8 +6,31 @@
   box-sizing: border-box;
   width: 100%;
   border-bottom: 1rpx solid #C9CACA;
+  position: relative;
 }
+
 .last {
   position: relative;
   bottom: 80vh;
+}
+
+.read {
+  background: #B37AE5;
+  box-shadow: 4rpx 4rpx 10rpx 4rpx rgba(0, 0, 0, .1);
+  text-align: center;
+  padding: 4rpx 16rpx !important;
+  color: white;
+  border-radius: 999rem;
+  font-size: 24rpx !important;
+  flex-shrink: 0;
+  position: absolute;
+  right: 18rpx;
+  top: 10rpx;
+  border: 1px solid #B37AE5;
+}
+
+.greyRead {
+  background: white;
+  color: #B37AE5;
+  border: 1px solid #B37AE5;
 }

@@ -213,7 +213,7 @@
         {
           "name": "pages/home/welcome/welcome",
           "pathName": "pages/home/welcome/welcome",
-          "query": "scene=groupId%3D171",
+          "query": "scene=groupId%3D177",
           "scene": 1011
         },
         {
@@ -364,6 +364,24 @@
           "name": "pages/home/course/courseDetail/courseDetail",
           "pathName": "pages/home/course/courseDetail/courseDetail",
           "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/square/square",
+          "pathName": "pages/square/square",
+          "query": "scene=groupId%3D176",
+          "scene": null
+        },
+        {
+          "name": "pages/home/puchCard/puchCard",
+          "pathName": "pages/home/puchCard/puchCard",
+          "query": "showGroupId=181",
+          "scene": null
+        },
+        {
+          "name": "pages/home/course/courseDetail/courseDetail",
+          "pathName": "pages/home/course/courseDetail/courseDetail",
+          "query": "id=105",
           "scene": null
         }
       ]

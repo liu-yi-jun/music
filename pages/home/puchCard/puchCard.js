@@ -47,23 +47,53 @@ Page({
     // 是否是自己的小组
     isMyGroup: false,
     puchCardGuide: false,
-    longpressIndex: -1
+    longpressIndex: -1,
+    dialogShow:false,
+    isHome:false
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let showGroupId = options.showGroupId
+    this.showGroupId = options.showGroupId
     // 获取去除上面导航栏，剩余的高度
     tool.navExcludeHeight(this)
+    if (!app.userInfo) {
+      this.setData({
+        isHome: true
+      })
+      app.initLogin().then(() => {
+        if (app.userInfo) {
+          this.initPuchCard()
+        } else {
+          this.setData({
+            dialogShow: true
+          })
+        }
+      })
+    } else {
+      this.initPuchCard()
+    }
+   
+  },
+  initPuchCard() {
+    let isMyGroup = false,groupDuty = -1
+    if (app.myGrouList) {
+      app.myGrouList.forEach((item, index) => {
+        if (item.groupId == this.showGroupId) {
+          isMyGroup = true
+          groupDuty = item.groupDuty
+          return 
+        }
+      })
+    }
     this.setData({
-      groupDuty: app.userInfo.groupDuty,
-      showGroupId: showGroupId,
-      isMyGroup: showGroupId == app.userInfo.groupId,
+      groupDuty,
+      isMyGroup,
+      showGroupId:this.showGroupId
     })
-
-    this.getPagingGroupCard(showGroupId)
+    this.getPagingGroupCard(this.showGroupId)
     this.initSound()
   },
   toLike(e) {
@@ -300,7 +330,9 @@ Page({
       app.issuePuchCardBack = false
     }
   },
-
+  handleGetUserInfo() {
+    this.initPuchCard()
+  },
   /**
    * 生命周期函数--监听页面卸载
    */
@@ -730,6 +762,12 @@ Page({
           })
         }
       })
+    }
+  },
+  onShareAppMessage: function () {
+    return {
+      title: '打卡邀请',
+      path: `/pages/home/puchCard/puchCard?showGroupId=${this.data.showGroupId}`,
     }
   },
 })

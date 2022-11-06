@@ -1,7 +1,7 @@
 <!--pages/home/course/courseDetail/courseDetail.wxml-->
 <view class="learnGuitarDetail">
-  <navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' back="{{true}}" iconTheme='white'
-    bindback="handlerGobackClick"></navBar>
+  <navBar backgroundColorTop='rgba(0,0,0,0)' background='rgba(0,0,0,0)' back="{{!isHome}}" home="{{isHome}}" iconTheme='white'
+    bindback="handlerGobackClick" bindhome="handlerGobackClick"></navBar>
   <view class="head">
     <view class="title-showMenu">
       <text class="title">{{detail.courseName}}</text>
@@ -50,7 +50,7 @@
               <image class="avatar" src="{{detail.avatarUrl}}" catchtap="goPersonal"></image>
               <view class="name-organization">
                 <text class="name">{{detail.nickName}}</text>
-                <text class="organization">{{detail.groupName}}</text>
+                <text wx:if="{{organization}}" class="organization">{{detail.groupName}}</text>
               </view>
             </view>
             <block wx:if="{{userId!==detail.userId}}">
@@ -103,3 +103,5 @@
 
 <menu id="menu" list="{{list}}" bind:handleStore="handleStore" bind:handleReport="handleReport"
   bind:hadleDelete="hadleDelete" bind:cancelMenu="cancelMenu" bind:handleEdit="handleEdit"></menu>
+
+<authorization dialogShow="{{dialogShow}}" bind:handleGetUserInfo="handleGetUserInfo"></authorization>

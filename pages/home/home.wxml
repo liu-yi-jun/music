@@ -141,7 +141,7 @@
         <view class="avatarBackground">
           <image mode="aspectFill" class="avatar" src="{{showMember[0].avatarUrl}}"></image>
         </view>
-
+ 
       </view>
       <view class="section" mark:index="0"
         style="bottom:{{style[6].bottom}}%; transform: scale({{style[6].scaleX}}, {{style[6].scaleY}});  opacity:{{style[6].opacity ? (showMember[6] ? 1:0): 0}}"

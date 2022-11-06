@@ -68,32 +68,32 @@ Page({
     barList: [{
         name: '动态',
         children: [{
+            name: '广场'
+          }, {
             name: '小组'
           },
-          {
-            name: '广场'
-          }
+
         ]
       },
-      {
-        name: '发布',
-        children: [{
-            name: '小组活动'
-          },
-          {
-            name: '一起组乐队'
-          },
-          {
-            name: '乐队瞬间'
-          },
-          {
-            name: '二手乐器'
-          },
-          {
-            name: '票务转让'
-          },
-        ]
-      }
+      // {
+      //   name: '发布',
+      //   children: [{
+      //       name: '小组活动'
+      //     },
+      //     {
+      //       name: '一起组乐队'
+      //     },
+      //     {
+      //       name: '乐队瞬间'
+      //     },
+      //     {
+      //       name: '二手乐器'
+      //     },
+      //     {
+      //       name: '票务转让'
+      //     },
+      //   ]
+      // }
     ],
     actIndexArr: [0, 0],
     noticeNumbe: 0,
@@ -102,7 +102,7 @@ Page({
     feedbackContent: '',
     showCode: false,
     code: '',
-    msgAuthorizationShow:false,
+    msgAuthorizationShow: false,
     requestId: [app.InfoId.follow]
   },
 
@@ -147,7 +147,7 @@ Page({
     }
   },
   onPageScroll(e) {
-    if (!this.pullDown) {
+    if (!this.pullDown && !this.prohibit) {
       if (this.flag) {
         this.flag = false
         setTimeout(() => {
@@ -173,6 +173,36 @@ Page({
             tabBarBtnShow: false
           })
         }
+      }
+    }
+
+  },
+  fullscreenchange(e) {
+    let fullScreen = e.detail.fullScreen //值true为进入全屏，false为退出全屏
+    if (!fullScreen) { //退出全屏
+      this.prohibit = false
+      console.log('退出全屏', this.tempScrollTop)
+      // console.log('111', this.tempScrollTop ? this.tempScrollTop : this.data.scrollTop)
+      // setTimeout(() => {
+      //   this.setData({
+      //     scrollTop: this.tempScrollTop ? this.tempScrollTop : this.data.scrollTop
+      //   })
+      // }, 100)
+
+      if (this.show) {
+        this.getTabBar().setData({
+          show: true
+        })
+      }
+    } else { //进入全屏
+      this.prohibit = true
+      console.log('进入全屏')
+      // this.tempScrollTop = this.scrollTop
+      this.show = this.getTabBar().data.show
+      if (this.getTabBar().data.show) {
+        this.getTabBar().setData({
+          show: false
+        })
       }
     }
 
@@ -249,6 +279,7 @@ Page({
         this.data.squarePaging.isNotData = true
       }
       this.data.squarePaging.minID = res.length ? res[res.length - 1].id : 0
+      common.videoToImg(res, 'videoUrl')
       this.setData({
         squareDynamics: this.data.squareDynamics.concat(res),
       })
@@ -264,6 +295,7 @@ Page({
         this.data.groupdPaging.isNotData = true
       }
       this.data.groupdPaging.minID = res.length ? res[res.length - 1].id : 0
+      common.videoToImg(res, 'videoUrl')
       this.setData({
         groupdDynamics: this.data.groupdDynamics.concat(res)
       })
@@ -340,15 +372,8 @@ Page({
     }, {
       loading: false
     }).then(res => {
-      let noticeNumbe = res.noticeNumbe
-      let systemMsg = wx.getStorageSync('systemMsg')
-      if (systemMsg) {
-        systemMsg.forEach(item => {
-          if (item.message.jsonDate.isNew) noticeNumbe++
-        })
-      }
       this.setData({
-        noticeNumbe
+        noticeNumbe: res
       })
     })
   },
@@ -383,11 +408,11 @@ Page({
       actIndexArr
     } = this.data
     if (actIndexArr[0] === 0 && actIndexArr[1] === 0 && !groupdPaging.isNotData) {
-      // 获取小组动态
-      this.getGroupdDynamics(app.userInfo.id)
-    } else if (actIndexArr[0] === 0 && actIndexArr[1] === 1 && !squarePaging.isNotData) {
       // 获取广场动态
       this.getSquareDynamics(app.userInfo.id)
+    } else if (actIndexArr[0] === 0 && actIndexArr[1] === 1 && !squarePaging.isNotData) {
+      // 获取小组动态
+      this.getGroupdDynamics(app.userInfo.id)
     } else if (actIndexArr[0] === 1 && actIndexArr[1] === 0 && !alliancePaging.isNotData) {
       // 获取小组活动
       this.getPersonalAlliance(app.userInfo.id)
@@ -530,11 +555,11 @@ Page({
     common.showLoading('删除中')
     let dynamics, actIndexArr = this.data.actIndexArr
     if (actIndexArr[1] === 0) {
-      // 小组
-      dynamics = this.data.groupdDynamics
-    } else {
       // 广场
       dynamics = this.data.squareDynamics
+    } else {
+      // 小组
+      dynamics = this.data.groupdDynamics
     }
     let {
       tableName,
@@ -551,11 +576,11 @@ Page({
         dynamics.splice(index, 1)
         if (actIndexArr[1] === 0) {
           this.setData({
-            groupdDynamics: dynamics
+            squareDynamics: dynamics
           })
         } else {
           this.setData({
-            squareDynamics: dynamics
+            groupdDynamics: dynamics
           })
         }
         common.Toast('已删除')
@@ -563,11 +588,11 @@ Page({
         dynamics.splice(index, 1)
         if (actIndexArr[1] === 0) {
           this.setData({
-            groupdDynamics: dynamics
+            squareDynamics: dynamics
           })
         } else {
           this.setData({
-            squareDynamics: dynamics
+            groupdDynamics: dynamics
           })
         }
         common.Toast('该动态已不存在')
@@ -588,11 +613,11 @@ Page({
     }
     let dynamics, actIndexArr = this.data.actIndexArr
     if (actIndexArr[1] === 0) {
-      // 小组
-      dynamics = this.data.groupdDynamics
-    } else {
       // 广场
       dynamics = this.data.squareDynamics
+    } else {
+      // 小组
+      dynamics = this.data.groupdDynamics
     }
     setTimeout(() => {
       app.post(app.Api.share, {
@@ -603,9 +628,9 @@ Page({
       }).then(res => {
         let dynamicList = null
         if (actIndexArr[1] === 0) {
-          dynamicList = this.selectComponent('#groupdDynamics');
-        } else {
           dynamicList = this.selectComponent('#squareDynamics');
+        } else {
+          dynamicList = this.selectComponent('#groupdDynamics');     
         }
         dynamicList.completeShare(index)
 
@@ -737,31 +762,31 @@ Page({
       }
     })
 
-    // wx.getUserProfile({
-    //   desc: '用于完善个人资料',
-    //   success: (data) => {
-    //     wx.getUserInfo({
-    //       withCredentials: true,
-    //       success: userDate=> {
-    //         console.log(userDate)
-    //         if (!app.userInfo) {
-    //           app.post(app.Api.register, {
-    //             userInfo: data.userInfo,
-    //             encryptedData: userDate.encryptedData,
-    //             iv: userDate.iv
-    //           }, {
-    //             loading: false
-    //           }).then(res => {
-    //             app.userInfo = res.userInfo
-    //             socket.initSocketEvent()
-    //             this.completeGetUserInfo()
-    //           })
-    //         }
-    //       }
-    //     })
+    wx.getUserProfile({
+      desc: '用于完善个人资料',
+      success: (data) => {
+        wx.getUserInfo({
+          withCredentials: true,
+          success: userDate => {
+            console.log(userDate)
+            if (!app.userInfo) {
+              app.post(app.Api.register, {
+                userInfo: data.userInfo,
+                encryptedData: userDate.encryptedData,
+                iv: userDate.iv
+              }, {
+                loading: false
+              }).then(res => {
+                app.userInfo = res.userInfo
+                socket.initSocketEvent()
+                this.completeGetUserInfo()
+              })
+            }
+          }
+        })
 
-    //   }
-    // })
+      }
+    })
 
   },
   goInformation() {

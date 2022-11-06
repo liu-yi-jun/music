@@ -126,3 +126,13 @@
   z-index: 10;
   color: rgba(191, 191, 191, 0.8);
 }
+
+.localDelete {
+  margin-left: 20rpx;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  text-align: center;
+  cursor: pointer;
+}
