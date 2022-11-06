@@ -20,7 +20,7 @@
   <view class="textareaWarp">
     <textarea maxlength="1000" name="describe" class="textarea" placeholder="请输入音频描述……" placeholder-class="placeholder"></textarea>
   </view>
-  <view class="locationWrap">
+  <!-- <view class="locationWrap">
       <view class="location">
         <image class="locationLogo" src="http://cdn.eigene.cn/squarePost/locationLogo.png"></image>
         <text class="locationText" catchtap="getLocation">你在哪里?</text>
@@ -31,7 +31,7 @@
           {{mks[index].title}}
         </view>
       </picker>
-    </view>
+    </view> -->
   <view class="issueWrap">
     <button class="issue" form-type="submit">发布</button>
   </view>

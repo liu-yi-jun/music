@@ -9,7 +9,7 @@
     <video catchlongpress="deletevideo" src="{{tempFilePath}}" object-fit="cover" wx:if="{{tempFilePath}}"></video>
     <image wx:else class="add" src="{{qiniuUrl}}/issueImg/addImg.png" catchtap="chooseVideo" ></image>
   </view>
-  <view class="locationWrap">
+  <!-- <view class="locationWrap">
       <view class="location">
         <image class="locationLogo" src="http://cdn.eigene.cn/squarePost/locationLogo.png"></image>
         <text class="locationText" catchtap="getLocation">你在哪里?</text>
@@ -20,7 +20,7 @@
           {{mks[index].title}}
         </view>
       </picker>
-    </view>
+    </view> -->
   <view class="issueWrap">
     <button class="issue" form-type="submit">发布</button>
   </view>

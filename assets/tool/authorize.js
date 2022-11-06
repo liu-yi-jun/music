@@ -3,44 +3,44 @@ const InfoName = require('../../assets/request/config').InfoName
 const tool = require('../../assets/tool/tool')
 // 获取定位位置
 function getLocation(callback) {
-  wx.getSetting({
-    success(res) {
-      if (!res.authSetting['scope.userLocation']) {
-        // 没有授权过进入授权
-        wx.authorize({
-          scope: 'scope.userLocation',
-          success() {
-            // 用户点击同意
-            wxGetLocation(callback)
-          },
-          fail() {
-            common.Tip('位置信息授权失败，请点击右上角 “···” → “设置” → “位置信息” -> 勾选“使用小程序期间和离开小程序后”', '提示', '去开启', {
-              cancelText: '取消'
-            }).then(res => {
-              if (res.confirm) {
-                wx.openSetting({
-                  success(res) {}
-                })
-              }
-            })
-            callback({
-              warning: true,
-              msg: '用户拒绝位置信息授权'
-            })
-          }
-        })
-      } else {
-        console.log('已授权过直接获取')
-        wxGetLocation(callback)
-      }
-    },
-    fail(err) {
-      callback(err || {
-        err: true,
-        msg: '获取用户的当前设置失败'
-      })
-    }
-  })
+  // wx.getSetting({
+  //   success(res) {
+  //     if (!res.authSetting['scope.userLocation']) {
+  //       // 没有授权过进入授权
+  //       wx.authorize({
+  //         scope: 'scope.userLocation',
+  //         success() {
+  //           // 用户点击同意
+  //           wxGetLocation(callback)
+  //         },
+  //         fail() {
+  //           common.Tip('位置信息授权失败，请点击右上角 “···” → “设置” → “位置信息” -> 勾选“使用小程序期间和离开小程序后”', '提示', '去开启', {
+  //             cancelText: '取消'
+  //           }).then(res => {
+  //             if (res.confirm) {
+  //               wx.openSetting({
+  //                 success(res) {}
+  //               })
+  //             }
+  //           })
+  //           callback({
+  //             warning: true,
+  //             msg: '用户拒绝位置信息授权'
+  //           })
+  //         }
+  //       })
+  //     } else {
+  //       console.log('已授权过直接获取')
+  //       wxGetLocation(callback)
+  //     }
+  //   },
+  //   fail(err) {
+  //     callback(err || {
+  //       err: true,
+  //       msg: '获取用户的当前设置失败'
+  //     })
+  //   }
+  // })
 
 }
 

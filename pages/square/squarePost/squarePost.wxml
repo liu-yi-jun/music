@@ -35,7 +35,7 @@
             <text>#{{topics[topicIndex].topicName}}#</text>
           </view>
         </view>
-        <view class="locationWrap">
+        <!-- <view class="locationWrap">
           <view class="location" >
             <image class="locationLogo" src="http://cdn.eigene.cn/squarePost/locationLogo.png"></image>
             <text class="locationText" catchtap="getLocation">你在哪里?</text>
@@ -46,7 +46,7 @@
               {{mks[index].title}}
             </view>
           </picker>
-        </view>
+        </view> -->
       </view>
     </scroll-view>
   </form>

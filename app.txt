@@ -75,6 +75,11 @@
     "components/common/msgAuthorization/msgAuthorization",
     "components/common/guidMsgAuthor/guidMsgAuthor"
   ],
+  "permission": {
+    "scope.userLocation": {
+      "desc": "你的位置信息将用于动态发布"
+    }
+  },
   "useExtendedLib": {
     "weui": true
   },
